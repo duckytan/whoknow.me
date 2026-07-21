@@ -41,15 +41,31 @@
     .logo {
       font-size: 4.5rem;
       font-weight: 900;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
       color: #fff;
       line-height: 1;
-      transform: skewX(-18deg);
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .logo .green { color: #6eda78; }
-    .logo .dim { color: #333; font-weight: 300; }
+    .logo-who {
+      display: inline-block;
+      transform: skewX(-30deg);
+    }
+
+    .logo-k {
+      display: inline-block;
+      background: linear-gradient(180deg, #6eda78 0%, #fbbf24 50%, #ff6a6a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-now {
+      display: inline-block;
+      transform: skewX(30deg);
+    }
 
     .logo-dot {
       display: inline-block;
@@ -86,20 +102,21 @@
       margin-right: -0.4em;
       margin-top: 0.2rem;
       line-height: 1.2;
-      transform: skewX(18deg);
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .chinese-brand .char { display: inline-block; }
-
-.chinese-brand .char1 {
+    .chinese-brand .char1 {
       color: #6eda78;
       display: inline-block;
+      transform: skewX(-30deg);
     }
 
     .chinese-brand .char2 {
       color: #fff;
       display: inline-block;
+      transform: skewX(30deg);
     }
 
     /* ---- Tagline ---- */
@@ -108,11 +125,6 @@
       font-size: 1rem;
       color: #666;
       letter-spacing: 0.02em;
-      transform: skewX(-18deg);
-    }
-
-    .tagline-sub {
-      transform: skewX(18deg);
     }
 
     .tagline-sub {
@@ -220,7 +232,7 @@
   <div class="container">
     <div class="hero">
       <div class="logo">
-        who<span class="green">know</span><span class="logo-dot"></span>
+        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span><span class="logo-dot"></span>
       </div>
       <div class="divider"></div>
       <div class="chinese-brand">
