@@ -126,6 +126,18 @@
       color: var(--green);
       position: relative;
       display: inline-block;
+      animation: breathe-k 2.4s ease-in-out infinite;
+    }
+
+    @keyframes breathe-k {
+      0%, 100% {
+        opacity: 0.55;
+        text-shadow: 0 0 0 transparent;
+      }
+      50% {
+        opacity: 1;
+        text-shadow: 0 0 24px rgba(110, 218, 120, 0.45);
+      }
     }
 
 
