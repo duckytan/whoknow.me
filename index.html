@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>whoknow · 胡闹宇宙</title>
+  <title>胡闹 · whoknow</title>
   <meta name="description" content="谁知道这个宇宙里会发生什么？" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700;900&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Noto Sans SC', 'Inter', -apple-system, sans-serif;
       background: #08090a;
       color: #ededef;
       min-height: 100vh;
@@ -19,8 +19,7 @@
       flex-direction: column;
       align-items: center;
       background-image:
-        radial-gradient(ellipse 600px 400px at 50% 0%, rgba(110, 218, 120, 0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 500px 500px at 80% 100%, rgba(110, 218, 120, 0.03) 0%, transparent 50%);
+        radial-gradient(ellipse 600px 400px at 50% 0%, rgba(110, 218, 120, 0.06) 0%, transparent 60%);
     }
 
     .container {
@@ -36,44 +35,54 @@
     /* ---- Hero ---- */
     .hero {
       text-align: center;
-      padding-top: 6rem;
+      padding-top: 5rem;
     }
 
-    .logo {
-      font-size: 4.5rem;
+    .chinese-brand {
+      font-size: 5rem;
       font-weight: 900;
-      letter-spacing: -0.04em;
-      color: #fff;
+      letter-spacing: 0.2em;
       line-height: 1;
+      background: linear-gradient(135deg, #6eda78, #ff6a6a, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: hue-shift 6s ease infinite;
     }
 
-    .logo-dot {
+    @keyframes hue-shift {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(30deg); }
+    }
+
+    .en-brand {
+      margin-top: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #555;
+      letter-spacing: 0.3em;
+    }
+
+    .en-brand span { color: #6eda78; }
+
+    .tagline-box {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid #1e1f21;
+      border-radius: 99px;
       display: inline-block;
-      width: 12px;
-      height: 12px;
-      background: #6eda78;
-      border-radius: 50%;
-      margin-left: 4px;
-      vertical-align: super;
-      animation: pulse-dot 2s ease-in-out infinite;
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    .tagline {
-      margin-top: 1rem;
-      font-size: 1.05rem;
-      color: #6b6b6b;
-      letter-spacing: 0.02em;
+    .tagline-text {
+      font-size: 0.9rem;
+      color: #888;
     }
 
     .tagline-sub {
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: #444;
-      margin-top: 0.3rem;
+      margin-top: 0.5rem;
     }
 
     /* ---- Products ---- */
@@ -96,6 +105,7 @@
       text-decoration: none;
       color: inherit;
       transition: all 0.2s ease;
+      cursor: pointer;
     }
 
     .product-row:hover {
@@ -111,30 +121,11 @@
       flex-shrink: 0;
     }
 
-    .product-row .info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .product-row .name {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
-    }
-
-    .product-row .desc {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 0.15rem;
-    }
-
-    .product-row .badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 99px;
-      flex-shrink: 0;
-    }
-
+    .product-row .info { flex: 1; min-width: 0; }
+    .product-row .name { font-weight: 700; font-size: 1rem; color: #fff; }
+    .product-row .en-name { font-size: 0.75rem; color: #555; font-family: 'Inter', sans-serif; margin-top: 0.1rem; }
+    .product-row .desc { font-size: 0.8rem; color: #666; margin-top: 0.15rem; }
+    .product-row .badge { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 99px; flex-shrink: 0; }
     .badge.dev { background: #1a2e1a; color: #6eda78; }
     .badge.design { background: #1e1a2e; color: #a78bfa; }
     .badge.idea { background: #2e1e1a; color: #fbbf24; }
@@ -158,10 +149,7 @@
       transition: all 0.15s;
     }
 
-    .domains a:hover {
-      color: #6eda78;
-      border-color: #6eda78;
-    }
+    .domains a:hover { color: #6eda78; border-color: #6eda78; }
 
     /* ---- Footer ---- */
     .footer {
@@ -172,57 +160,56 @@
       text-align: center;
     }
 
-    /* ---- Responsive ---- */
     @media (max-width: 480px) {
       .container { padding: 2rem 1.25rem; }
       .hero { padding-top: 3rem; }
-      .logo { font-size: 3rem; }
+      .chinese-brand { font-size: 3.5rem; letter-spacing: 0.15em; }
       .product-row { padding: 1rem 1.25rem; }
-    }
-
-    /* ---- Cursor ---- */
-    .cursor-container {
-      position: relative;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="hero">
-      <div class="logo">
-        who<span style="color:#6eda78">know</span><span class="logo-dot"></span>
+      <div class="chinese-brand">胡闹</div>
+      <div class="en-brand">who<span>know</span></div>
+
+      <div class="tagline-box">
+        <span class="tagline-text">谁知道这个宇宙里会发生什么？</span>
       </div>
-      <div class="tagline">谁知道这个宇宙里会发生什么？</div>
-      <div class="tagline-sub">胡闹 · Who knows? · 家人们谁懂啊</div>
+      <div class="tagline-sub">Who knows? · 家人们谁懂啊</div>
     </div>
 
     <div class="products">
-      <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖正在开发中，即将上线！');return false;">
+      <div class="product-row" onclick="alert('🍜 胡闹外卖开发中，Day 6 代码已就位！即将上线~');">
         <div class="icon">🍜</div>
         <div class="info">
-          <div class="name">whoknow-waimai</div>
-          <div class="desc">胡闹外卖 · 段子手老板 × 戏精骑手</div>
+          <div class="name">胡闹外卖</div>
+          <div class="en-name">whoknow-waimai</div>
+          <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
         </div>
         <span class="badge dev">🎬 Day 6</span>
-      </a>
+      </div>
 
-      <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在娘胎里，再等等~');return false;">
+      <div class="product-row" onclick="alert('🛒 胡闹导购还在设计阶段，很快会来拦住你买东西~');">
         <div class="icon">🛒</div>
         <div class="info">
-          <div class="name">whoknow-mart</div>
-          <div class="desc">胡闹导购 · 反骨 AI 阻止你 checkout</div>
+          <div class="name">胡闹导购</div>
+          <div class="en-name">whoknow-mart</div>
+          <div class="desc">反骨导购阻止你 checkout</div>
         </div>
         <span class="badge design">💡 设计</span>
-      </a>
+      </div>
 
-      <a class="product-row" href="#" onclick="alert('🧠 控制中心已设计好架构，等开发~');return false;">
+      <div class="product-row" onclick="alert('🧠 胡闹大脑负责 AI 追热点、生成段子、调配平衡，控制一切');">
         <div class="icon">🧠</div>
         <div class="info">
-          <div class="name">whoknow-brain</div>
-          <div class="desc">胡闹大脑 · AI 追热点推段子</div>
+          <div class="name">胡闹大脑</div>
+          <div class="en-name">whoknow-brain</div>
+          <div class="desc">控制中心 · AI 追热点推段子</div>
         </div>
         <span class="badge idea">🧪 规划</span>
-      </a>
+      </div>
     </div>
 
     <div class="domains">
