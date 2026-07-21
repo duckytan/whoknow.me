@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whoknow · 胡闹宇宙</title>
+  <meta name="description" content="谁知道这个宇宙里会发生什么？" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #08090a;
+      color: #ededef;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image:
+        radial-gradient(ellipse 600px 400px at 50% 0%, rgba(110, 218, 120, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 500px 500px at 80% 100%, rgba(110, 218, 120, 0.03) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 640px;
+      width: 100%;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+      text-align: center;
+      padding-top: 6rem;
+    }
+
+    .logo {
+      font-size: 4.5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .logo-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #6eda78;
+      border-radius: 50%;
+      margin-left: 4px;
+      vertical-align: super;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      color: #6b6b6b;
+      letter-spacing: 0.02em;
+    }
+
+    .tagline-sub {
+      font-size: 0.85rem;
+      color: #444;
+      margin-top: 0.3rem;
+    }
+
+    /* ---- Products ---- */
+    .products {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      margin-top: 4rem;
+    }
+
+    .product-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #121314;
+      border: 1px solid #1e1f21;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .product-row:hover {
+      border-color: #6eda78;
+      background: #17181a;
+      transform: translateX(4px);
+    }
+
+    .product-row .icon {
+      font-size: 1.8rem;
+      width: 48px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .product-row .info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .product-row .name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .product-row .desc {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.15rem;
+    }
+
+    .product-row .badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      flex-shrink: 0;
+    }
+
+    .badge.dev { background: #1a2e1a; color: #6eda78; }
+    .badge.design { background: #1e1a2e; color: #a78bfa; }
+    .badge.idea { background: #2e1e1a; color: #fbbf24; }
+
+    /* ---- Domain list ---- */
+    .domains {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      margin-top: 3rem;
+    }
+
+    .domains a {
+      color: #444;
+      text-decoration: none;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid #1e1f21;
+      border-radius: 99px;
+      transition: all 0.15s;
+    }
+
+    .domains a:hover {
+      color: #6eda78;
+      border-color: #6eda78;
+    }
+
+    /* ---- Footer ---- */
+    .footer {
+      margin-top: auto;
+      padding: 3rem 0 2rem;
+      font-size: 0.75rem;
+      color: #333;
+      text-align: center;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 480px) {
+      .container { padding: 2rem 1.25rem; }
+      .hero { padding-top: 3rem; }
+      .logo { font-size: 3rem; }
+      .product-row { padding: 1rem 1.25rem; }
+    }
+
+    /* ---- Cursor ---- */
+    .cursor-container {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="logo">
+        who<span style="color:#6eda78">know</span><span class="logo-dot"></span>
+      </div>
+      <div class="tagline">谁知道这个宇宙里会发生什么？</div>
+      <div class="tagline-sub">胡闹 · Who knows? · 家人们谁懂啊</div>
+    </div>
+
+    <div class="products">
+      <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖正在开发中，即将上线！');return false;">
+        <div class="icon">🍜</div>
+        <div class="info">
+          <div class="name">whoknow-waimai</div>
+          <div class="desc">胡闹外卖 · 段子手老板 × 戏精骑手</div>
+        </div>
+        <span class="badge dev">🎬 Day 6</span>
+      </a>
+
+      <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在娘胎里，再等等~');return false;">
+        <div class="icon">🛒</div>
+        <div class="info">
+          <div class="name">whoknow-mart</div>
+          <div class="desc">胡闹导购 · 反骨 AI 阻止你 checkout</div>
+        </div>
+        <span class="badge design">💡 设计</span>
+      </a>
+
+      <a class="product-row" href="#" onclick="alert('🧠 控制中心已设计好架构，等开发~');return false;">
+        <div class="icon">🧠</div>
+        <div class="info">
+          <div class="name">whoknow-brain</div>
+          <div class="desc">胡闹大脑 · AI 追热点推段子</div>
+        </div>
+        <span class="badge idea">🧪 规划</span>
+      </a>
+    </div>
+
+    <div class="domains">
+      <a href="https://whoknow.me" target="_blank">whoknow.me</a>
+      <a href="https://whoknow.vip" target="_blank">whoknow.vip</a>
+      <a href="https://whoknow.cc" target="_blank">whoknow.cc</a>
+      <a href="https://whonow.me" target="_blank">whonow.me</a>
+      <a href="https://whonow.vip" target="_blank">whonow.vip</a>
+      <a href="https://whonow.cc" target="_blank">whonow.cc</a>
+    </div>
+
+    <div class="footer">
+      whoknow — 谁都不知道接下来会发生什么
+    </div>
+  </div>
+</body>
+</html>
