@@ -6,20 +6,22 @@
   <title>whoknow · 胡闹宇宙</title>
   <meta name="description" content="谁知道这个宇宙里会发生什么？" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --green: #6eda78;
       --green-dim: rgba(110, 218, 120, 0.12);
-      --bg: #08090a;
-      --bg-2: #0e0f11;
-      --line: #1a1c1f;
-      --line-2: #25282b;
+      --orange: #ff7849;
+      --purple: #8b5cf6;
+      --bg: #0a0612;
+      --bg-2: #120a1a;
+      --line: #1f1828;
+      --line-2: #2a2236;
       --fg: #ededef;
-      --fg-dim: #888;
-      --fg-mute: #555;
+      --fg-dim: #a094b8;
+      --fg-mute: #6b6480;
     }
 
     html, body { background: var(--bg); }
@@ -40,8 +42,9 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 500px 400px at 30% 10%, rgba(110, 218, 120, 0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 600px 400px at 80% 90%, rgba(167, 139, 250, 0.04) 0%, transparent 70%);
+        radial-gradient(ellipse 500px 400px at 20% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 85% 100%, rgba(110, 218, 120, 0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 50% 30%, rgba(255, 120, 73, 0.06) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -105,16 +108,24 @@
 
     /* 主标：单行 whoknow · 不要再花 */
     .logo {
-      font-size: 5rem;
-      font-weight: 800;
-      letter-spacing: -0.05em;
+      font-family: 'Bungee', 'Inter', sans-serif;
+      font-size: 5.5rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
       color: var(--fg);
       line-height: 1;
-      margin-top: 1.6rem;
+      margin-top: 1.8rem;
+      transform: rotate(-4deg);
       display: flex;
       align-items: baseline;
       justify-content: center;
       gap: 0;
+      text-shadow:
+        -2px -2px 0 #0a0612,
+        2px -2px 0 #0a0612,
+        -2px 2px 0 #0a0612,
+        2px 2px 0 #0a0612,
+        0 6px 0 rgba(255, 120, 73, 0.4);
     }
 
     .logo-who,
@@ -123,34 +134,56 @@
     }
 
     .logo-k {
-      color: var(--green);
+      color: var(--orange);
       position: relative;
       display: inline-block;
       animation: breathe-k 2.4s ease-in-out infinite;
+      margin: 0 0.08em;
     }
 
     @keyframes breathe-k {
       0%, 100% {
-        opacity: 0.55;
-        text-shadow: 0 0 0 transparent;
+        opacity: 0.7;
+        text-shadow:
+          -2px -2px 0 #0a0612,
+          2px -2px 0 #0a0612,
+          -2px 2px 0 #0a0612,
+          2px 2px 0 #0a0612,
+          0 0 0 transparent;
       }
       50% {
         opacity: 1;
-        text-shadow: 0 0 24px rgba(110, 218, 120, 0.45);
+        text-shadow:
+          -2px -2px 0 #0a0612,
+          2px -2px 0 #0a0612,
+          -2px 2px 0 #0a0612,
+          2px 2px 0 #0a0612,
+          0 0 32px rgba(255, 120, 73, 0.6);
       }
+    }
+
+    .logo-k::after {
+      content: '\01F525';
+      position: absolute;
+      top: -0.55em;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.45em;
+      filter: drop-shadow(0 0 6px rgba(255, 120, 73, 0.5));
     }
 
 
 
     /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
     .chinese-brand {
-      font-family: 'Noto Sans SC', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--fg-mute);
+      font-family: 'Bungee', 'Noto Sans SC', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--fg);
       letter-spacing: 0.2em;
       margin-right: -0.2em;
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
+      transform: rotate(-3deg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -159,11 +192,16 @@
 
     .chinese-brand .char {
       display: inline-block;
-      color: var(--fg-mute);
+      color: var(--fg);
+      text-shadow:
+        -1px -1px 0 #0a0612,
+        1px -1px 0 #0a0612,
+        -1px 1px 0 #0a0612,
+        1px 1px 0 #0a0612;
     }
 
     .chinese-brand .char.accent {
-      color: var(--green);
+      color: var(--orange);
     }
 
     /* 副标：mono 风 · 像 status bar */
@@ -219,7 +257,7 @@
     }
 
     .product-row:hover {
-      border-color: var(--green);
+      border-color: var(--orange);
       background: #111315;
       transform: translateX(2px);
     }
@@ -275,7 +313,7 @@
       letter-spacing: 0.05em;
     }
 
-    .footer .accent { color: #444; }
+    .footer .accent { color: var(--orange); }
 
     /* ===== Mobile ===== */
     @media (max-width: 480px) {
