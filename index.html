@@ -83,20 +83,19 @@
       gap: 0.5rem;
       font-family: 'JetBrains Mono', ui-monospace, monospace;
       font-size: 0.72rem;
-      color: var(--green);
+      color: var(--fg-mute);
       letter-spacing: 0.15em;
       padding: 0.4rem 0.9rem;
-      border: 1px solid var(--line-2);
+      border: 1px solid var(--line);
       border-radius: 99px;
-      background: var(--green-dim);
+      background: transparent;
     }
 
     .eyebrow .dot {
       width: 6px;
       height: 6px;
-      background: var(--green);
+      background: #444;
       border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
     }
 
     @keyframes pulse-dot {
@@ -129,19 +128,7 @@
       display: inline-block;
     }
 
-    /* K 顶上一个撇：像"胡闹"的小记号，呼应主调但不抢戏 */
-    .logo-k::before {
-      content: '';
-      position: absolute;
-      top: -0.28em;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0.28em;
-      height: 0.28em;
-      background: var(--green);
-      border-radius: 50%;
-      opacity: 0.95;
-    }
+
 
     /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
     .chinese-brand {
@@ -177,7 +164,7 @@
       letter-spacing: 0;
     }
 
-    .tagline .accent { color: var(--green); }
+    .tagline .accent { color: var(--fg); }
     .tagline .dim { color: var(--fg-mute); }
     .tagline .sep { color: var(--line-2); margin: 0 0.5rem; }
 
@@ -196,7 +183,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .section-title .accent { color: var(--green); }
+    .section-title .accent { color: var(--fg-mute); }
 
     /* ===== Products ===== */
     .products {
@@ -299,7 +286,7 @@
       letter-spacing: 0.05em;
     }
 
-    .footer .accent { color: var(--green); }
+    .footer .accent { color: #444; }
 
     /* ===== Mobile ===== */
     @media (max-width: 480px) {
@@ -319,7 +306,6 @@
 
       <!-- Eyebrow: 顶部状态条 -->
       <div class="eyebrow">
-        <span class="dot"></span>
         <span>CHUNAO.UNIVERSE / v0.1</span>
       </div>
 
