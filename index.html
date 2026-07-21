@@ -6,290 +6,377 @@
   <title>whoknow · 胡闹宇宙</title>
   <meta name="description" content="谁知道这个宇宙里会发生什么？" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --green: #6eda78;
+      --green-dim: rgba(110, 218, 120, 0.12);
+      --bg: #08090a;
+      --bg-2: #0e0f11;
+      --line: #1a1c1f;
+      --line-2: #25282b;
+      --fg: #ededef;
+      --fg-dim: #888;
+      --fg-mute: #555;
+    }
+
+    html, body { background: var(--bg); }
+
     body {
       font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
-      background: #08090a;
-      color: #ededef;
+      color: var(--fg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 背景：左上极淡绿光晕 + 网格点阵 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 500px 400px at 30% 10%, rgba(110, 218, 120, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 80% 90%, rgba(167, 139, 250, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
       background-image:
-        radial-gradient(ellipse 700px 500px at 50% 0%, rgba(110, 218, 120, 0.08) 0%, transparent 65%);
+        radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .container {
+      position: relative;
+      z-index: 1;
       max-width: 640px;
       width: 100%;
-      padding: 3.5rem 2rem 2rem;
+      padding: 4rem 2rem 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
     }
 
-    /* ---- Hero ---- */
+    /* ===== Hero ===== */
     .hero {
       text-align: center;
-      padding-top: 2.5rem;
+      padding-top: 4rem;
+      width: 100%;
     }
 
-    /* ---- Logo block: 一体化设计 ---- */
-    .logo {
-      font-size: 5.5rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      color: #fff;
-      line-height: 1.05;
-      display: flex;
+    /* 顶部小标：mono 字体 · 标签感 */
+    .eyebrow {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 0;
-      position: relative;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.72rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line-2);
+      border-radius: 99px;
+      background: var(--green-dim);
     }
 
-    .logo-who {
-      display: inline-block;
-      transform: skewX(20deg);
-    }
-
-    .logo-k {
-      display: inline-block;
-      font-size: 1.35em;
-      line-height: 1;
-      padding: 0 0.35em;
-      background: linear-gradient(180deg, #6eda78 0%, #fbbf24 55%, #ff6a6a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .logo-now {
-      display: inline-block;
-      transform: skewX(-20deg);
-      color: #6eda78;
-    }
-
-    .logo-dot {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #6eda78;
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
       border-radius: 50%;
-      top: 0.6em;
-      right: 0.2em;
       animation: pulse-dot 2s ease-in-out infinite;
     }
 
     @keyframes pulse-dot {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.6); }
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
     }
 
-    /* ---- Chinese brand: 与 whoknow 同强度 ---- */
+    /* 主标：单行 whoknow · 不要再花 */
+    .logo {
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--fg);
+      line-height: 1;
+      margin-top: 2rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .logo-who,
+    .logo-now {
+      color: var(--fg);
+    }
+
+    .logo-k {
+      color: var(--green);
+      position: relative;
+      display: inline-block;
+    }
+
+    /* K 顶上一个撇：像"胡闹"的小记号，呼应主调但不抢戏 */
+    .logo-k::before {
+      content: '';
+      position: absolute;
+      top: -0.15em;
+      right: -0.05em;
+      width: 0.4em;
+      height: 0.4em;
+      background: var(--green);
+      border-radius: 50%;
+      opacity: 0.85;
+    }
+
+    /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
     .chinese-brand {
       font-family: 'Noto Sans SC', sans-serif;
-      font-size: 3.2rem;
-      font-weight: 900;
-      color: #fff;
-      margin-top: 0.4rem;
-      line-height: 1.2;
-      display: inline-flex;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg-mute);
+      letter-spacing: 0.4em;
+      margin-right: -0.4em;
+      margin-top: 1.2rem;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.3em;
+      gap: 0.4em;
     }
 
     .chinese-brand .char {
       display: inline-block;
-      transform: skewX(-20deg);
+      color: var(--fg-mute);
     }
 
-    .chinese-brand .char1 { color: #6eda78; }
+    .chinese-brand .char.accent {
+      color: var(--green);
+    }
 
-    /* ---- Tagline ---- */
+    /* 副标：mono 风 · 像 status bar */
     .tagline {
-      margin-top: 1.5rem;
-      font-size: 1rem;
-      color: #666;
-      letter-spacing: 0.02em;
+      margin-top: 2.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.85rem;
+      color: var(--fg-dim);
+      line-height: 1.7;
+      letter-spacing: 0;
     }
 
-    .tagline-sub {
-      font-size: 0.8rem;
-      color: #555;
-      margin-top: 0.4rem;
-      letter-spacing: 0.05em;
-    }
+    .tagline .accent { color: var(--green); }
+    .tagline .dim { color: var(--fg-mute); }
+    .tagline .sep { color: var(--line-2); margin: 0 0.5rem; }
 
-    .tagline-sub .sep {
-      color: #2a2a2a;
-      margin: 0 0.4rem;
-    }
-
-    /* ---- Section header for products ---- */
-    .section-title {
+    /* ===== Section ===== */
+    .section {
       margin-top: 6rem;
+      width: 100%;
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
       font-size: 0.7rem;
-      color: #444;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      align-self: stretch;
+      color: var(--fg-mute);
+      letter-spacing: 0.2em;
       text-align: center;
+      margin-bottom: 1.5rem;
     }
 
-    .section-title::before,
-    .section-title::after {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: #1e1f21;
-      vertical-align: middle;
-      margin: 0 0.7rem;
-    }
+    .section-title .accent { color: var(--green); }
 
-    /* ---- Products ---- */
+    /* ===== Products ===== */
     .products {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.6rem;
       width: 100%;
-      margin-top: 1.5rem;
     }
 
     .product-row {
       display: flex;
       align-items: center;
       gap: 1rem;
-      background: #121314;
-      border: 1px solid #1e1f21;
-      border-radius: 16px;
-      padding: 1.25rem 1.5rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
       text-decoration: none;
       color: inherit;
       transition: all 0.2s ease;
     }
 
     .product-row:hover {
-      border-color: #6eda78;
-      background: #17181a;
-      transform: translateX(4px);
+      border-color: var(--green);
+      background: #111315;
+      transform: translateX(2px);
     }
 
     .product-row .icon {
-      font-size: 1.8rem;
-      width: 48px;
-      text-align: center;
+      font-size: 1.6rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
       flex-shrink: 0;
     }
 
     .product-row .info { flex: 1; min-width: 0; }
     .product-row .name {
       font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
+      font-size: 0.95rem;
+      color: var(--fg);
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
     }
-    .product-row .name .zh { font-family: 'Noto Sans SC', sans-serif; }
-    .product-row .name .en { font-family: 'Inter', sans-serif; color: #555; font-weight: 400; }
-    .product-row .name .sep { color: #333; margin: 0 0.3rem; }
-    .product-row .desc { font-size: 0.8rem; color: #666; margin-top: 0.15rem; }
-    .product-row .badge { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 99px; flex-shrink: 0; }
-    .badge.dev { background: #1a2e1a; color: #6eda78; }
-    .badge.design { background: #1e1a2e; color: #a78bfa; }
-    .badge.idea { background: #2e1e1a; color: #fbbf24; }
+    .product-row .name .en {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      color: var(--fg-mute);
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .product-row .desc { font-size: 0.78rem; color: var(--fg-mute); margin-top: 0.2rem; }
+    .product-row .badge {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .badge.dev { background: var(--green-dim); color: var(--green); border: 1px solid rgba(110, 218, 120, 0.3); }
+    .badge.design { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
+    .badge.idea { background: rgba(251, 191, 36, 0.08); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
 
-    /* ---- Domain list: 3+3 居中 ---- */
+    /* ===== Domains ===== */
     .domains {
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
       justify-content: center;
-      margin-top: 3rem;
+      margin-top: 4rem;
       max-width: 420px;
     }
 
     .domains a {
-      color: #444;
+      color: var(--fg-mute);
       text-decoration: none;
-      font-size: 0.72rem;
-      padding: 0.25rem 0.7rem;
-      border: 1px solid #1e1f21;
-      border-radius: 99px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
       transition: all 0.15s;
     }
 
-    .domains a:hover { color: #6eda78; border-color: #6eda78; }
+    .domains a:hover { color: var(--green); border-color: var(--green); }
 
-    /* ---- Footer ---- */
+    /* ===== Footer ===== */
     .footer {
       margin-top: auto;
-      padding: 2.5rem 0 1.5rem;
-      font-size: 0.75rem;
-      color: #444;
+      padding: 3rem 0 1.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      color: var(--fg-mute);
       text-align: center;
+      letter-spacing: 0.05em;
     }
 
+    .footer .accent { color: var(--green); }
+
+    /* ===== Mobile ===== */
     @media (max-width: 480px) {
-      .container { padding: 2rem 1.25rem; }
-      .hero { padding-top: 2.5rem; }
-      .logo { font-size: 3.2rem; }
-      .chinese-brand { font-size: 2rem; letter-spacing: 0.4em; margin-right: -0.4em; }
-      .product-row { padding: 1rem 1.25rem; }
-      .section-title { margin-top: 3.5rem; }
+      .container { padding: 2.5rem 1.25rem 1.5rem; }
+      .hero { padding-top: 2rem; }
+      .logo { font-size: 3.5rem; }
+      .chinese-brand { font-size: 1.1rem; }
+      .product-row { padding: 0.9rem 1rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <!-- ===== HERO ===== -->
     <div class="hero">
+
+      <!-- Eyebrow: 顶部状态条 -->
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span>CHUNAO.UNIVERSE / v0.1</span>
+      </div>
+
+      <!-- 主标：纯文字，单一绿色锚点 K -->
       <div class="logo">
-        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span><span class="logo-dot"></span>
+        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span>
       </div>
+
+      <!-- 胡闹：小一号，灰绿色，作为副标 -->
       <div class="chinese-brand">
-        <span class="char char1">胡</span><span class="char char2">闹</span>
+        <span class="char accent">胡</span><span class="char">闹</span>
       </div>
-      <div class="tagline">谁知道这个宇宙里会发生什么？</div>
-      <div class="tagline-sub">
-        Who knows?<span class="sep">·</span>家人们谁懂啊
+
+      <!-- Tagline: mono 风，像系统输出 -->
+      <div class="tagline">
+        <span class="dim">//</span> <span class="accent">谁知道这个宇宙里</span>会发生什么？<br>
+        <span class="dim">$</span> Who knows<span class="sep">·</span>家人们谁懂啊
+      </div>
+
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="section">
+      <div class="section-title">
+        <span class="accent">$</span> ls ./胡闹三件套
+      </div>
+
+      <div class="products">
+        <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
+          <div class="icon">🍜</div>
+          <div class="info">
+            <div class="name">胡闹外卖 <span class="en">/waimai</span></div>
+            <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
+          </div>
+          <span class="badge dev">[dev]</span>
+        </a>
+
+        <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
+          <div class="icon">🛒</div>
+          <div class="info">
+            <div class="name">胡闹导购 <span class="en">/mart</span></div>
+            <div class="desc">反骨导购阻止你 checkout</div>
+          </div>
+          <span class="badge design">[design]</span>
+        </a>
+
+        <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
+          <div class="icon">🧠</div>
+          <div class="info">
+            <div class="name">胡闹大脑 <span class="en">/brain</span></div>
+            <div class="desc">控制中心 · AI 追热点推段子</div>
+          </div>
+          <span class="badge idea">[idea]</span>
+        </a>
       </div>
     </div>
 
-    <div class="section-title">胡闹三件套</div>
-
-    <div class="products">
-      <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
-        <div class="icon">🍜</div>
-        <div class="info">
-          <div class="name"><span class="zh">胡闹外卖</span><span class="sep">·</span><span class="en">waimai</span></div>
-          <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
-        </div>
-        <span class="badge dev">🎬 Day 6</span>
-      </a>
-
-      <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
-        <div class="icon">🛒</div>
-        <div class="info">
-          <div class="name"><span class="zh">胡闹导购</span><span class="sep">·</span><span class="en">mart</span></div>
-          <div class="desc">反骨导购阻止你 checkout</div>
-        </div>
-        <span class="badge design">💡 设计</span>
-      </a>
-
-      <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
-        <div class="icon">🧠</div>
-        <div class="info">
-          <div class="name"><span class="zh">胡闹大脑</span><span class="sep">·</span><span class="en">brain</span></div>
-          <div class="desc">控制中心 · AI 追热点推段子</div>
-        </div>
-        <span class="badge idea">🧪 规划</span>
-      </a>
-    </div>
-
+    <!-- ===== DOMAINS ===== -->
     <div class="domains">
       <a href="https://whoknow.me" target="_blank">whoknow.me</a>
       <a href="https://whoknow.vip" target="_blank">whoknow.vip</a>
@@ -299,9 +386,11 @@
       <a href="https://whonow.cc" target="_blank">whonow.cc</a>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <div class="footer">
-      whoknow — 谁都不知道接下来会发生什么
+      <span class="accent">●</span> whoknow — 谁都不知道接下来会发生什么 <span class="accent">●</span>
     </div>
+
   </div>
 </body>
 </html>
