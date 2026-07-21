@@ -1,0 +1,287 @@
+[
+  {
+    "id": "s001",
+    "name": "老王烧烤",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=laowang-bbq",
+    "type": "烧烤",
+    "rating": 4.5,
+    "monthlySales": 1024,
+    "deliveryFee": 3,
+    "deliveryTime": 30,
+    "distance": 1.2,
+    "bossPersonality": "angry",
+    "bossMottos": [
+      "催什么催！锅还没热呢！",
+      "这单做不做？不做我下班了",
+      "吃辣是吧？辣死你我可不管",
+      "你点得也太多了，我一个人做得完吗",
+      "评一星试试？我知道你住哪"
+    ]
+  },
+  {
+    "id": "s002",
+    "name": "暴躁麻辣烫",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=angry-mlt",
+    "type": "麻辣烫",
+    "rating": 4.2,
+    "monthlySales": 856,
+    "deliveryFee": 2,
+    "deliveryTime": 25,
+    "distance": 0.8,
+    "bossPersonality": "angry",
+    "bossMottos": [
+      "加辣？你不要命了？",
+      "叫什么外卖，自己来不好吗",
+      "备注少加辣，少加是多少？我会加到你哭",
+      "没有不辣的，不辣你去吃沙拉",
+      "下单了就别反悔，反悔你出门右转超市"
+    ]
+  },
+  {
+    "id": "s003",
+    "name": "火辣川菜馆",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=hot-sichuan",
+    "type": "川菜",
+    "rating": 4.7,
+    "monthlySales": 2103,
+    "deliveryFee": 4,
+    "deliveryTime": 35,
+    "distance": 1.8,
+    "bossPersonality": "angry",
+    "bossMottos": [
+      "辣到你哭是我的职业理想",
+      "催单？我炒菜的手不会停但嘴可以",
+      "好评可以，但差评我截图发群",
+      "你说微辣，我听成变态辣，对不起",
+      "今天心情不好，菜可能更辣"
+    ]
+  },
+  {
+    "id": "s004",
+    "name": "张阿姨厨房",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=aunt-zhang",
+    "type": "家常菜",
+    "rating": 4.9,
+    "monthlySales": 3201,
+    "deliveryFee": 2,
+    "deliveryTime": 28,
+    "distance": 0.5,
+    "bossPersonality": "gentle",
+    "bossMottos": [
+      "好的亲，马上就好，辛苦等待哦~",
+      "天气凉了，汤要多喝哦宝贝~",
+      "你上次点的菜阿姨记得，这次要不要换一个~",
+      "多吃点，太瘦了不好看~",
+      "阿姨给你多加了一勺料，不用谢~"
+    ]
+  },
+  {
+    "id": "s005",
+    "name": "暖心便当铺",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=warm-bento",
+    "type": "便当",
+    "rating": 4.8,
+    "monthlySales": 1567,
+    "deliveryFee": 0,
+    "deliveryTime": 22,
+    "distance": 0.3,
+    "bossPersonality": "gentle",
+    "bossMottos": [
+      "每一份便当都是我认真做的哦~",
+      "吃饱了记得喝水~",
+      "今天努力工作了吗？吃好点奖励自己~",
+      "配料可以加量，不用加钱~",
+      "希望你吃到这份便当的时候心情好好的~"
+    ]
+  },
+  {
+    "id": "s006",
+    "name": "好粥道",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=good-porridge",
+    "type": "粥品",
+    "rating": 4.6,
+    "monthlySales": 987,
+    "deliveryFee": 3,
+    "deliveryTime": 20,
+    "distance": 0.9,
+    "bossPersonality": "gentle",
+    "bossMottos": [
+      "粥要趁热喝哦，凉了没那么香~",
+      "加了枸杞，对眼睛好，不客气~",
+      "生病了吗？多喝粥会好的~",
+      "今天的粥熬了两个小时，香~",
+      "每天喝粥的人都很健康哦~"
+    ]
+  },
+  {
+    "id": "s007",
+    "name": "神秘寿司研究所",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=mystery-sushi",
+    "type": "寿司",
+    "rating": 4.3,
+    "monthlySales": 432,
+    "deliveryFee": 5,
+    "deliveryTime": 40,
+    "distance": 2.1,
+    "bossPersonality": "weird",
+    "bossMottos": [
+      "你点的菜......我研究一下",
+      "今天的食材来自未知来源，放心吃",
+      "这道菜的秘方是我在梦里悟出来的",
+      "吃之前请默念三遍，味道会更好",
+      "不好吃？那是你的味蕾还没进化完"
+    ]
+  },
+  {
+    "id": "s008",
+    "name": "实验料理工坊",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=lab-cuisine",
+    "type": "创意料理",
+    "rating": 3.9,
+    "monthlySales": 201,
+    "deliveryFee": 6,
+    "deliveryTime": 50,
+    "distance": 3.0,
+    "bossPersonality": "weird",
+    "bossMottos": [
+      "这道菜是我昨晚做梦想出来的",
+      "食材组合是按照星座搭配的，你是什么座？",
+      "今天加了一种神秘香料，你猜是什么",
+      "有些菜只有第六感强的人才能体会到真正的味道",
+      "吃完如果感觉不对劲属于正常现象"
+    ]
+  },
+  {
+    "id": "s009",
+    "name": "小黑汉堡",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=black-burger",
+    "type": "汉堡",
+    "rating": 4.1,
+    "monthlySales": 678,
+    "deliveryFee": 4,
+    "deliveryTime": 32,
+    "distance": 1.5,
+    "bossPersonality": "weird",
+    "bossMottos": [
+      "汉堡是黑色的不是因为糊了，是艺术",
+      "秘制酱料来自我外婆外婆的外婆",
+      "吃汉堡要配音乐，建议播放金属乐",
+      "今天心情很复杂，所以菜量也很复杂",
+      "不好吃算我输，但我还没输过"
+    ]
+  },
+  {
+    "id": "s010",
+    "name": "老陈黄焖鸡",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=old-chen-chicken",
+    "type": "黄焖鸡",
+    "rating": 4.0,
+    "monthlySales": 1234,
+    "deliveryFee": 2,
+    "deliveryTime": 45,
+    "distance": 1.1,
+    "bossPersonality": "lazy",
+    "bossMottos": [
+      "啊？现在做啊？......行吧",
+      "最近腰不好，做菜可能慢一点",
+      "你催我我就更慢，配合一下",
+      "今天有点困，做着做着可能睡着",
+      "差不多得了，不用那么精确"
+    ]
+  },
+  {
+    "id": "s011",
+    "name": "拖延奶茶铺",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=lazy-milk-tea",
+    "type": "奶茶",
+    "rating": 3.8,
+    "monthlySales": 543,
+    "deliveryFee": 3,
+    "deliveryTime": 60,
+    "distance": 0.7,
+    "bossPersonality": "lazy",
+    "bossMottos": [
+      "好的......一会儿做",
+      "奶茶要慢慢做才好喝，你急什么",
+      "今天有点事，单子先放着",
+      "做了一半，有点累，先歇一下",
+      "你下单了我知道，我只是还没开始"
+    ]
+  },
+  {
+    "id": "s012",
+    "name": "不想动烧烤摊",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=lazy-bbq",
+    "type": "烧烤",
+    "rating": 3.5,
+    "monthlySales": 321,
+    "deliveryFee": 5,
+    "deliveryTime": 55,
+    "distance": 2.3,
+    "bossPersonality": "lazy",
+    "bossMottos": [
+      "烤串要慢工出细活，别急",
+      "炭火还没旺呢，等会儿",
+      "这个价格还要多快？",
+      "我昨天睡太晚了，今天状态一般",
+      "烤一半，先坐一下"
+    ]
+  },
+  {
+    "id": "s013",
+    "name": "孔子饺子馆",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=confucius-dumpling",
+    "type": "饺子",
+    "rating": 4.8,
+    "monthlySales": 876,
+    "deliveryFee": 3,
+    "deliveryTime": 33,
+    "distance": 1.4,
+    "bossPersonality": "philosophical",
+    "bossMottos": [
+      "年轻人，你点的不是饺子，是人生",
+      "每一个饺子里都包着一个道理",
+      "吃饺子要细嚼慢咽，人生亦如此",
+      "饺子的褶子代表着人生的起伏",
+      "吃完这碗饺子，你会顿悟一些东西"
+    ]
+  },
+  {
+    "id": "s014",
+    "name": "禅意寿司",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=zen-sushi",
+    "type": "寿司",
+    "rating": 4.6,
+    "monthlySales": 654,
+    "deliveryFee": 4,
+    "deliveryTime": 38,
+    "distance": 1.7,
+    "bossPersonality": "philosophical",
+    "bossMottos": [
+      "寿司之道，即是人生之道",
+      "每一口都是当下，不要想太多",
+      "你来点餐，是缘分",
+      "米饭和鱼的结合，如同你与这个世界",
+      "吃完寿司，烦恼会少三成"
+    ]
+  },
+  {
+    "id": "s015",
+    "name": "诗人豆浆铺",
+    "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=poet-soymilk",
+    "type": "早餐",
+    "rating": 4.4,
+    "monthlySales": 432,
+    "deliveryFee": 1,
+    "deliveryTime": 18,
+    "distance": 0.4,
+    "bossPersonality": "philosophical",
+    "bossMottos": [
+      "喝下这杯豆浆，你将获得片刻宁静",
+      "早餐是一天的序章，要用心写",
+      "豆子经历了磨碎才能成浆，人生亦然",
+      "油条和豆浆，分开是两种食物，在一起是哲学",
+      "一杯豆浆，治愈一个早晨"
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import type { Order } from '@/types'
+
+const STORAGE_KEY = 'chaos_orders'
+
+function loadOrders(): Order[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function saveOrders(orders: Order[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(orders))
+}
+
+export const useOrderStore = defineStore('order', () => {
+  const orders = ref<Order[]>(loadOrders())
+  const currentOrderId = ref<string | null>(null)
+
+  const currentOrder = () =>
+    orders.value.find(o => o.id === currentOrderId.value) || null
+
+  function createOrder(order: Order) {
+    orders.value.unshift(order)
+    currentOrderId.value = order.id
+    saveOrders(orders.value)
+  }
+
+  function updateOrderStatus(orderId: string, status: Order['status'], npcQuote?: string) {
+    const order = orders.value.find(o => o.id === orderId)
+    if (!order) return
+    order.status = status
+    order.timeline.push({
+      time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+      action: statusLabel(status),
+      npcQuote,
+    })
+    saveOrders(orders.value)
+  }
+
+  function getOrderById(id: string) {
+    return orders.value.find(o => o.id === id) || null
+  }
+
+  function assignRider(orderId: string, riderId: string) {
+    const order = orders.value.find(o => o.id === orderId)
+    if (!order) return
+    order.riderId = riderId
+    saveOrders(orders.value)
+  }
+
+  function addReview(orderId: string, review: import('@/types').Review) {
+    const order = orders.value.find(o => o.id === orderId)
+    if (!order) return
+    order.review = review
+    saveOrders(orders.value)
+  }
+
+  return { orders, currentOrderId, currentOrder, createOrder, updateOrderStatus, getOrderById, assignRider, addReview }
+})
+
+function statusLabel(status: Order['status']): string {
+  const map: Record<Order['status'], string> = {
+    pending: '等待商家接单',
+    accepted: '商家已接单',
+    cooking: '正在出餐',
+    delivering: '骑手配送中',
+    completed: '已送达',
+    boss_complaining: '老板在叨叨',
+    rider_lost: '骑手迷路了',
+  }
+  return map[status] || status
+}
