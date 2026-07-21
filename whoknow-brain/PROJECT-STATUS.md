@@ -52,8 +52,11 @@ whoknow-brain/
 
 ## 📋 待办
 
-- [ ] 体系架构完整文档
-- [ ] 产品配置 JSON 格式定义
-- [ ] 采集脚本设计
-- [ ] AI 引擎接口设计
-- [ ] 分发机制设计
+- [x] 产品配置 JSON 格式定义 → `docs/api-spec.md`
+- [x] AI 引擎接口设计 → `docs/api-spec.md`
+- [x] 分发机制设计 → `docs/api-spec.md`
+- [x] 降级策略设计 → `docs/api-spec.md`
+- [ ] 采集器脚本开发
+- [ ] LLM prompt 模板设计
+- [ ] 前端接入 brain 配置拉取
+- [ ] 部署方案（GitHub Actions cron）
