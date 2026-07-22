@@ -563,6 +563,13 @@
       border: 1px solid var(--line-2);
     }
 
+    .badge-live {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
 /* ===== Footer ===== */
     .footer {
       margin-top: auto;
@@ -747,7 +754,7 @@
     <!-- ===== PRODUCTS ===== -->
     <div class="section">
       <div class="products">
-        <div class="review-card" onclick="alert('🍜 胡闹外卖开发中，即将上线！');">
+        <div class="review-card" onclick="window.location.href='/waimai'" style="cursor:pointer;">
           <div class="review-text">骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣</div>
           <div class="review-meta">
             <div class="author">
@@ -759,7 +766,7 @@
           <div class="review-product">
             <span class="tag">🍜 胡闹外卖</span>
             <span>/waimai</span>
-            <span style="margin-left: auto;">[开发中]</span>
+            <span class="badge-live">🟢 去点一单</span>
           </div>
         </div>
 
