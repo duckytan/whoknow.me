@@ -77,6 +77,19 @@ const etaMinutes = computed(() => {
 const speedOptions = DEMO_SPEED_OPTIONS
 const currentSpeed = ref(getDemoSpeed())
 
+// V12 · demo 倍速首次进站提示（v12 P0-2 · 防误解）
+const speedHintShown = ref(false)
+function maybeShowSpeedHint() {
+  if (speedHintShown.value) return
+  if (currentSpeed.value === 1) return // 1× 是真实，不提示
+  speedHintShown.value = true
+  showToast({
+    message: `demo 默认 ×${currentSpeed.value} 倍速，1 分钟看完完整剧情。可点下方手动调整。`,
+    duration: 3500,
+    type: 'success',
+  })
+}
+
 function changeSpeed(speed: number) {
   currentSpeed.value = speed
   setDemoSpeed(speed)
@@ -185,6 +198,12 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
   })
   showReviewModal.value = false
 }
+
+// V12 P0-2 · demo 倍速首次提示：用户进订单页看到「时间跳飞快」会以为 bug
+onMounted(() => {
+  // 200ms 后弹出，避免与页面转场动画冲突
+  setTimeout(maybeShowSpeedHint, 200)
+})
 </script>
 
 <template>
