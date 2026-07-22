@@ -1,0 +1,296 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "updatedAt": "2026-07-22",
+    "purpose": "胡闹大脑控制参数 · 所有可调参数集中管理",
+    "editPolicy": "改这里 = 改游戏性 · 无需改代码",
+    "schema": {
+      "schemaVersion": 1,
+      "validateWith": "src/utils/config.ts · loadConfig()",
+      "migrationNote": "胡闹大脑接入时，schemaVersion 升 2，加 chaosBrain 字段"
+    }
+  },
+
+  "_brainHooks": {
+    "_comment": "胡闹大脑接入点预留（v2 启用）",
+    "enabled": false,
+    "endpoint": "/api/chaos-brain",
+    "fallbackStrategy": "static-then-cache",
+    "refreshIntervalSec": 300,
+    "overrideKeys": [
+      "BOSS_SPEED_MULT",
+      "ADDRESS_TIME_OFFSET",
+      "REMARK_TIME_OFFSET",
+      "LIFESTYLE_MAP"
+    ]
+  },
+
+  "cuisineCookTime": {
+    "_comment": "菜系 → 出餐时间范围（秒）",
+    "_schema": "Record<string, [minSeconds, maxSeconds]>",
+    "烧烤": [480, 900],
+    "烤串": [480, 900],
+    "烤肉": [600, 900],
+    "烤鱼": [720, 1080],
+    "烤海鲜": [600, 1080],
+    "烤蔬菜": [300, 480],
+    "麻辣烫": [300, 480],
+    "香锅": [360, 600],
+    "川菜": [480, 720],
+    "小炒": [300, 480],
+    "小炒鸡": [360, 540],
+    "家常菜": [360, 600],
+    "便当": [180, 300],
+    "盖浇饭": [180, 360],
+    "套餐": [240, 420],
+    "粥": [600, 900],
+    "寿司": [480, 720],
+    "刺身": [300, 480],
+    "卷物": [300, 480],
+    "饭团": [180, 300],
+    "料理": [600, 1200],
+    "拉面": [420, 720],
+    "拌面": [300, 480],
+    "面食": [360, 600],
+    "饺子": [600, 900],
+    "火锅": [600, 1200],
+    "汉堡": [300, 480],
+    "披萨": [600, 900],
+    "三明治": [180, 300],
+    "黄焖鸡": [720, 1080],
+    "奶茶": [120, 240],
+    "茶饮": [120, 240],
+    "咖啡": [120, 240],
+    "豆浆": [120, 180],
+    "热饮": [120, 240],
+    "冷饮": [60, 180],
+    "甜品": [180, 360],
+    "点心": [300, 600],
+    "炸鸡": [480, 720],
+    "炸物": [360, 600],
+    "卤味": [300, 600],
+    "凉拌": [180, 300],
+    "汤": [600, 900],
+    "煲仔饭": [720, 1080],
+    "炖肉": [900, 1500],
+    "咖喱": [480, 720],
+    "米粉": [300, 480],
+    "硬菜": [600, 1200],
+    "主食": [300, 600],
+    "特色": [360, 720],
+    "轻食": [180, 360],
+    "素菜": [240, 480],
+    "素食": [360, 600],
+    "零食": [60, 180],
+    "丸子": [300, 480],
+    "小食": [180, 360],
+    "小吃": [240, 480],
+    "海鲜饭": [600, 900],
+    "_default": [300, 600]
+  },
+
+  "cuisineEmoji": {
+    "_comment": "菜系 → 默认 emoji（chip 显示用）",
+    "_schema": "Record<string, string>",
+    "烧烤": "🍢",
+    "烤串": "🍢",
+    "烤肉": "🥩",
+    "烤鱼": "🐟",
+    "烤海鲜": "🦐",
+    "烤蔬菜": "🥬",
+    "麻辣烫": "🌶️",
+    "香锅": "🍲",
+    "川菜": "🌶️",
+    "小炒": "🍳",
+    "小炒鸡": "🍗",
+    "家常菜": "🥘",
+    "便当": "🍱",
+    "盖浇饭": "🍚",
+    "套餐": "🍱",
+    "粥": "🥣",
+    "寿司": "🍣",
+    "刺身": "🍣",
+    "卷物": "🍙",
+    "饭团": "🍙",
+    "料理": "🍱",
+    "拉面": "🍜",
+    "拌面": "🍝",
+    "面食": "🍜",
+    "饺子": "🥟",
+    "火锅": "🍲",
+    "汉堡": "🍔",
+    "披萨": "🍕",
+    "三明治": "🥪",
+    "黄焖鸡": "🍗",
+    "奶茶": "🧋",
+    "茶饮": "🍵",
+    "咖啡": "☕",
+    "豆浆": "🥛",
+    "热饮": "☕",
+    "冷饮": "🧊",
+    "甜品": "🍰",
+    "点心": "🍮",
+    "炸鸡": "🍗",
+    "炸物": "🍤",
+    "卤味": "🥚",
+    "凉拌": "🥗",
+    "汤": "🍲",
+    "煲仔饭": "🍚",
+    "炖肉": "🍖",
+    "咖喱": "🍛",
+    "米粉": "🍜",
+    "硬菜": "🥩",
+    "主食": "🍚",
+    "特色": "⭐",
+    "轻食": "🥗",
+    "素菜": "🥬",
+    "素食": "🥗",
+    "零食": "🍪",
+    "丸子": "🍡",
+    "小食": "🥟",
+    "小吃": "🥠",
+    "海鲜饭": "🍤",
+    "_default": "🍳"
+  },
+
+  "riderSpeedMult": {
+    "_comment": "骑手 → 配送速度倍率（<1 = 快, >1 = 慢）",
+    "_schema": "Record<riderId, number>",
+    "r001": 0.7,
+    "r002": 1.5,
+    "r003": 1.2,
+    "r004": 0.85,
+    "r005": 1.0
+  },
+
+  "addressTimeOffset": {
+    "_comment": "地址 → 时间偏移（秒）",
+    "_schema": "Record<addressName, number>",
+    "家庭": 0,
+    "学校": 30,
+    "公司": 60,
+    "公厕": 180,
+    "百慕大": 600,
+    "ICU": 300
+  },
+
+  "addressMeta": {
+    "_comment": "地址 → chip 显示文案 + emoji",
+    "_schema": "Record<addressName, { label: string, emoji: string }>",
+    "家庭": { "label": "家", "emoji": "🏠" },
+    "学校": { "label": "上楼配送", "emoji": "🎒" },
+    "公司": { "label": "前台登记", "emoji": "💼" },
+    "公厕": { "label": "骑手犹豫", "emoji": "🚽" },
+    "百慕大": { "label": "跨洋配送", "emoji": "🗺️" },
+    "ICU": { "label": "医院门禁", "emoji": "🏥" }
+  },
+
+  "remarkTimeOffset": {
+    "_comment": "备注 → 时间偏移（秒，可负）",
+    "_schema": "Record<remarkText, number>",
+    "多放辣": 30,
+    "少放辣": 0,
+    "不要香菜": 10,
+    "别骂了": -20,
+    "表演才艺": 180,
+    "老板辛苦了": -30
+  },
+
+  "remarkMeta": {
+    "_comment": "备注 → chip 显示文案 + emoji",
+    "_schema": "Record<remarkText, { label: string, emoji: string }>",
+    "多放辣": { "label": "多备辣椒", "emoji": "🌶️" },
+    "少放辣": { "label": "少辣", "emoji": "🌶️" },
+    "不要香菜": { "label": "挑选香菜", "emoji": "🌿" },
+    "别骂了": { "label": "老板收敛", "emoji": "🙏" },
+    "表演才艺": { "label": "老板表演才艺", "emoji": "🎤" },
+    "老板辛苦了": { "label": "老板开心", "emoji": "😊" }
+  },
+
+  "bossSpeedMult": {
+    "_comment": "老板性格 → 出餐速度倍率",
+    "_schema": "Record<personality, number>",
+    "angry": 1.2,
+    "lazy": 1.5,
+    "gentle": 0.9,
+    "weird": 1.5,
+    "philosophical": 1.3,
+    "_legacy": {
+      "_comment": "旧版兼容性，新游戏不用",
+      "zen": 0.9,
+      "cool": 1.0,
+      "warm": 0.95,
+      "silly": 1.1,
+      "mystery": 1.0,
+      "chaotic": 1.3
+    }
+  },
+
+  "bossLabels": {
+    "_comment": "老板性格 → 中文标签",
+    "_schema": "Record<personality, string>",
+    "angry": "暴躁",
+    "gentle": "温柔",
+    "lazy": "拖延",
+    "weird": "诡异",
+    "philosophical": "哲学"
+  },
+
+  "bossEmoji": {
+    "_comment": "老板性格 → chip emoji（>1 = 慢/烦, <1 = 快/开心）",
+    "_schema": "Record<personality, string>",
+    "angry": "😤",
+    "gentle": "😊",
+    "lazy": "😴",
+    "weird": "🤪",
+    "philosophical": "🤔"
+  },
+
+  "demoSpeedOptions": {
+    "_comment": "demo 倍速选项",
+    "_schema": "Array<{ label: string, value: number, desc: string }>",
+    "options": [
+      { "label": "×1 真实", "value": 1, "desc": "完全真实时间（30-45 分钟）" },
+      { "label": "×5 快速", "value": 5, "desc": "压缩到 6-9 分钟" },
+      { "label": "×30 demo", "value": 30, "desc": "1 分钟左右看完剧情" },
+      { "label": "×100 跳过", "value": 100, "desc": "10 秒走完一单" }
+    ],
+    "defaultValue": 30
+  },
+
+  "lifestyleMap": {
+    "_comment": "真实秒数 → 生活映射文案（戏剧反差）",
+    "_schema": "Array<{ maxMinutes: number, text: string }>",
+    "brackets": [
+      { "maxMinutes": 3, "text": "☕ 一杯咖啡的时间" },
+      { "maxMinutes": 8, "text": "📱 刷个短视频" },
+      { "maxMinutes": 15, "text": "🍜 一顿饭" },
+      { "maxMinutes": 25, "text": "📺 追一集剧" },
+      { "maxMinutes": 40, "text": "🎬 看场电影" },
+      { "maxMinutes": 60, "text": "🛀 泡个澡" },
+      { "maxMinutes": 120, "text": "🛌 睡个午觉" }
+    ],
+    "defaultText": "🌙 半部《甄嬛传》"
+  },
+
+  "factorChipStyle": {
+    "_comment": "factor chip 配色（快/慢/中）",
+    "fast": { "bg": "#e8f5e9", "fg": "#2e7d32", "label": "↑ 快" },
+    "slow": { "bg": "#fff3e0", "fg": "#ef6c00", "label": "↓ 慢" },
+    "neutral": { "bg": "#f5f5f5", "fg": "#616161", "label": "· 中" }
+  },
+
+  "riderChipEmoji": {
+    "_comment": "骑手 chip emoji（按倍率决定快/慢）",
+    "fast": "⚡",
+    "slow": "🐢",
+    "neutral": "🚴"
+  },
+
+  "_debugHooks": {
+    "_comment": "调试时改这里快速试值（不改代码）",
+    "forceAllMultiplier": 1.0,
+    "forceDelivery": null,
+    "forceCooking": null
+  }
+}

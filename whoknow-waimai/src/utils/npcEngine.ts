@@ -2,15 +2,13 @@ import { useOrderStore } from '@/store/order'
 import { useShopStore } from '@/store/shop'
 import type { Order } from '@/types'
 import quotesData from '@/data/quotes.json'
+import ridersData from '@/data/riders.json'
 import { calcOrderTime, applyDemoSpeed, getTimeOffsetExplanation, getDemoSpeed, getDemoLifestyle } from './cookingTime'
 
-// ============ 骑手信息 ============
-const RIDER_INFO: Record<string, { name: string; avatar: string }> = {
-  r001: { name: '雷速飞', avatar: '⚡' },
-  r002: { name: '李慢慢', avatar: '🐢' },
-  r003: { name: '张迷路', avatar: '🗺️' },
-  r004: { name: '王大力', avatar: '💪' },
-  r005: { name: '赵飘飘', avatar: '🌸' },
+// ============ 骑手信息（从 riders.json 读取）============
+const RIDER_INFO: Record<string, { name: string; avatar: string }> = {}
+for (const r of ridersData as any[]) {
+  RIDER_INFO[r.id] = { name: r.name, avatar: r.avatar }
 }
 
 // ============ 话术变量填充 ============
