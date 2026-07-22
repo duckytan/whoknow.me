@@ -33,6 +33,8 @@ function fillVars(template: string, vars: QuoteVars): string {
     .replace(/\{userName\}/g, vars.userName || '顾客')
     .replace(/\{orderNum\}/g, vars.orderNum || String(Math.floor(Math.random() * 20) + 3))
     .replace(/\{eventCount\}/g, vars.eventCount || '5')
+    .replace(/\{address\}/g, vars.address || '你家')
+    .replace(/\{remark\}/g, vars.remark || '少废话')
 }
 
 function pickRandom<T>(arr: T[]): T {
