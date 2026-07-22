@@ -5,6 +5,7 @@ import { VantResolver } from '@vant/auto-import-resolver'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
+  base: '/waimai/',
   plugins: [
     vue(),
     Components({

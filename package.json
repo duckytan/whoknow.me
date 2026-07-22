@@ -1,0 +1,10 @@
+{
+  "name": "whoknow-me-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build:root && npm run build:waimai",
+    "build:root": "mkdir -p dist && cp index.html dist/",
+    "build:waimai": "cd whoknow-waimai && npm install && npm run build && cd .. && mkdir -p dist/waimai && cp -r whoknow-waimai/dist/* dist/waimai/"
+  }
+}
