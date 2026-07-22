@@ -35,7 +35,7 @@ export const useOrderStore = defineStore('order', () => {
     if (!order) return
     order.status = status
     order.timeline.push({
-      time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+      time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       action: statusLabel(status),
       npcQuote,
     })

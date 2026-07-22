@@ -62,6 +62,49 @@ const showMap = computed(() => {
   return s === 'delivering' || s === 'rider_lost' || s === 'completed'
 })
 
+// ============ 倒计时 ============
+const countdownSeconds = ref(0)
+let countdownTimer: ReturnType<typeof setInterval> | null = null
+
+function updateCountdown() {
+  if (!order.value) {
+    countdownSeconds.value = 0
+    return
+  }
+  const stageTimes = (window as any).__chaosStageTimes?.[order.value.id]
+  if (!stageTimes) {
+    countdownSeconds.value = 0
+    return
+  }
+  const now = Date.now()
+  const nextStage = stageTimes.stages.find((t: number) => t > now)
+  if (nextStage) {
+    countdownSeconds.value = Math.ceil((nextStage - now) / 1000)
+  } else {
+    countdownSeconds.value = 0
+  }
+}
+
+watch(
+  () => order.value?.id,
+  () => {
+    countdownSeconds.value = 0
+    if (countdownTimer) clearInterval(countdownTimer)
+    if (!isCompleted.value) {
+      countdownTimer = setInterval(updateCountdown, 500)
+    }
+  },
+  { immediate: true }
+)
+
+watch(isCompleted, (v) => {
+  if (v && countdownTimer) {
+    clearInterval(countdownTimer)
+    countdownTimer = null
+    countdownSeconds.value = 0
+  }
+})
+
 // ============ 彩蛋卡片 ============
 const showEasterEgg = ref(false)
 const easterEggText = ref('')
@@ -197,6 +240,9 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
         <div v-if="!isCompleted" class="loading-hint">
           <van-loading size="16" color="#ff6b35" />
           <span>NPC 正在剧情中，请等待下一幕...</span>
+          <span v-if="countdownSeconds > 0" class="countdown">
+            ⏱️ 下一幕还有 {{ countdownSeconds }} 秒
+          </span>
         </div>
       </div>
 
@@ -358,6 +404,23 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
   font-size: 12px;
   color: #aaa;
   padding: 8px 0;
+  flex-wrap: wrap;
+}
+
+.countdown {
+  background: linear-gradient(90deg, #ff6b35, #ff9a3c);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 11px;
+  margin-left: 4px;
+  animation: pulse-countdown 2s ease-in-out infinite;
+}
+
+@keyframes pulse-countdown {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 // 彩蛋卡片
