@@ -16,15 +16,23 @@ const shop = computed(() => shopStore.currentShop)
 const remark = ref('')
 const submitting = ref(false)
 
-// 假地址列表（随机选一个让它有点戏）
-const addresses = [
-  '宇宙路 404 号，迷失公寓 3 楼，找不到门牌那个',
-  '幸福小区 B 栋 2102，按门铃没人应就敲门',
-  '城北大道 88 号，在麦当劳旁边那个没有招牌的楼',
-  '学府路 1 号研究生宿舍，门卫很凶，麻烦放门口',
-  '天河路 999 号，金碧辉煌大厦 32F，开电梯要刷卡',
+const ADDRESS_OPTIONS = [
+  { value: '家庭', icon: '🏠', text: '温馨小家' },
+  { value: '学校', icon: '🎒', text: '学生宿舍' },
+  { value: '公司', icon: '💼', text: '公司楼下' },
+  { value: '公厕', icon: '🚽', text: '公共厕所' },
+  { value: '百慕大', icon: '🗺️', text: '百慕大三角' },
+  { value: 'ICU', icon: '🏥', text: 'ICU 病房' },
 ]
-const address = ref(addresses[Math.floor(Math.random() * addresses.length)])
+const REMARK_OPTIONS = [
+  { value: '多放辣', text: '🌶️ 多放辣' },
+  { value: '少放辣', text: '🥒 少放辣' },
+  { value: '不要香菜', text: '🚫 不要香菜' },
+  { value: '别骂了', text: '🙏 别骂了' },
+  { value: '表演才艺', text: '🎤 表演才艺' },
+  { value: '老板辛苦了', text: '😊 老板辛苦了' },
+]
+const address = ref(ADDRESS_OPTIONS[0].value)
 
 const totalWithFee = computed(() => {
   if (!shop.value) return cartStore.totalPrice
@@ -80,16 +88,19 @@ async function submitOrder() {
 
       <!-- 收货地址 -->
       <div class="section">
-        <div class="section-title">📍 收货地址</div>
-        <van-cell-group inset>
-          <van-field
-            v-model="address"
-            type="textarea"
-            rows="2"
-            autosize
-            placeholder="输入地址"
-          />
-        </van-cell-group>
+        <div class="section-title">📍 送到哪？<span class="section-hint">选一个，老板的反应不一样</span></div>
+        <div class="address-grid">
+          <div
+            v-for="opt in ADDRESS_OPTIONS"
+            :key="opt.value"
+            class="address-chip"
+            :class="{ selected: address === opt.value }"
+            @click="address = opt.value"
+          >
+            <span class="address-icon">{{ opt.icon }}</span>
+            <span class="address-label">{{ opt.text }}</span>
+          </div>
+        </div>
       </div>
 
       <!-- 商家信息 -->
@@ -137,19 +148,19 @@ async function submitOrder() {
 
       <!-- 备注 -->
       <div class="section">
-        <div class="section-title">📝 给老板留言</div>
-        <van-cell-group inset>
-          <van-field
-            v-model="remark"
-            placeholder="比如：不要香菜 / 多放辣 / 老板你好"
-            rows="2"
-            type="textarea"
-            autosize
-            maxlength="50"
-            show-word-limit
-          />
-        </van-cell-group>
-        <p class="remark-hint">⚠️ 提示：如果你骂老板，老板可能会骂回来</p>
+        <div class="section-title">📝 给老板留言（不是必须，但选了有彩蛋）</div>
+        <div class="remark-grid">
+          <div
+            v-for="opt in REMARK_OPTIONS"
+            :key="opt.value"
+            class="remark-chip"
+            :class="{ selected: remark === opt.value }"
+            @click="remark = remark === opt.value ? '' : opt.value"
+          >
+            {{ opt.text }}
+          </div>
+        </div>
+        <p class="remark-hint">💡 选一个备注，NPC 会回应你；再点一次取消</p>
       </div>
 
     </div>
@@ -220,6 +231,73 @@ async function submitOrder() {
   font-size: 18px;
   font-weight: 700;
   color: #ff6b35;
+}
+
+.section-hint {
+  font-size: 11px;
+  font-weight: 400;
+  color: #999;
+  margin-left: 6px;
+}
+
+.address-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 16px 10px;
+}
+
+.address-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.address-chip.selected {
+  border-color: #ff6b35;
+  background: #fff5f0;
+  color: #ff6b35;
+  font-weight: 600;
+}
+.address-chip:active {
+  transform: scale(0.96);
+}
+
+.address-icon { font-size: 16px; }
+.address-label { line-height: 1; }
+
+.remark-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 16px 10px;
+}
+
+.remark-chip {
+  padding: 7px 14px;
+  border-radius: 18px;
+  border: 1.5px solid #e0e0e0;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.remark-chip.selected {
+  border-color: #07c160;
+  background: #f0fff4;
+  color: #07c160;
+  font-weight: 600;
+}
+.remark-chip:active {
+  transform: scale(0.96);
 }
 
 .remark-hint {

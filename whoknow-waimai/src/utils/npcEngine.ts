@@ -19,6 +19,8 @@ interface QuoteVars {
   userName?: string
   orderNum?: string
   eventCount?: string
+  address?: string
+  remark?: string
 }
 
 function fillVars(template: string, vars: QuoteVars): string {
@@ -42,6 +44,18 @@ function getBossQuoteFromJson(
   const group = (quotesData.boss as Record<string, string[]>)[personality]
     || quotesData.boss.angry
   return fillVars(pickRandom(group), vars)
+}
+
+function getAddressReaction(address: string, vars: QuoteVars): string | null {
+  const reactions = (quotesData.address_reactions as Record<string, string[]>)[address]
+  if (!reactions) return null
+  return fillVars(pickRandom(reactions), vars)
+}
+
+function getRemarkReaction(remark: string, vars: QuoteVars): string | null {
+  const reactions = (quotesData.remark_reactions as Record<string, string[]>)[remark]
+  if (!reactions) return null
+  return fillVars(pickRandom(reactions), vars)
 }
 
 function getBossComplainingFromJson(personality: string, vars: QuoteVars): string {
@@ -85,6 +99,8 @@ export function triggerOrderFlow(orderId: string) {
 
   // 取菜名（第一个菜品）
   const dishName = order.items[0]?.name || '美食'
+  const addressName = order.address || '未知地址'
+  const remarkText = order.remark || ''
 
   const vars: QuoteVars = {
     shopName: order.shopName,
@@ -93,25 +109,36 @@ export function triggerOrderFlow(orderId: string) {
     userName: '大人',
     orderNum: String(Math.floor(Math.random() * 20) + 3),
     eventCount: '5',
+    address: addressName,
+    remark: remarkText,
   }
 
   // 接单 2-5s
   const t1 = 2000 + Math.random() * 3000
   setTimeout(() => {
-    const quote = getBossQuoteFromJson(personality, vars)
+    let quote = getBossQuoteFromJson(personality, vars)
+    // 先看看地址有没有特殊反应
+    const addrReaction = getAddressReaction(addressName, vars)
+    if (addrReaction) {
+      quote = addrReaction + ' ' + quote
+    }
     orderStore.updateOrderStatus(orderId, 'accepted', `【老板】${quote}`)
   }, t1)
 
   // 出餐 5-12s
   const t2 = t1 + 5000 + Math.random() * 7000
   setTimeout(() => {
-    const isBossComplaining = Math.random() < 0.25
-    if (isBossComplaining) {
+    // 备注反应（优先于老板抱怨，但笔记版不替换老板情绪）
+    const remarkReaction = remarkText ? getRemarkReaction(remarkText, vars) : null
+    const isBossComplaining = Math.random() < (remarkReaction ? 0.35 : 0.25)
+    if (remarkReaction && isBossComplaining) {
       const complaint = getBossComplainingFromJson(personality, vars)
-      orderStore.updateOrderStatus(orderId, 'boss_complaining', `【老板发疯中】${complaint}`)
+      orderStore.updateOrderStatus(orderId, 'boss_complaining', `【老板发疯中】${remarkReaction} 「而且」${complaint}`)
       setTimeout(() => {
         orderStore.updateOrderStatus(orderId, 'cooking', '【系统】虽然老板在发疯，但菜还是做好了')
       }, 800)
+    } else if (remarkReaction) {
+      orderStore.updateOrderStatus(orderId, 'cooking', `【老板看到备注】${remarkReaction}`)
     } else {
       orderStore.updateOrderStatus(orderId, 'cooking', '【厨房】出餐中，香味已飘出三条街')
     }
@@ -121,8 +148,11 @@ export function triggerOrderFlow(orderId: string) {
   const t3 = t2 + 1000 + Math.random() * 2000
   setTimeout(() => {
     const quote = getRiderQuoteFromJson(riderId, vars)
+    // 骑手对地址的反应
+    const riderAddrReaction = addressName === '百慕大'
+      ? '（看了地址后沉默了一下）': ''
     orderStore.assignRider(orderId, riderId)
-    orderStore.updateOrderStatus(orderId, 'delivering', `【骑手】${quote}`)
+    orderStore.updateOrderStatus(orderId, 'delivering', `【骑手】${quote} ${riderAddrReaction}`)
   }, t3)
 
   // 配送中途消息 8-15s
