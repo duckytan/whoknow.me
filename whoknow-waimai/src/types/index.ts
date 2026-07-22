@@ -1,4 +1,8 @@
 // ============ 商家 ============
+
+/** 老板性格枚举（v11 强类型 · 与 config.json/quotes.json 三处同步） */
+export type BossPersonality = 'angry' | 'gentle' | 'lazy' | 'weird' | 'philosophical'
+
 export interface Shop {
   id: string
   name: string
@@ -10,7 +14,7 @@ export interface Shop {
   deliveryFee: number
   deliveryTime: number
   distance: number
-  bossPersonality: string
+  bossPersonality: BossPersonality
   bossMottos: string[]
   menus?: Dish[]
 }
@@ -39,7 +43,7 @@ export interface Rider {
   avatar: string
   vehicle: 'bike' | 'ebike' | 'motor' | 'rickshaw'
   mottos: string[]
-  speed: number
+  // v11 移除 dead field speed：走 config.json riderSpeedMult 才生效
 }
 
 // ============ 订单 ============
@@ -62,7 +66,7 @@ export interface Order {
   id: string
   shopId: string
   shopName: string
-  bossPersonality: string
+  bossPersonality: BossPersonality
   riderId: string
   riderName: string
   riderAvatar: string

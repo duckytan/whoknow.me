@@ -14,10 +14,16 @@
 
 import type { Dish } from '@/types'
 import ridersData from '@/data/riders.json'
+import { STORAGE_KEYS } from './storageKeys'
 import {
   getCuisineCookTime,
   getCuisineEmoji,
   getRiderSpeedMult,
+  getEmptyOrderSeconds,
+  getCoordinationSecondsPerDish,
+  getDoorbellSeconds,
+  getComplainDurationSeconds,
+  getImpactShow,
   getAddressTimeOffset,
   getAddressMeta,
   getRemarkTimeOffset,
@@ -46,9 +52,9 @@ export function getDishCookTime(dish: Dish): number {
 
 // ============ 计算订单总出餐时间 ============
 export function getOrderCookTime(dishes: Dish[], bossPersonality: string): number {
-  if (dishes.length === 0) return 300
+  if (dishes.length === 0) return getEmptyOrderSeconds()
   const maxCookTime = Math.max(...dishes.map(getDishCookTime))
-  const coordinationTime = (dishes.length - 1) * 30
+  const coordinationTime = (dishes.length - 1) * getCoordinationSecondsPerDish()
   const bossMult = getBossSpeedMult(bossPersonality)
   return Math.round((maxCookTime + coordinationTime) * bossMult)
 }
@@ -90,7 +96,7 @@ export function calcOrderTime(
   const cooking = getOrderCookTime(dishes, bossPersonality)
   const riderGrab = 60 + Math.random() * 120
   const delivery = getDeliveryTime(distance, riderId, address, remark)
-  const doorbell = 30
+  const doorbell = getDoorbellSeconds()
 
   return {
     accept: Math.round(accept),
@@ -161,7 +167,7 @@ export function getTimeOffsetExplanation(
     factors.push({
       key: 'boss',
       label: `${getBossLabel(bossPersonality)}老板 ×${bossMult}`,
-      impact: bossMult > 1 ? 60 : -30,
+      impact: bossMult > 1 ? getImpactShow('boss', 'slow') : getImpactShow('boss', 'fast'),
       emoji: getBossEmoji(bossPersonality),
       mult: bossMult,
     })
@@ -202,7 +208,7 @@ export function getTimeOffsetExplanation(
     factors.push({
       key: 'rider',
       label: `${riderName} ×${riderMult}`,
-      impact: riderMult > 1 ? 120 : -90,
+      impact: riderMult > 1 ? getImpactShow('rider', 'slow') : getImpactShow('rider', 'fast'),
       emoji: getRiderChipEmoji(riderMult),
       mult: riderMult,
     })
@@ -218,7 +224,7 @@ export { getDemoSpeedOptions }
 
 export function getDemoSpeed(): number {
   try {
-    const stored = localStorage.getItem('chaos_demo_speed')
+    const stored = localStorage.getItem(STORAGE_KEYS.demoSpeed)
     if (!stored) return getDefaultDemoSpeed()
     const speed = parseInt(stored)
     return speed > 0 ? speed : getDefaultDemoSpeed()
@@ -230,7 +236,7 @@ export function getDemoSpeed(): number {
 export function setDemoSpeed(speed: number) {
   if (speed <= 0 || !Number.isFinite(speed)) return
   try {
-    localStorage.setItem('chaos_demo_speed', String(speed))
+    localStorage.setItem(STORAGE_KEYS.demoSpeed, String(speed))
   } catch {}
 }
 

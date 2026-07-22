@@ -208,6 +208,30 @@ export function getRiderChipEmoji(mult: number): string {
   return map.neutral
 }
 
+// ============ 业务兜底时长（v11）============
+export function getEmptyOrderSeconds(): number {
+  return (configData.timingDefaults as any).emptyOrderSeconds
+}
+export function getCoordinationSecondsPerDish(): number {
+  return (configData.timingDefaults as any).coordinationPerDishSeconds
+}
+export function getDoorbellSeconds(): number {
+  return (configData.timingDefaults as any).doorbellSeconds
+}
+export function getAcceptWindow(): { min: number; random: number } {
+  const t = (configData.timingDefaults as any)
+  return { min: t.acceptWindowMinSeconds, random: t.acceptWindowRandomSeconds }
+}
+export function getComplainDurationSeconds(): number {
+  return (configData.timingDefaults as any).complainDurationSeconds
+}
+export function getDeliveryMidProgressRatio(): number {
+  return (configData.timingDefaults as any).deliveryMidProgressRatio
+}
+export function getImpactShow(key: 'boss' | 'rider', dir: 'slow' | 'fast'): number {
+  return (configData.timingDefaults as any).impactShow[key][dir]
+}
+
 // ============ 调试 Hook ============
 
 export function getDebugOverrides() {

@@ -4,6 +4,7 @@ import type { Order } from '@/types'
 import quotesData from '@/data/quotes.json'
 import ridersData from '@/data/riders.json'
 import { calcOrderTime, applyDemoSpeed, getTimeOffsetExplanation, getDemoSpeed, getDemoLifestyle } from './cookingTime'
+import { getComplainDurationSeconds, getDeliveryMidProgressRatio } from './config'
 
 // ============ 骑手信息（从 riders.json 读取）============
 const RIDER_INFO: Record<string, { name: string; avatar: string }> = {}
@@ -28,7 +29,7 @@ function fillVars(template: string, vars: QuoteVars): string {
     .replace(/\{shopName\}/g, vars.shopName || '本店')
     .replace(/\{dishName\}/g, vars.dishName || '美食')
     .replace(/\{riderName\}/g, vars.riderName || '骑手')
-    .replace(/\{userName\}/g, vars.userName || '顾客')
+    .replace(/\{userName\}/g, vars.userName || '大人')
     .replace(/\{orderNum\}/g, vars.orderNum || String(Math.floor(Math.random() * 20) + 3))
     .replace(/\{eventCount\}/g, vars.eventCount || '5')
     .replace(/\{address\}/g, vars.address || '你家')
@@ -112,8 +113,14 @@ function getCompletedQuote(riderId: string, vars: QuoteVars): string {
 }
 
 // ============ NPC 状态机 ============
-export function triggerOrderFlow(orderId: string) {
+export function triggerOrderFlow(orderId: string): () => void {
   const orderStore = useOrderStore()
+  // v11 防御性：收集所有 timer，用户离开/取消时可一键清理
+  const timers: number[] = []
+  const safeSetTimeout = (fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms)
+    timers.push(id)
+  }
 
   // 随机选一个骑手
   const riderIds = ['r001', 'r002', 'r003', 'r004', 'r005']
@@ -164,7 +171,7 @@ export function triggerOrderFlow(orderId: string) {
   const t1 = applyDemoSpeed(timeEst.accept) * 1000
   const t2 = t1 + applyDemoSpeed(timeEst.cooking) * 1000
   const t3 = t2 + applyDemoSpeed(timeEst.riderGrab) * 1000
-  const t4 = t3 + applyDemoSpeed(timeEst.delivery * 0.6) * 1000 // 配送 60% 进度时弹一条
+  const t4 = t3 + applyDemoSpeed(timeEst.delivery * getDeliveryMidProgressRatio()) * 1000 // 配送进度阈值时弹一条
   const t5 = t3 + applyDemoSpeed(timeEst.delivery) * 1000
 
   // 记录真实时间戳 + 影响因子（供倒计时 & 详情 UI 使用）
@@ -177,7 +184,7 @@ export function triggerOrderFlow(orderId: string) {
   ]
 
   // 接单
-  setTimeout(() => {
+  safeSetTimeout(() => {
     let quote = getBossQuoteFromJson(personality, vars)
     const addrReaction = getAddressReaction(addressName, vars)
     if (addrReaction) {
@@ -187,14 +194,14 @@ export function triggerOrderFlow(orderId: string) {
   }, t1)
 
   // 出餐
-  setTimeout(() => {
+  safeSetTimeout(() => {
     const remarkReaction = remarkText ? getRemarkReaction(remarkText, vars) : null
     const isBossComplaining = Math.random() < (remarkReaction ? 0.35 : 0.25)
     if (remarkReaction && isBossComplaining) {
       const complaint = getBossComplainingFromJson(personality, vars)
       orderStore.updateOrderStatus(orderId, 'boss_complaining', `【老板发疯中】${remarkReaction} 「而且」${complaint}`)
-      const complainDuration = applyDemoSpeed(90) * 1000
-      setTimeout(() => {
+      const complainDuration = applyDemoSpeed(getComplainDurationSeconds()) * 1000
+      safeSetTimeout(() => {
         orderStore.updateOrderStatus(orderId, 'cooking', '【系统】虽然老板在发疯，但菜还是做好了')
       }, complainDuration)
     } else if (remarkReaction) {
@@ -205,7 +212,7 @@ export function triggerOrderFlow(orderId: string) {
   }, t2)
 
   // 骑手接单
-  setTimeout(() => {
+  safeSetTimeout(() => {
     const quote = getRiderQuoteFromJson(riderId, vars)
     const riderAddrReaction = addressName === '百慕大'
       ? '（看了地址后沉默了一下）': ''
@@ -214,7 +221,7 @@ export function triggerOrderFlow(orderId: string) {
   }, t3)
 
   // 配送中途消息（路上 60% 进度）
-  setTimeout(() => {
+  safeSetTimeout(() => {
     const isRiderLost = riderId === 'r003' || Math.random() < 0.2
     if (isRiderLost) {
       const quote = getRiderLostQuote(riderId, vars)
@@ -227,14 +234,15 @@ export function triggerOrderFlow(orderId: string) {
   }, t4)
 
   // 送达
-  setTimeout(() => {
+  safeSetTimeout(() => {
     const doneQuote = getCompletedQuote(riderId, vars)
     orderStore.updateOrderStatus(orderId, 'completed', `【骑手】${doneQuote}`)
   }, t5)
 
   // 存储预计时间轴 + 影响因素
-  ;(window as any).__chaosStageTimes = (window as any).__chaosStageTimes || {}
-  ;(window as any).__chaosStageTimes[orderId] = {
+  const w = window as any
+  w.__chaosStageTimes = w.__chaosStageTimes || {}
+  w.__chaosStageTimes[orderId] = {
     created: Date.now(),
     realTotalSeconds: timeEst.total,
     demoSpeed: getDemoSpeed(),
@@ -247,6 +255,23 @@ export function triggerOrderFlow(orderId: string) {
       riderId,
     ),
     lifestyle: getDemoLifestyle(timeEst.total),
+  }
+
+  // v11 防御性：window 内存上限（50 个为阈值，FIFO）
+  const STAGE_TIMES_MAX = 50
+  const stageKeys = Object.keys(w.__chaosStageTimes)
+  if (stageKeys.length > STAGE_TIMES_MAX) {
+    const overflow = stageKeys.length - STAGE_TIMES_MAX
+    const toRemove = stageKeys
+      .map(k => ({ k, t: w.__chaosStageTimes[k].created }))
+      .sort((a, b) => a.t - b.t)
+      .slice(0, overflow)
+    toRemove.forEach(({ k }) => delete w.__chaosStageTimes[k])
+  }
+
+  // v11 返回取消函数：调用方可以取消未完成的订单剧情
+  return () => {
+    timers.forEach(id => window.clearTimeout(id))
   }
 }
 

@@ -2,8 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Order } from '@/types'
 import { sanitizeQuote } from '@/utils/npcEngine'
+import { STORAGE_KEYS } from '@/utils/storageKeys'
 
-const STORAGE_KEY = 'chaos_orders'
+const STORAGE_KEY = STORAGE_KEYS.orders
 
 function loadOrders(): Order[] {
   try {

@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { CartItem, Dish } from '@/types'
+import { STORAGE_KEYS } from '@/utils/storageKeys'
 
-const STORAGE_KEY = 'chaos_cart'
+const STORAGE_KEY = STORAGE_KEYS.cart
 
 function loadCart(): CartItem[] {
   try {

@@ -1,5 +1,7 @@
 // 戏精评价生成器
 
+import { sanitizeQuote } from './npcEngine'
+
 export interface ReviewContext {
   shopName: string
   dishName: string
@@ -52,7 +54,7 @@ const REVIEW_TEMPLATES = {
     '{shopName}的老板绝对是艺术家，看他把{dishName}摆盘的样子，我以为是国宴',
     '这一单的等待时间让我以为老板在现种菜、现养猪、现学做饭',
     '我严重怀疑{riderName}是冒充骑手的赛车手，他送外卖的样子像在漂移入库',
-    '老板送了我一份赠品——一段关于人生和{ dishName }的即兴演讲',
+    '老板送了我一份赠品——一段关于人生和{dishName}的即兴演讲',
     '吃完这顿饭，我感觉我不是在吃外卖，是在参与一场美食革命',
   ],
   // ===== 哲学类 =====
@@ -100,7 +102,7 @@ const REVIEW_TEMPLATES = {
     '{riderName}到了楼下才发现没带手机，他凭记忆找到了我家——快递员的职业素养',
     '外卖送到的时候，盒子上贴了一张纸条：「今天第{orderNum}单，你运气不错」',
     '老板把外卖递给我的时候说：「这菜我做了{eventCount}次才成功」——能吃就行',
-    '骑手在配送途中救了一只猫，所以花了{delieryMinutes}分钟——我原谅他了',
+    '骑手在配送途中救了一只猫，所以花了{deliveryMinutes}分钟——我原谅他了',
     '备注写「求好运」，收到{dishName}时发现米饭上画了一个笑脸——真的走运了',
     '我点的是{dishName}，老板送的是{dishName}加一段人生建议——赚了',
     '今天是{shopName}老板第{orderNum}次被人投诉脾气差，但菜真的一如既往地好',
@@ -185,7 +187,7 @@ const REVIEW_TEMPLATES = {
     '配送过程可以拍一集纪录片了，标题是《{riderName}的{dishName}传》',
     '骑手迷路了一小会儿，但最终正义（外卖）还是到达了',
     '我想给{riderName}的小费不只是钱，还有精神上的支持',
-    '从下单到送达经历了{delieryMinutes}分钟，期间我和{riderName}建立了深厚的革命友谊',
+    '从下单到送达经历了{deliveryMinutes}分钟，期间我和{riderName}建立了深厚的革命友谊',
     '看到{riderName}的那一刻，仿佛看到了一名战士凯旋归来',
     '配送轨迹就像过山车——忽快忽慢，但终点是美好的',
     '我通过订单追踪学会了{riderName}日常活动的路线',
@@ -251,7 +253,7 @@ const BOSS_REPLY_TEMPLATES: Record<string, string[]> = {
 
 // 随机选择并填充变量
 function fillTemplate(template: string, ctx: ReviewContext & { orderNum?: number; eventCount?: number }): string {
-  return template
+  const filled = template
     .replace(/\{shopName\}/g, ctx.shopName)
     .replace(/\{dishName\}/g, ctx.dishName)
     .replace(/\{riderName\}/g, ctx.riderName)
@@ -259,6 +261,8 @@ function fillTemplate(template: string, ctx: ReviewContext & { orderNum?: number
     .replace(/\{deliveryMinutes\}/g, String(ctx.deliveryMinutes))
     .replace(/\{orderNum\}/g, String(ctx.orderNum || Math.floor(Math.random() * 20) + 3))
     .replace(/\{eventCount\}/g, String(ctx.eventCount || 5))
+  // v11 防御性兜底：sanitize 处理 typo 和未知占位符（v10 体系扩展）
+  return sanitizeQuote(filled)
 }
 
 // 生成一条随机评价文本
