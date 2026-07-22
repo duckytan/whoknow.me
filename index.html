@@ -573,11 +573,15 @@
             }
           ];
 
-          var pick = slogans[Math.floor(Math.random() * slogans.length)];
+          function render() {
+            var pick = slogans[Math.floor(Math.random() * slogans.length)];
+            document.getElementById('tagline').innerHTML =
+              '<span class="question">?</span>' + pick.zh + '<br>' +
+              '<span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>';
+          }
 
-          document.getElementById('tagline').innerHTML =
-            '<span class="question">?</span>' + pick.zh + '<br>' +
-            '<span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>';
+          render();
+          setInterval(render, 3000);
         })();
       </script>
 
