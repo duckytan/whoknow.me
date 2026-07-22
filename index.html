@@ -6,7 +6,7 @@
   <title>whoknow · 胡闹宇宙</title>
   <meta name="description" content="谁知道这个宇宙里会发生什么？" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600&family=Bowlby+One&family=ZCOOL+KuaiLe&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -14,14 +14,16 @@
       --green: #6eda78;
       --green-dim: rgba(110, 218, 120, 0.12);
       --orange: #ff7849;
-      --purple: #8b5cf6;
-      --bg: #0a0612;
-      --bg-2: #120a1a;
+      --red: #ef4444;
+      --yellow: #fde047;
+      --bg: #1a0e2e;
+      --bg-paper: #fafaf6;
       --line: #1f1828;
       --line-2: #2a2236;
       --fg: #ededef;
-      --fg-dim: #a094b8;
-      --fg-mute: #6b6480;
+      --fg-dark: #1a0e2e;
+      --fg-dim: #888;
+      --fg-mute: #555;
     }
 
     html, body { background: var(--bg); }
@@ -42,40 +44,81 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 500px 400px at 20% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 600px 400px at 85% 100%, rgba(110, 218, 120, 0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 400px 300px at 50% 30%, rgba(255, 120, 73, 0.06) 0%, transparent 70%);
+        radial-gradient(ellipse 800px 600px at 50% 0%, #4c1d95 0%, #1a0e2e 60%),
+        radial-gradient(circle at 20% 15%, rgba(253, 224, 71, 0.4) 1px, transparent 1.5px),
+        radial-gradient(circle at 60% 25%, rgba(253, 224, 71, 0.3) 1px, transparent 1.5px),
+        radial-gradient(circle at 85% 10%, rgba(253, 224, 71, 0.5) 1px, transparent 1.5px),
+        radial-gradient(circle at 40% 5%, rgba(253, 224, 71, 0.3) 1px, transparent 1.5px),
+        radial-gradient(circle at 75% 35%, rgba(255, 255, 255, 0.6) 1.5px, transparent 2px);
+      background-size: 100% 100%, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px;
       pointer-events: none;
       z-index: 0;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 28px 28px;
-      pointer-events: none;
-      z-index: 0;
-    }
+
 
     .container {
       position: relative;
       z-index: 1;
-      max-width: 640px;
+      max-width: 720px;
       width: 100%;
-      padding: 4rem 2rem 2rem;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    /* 上半：紫色区 */
+    .hero-section {
+      padding: 5rem 2rem 7rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      position: relative;
     }
 
-    /* ===== Hero ===== */
+    /* 撕裂纸效果：用 SVG mask 模拟 */
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: var(--bg-paper);
+      clip-path: polygon(
+        0% 100%, 0% 40%, 2% 60%, 4% 30%, 6% 70%, 8% 45%, 11% 80%, 14% 35%, 17% 65%, 20% 50%,
+        23% 75%, 26% 40%, 29% 60%, 32% 30%, 35% 70%, 38% 45%, 41% 80%, 44% 35%, 47% 65%, 50% 50%,
+        53% 75%, 56% 40%, 59% 60%, 62% 30%, 65% 70%, 68% 45%, 71% 80%, 74% 35%, 77% 65%, 80% 50%,
+        83% 75%, 86% 40%, 89% 60%, 92% 30%, 95% 70%, 98% 45%, 100% 60%, 100% 100%
+      );
+    }
+
+    /* 下半：白纸区 */
+    .paper-section {
+      background: var(--bg-paper);
+      color: var(--fg-dark);
+      padding: 4rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* 白纸上的细网格线 */
+    .paper-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(26, 14, 46, 0.03) 1px, transparent 1px);
+      background-size: 32px 100%;
+      pointer-events: none;
+    }
+
     .hero {
       text-align: center;
-      padding-top: 4rem;
       width: 100%;
     }
 
@@ -86,18 +129,18 @@
       gap: 0.5rem;
       font-family: 'JetBrains Mono', ui-monospace, monospace;
       font-size: 0.72rem;
-      color: var(--fg-mute);
+      color: rgba(255, 255, 255, 0.85);
       letter-spacing: 0.15em;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid var(--line);
+      padding: 0.5rem 1rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
       border-radius: 99px;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .eyebrow .dot {
       width: 6px;
       height: 6px;
-      background: #444;
+      background: var(--yellow);
       border-radius: 50%;
     }
 
@@ -108,28 +151,26 @@
 
     /* 主标：单行 whoknow · 不要再花 */
     .logo {
-      font-family: 'Bungee', 'Inter', sans-serif;
-      font-size: 5.5rem;
+      font-family: 'Bowlby One', 'Bungee', 'Inter', sans-serif;
+      font-size: 6rem;
       font-weight: 400;
       letter-spacing: -0.02em;
-      color: var(--fg);
       line-height: 1;
-      margin-top: 1.8rem;
-      transform: rotate(-4deg);
+      margin-top: 2rem;
+      transform: rotate(-5deg);
       display: flex;
       align-items: baseline;
       justify-content: center;
       gap: 0;
       text-shadow:
-        -2px -2px 0 #0a0612,
-        2px -2px 0 #0a0612,
-        -2px 2px 0 #0a0612,
-        2px 2px 0 #0a0612,
-        0 6px 0 rgba(255, 120, 73, 0.4);
+        -3px -3px 0 #0a0612,
+        3px -3px 0 #0a0612,
+        -3px 3px 0 #0a0612,
+        3px 3px 0 #0a0612,
+        0 8px 0 rgba(0, 0, 0, 0.5);
     }
 
-    .logo-who,
-    .logo-now {
+    .logo-who {
       color: var(--fg);
     }
 
@@ -137,67 +178,61 @@
       color: var(--orange);
       position: relative;
       display: inline-block;
-      animation: breathe-k 2.4s ease-in-out infinite;
-      margin: 0 0.08em;
+      animation: bounce-k 1.8s ease-in-out infinite;
+      margin: 0 0.05em;
     }
 
-    @keyframes breathe-k {
-      0%, 100% {
-        opacity: 0.7;
-        text-shadow:
-          -2px -2px 0 #0a0612,
-          2px -2px 0 #0a0612,
-          -2px 2px 0 #0a0612,
-          2px 2px 0 #0a0612,
-          0 0 0 transparent;
-      }
-      50% {
-        opacity: 1;
-        text-shadow:
-          -2px -2px 0 #0a0612,
-          2px -2px 0 #0a0612,
-          -2px 2px 0 #0a0612,
-          2px 2px 0 #0a0612,
-          0 0 32px rgba(255, 120, 73, 0.6);
-      }
+    @keyframes bounce-k {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
     }
 
-    .logo-k::after {
+    .logo-k::before {
       content: '\01F525';
       position: absolute;
-      top: -0.55em;
+      top: -1em;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.45em;
-      filter: drop-shadow(0 0 6px rgba(255, 120, 73, 0.5));
+      font-size: 0.5em;
+      filter: drop-shadow(0 0 8px rgba(255, 120, 73, 0.8));
+      animation: flicker-flame 0.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker-flame {
+      0% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.1) rotate(-3deg); }
+    }
+
+    .logo-now {
+      color: var(--fg);
     }
 
 
 
     /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
     .chinese-brand {
-      font-family: 'Bungee', 'Noto Sans SC', sans-serif;
-      font-size: 1.8rem;
+      font-family: 'ZCOOL KuaiLe', 'Noto Sans SC', sans-serif;
+      font-size: 2.5rem;
       font-weight: 400;
-      color: var(--fg);
-      letter-spacing: 0.2em;
-      margin-right: -0.2em;
+      color: var(--yellow);
+      letter-spacing: 0.3em;
+      margin-right: -0.3em;
       margin-top: 1.5rem;
-      transform: rotate(-3deg);
+      transform: rotate(-4deg);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.2em;
+      gap: 0.3em;
+      text-shadow:
+        -2px -2px 0 #0a0612,
+        2px -2px 0 #0a0612,
+        -2px 2px 0 #0a0612,
+        2px 2px 0 #0a0612;
     }
 
     .chinese-brand .char {
       display: inline-block;
-      color: var(--fg);
-      text-shadow:
-        -1px -1px 0 #0a0612,
-        1px -1px 0 #0a0612,
-        -1px 1px 0 #0a0612,
-        1px 1px 0 #0a0612;
+      color: var(--yellow);
     }
 
     .chinese-brand .char.accent {
@@ -208,15 +243,15 @@
     .tagline {
       margin-top: 2.5rem;
       font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.85rem;
-      color: var(--fg-dim);
-      line-height: 1.7;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.8;
       letter-spacing: 0;
     }
 
-    .tagline .accent { color: var(--fg); }
-    .tagline .dim { color: var(--fg-mute); }
-    .tagline .sep { color: var(--line-2); margin: 0 0.5rem; }
+    .tagline .accent { color: var(--yellow); }
+    .tagline .dim { color: rgba(255, 255, 255, 0.45); }
+    .tagline .sep { color: rgba(255, 255, 255, 0.2); margin: 0 0.5rem; }
 
     /* ===== Section ===== */
     .section {
@@ -226,14 +261,15 @@
 
     .section-title {
       font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.7rem;
-      color: var(--fg-mute);
+      font-size: 0.72rem;
+      color: var(--fg-dark);
       letter-spacing: 0.2em;
       text-align: center;
       margin-bottom: 1.5rem;
+      opacity: 0.7;
     }
 
-    .section-title .accent { color: var(--fg-mute); }
+    .section-title .accent { color: var(--orange); opacity: 1; }
 
     /* ===== Products ===== */
     .products {
@@ -257,7 +293,7 @@
     }
 
     .product-row:hover {
-      border-color: var(--orange);
+      border-color: var(--green);
       background: #111315;
       transform: translateX(2px);
     }
@@ -298,9 +334,9 @@
       border-radius: 6px;
       flex-shrink: 0;
     }
-    .badge.dev { background: rgba(255, 255, 255, 0.04); color: #bbb; border: 1px solid var(--line-2); }
-    .badge.design { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
-    .badge.idea { background: rgba(251, 191, 36, 0.08); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+    .badge.dev { background: var(--fg-dark); color: #fff; border: 1.5px solid var(--fg-dark); }
+    .badge.design { background: var(--orange); color: #fff; border: 1.5px solid var(--orange); }
+    .badge.idea { background: var(--yellow); color: var(--fg-dark); border: 1.5px solid var(--yellow); }
 
 /* ===== Footer ===== */
     .footer {
@@ -313,14 +349,14 @@
       letter-spacing: 0.05em;
     }
 
-    .footer .accent { color: var(--orange); }
+    .footer .accent { color: #444; }
 
     /* ===== Mobile ===== */
     @media (max-width: 480px) {
-      .container { padding: 2.5rem 1.25rem 1.5rem; }
-      .hero { padding-top: 2rem; }
-      .logo { font-size: 3.5rem; }
-      .chinese-brand { font-size: 1.1rem; }
+      .hero-section { padding: 3rem 1.25rem 5rem; }
+      .paper-section { padding: 3rem 1.25rem 2rem; }
+      .logo { font-size: 3.8rem; }
+      .chinese-brand { font-size: 1.8rem; }
       .product-row { padding: 0.9rem 1rem; }
     }
   </style>
@@ -328,71 +364,79 @@
 <body>
   <div class="container">
 
-    <!-- ===== HERO ===== -->
-    <div class="hero">
+    <!-- ===== 上半：紫色 hero ===== -->
+    <div class="hero-section">
+      <div class="hero">
 
-      <!-- Eyebrow: 顶部状态条 -->
-      <div class="eyebrow">
-        <span>CHUNAO.UNIVERSE / v0.1</span>
-      </div>
+        <!-- Eyebrow: 顶部状态条 -->
+        <div class="eyebrow">
+          <span class="dot"></span>
+          <span>CHUNAO.UNIVERSE / v0.1</span>
+        </div>
 
-      <!-- 主标：纯文字，单一绿色锚点 K -->
-      <div class="logo">
-        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span>
-      </div>
+        <!-- 主标：纯文字，单一绿色锚点 K -->
+        <div class="logo">
+          <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span>
+        </div>
 
-      <!-- 胡闹：小一号，灰绿色，作为副标 -->
-      <div class="chinese-brand">
-        <span class="char accent">胡</span><span class="char">闹</span>
-      </div>
+        <!-- 胡闹：小一号，灰绿色，作为副标 -->
+        <div class="chinese-brand">
+          <span class="char accent">胡</span><span class="char">闹</span>
+        </div>
 
-      <!-- Tagline: mono 风，像系统输出 -->
-      <div class="tagline">
-        <span class="dim">//</span> <span class="accent">谁知道这个宇宙里</span>会发生什么？<br>
-        <span class="dim">$</span> Who knows<span class="sep">·</span>家人们谁懂啊
-      </div>
+        <!-- Tagline: mono 风，像系统输出 -->
+        <div class="tagline">
+          <span class="dim">//</span> <span class="accent">谁知道这个宇宙里</span>会发生什么？<br>
+          <span class="dim">$</span> Who knows<span class="sep">·</span>家人们谁懂啊
+        </div>
 
-    </div>
-
-    <!-- ===== PRODUCTS ===== -->
-    <div class="section">
-      <div class="section-title">
-        <span class="accent">$</span> ls ./胡闹三件套
-      </div>
-
-      <div class="products">
-        <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
-          <div class="icon">🍜</div>
-          <div class="info">
-            <div class="name">胡闹外卖 <span class="en">/waimai</span></div>
-            <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
-          </div>
-          <span class="badge dev">[dev]</span>
-        </a>
-
-        <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
-          <div class="icon">🛒</div>
-          <div class="info">
-            <div class="name">胡闹导购 <span class="en">/mart</span></div>
-            <div class="desc">反骨导购阻止你 checkout</div>
-          </div>
-          <span class="badge design">[design]</span>
-        </a>
-
-        <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
-          <div class="icon">🧠</div>
-          <div class="info">
-            <div class="name">胡闹大脑 <span class="en">/brain</span></div>
-            <div class="desc">控制中心 · AI 追热点推段子</div>
-          </div>
-          <span class="badge idea">[idea]</span>
-        </a>
       </div>
     </div>
 
-<!-- ===== FOOTER ===== -->
-    <div class="footer">
-      <span class="accent">●</span> whoknow — 谁都不知道接下来会发生什么 <span class="accent">●</span>
+    <!-- ===== 下半：白纸区 ===== -->
+    <div class="paper-section">
+
+      <!-- PRODUCTS -->
+      <div class="section">
+        <div class="section-title">
+          <span class="accent">$</span> ls ./胡闹三件套
+        </div>
+
+        <div class="products">
+          <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
+            <div class="icon">🍜</div>
+            <div class="info">
+              <div class="name">胡闹外卖 <span class="en">/waimai</span></div>
+              <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
+            </div>
+            <span class="badge dev">[dev]</span>
+          </a>
+
+          <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
+            <div class="icon">🛒</div>
+            <div class="info">
+              <div class="name">胡闹导购 <span class="en">/mart</span></div>
+              <div class="desc">反骨导购阻止你 checkout</div>
+            </div>
+            <span class="badge design">[design]</span>
+          </a>
+
+          <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
+            <div class="icon">🧠</div>
+            <div class="info">
+              <div class="name">胡闹大脑 <span class="en">/brain</span></div>
+              <div class="desc">控制中心 · AI 追热点推段子</div>
+            </div>
+            <span class="badge idea">[idea]</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="footer">
+        <span class="accent">●</span> whoknow — 谁都不知道接下来会发生什么 <span class="accent">●</span>
+      </div>
+
     </div>
 
   </div>
