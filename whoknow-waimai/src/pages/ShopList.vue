@@ -1,12 +1,33 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useShopStore } from '@/store/shop'
 import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
 import type { Shop } from '@/types'
+import shopsData from '@/data/shops.json'
+import dishesData from '@/data/dishes.json'
 
 const shopStore = useShopStore()
+const route = useRoute()
 const keyword = ref('')
+
+// 读取首页传过来的搜索词
+onMounted(() => {
+  if (route.query.q) {
+    keyword.value = route.query.q as string
+  }
+})
+
+// 按菜品名搜到的商家 ID
+function findShopsByDish(kw: string): string[] {
+  if (!kw) return []
+  const lower = kw.toLowerCase()
+  return dishesData
+    .filter(d => d.name.toLowerCase().includes(lower) || d.description.toLowerCase().includes(lower))
+    .map(d => d.shopId)
+    .filter((id, i, arr) => arr.indexOf(id) === i) // dedup
+}
 const activePersonality = ref<Shop['bossPersonality'] | ''>('')
 
 const personalityOpts: Array<{ key: Shop['bossPersonality'] | ''; label: string; icon: string }> = [
@@ -23,10 +44,12 @@ const filteredShops = computed(() => {
   const kw = keyword.value.trim().toLowerCase()
 
   if (kw) {
+    const dishShopIds = findShopsByDish(kw)
     list = list.filter(s =>
       s.name.toLowerCase().includes(kw) ||
       s.type.toLowerCase().includes(kw) ||
-      s.bossMottos.some(m => m.includes(keyword.value.trim()))
+      s.bossMottos.some(m => m.includes(keyword.value.trim())) ||
+      dishShopIds.includes(s.id)
     )
   }
 
@@ -45,7 +68,7 @@ const filteredShops = computed(() => {
     <!-- 搜索框 -->
     <van-search
       v-model="keyword"
-      placeholder="搜索商家、菜系或老板语录"
+      placeholder="搜索商家、菜品或老板语录"
       shape="round"
       background="#fff"
     />

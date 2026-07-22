@@ -60,7 +60,7 @@ const sortOpts = [
 
 <template>
   <div class="page-container">
-    <AppHeader title="胡闹外卖" show-search />
+    <AppHeader title="胡闹外卖" show-search @search="kw => $router.push('/shops?q=' + encodeURIComponent(kw))" />
 
     <!-- 品牌 Slogan -->
     <div class="slogan-bar">
