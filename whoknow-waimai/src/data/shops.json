@@ -2,7 +2,7 @@
   {
     "id": "s001",
     "name": "老王烧烤",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🥩%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/laowang-bbq.svg",
     "type": "烧烤",
     "rating": 4.5,
     "monthlySales": 1024,
@@ -22,7 +22,7 @@
   {
     "id": "s002",
     "name": "暴躁麻辣烫",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🌶️%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/angry-mlt.svg",
     "type": "麻辣烫",
     "rating": 4.2,
     "monthlySales": 856,
@@ -42,7 +42,7 @@
   {
     "id": "s003",
     "name": "火辣川菜馆",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🔥%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/hot-sichuan.svg",
     "type": "川菜",
     "rating": 4.7,
     "monthlySales": 2103,
@@ -62,7 +62,7 @@
   {
     "id": "s004",
     "name": "张阿姨厨房",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍳%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/aunt-zhang.svg",
     "type": "家常菜",
     "rating": 4.9,
     "monthlySales": 3201,
@@ -82,7 +82,7 @@
   {
     "id": "s005",
     "name": "暖心便当铺",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍱%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/warm-bento.svg",
     "type": "便当",
     "rating": 4.8,
     "monthlySales": 1567,
@@ -102,7 +102,7 @@
   {
     "id": "s006",
     "name": "好粥道",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🥣%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/good-porridge.svg",
     "type": "粥品",
     "rating": 4.6,
     "monthlySales": 987,
@@ -122,7 +122,7 @@
   {
     "id": "s007",
     "name": "神秘寿司研究所",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍣%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/mystery-sushi.svg",
     "type": "寿司",
     "rating": 4.3,
     "monthlySales": 432,
@@ -142,7 +142,7 @@
   {
     "id": "s008",
     "name": "实验料理工坊",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🧪%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/lab-cuisine.svg",
     "type": "创意料理",
     "rating": 3.9,
     "monthlySales": 201,
@@ -162,7 +162,7 @@
   {
     "id": "s009",
     "name": "小黑汉堡",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍔%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/black-burger.svg",
     "type": "汉堡",
     "rating": 4.1,
     "monthlySales": 678,
@@ -182,7 +182,7 @@
   {
     "id": "s010",
     "name": "老陈黄焖鸡",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🐔%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/old-chen-chicken.svg",
     "type": "黄焖鸡",
     "rating": 4.0,
     "monthlySales": 1234,
@@ -202,7 +202,7 @@
   {
     "id": "s011",
     "name": "拖延奶茶铺",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🧋%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/lazy-milk-tea.svg",
     "type": "奶茶",
     "rating": 3.8,
     "monthlySales": 543,
@@ -222,7 +222,7 @@
   {
     "id": "s012",
     "name": "不想动烧烤摊",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍢%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/lazy-bbq.svg",
     "type": "烧烤",
     "rating": 3.5,
     "monthlySales": 321,
@@ -242,7 +242,7 @@
   {
     "id": "s013",
     "name": "孔子饺子馆",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🥟%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/confucius-dumpling.svg",
     "type": "饺子",
     "rating": 4.8,
     "monthlySales": 876,
@@ -262,7 +262,7 @@
   {
     "id": "s014",
     "name": "禅意寿司",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🍙%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/zen-sushi.svg",
     "type": "寿司",
     "rating": 4.6,
     "monthlySales": 654,
@@ -282,7 +282,7 @@
   {
     "id": "s015",
     "name": "诗人豆浆铺",
-    "avatar": "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2250%22%3E🫘%3C/text%3E%3C/svg%3E",
+    "avatar": "/assets/avatars/poet-soymilk.svg",
     "type": "早餐",
     "rating": 4.4,
     "monthlySales": 432,
