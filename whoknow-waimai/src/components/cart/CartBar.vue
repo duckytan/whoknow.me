@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 import type { Shop } from '@/types'
 
@@ -6,16 +7,19 @@ defineProps<{
   shop: Shop
 }>()
 
-const emit = defineEmits<{
-  checkout: []
-}>()
-
+const router = useRouter()
 const cartStore = useCartStore()
+
+function goCart() {
+  if (!cartStore.isEmpty) {
+    router.push('/cart')
+  }
+}
 </script>
 
 <template>
   <div class="cart-bar" :class="{ 'has-items': !cartStore.isEmpty }">
-    <div class="cart-bar__icon" @click="!cartStore.isEmpty && emit('checkout')">
+    <div class="cart-bar__icon" @click="goCart">
       <van-icon name="shopping-cart-o" size="26" color="#fff" />
       <van-badge
         v-if="cartStore.totalCount > 0"
@@ -38,7 +42,7 @@ const cartStore = useCartStore()
       :disabled="cartStore.isEmpty"
       size="small"
       round
-      @click="emit('checkout')"
+      @click="goCart"
     >
       {{ cartStore.isEmpty ? '未选' : '去下单' }}
     </van-button>

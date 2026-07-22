@@ -28,6 +28,12 @@ const router = createRouter({
       meta: { title: '确认下单' },
     },
     {
+      path: '/cart',
+      name: 'CartPage',
+      component: () => import('@/pages/CartPage.vue'),
+      meta: { title: '购物车' },
+    },
+    {
       path: '/orders',
       name: 'OrderHistory',
       component: () => import('@/pages/OrderHistory.vue'),

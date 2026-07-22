@@ -62,11 +62,30 @@ export const useCartStore = defineStore('cart', () => {
     return items.value.find(i => i.id === dishId)?.quantity || 0
   }
 
+  function increment(dishId: string) {
+    const existing = items.value.find(i => i.id === dishId)
+    if (existing) {
+      existing.quantity++
+      saveCart(items.value)
+    }
+  }
+
+  function decrement(dishId: string) {
+    const existing = items.value.find(i => i.id === dishId)
+    if (!existing) return
+    if (existing.quantity > 1) {
+      existing.quantity--
+      saveCart(items.value)
+    } else {
+      removeItem(dishId)
+    }
+  }
+
   function clearCart() {
     items.value = []
     currentShopId.value = null
     localStorage.removeItem(STORAGE_KEY)
   }
 
-  return { items, currentShopId, totalCount, totalPrice, isEmpty, addItem, removeItem, getItemCount, clearCart }
+  return { items, currentShopId, totalCount, totalPrice, isEmpty, addItem, removeItem, increment, decrement, getItemCount, clearCart }
 })

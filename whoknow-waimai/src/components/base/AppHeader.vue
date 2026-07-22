@@ -1,8 +1,28 @@
 <script setup lang="ts">
-defineProps<{
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const props = defineProps<{
   title?: string
   showSearch?: boolean
 }>()
+
+const emit = defineEmits<{
+  (e: 'search', keyword: string): void
+}>()
+
+const router = useRouter()
+const searchValue = ref('')
+
+function onSearch(val: string) {
+  if (val.trim()) {
+    emit('search', val.trim())
+  }
+}
+
+function onClickSearch() {
+  router.push('/shops')
+}
 </script>
 
 <template>
@@ -13,10 +33,12 @@ defineProps<{
     </div>
     <div v-if="showSearch" class="header-search">
       <van-search
+        v-model="searchValue"
         placeholder="搜索商家或菜品"
-        readonly
         shape="round"
         background="transparent"
+        @search="onSearch"
+        @click-input="onClickSearch"
       />
     </div>
   </div>

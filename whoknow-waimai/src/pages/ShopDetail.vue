@@ -45,7 +45,7 @@ onMounted(() => {
     </div>
 
     <!-- 底部购物车 Bar（Day 3 实现） -->
-    <CartBar :shop="shop" @checkout="router.push('/checkout')" />
+    <CartBar :shop="shop" />
   </div>
 
   <!-- 商家不存在 -->

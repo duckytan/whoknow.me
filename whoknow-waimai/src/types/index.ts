@@ -2,6 +2,7 @@
 export interface Shop {
   id: string
   name: string
+  description?: string
   avatar: string
   type: string
   rating: number

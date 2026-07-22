@@ -98,7 +98,7 @@ async function submitOrder() {
         <van-cell-group inset>
           <van-cell :title="shop.name" :label="`预计 ${shop.deliveryTime} 分钟送达`">
             <template #icon>
-              <span class="shop-avatar">{{ shop.avatar }}</span>
+              <img class="shop-avatar" :src="shop.avatar" :alt="shop.name" style="width:40px;height:40px;border-radius:8px;margin-right:8px;object-fit:cover" />
             </template>
           </van-cell>
         </van-cell-group>
@@ -111,9 +111,14 @@ async function submitOrder() {
           <van-cell
             v-for="item in cartStore.items"
             :key="item.id"
-            :title="item.name"
             :value="`¥${(item.price * item.quantity).toFixed(2)}`"
           >
+            <template #title>
+              <span class="dish-name">
+                <span class="dish-img">{{ item.image }}</span>
+                {{ item.name }}
+              </span>
+            </template>
             <template #label>
               <span class="item-qty">x{{ item.quantity }}  ·  ¥{{ item.price }}/份</span>
             </template>
@@ -197,12 +202,10 @@ async function submitOrder() {
   color: #666;
 }
 
-.shop-avatar {
-  font-size: 26px;
-  margin-right: 8px;
-  line-height: 1;
-}
 
+
+.dish-name { display: flex; align-items: center; gap: 8px; }
+.dish-img { font-size: 22px; line-height: 1; }
 .item-qty {
   font-size: 11px;
   color: #aaa;

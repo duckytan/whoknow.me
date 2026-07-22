@@ -100,6 +100,12 @@ onUnmounted(() => {
       </div>
     </div>
 
+    <!-- 店铺简介 -->
+    <div class="shop-header__desc">
+      <span class="desc-icon">📖</span>
+      <span class="desc-text">{{ shop.description }}</span>
+    </div>
+
     <!-- 老板说话气泡 -->
     <div
       class="boss-bubble"
@@ -205,6 +211,22 @@ onUnmounted(() => {
     }
   }
 }
+
+.shop-header__desc {
+  margin: 0 16px 8px;
+  padding: 10px 14px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.desc-icon { font-size: 16px; flex-shrink: 0; }
+.desc-text { flex: 1; }
 
 .boss-bubble {
   margin: 0 16px 16px;
