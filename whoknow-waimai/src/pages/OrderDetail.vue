@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, watch, ref } from 'vue'
+import { computed, watch, ref, onMounted } from 'vue'
+import { getDemoSpeed, setDemoSpeed, DEMO_SPEED_OPTIONS } from '@/utils/cookingTime'
 import { useRoute, useRouter } from 'vue-router'
 import { useOrderStore } from '@/store/order'
 import { getRiderName, getRiderAvatar } from '@/utils/npcEngine'
@@ -65,6 +66,23 @@ const showMap = computed(() => {
 // ============ 倒计时 ============
 const countdownSeconds = ref(0)
 let countdownTimer: ReturnType<typeof setInterval> | null = null
+
+// ============ 真实时间 & demo 倍速 ============
+const stageInfo = computed(() => (window as any).__chaosStageTimes?.[order.value?.id])
+const etaMinutes = computed(() => {
+  if (!stageInfo.value) return 0
+  return Math.ceil(stageInfo.value.realTotalSeconds / 60)
+})
+const speedOptions = DEMO_SPEED_OPTIONS
+const currentSpeed = ref(getDemoSpeed())
+
+function changeSpeed(speed: number) {
+  currentSpeed.value = speed
+  setDemoSpeed(speed)
+  // 修改后提示用户：新订单生效
+  alert(`倍速已改为 ${speed}×
+新订单生效（当前订单已排定不受影响）`)
+}
 
 function updateCountdown() {
   if (!order.value) {
@@ -181,6 +199,23 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
         </div>
         <div class="order-shop">🏪 {{ order.shopName }}</div>
         <div class="order-address">📍 {{ order.address }}</div>
+        <div v-if="stageInfo && !isCompleted" class="order-eta">
+          ⏱️ 预计送达 <strong>{{ etaMinutes }}</strong> 分钟
+          <span class="eta-detail">（真实 {{ stageInfo.realTotalSeconds }} 秒 × {{ stageInfo.demoSpeed }}倍速）</span>
+        </div>
+        <div v-if="stageInfo?.factors?.length && !isCompleted" class="order-factors">
+          <span v-for="(f, i) in stageInfo.factors" :key="i" class="factor-chip">{{ f }}</span>
+        </div>
+        <div v-if="!isCompleted" class="speed-control">
+          <span class="speed-label">demo 速度：</span>
+          <button
+            v-for="opt in speedOptions"
+            :key="opt.value"
+            :class="['speed-btn', { active: currentSpeed === opt.value }]"
+            @click="changeSpeed(opt.value)"
+          >{{ opt.label }}</button>
+          <span class="speed-hint" v-if="currentSpeed === 1">🍿 等杯茶</span>
+        </div>
       </div>
 
       <!-- 进度条 -->
@@ -352,6 +387,66 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
 .order-time { font-size: 12px; opacity: 0.8; }
 .order-shop { font-size: 15px; font-weight: 700; }
 .order-address { font-size: 12px; opacity: 0.85; }
+
+.order-eta {
+  font-size: 13px;
+  margin-top: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+.order-eta strong { font-size: 16px; margin: 0 2px; }
+.eta-detail { font-size: 11px; opacity: 0.85; margin-left: 4px; }
+
+.order-factors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.factor-chip {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.speed-control {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.speed-label {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-right: 2px;
+}
+.speed-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.speed-btn:hover { background: rgba(255, 255, 255, 0.25); }
+.speed-btn.active {
+  background: white;
+  color: #ff6b35;
+  font-weight: 700;
+  border-color: white;
+}
+.speed-hint {
+  font-size: 11px;
+  margin-left: 4px;
+  opacity: 0.8;
+}
 
 .progress-card {
   background: #fff;

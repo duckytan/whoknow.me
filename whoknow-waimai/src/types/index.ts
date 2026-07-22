@@ -10,7 +10,7 @@ export interface Shop {
   deliveryFee: number
   deliveryTime: number
   distance: number
-  bossPersonality: 'angry' | 'gentle' | 'weird' | 'lazy' | 'philosophical'
+  bossPersonality: string
   bossMottos: string[]
   menus?: Dish[]
 }
@@ -62,7 +62,7 @@ export interface Order {
   id: string
   shopId: string
   shopName: string
-  bossPersonality: 'angry' | 'gentle' | 'weird' | 'lazy' | 'philosophical'
+  bossPersonality: string
   riderId: string
   riderName: string
   riderAvatar: string
