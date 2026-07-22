@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch, ref, onMounted } from 'vue'
 import { getDemoSpeed, setDemoSpeed, DEMO_SPEED_OPTIONS } from '@/utils/cookingTime'
+import { showToast } from 'vant'
 import { useRoute, useRouter } from 'vue-router'
 import { useOrderStore } from '@/store/order'
 import { getRiderName, getRiderAvatar } from '@/utils/npcEngine'
@@ -79,9 +80,10 @@ const currentSpeed = ref(getDemoSpeed())
 function changeSpeed(speed: number) {
   currentSpeed.value = speed
   setDemoSpeed(speed)
-  // 修改后提示用户：新订单生效
-  alert(`倍速已改为 ${speed}×
-新订单生效（当前订单已排定不受影响）`)
+  showToast({
+    message: `倍速已切换到 ×${speed}（新订单生效）`,
+    duration: 2000,
+  })
 }
 
 function updateCountdown() {
@@ -120,6 +122,10 @@ watch(isCompleted, (v) => {
     clearInterval(countdownTimer)
     countdownTimer = null
     countdownSeconds.value = 0
+    // 清理已完成的订单时间数据（避免内存累积）
+    if (order.value?.id && (window as any).__chaosStageTimes?.[order.value.id]) {
+      delete (window as any).__chaosStageTimes[order.value.id]
+    }
   }
 })
 
@@ -202,9 +208,10 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
         <div v-if="stageInfo && !isCompleted" class="order-eta">
           ⏱️ 预计送达 <strong>{{ etaMinutes }}</strong> 分钟
           <span class="eta-detail">（真实 {{ stageInfo.realTotalSeconds }} 秒 × {{ stageInfo.demoSpeed }}倍速）</span>
+          <div v-if="stageInfo.lifestyle" class="lifestyle">≈ {{ stageInfo.lifestyle }}</div>
         </div>
         <div v-if="stageInfo?.factors?.length && !isCompleted" class="order-factors">
-          <span v-for="(f, i) in stageInfo.factors" :key="i" class="factor-chip">{{ f }}</span>
+          <span v-for="(f, i) in stageInfo.factors" :key="i" class="factor-chip">{{ f.emoji }} {{ f.label }}</span>
         </div>
         <div v-if="!isCompleted" class="speed-control">
           <span class="speed-label">demo 速度：</span>
@@ -398,6 +405,12 @@ function handleReviewSubmit(payload: { rating: number; tags: string[]; text: str
 }
 .order-eta strong { font-size: 16px; margin: 0 2px; }
 .eta-detail { font-size: 11px; opacity: 0.85; margin-left: 4px; }
+.lifestyle {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.9;
+  font-style: italic;
+}
 
 .order-factors {
   display: flex;

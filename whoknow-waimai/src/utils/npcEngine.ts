@@ -2,7 +2,7 @@ import { useOrderStore } from '@/store/order'
 import { useShopStore } from '@/store/shop'
 import type { Order } from '@/types'
 import quotesData from '@/data/quotes.json'
-import { calcOrderTime, applyDemoSpeed, getTimeOffsetExplanation } from './cookingTime'
+import { calcOrderTime, applyDemoSpeed, getTimeOffsetExplanation, getDemoSpeed, getDemoLifestyle } from './cookingTime'
 
 // ============ 骑手信息 ============
 const RIDER_INFO: Record<string, { name: string; avatar: string }> = {
@@ -211,9 +211,16 @@ export function triggerOrderFlow(orderId: string) {
   ;(window as any).__chaosStageTimes[orderId] = {
     created: Date.now(),
     realTotalSeconds: timeEst.total,
-    demoSpeed: (window as any).__demoSpeed || 30,
+    demoSpeed: getDemoSpeed(),
     stages: stageTimes,
-    factors: getTimeOffsetExplanation(addressName, remarkText, personality, riderId),
+    factors: getTimeOffsetExplanation(
+      order.items as any,
+      personality,
+      addressName,
+      remarkText,
+      riderId,
+    ),
+    lifestyle: getDemoLifestyle(timeEst.total),
   }
 }
 
