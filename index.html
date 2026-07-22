@@ -555,6 +555,55 @@
       .chinese-brand { font-size: 1.8rem; }
       .product-row { padding: 0.9rem 1rem; }
     }
+  
+    /* X: hero 整体轻微晃动 */
+    .hero {
+      animation: hero-shake 2.5s ease-in-out infinite;
+    }
+
+    @keyframes hero-shake {
+      0%, 100% { transform: translate(0, 0) rotate(0); }
+      25% { transform: translate(-0.5px, 0.3px) rotate(-0.15deg); }
+      50% { transform: translate(0.4px, -0.2px) rotate(0.1deg); }
+      75% { transform: translate(-0.3px, -0.4px) rotate(0.15deg); }
+    }
+
+    @keyframes logo-breathe {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50% { transform: rotate(-5deg) scale(1.04); }
+    }
+    .logo {
+      animation: logo-breathe 3s ease-in-out infinite;
+    }
+    /* ⚠️ transform 已被 keyframes 完全接管，rotate(-5deg) 在 keyframes 0%/100% 里保留 */
+    /* W: 产品卡 hover 反骨 */
+    .product-row:hover .name::after {
+      content: '点啥点，这功能还在设计~';
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--orange);
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+
+    /* Y: 背景粒子 */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: particle-float var(--dur, 8s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes particle-float {
+      0%, 100% { transform: translate(0, 0); opacity: 0; }
+      10% { opacity: var(--max-opacity, 0.6); }
+      90% { opacity: var(--max-opacity, 0.6); }
+      50% { transform: translate(var(--dx, 30px), var(--dy, -40px)); }
+    }
+
   </style>
 </head>
 <body>
@@ -704,5 +753,27 @@
     </div>
 
   </div>
-</body>
+
+      <script>
+        (function() {
+          // 12 个粒子，颜色随机
+          var colors = ['#6eda78', '#ff7849', '#fde047', '#a78bfa', '#ff3b8b'];
+          for (var i = 0; i < 14; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = (3 + Math.random() * 4) + 'px';
+            p.style.height = p.style.width;
+            p.style.background = colors[Math.floor(Math.random() * colors.length)];
+            p.style.left = (Math.random() * 100) + 'vw';
+            p.style.top = (Math.random() * 100) + 'vh';
+            p.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
+            p.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
+            p.style.setProperty('--dur', (6 + Math.random() * 6) + 's');
+            p.style.setProperty('--delay', (Math.random() * 5) + 's');
+            p.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.4));
+            document.body.appendChild(p);
+          }
+        })();
+      </script>
+  </body>
 </html>
