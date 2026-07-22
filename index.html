@@ -366,19 +366,51 @@
       }
     }
 
-    /* 副标：mono 风 · 像 status bar */
+    /* 副标：和主标统一字体 + 加描边立体 */
     .tagline {
       margin-top: 2.5rem;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.85rem;
-      color: var(--fg-dim);
-      line-height: 1.7;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+      font-size: 1.05rem;
+      color: var(--fg);
+      line-height: 1.8;
       letter-spacing: 0;
+      font-weight: 600;
+      text-shadow:
+        -1px -1px 0 #0a0612,
+        1px -1px 0 #0a0612,
+        -1px 1px 0 #0a0612,
+        1px 1px 0 #0a0612;
     }
 
-    .tagline .accent { color: var(--fg); }
-    .tagline .dim { color: var(--fg-mute); }
-    .tagline .sep { color: var(--line-2); margin: 0 0.5rem; }
+    .tagline .accent {
+      color: #fde047;
+      font-weight: 800;
+      font-style: italic;
+    }
+    .tagline .dim {
+      color: var(--fg-dim);
+      font-weight: 400;
+    }
+    .tagline .sep {
+      color: var(--fg-mute);
+      margin: 0 0.5rem;
+      font-weight: 400;
+    }
+    .tagline .question {
+      display: inline-block;
+      color: #fde047;
+      font-size: 1.4em;
+      font-weight: 900;
+      vertical-align: middle;
+      margin-right: 0.15em;
+      transform: rotate(-8deg);
+      text-shadow:
+        -1px -1px 0 #0a0612,
+        1px -1px 0 #0a0612,
+        -1px 1px 0 #0a0612,
+        1px 1px 0 #0a0612,
+        0 2px 0 rgba(0, 0, 0, 0.4);
+    }
 
     /* ===== Section ===== */
     .section {
@@ -493,12 +525,6 @@
     <!-- ===== HERO ===== -->
     <div class="hero">
 
-      <!-- Eyebrow: 顶部状态条 -->
-      <div class="eyebrow">
-        <span class="dot"></span>
-        <span>CHUNAO.UNIVERSE / v0.1</span>
-      </div>
-
       <!-- 主标：纯文字，单一绿色锚点 K -->
       <div class="logo">
         <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-kuso">
@@ -514,20 +540,51 @@
         <span class="char">胡</span><span class="char accent">闹</span>
       </div>
 
-      <!-- Tagline: mono 风，像系统输出 -->
-      <div class="tagline">
-        <span class="dim">//</span> <span class="accent">谁知道这个宇宙里</span>会发生什么？<br>
-        <span class="dim">$</span> Who knows<span class="sep">·</span>家人们谁懂啊
+      <!-- Tagline: 随机轮盘（每次刷新不同） -->
+      <div class="tagline" id="tagline">
+        <!-- JS 启动时随机注入 -->
       </div>
+      <script>
+        (function() {
+          var slogans = [
+            {
+              q: '这个导购员居然阻止我买化妆品',
+              zh: '这个导购员居然阻止我买化妆品'
+            },
+            {
+              q: '骑手送外卖时居然跟我聊哲学',
+              zh: '骑手送外卖时居然跟我聊哲学'
+            },
+            {
+              q: '老板推荐菜时给我讲了个段子',
+              zh: '老板推荐菜时给我讲了个段子'
+            },
+            {
+              q: 'AI 居然用段子给我推新品',
+              zh: 'AI 居然用段子给我推新品'
+            },
+            {
+              q: '下一秒会发生啥',
+              zh: '下一秒会发生啥'
+            },
+            {
+              q: '这个宇宙里啥都敢胡来',
+              zh: '这个宇宙里啥都敢胡来'
+            }
+          ];
+
+          var pick = slogans[Math.floor(Math.random() * slogans.length)];
+
+          document.getElementById('tagline').innerHTML =
+            '<span class="question">?</span>' + pick.zh + '<br>' +
+            '<span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>';
+        })();
+      </script>
 
     </div>
 
     <!-- ===== PRODUCTS ===== -->
     <div class="section">
-      <div class="section-title">
-        <span class="accent">$</span> ls ./胡闹三件套
-      </div>
-
       <div class="products">
         <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
           <div class="icon">🍜</div>
@@ -558,9 +615,9 @@
       </div>
     </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- ===== FOOTER I: 互动式 ===== -->
     <div class="footer">
-      <span class="accent">●</span> whoknow — 谁都不知道接下来会发生什么 <span class="accent">●</span>
+      <span class="accent">→</span> 下一个胡闹，由你决定
     </div>
 
   </div>
