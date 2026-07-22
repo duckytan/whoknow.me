@@ -161,6 +161,79 @@
       100% { opacity: 1; transform: translateX(-50%) scale(1.15) translateY(-3px) rotate(-4deg); }
     }
 
+    /* ===== KUSO 脚注：紧贴 K 下方，像注释 ===== */
+    .logo-kuso {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      gap: 0.08em;
+      margin-top: -0.05em;
+      pointer-events: none;
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    .k-letter {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.14em;
+      font-weight: 400;
+      color: var(--c, #888);
+      display: inline-block;
+      opacity: 0.85;
+      letter-spacing: 0.02em;
+      animation-delay: var(--d, 0s);
+      transform-origin: center bottom;
+    }
+
+    /* 字母 1：安静型 —— 微浮 */
+    .k-letter-1 {
+      animation: kid-float 1.4s ease-in-out infinite;
+    }
+
+    @keyframes kid-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    /* 字母 2：兴奋型 —— 小跳（克制） */
+    .k-letter-2 {
+      animation: kid-jump 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
+
+    @keyframes kid-jump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* 字母 3：旋转型 —— 微旋转 */
+    .k-letter-3 {
+      animation: kid-spin 2.2s linear infinite;
+    }
+
+    @keyframes kid-spin {
+      from { transform: rotate(0); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 字母 4：摇摆型 —— 微摆 */
+    .k-letter-4 {
+      animation: kid-sway 1.6s ease-in-out infinite;
+    }
+
+    @keyframes kid-sway {
+      0%, 100% { transform: translateX(0) rotate(0); }
+      25% { transform: translateX(-1.5px) rotate(-4deg); }
+      75% { transform: translateX(1.5px) rotate(4deg); }
+    }
+
+    /* 给字母起始微错位 */
+    .k-letter-1 { transform: translateY(-0.5px); }
+    .k-letter-2 { transform: translateY(0.5px); }
+    .k-letter-3 { transform: translateY(-1px); }
+    .k-letter-4 { transform: translateY(1px); }
+
     .logo-now {
       color: var(--fg);
     }
@@ -332,7 +405,12 @@
 
       <!-- 主标：纯文字，单一绿色锚点 K -->
       <div class="logo">
-        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span>
+        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-kuso">
+          <span class="k-letter k-letter-1" style="--c:#fde047;--d:0s;">k</span>
+          <span class="k-letter k-letter-2" style="--c:#ff7849;--d:0.2s;">u</span>
+          <span class="k-letter k-letter-3" style="--c:#6eda78;--d:0.4s;">s</span>
+          <span class="k-letter k-letter-4" style="--c:#a78bfa;--d:0.6s;">o</span>
+        </span><span class="logo-now">now</span>
       </div>
 
       <!-- 胡闹：小一号，灰绿色，作为副标 -->
