@@ -467,72 +467,101 @@
 
     .section-title .accent { color: var(--fg-mute); }
 
-    /* ===== Products ===== */
+    /* α: 戏精评价卡 */
     .products {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 1rem;
       width: 100%;
     }
 
-    .product-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .review-card {
       background: var(--bg-2);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      text-decoration: none;
-      color: inherit;
+      border-radius: 14px;
+      padding: 1.2rem 1.3rem;
+      position: relative;
       transition: all 0.2s ease;
+      cursor: pointer;
     }
 
-    .product-row:hover {
-      border-color: var(--green);
-      background: #111315;
-      transform: translateX(2px);
+    .review-card:hover {
+      border-color: var(--orange);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
-    .product-row .icon {
-      font-size: 1.6rem;
-      width: 44px;
-      height: 44px;
+    .review-card::before {
+      content: '\201C';
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-family: 'Georgia', serif;
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--orange);
+      opacity: 0.5;
+    }
+
+    .review-text {
+      font-size: 0.95rem;
+      color: var(--fg);
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+      padding-top: 0.3rem;
+    }
+
+    .review-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--fg-mute);
+    }
+
+    .review-meta .author {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .review-meta .author .avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--line-2);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      flex-shrink: 0;
+      font-size: 0.85rem;
     }
 
-    .product-row .info { flex: 1; min-width: 0; }
-    .product-row .name {
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--fg);
+    .review-meta .stars {
+      color: var(--orange);
+      letter-spacing: 0.1em;
+    }
+
+    .review-product {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--fg-mute);
+      letter-spacing: 0.05em;
+      margin-top: 0.4rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 0.4rem;
     }
-    .product-row .name .en {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      color: var(--fg-mute);
-      font-weight: 400;
-      font-size: 0.8rem;
+
+    .review-product .tag {
+      background: var(--bg);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--line-2);
     }
-    .product-row .desc { font-size: 0.78rem; color: var(--fg-mute); margin-top: 0.2rem; }
-    .product-row .badge {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.65rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    .badge.dev { background: rgba(255, 255, 255, 0.04); color: #bbb; border: 1px solid var(--line-2); }
-    .badge.design { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
-    .badge.idea { background: rgba(251, 191, 36, 0.08); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
 
 /* ===== Footer ===== */
     .footer {
@@ -718,32 +747,53 @@
     <!-- ===== PRODUCTS ===== -->
     <div class="section">
       <div class="products">
-        <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
-          <div class="icon">🍜</div>
-          <div class="info">
-            <div class="name">胡闹外卖 <span class="en">/waimai</span></div>
-            <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
+        <div class="review-card" onclick="alert('🍜 胡闹外卖开发中，即将上线！');">
+          <div class="review-text">骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣</div>
+          <div class="review-meta">
+            <div class="author">
+              <div class="avatar">🐱</div>
+              <span>家人们谁懂啊</span>
+            </div>
+            <div class="stars">★★★★★</div>
           </div>
-          <span class="badge dev">[dev]</span>
-        </a>
+          <div class="review-product">
+            <span class="tag">🍜 胡闹外卖</span>
+            <span>/waimai</span>
+            <span style="margin-left: auto;">[开发中]</span>
+          </div>
+        </div>
 
-        <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
-          <div class="icon">🛒</div>
-          <div class="info">
-            <div class="name">胡闹导购 <span class="en">/mart</span></div>
-            <div class="desc">反骨导购阻止你 checkout</div>
+        <div class="review-card" onclick="alert('🛒 胡闹导购还在设计阶段~');">
+          <div class="review-text">导购员居然劝我别买，说我已经有 7 支口红了 💄</div>
+          <div class="review-meta">
+            <div class="author">
+              <div class="avatar">🐶</div>
+              <span>被劝退的小姐姐</span>
+            </div>
+            <div class="stars">★★★★★</div>
           </div>
-          <span class="badge design">[design]</span>
-        </a>
+          <div class="review-product">
+            <span class="tag">🛒 胡闹导购</span>
+            <span>/mart</span>
+            <span style="margin-left: auto;">[设计]</span>
+          </div>
+        </div>
 
-        <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
-          <div class="icon">🧠</div>
-          <div class="info">
-            <div class="name">胡闹大脑 <span class="en">/brain</span></div>
-            <div class="desc">控制中心 · AI 追热点推段子</div>
+        <div class="review-card" onclick="alert('🧠 胡闹大脑已设计好架构~');">
+          <div class="review-text">AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖</div>
+          <div class="review-meta">
+            <div class="author">
+              <div class="avatar">🦊</div>
+              <span>单身的码农</span>
+            </div>
+            <div class="stars">★★★★★</div>
           </div>
-          <span class="badge idea">[idea]</span>
-        </a>
+          <div class="review-product">
+            <span class="tag">🧠 胡闹大脑</span>
+            <span>/brain</span>
+            <span style="margin-left: auto;">[规划]</span>
+          </div>
+        </div>
       </div>
     </div>
 
