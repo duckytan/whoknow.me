@@ -39,6 +39,32 @@ function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
+/**
+ * 占位符清洗（v10 · 防御性兜底）
+ *
+ * 历史问题：7-22 21:23 修复 fillVars 之前，订单 store 里残留
+ * 模板字面量 `{address}` `{remark}` 等。这些订单不会自动迁移。
+ *
+ * 解决方案：
+ * 1. 写入前 sanitize（防止新 bug 写入脏数据）
+ * 2. 读取时 sanitize（清理历史脏数据 · 通过 store 层调用）
+ *
+ * 用法：所有写入 timeline.npcQuote 的地方都先 sanitize
+ */
+export function sanitizeQuote(quote: string | undefined): string {
+  if (!quote) return quote || ''
+  return quote
+    .replace(/\{address\}/g, '未知地址')
+    .replace(/\{remark\}/g, '少废话')
+    .replace(/\{shopName\}/g, '本店')
+    .replace(/\{dishName\}/g, '美食')
+    .replace(/\{riderName\}/g, '骑手')
+    .replace(/\{userName\}/g, '大人')
+    .replace(/\{orderNum\}/g, 'N')
+    .replace(/\{eventCount\}/g, '5')
+    .replace(/\{[^}]+\}/g, '...')  // 任何其他未识别占位符
+}
+
 function getBossQuoteFromJson(
   personality: string,
   vars: QuoteVars,

@@ -1,13 +1,22 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Order } from '@/types'
+import { sanitizeQuote } from '@/utils/npcEngine'
 
 const STORAGE_KEY = 'chaos_orders'
 
 function loadOrders(): Order[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    const list: Order[] = raw ? JSON.parse(raw) : []
+    // 启动时清洗历史脏数据（v10 防御性兜底）
+    return list.map(o => ({
+      ...o,
+      timeline: o.timeline?.map(t => ({
+        ...t,
+        npcQuote: t.npcQuote ? sanitizeQuote(t.npcQuote) : t.npcQuote,
+      })) || [],
+    }))
   } catch {
     return []
   }
@@ -37,7 +46,7 @@ export const useOrderStore = defineStore('order', () => {
     order.timeline.push({
       time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       action: statusLabel(status),
-      npcQuote,
+      npcQuote: npcQuote ? sanitizeQuote(npcQuote) : npcQuote,
     })
     saveOrders(orders.value)
   }
