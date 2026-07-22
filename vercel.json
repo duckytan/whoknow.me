@@ -11,6 +11,8 @@
     }
   ],
   "rewrites": [
+    { "source": "/waimai/assets/(.*)", "destination": "/waimai/assets/$1" },
+    { "source": "/waimai", "destination": "/waimai/index.html" },
     { "source": "/waimai/(.*)", "destination": "/waimai/index.html" }
   ]
 }
