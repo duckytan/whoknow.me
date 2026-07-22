@@ -148,17 +148,17 @@
     .logo-k::before {
       content: '\01F525';
       position: absolute;
-      top: -1em;
+      top: -1.4em;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 0.5em;
-      filter: drop-shadow(0 0 8px rgba(255, 120, 73, 0.8));
+      font-size: 0.42em;
+      filter: drop-shadow(0 0 10px rgba(255, 120, 73, 0.9));
       animation: flicker-flame 0.4s ease-in-out infinite alternate;
     }
 
     @keyframes flicker-flame {
-      0% { opacity: 0.85; transform: translateX(-50%) scale(1); }
-      100% { opacity: 1; transform: translateX(-50%) scale(1.1) rotate(-3deg); }
+      0% { opacity: 0.85; transform: translateX(-50%) scale(1) translateY(0); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.15) translateY(-3px) rotate(-4deg); }
     }
 
     .logo-now {
