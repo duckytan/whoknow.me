@@ -380,7 +380,45 @@
         1px -1px 0 #0a0612,
         -1px 1px 0 #0a0612,
         1px 1px 0 #0a0612;
+      transition: opacity 0.4s ease-out;
     }
+
+
+    /* 入场 C：模糊淡入（用 keyframes 动画，避开 reflow 问题） */
+    #tagline-top {
+      display: inline-block;
+    }
+
+    /* 新内容入场动画 */
+    #tagline-top.entering {
+      animation: enter-blur 0.5s ease-out forwards;
+    }
+
+    @keyframes enter-blur {
+      0% {
+        opacity: 0;
+        filter: blur(10px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    /* 退场 E：字母飞散 */
+    .char-anim {
+      display: inline-block;
+    }
+
+    #tagline-top.flying .char-anim {
+      animation: char-fly 0.5s ease-in forwards;
+    }
+
+    @keyframes char-fly {
+      0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+      100% { transform: translate(var(--dx, 30px), var(--dy, -50px)) rotate(var(--rot, 90deg)); opacity: 0; }
+    }
+
 
     .tagline .accent {
       color: #fde047;
@@ -540,47 +578,88 @@
         <span class="char">胡</span><span class="char accent">闹</span>
       </div>
 
-      <!-- Tagline: 随机轮盘（每次刷新不同） -->
+      <!-- Tagline: 上行随机切换 + 下行固定 -->
       <div class="tagline" id="tagline">
-        <!-- JS 启动时随机注入 -->
+        <span id="tagline-top"><!-- JS 注入：? + slogan 主体 --></span>
+        <br>
+        <span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>
       </div>
       <script>
         (function() {
           var slogans = [
-            {
-              q: '这个导购员居然阻止我买化妆品',
-              zh: '这个导购员居然阻止我买化妆品'
-            },
-            {
-              q: '骑手送外卖时居然跟我聊哲学',
-              zh: '骑手送外卖时居然跟我聊哲学'
-            },
-            {
-              q: '老板推荐菜时给我讲了个段子',
-              zh: '老板推荐菜时给我讲了个段子'
-            },
-            {
-              q: 'AI 居然用段子给我推新品',
-              zh: 'AI 居然用段子给我推新品'
-            },
-            {
-              q: '下一秒会发生啥',
-              zh: '下一秒会发生啥'
-            },
-            {
-              q: '这个宇宙里啥都敢胡来',
-              zh: '这个宇宙里啥都敢胡来'
-            }
+            '这个导购员居然阻止我买化妆品',
+            '骑手送外卖时居然跟我聊哲学',
+            '老板推荐菜时给我讲了个段子',
+            'AI 居然用段子给我推新品',
+            '下一秒会发生啥',
+            '这个宇宙里啥都敢胡来'
           ];
 
-          function render() {
-            var pick = slogans[Math.floor(Math.random() * slogans.length)];
-            document.getElementById('tagline').innerHTML =
-              '<span class="question">?</span>' + pick.zh + '<br>' +
-              '<span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>';
+          var currentSlogan = slogans[0];
+          var topEl = document.getElementById('tagline-top');
+
+          // 入场用 C：模糊淡入 → 不需要逐字动画，只要整体淡入
+          function buildHTML(text) {
+            return '<span class="question">?</span><span class="slogan-zh">' + text + '</span>';
           }
 
-          render();
+          function render() {
+            var next;
+            do {
+              next = slogans[Math.floor(Math.random() * slogans.length)];
+            } while (next === currentSlogan && slogans.length > 1);
+            currentSlogan = next;
+
+            // 退场 E：字母飞散
+            // 先把当前内容拆成字符，每个字符加随机飞散方向
+            var chars = topEl.querySelectorAll('.slogan-zh, .question');
+            chars.forEach(function(el) {
+              if (el.classList.contains('question')) {
+                // ? 字符 - 直接飞散
+                var dx = (Math.random() - 0.5) * 80;
+                var dy = -40 - Math.random() * 50;
+                var rot = (Math.random() - 0.5) * 240;
+                el.style.setProperty('--dx', dx + 'px');
+                el.style.setProperty('--dy', dy + 'px');
+                el.style.setProperty('--rot', rot + 'deg');
+                el.classList.add('char-anim');
+              } else {
+                // slogan 主体：每个字符拆出来
+                var text = el.textContent;
+                var spans = '';
+                for (var i = 0; i < text.length; i++) {
+                  var dx = (Math.random() - 0.5) * 80;
+                  var dy = -40 - Math.random() * 50;
+                  var rot = (Math.random() - 0.5) * 240;
+                  spans += '<span class="char-anim" style="--dx: ' + dx + 'px; --dy: ' + dy + 'px; --rot: ' + rot + 'deg;">' + text[i] + '</span>';
+                }
+                el.outerHTML = spans;
+              }
+            });
+
+            topEl.classList.add('flying');
+
+            setTimeout(function() {
+              // 退场动画完成
+              topEl.classList.remove('flying');
+
+              // 入场 C：模糊淡入（用 keyframes 动画）
+              // 1. 替换内容（新 DOM 默认无 .entering）
+              topEl.innerHTML = buildHTML(next);
+              // 2. 强制 reflow，确保浏览器先渲染默认状态
+              void topEl.offsetWidth;
+              // 3. 加 .entering class → 触发 keyframes 动画
+              topEl.classList.add('entering');
+              // 4. 动画结束后移除 class（下次切换能再加）
+              setTimeout(function() {
+                topEl.classList.remove('entering');
+              }, 500);
+            }, 500);
+          }
+
+          currentSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+          topEl.innerHTML = buildHTML(currentSlogan);
+
           setInterval(render, 3000);
         })();
       </script>
