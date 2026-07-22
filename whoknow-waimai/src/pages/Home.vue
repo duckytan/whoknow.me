@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useShopStore } from '@/store/shop'
+import { useOrderStore } from '@/store/order'
 import AppHeader from '@/components/base/AppHeader.vue'
 import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
 
 const shopStore = useShopStore()
+const orderStore = useOrderStore()
+const orders = computed(() => orderStore.orders)
 
 const categories = [
   { icon: '🔥', name: '烧烤' },
@@ -73,6 +76,14 @@ const sortOpts = [
         </div>
       </van-swipe-item>
     </van-swipe>
+
+    <!-- 我的订单快捷入口 -->
+    <div class="order-entry" @click="$router.push('/orders')">
+      <van-icon name="records-o" size="18" color="#ff6b35" />
+      <span>我的订单</span>
+      <van-icon name="arrow" size="14" color="#bbb" style="margin-left:auto" />
+      <span v-if="orders.length > 0" class="order-count">{{ orders.length }}单</span>
+    </div>
 
     <!-- 分类 icon -->
     <div class="category-grid">
@@ -155,6 +166,33 @@ const sortOpts = [
     &--2 { background: linear-gradient(135deg, #ff4757, #ff6b35); }
     &--3 { background: linear-gradient(135deg, #e55a26, #ff8c42); }
   }
+}
+
+.order-entry {
+  margin: 0 16px;
+  padding: 10px 14px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.order-entry:active {
+  background: #fafafa;
+  transform: scale(0.98);
+}
+
+.order-count {
+  font-size: 11px;
+  font-weight: 400;
+  color: #999;
+  margin-right: 4px;
 }
 
 .category-grid {

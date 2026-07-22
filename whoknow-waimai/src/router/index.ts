@@ -28,6 +28,12 @@ const router = createRouter({
       meta: { title: '确认下单' },
     },
     {
+      path: '/orders',
+      name: 'OrderHistory',
+      component: () => import('@/pages/OrderHistory.vue'),
+      meta: { title: '我的订单' },
+    },
+    {
       path: '/order/:id',
       name: 'OrderDetail',
       component: () => import('@/pages/OrderDetail.vue'),
