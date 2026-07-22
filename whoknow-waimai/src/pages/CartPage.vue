@@ -3,8 +3,6 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/store/cart'
 import { useShopStore } from '@/store/shop'
-import AppHeader from '@/components/base/AppHeader.vue'
-
 const router = useRouter()
 const cartStore = useCartStore()
 const shopStore = useShopStore()
@@ -27,7 +25,7 @@ function goCheckout() {
 
 <template>
   <div class="cart-page">
-    <AppHeader title="购物车" />
+    <van-nav-bar title="购物车" left-arrow @click-left="router.back()" />
 
     <div v-if="cartStore.isEmpty" class="empty-cart">
       <van-empty image="shopping" description="购物车还是空的">

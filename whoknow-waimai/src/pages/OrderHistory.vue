@@ -2,8 +2,6 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useOrderStore } from '@/store/order'
-import AppHeader from '@/components/base/AppHeader.vue'
-
 const router = useRouter()
 const orderStore = useOrderStore()
 
