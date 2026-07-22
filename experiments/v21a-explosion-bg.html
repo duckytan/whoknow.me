@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whoknow · 胡闹宇宙</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0612'/%3E%3Ctext x='50' y='72' font-family='Inter,sans-serif' font-size='70' font-weight='900' fill='%23ff7849' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="谁知道这个宇宙里会发生什么？" />
+  <meta name="theme-color" content="#0a0612" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: #6eda78;
+      --green-dim: rgba(110, 218, 120, 0.12);
+      --orange: #ff7849;
+      --bg: #0a0612;
+      --bg-2: #120a1a;
+      --line: #1f1828;
+      --line-2: #2a2236;
+      --fg: #ededef;
+      --fg-dim: #a094b8;
+      --fg-mute: #6b6480;
+    }
+
+    html, body { background: var(--bg); }
+
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 背景：左上极淡绿光晕 + 网格点阵 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 500px 400px at 20% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 85% 100%, rgba(110, 218, 120, 0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 50% 30%, rgba(255, 120, 73, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      width: 100%;
+      padding: 4rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      text-align: center;
+      padding-top: 4rem;
+      width: 100%;
+    }
+
+    /* 顶部小标：mono 字体 · 标签感 */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.72rem;
+      color: var(--fg-mute);
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: transparent;
+    }
+
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      background: #444;
+      border-radius: 50%;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* 主标：单行 whoknow · 不要再花 */
+    .logo {
+      font-family: 'Bungee', 'Inter', 'PingFang SC', sans-serif;
+      font-size: 6rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: 2rem;
+      transform: rotate(-5deg);
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+      text-shadow:
+        -3px -3px 0 #0a0612,
+        3px -3px 0 #0a0612,
+        -3px 3px 0 #0a0612,
+        3px 3px 0 #0a0612,
+        0 8px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .logo-who {
+      color: var(--fg);
+    }
+
+    .logo-k {
+      color: var(--orange);
+      position: relative;
+      display: inline-block;
+      animation: bounce-k 1.8s ease-in-out infinite;
+      margin: 0 0.1em;
+      z-index: 2;
+    }
+
+    @keyframes bounce-k {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
+    }
+
+    .logo-k::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2.6em;
+      height: 2.6em;
+      transform: translate(-50%, -50%);
+      background:
+        repeating-conic-gradient(
+          from 0deg at 50% 50%,
+          #fde047 0deg 12deg,
+          #0a0612 12deg 24deg
+        );
+      clip-path: polygon(50% 0%, 60% 15%, 78% 8%, 70% 28%, 92% 22%, 78% 40%, 100% 50%, 78% 60%, 92% 78%, 70% 72%, 78% 92%, 60% 85%, 50% 100%, 40% 85%, 22% 92%, 30% 72%, 8% 78%, 22% 60%, 0% 50%, 22% 40%, 8% 22%, 30% 28%, 22% 8%, 40% 15%);
+      z-index: -1;
+      animation: spin-bg 8s linear infinite;
+    }
+
+    @keyframes spin-bg {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .logo-now {
+      color: var(--fg);
+    }
+
+
+
+    /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
+    .chinese-brand {
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: #fde047;
+      letter-spacing: 0.3em;
+      margin-right: -0.3em;
+      margin-top: 1.5rem;
+      transform: rotate(-4deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3em;
+      text-shadow:
+        -2px -2px 0 #0a0612,
+        2px -2px 0 #0a0612,
+        -2px 2px 0 #0a0612,
+        2px 2px 0 #0a0612;
+    }
+
+    .chinese-brand .char {
+      display: inline-block;
+      color: #fde047;
+    }
+
+    .chinese-brand .char.accent {
+      color: var(--orange);
+    }
+
+    /* 副标：mono 风 · 像 status bar */
+    .tagline {
+      margin-top: 2.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.85rem;
+      color: var(--fg-dim);
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+
+    .tagline .accent { color: var(--fg); }
+    .tagline .dim { color: var(--fg-mute); }
+    .tagline .sep { color: var(--line-2); margin: 0 0.5rem; }
+
+    /* ===== Section ===== */
+    .section {
+      margin-top: 6rem;
+      width: 100%;
+    }
+
+    .section-title {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      color: var(--fg-mute);
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title .accent { color: var(--fg-mute); }
+
+    /* ===== Products ===== */
+    .products {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      width: 100%;
+    }
+
+    .product-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .product-row:hover {
+      border-color: var(--green);
+      background: #111315;
+      transform: translateX(2px);
+    }
+
+    .product-row .icon {
+      font-size: 1.6rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .product-row .info { flex: 1; min-width: 0; }
+    .product-row .name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--fg);
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .product-row .name .en {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      color: var(--fg-mute);
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
+    .product-row .desc { font-size: 0.78rem; color: var(--fg-mute); margin-top: 0.2rem; }
+    .product-row .badge {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+    .badge.dev { background: rgba(255, 255, 255, 0.04); color: #bbb; border: 1px solid var(--line-2); }
+    .badge.design { background: rgba(167, 139, 250, 0.1); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); }
+    .badge.idea { background: rgba(251, 191, 36, 0.08); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+
+/* ===== Footer ===== */
+    .footer {
+      margin-top: auto;
+      padding: 3rem 0 1.5rem;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 0.7rem;
+      color: var(--fg-mute);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    .footer .accent { color: var(--orange); }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 480px) {
+      .container { padding: 2.5rem 1.25rem 1.5rem; }
+      .hero { padding-top: 2rem; }
+      .logo { font-size: 3.8rem; }
+      .chinese-brand { font-size: 1.8rem; }
+      .product-row { padding: 0.9rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+
+      <!-- Eyebrow: 顶部状态条 -->
+      <div class="eyebrow">
+        <span class="dot"></span>
+        <span>CHUNAO.UNIVERSE / v0.1</span>
+      </div>
+
+      <!-- 主标：纯文字，单一绿色锚点 K -->
+      <div class="logo">
+        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-now">now</span>
+      </div>
+
+      <!-- 胡闹：小一号，灰绿色，作为副标 -->
+      <div class="chinese-brand">
+        <span class="char accent">胡</span><span class="char">闹</span>
+      </div>
+
+      <!-- Tagline: mono 风，像系统输出 -->
+      <div class="tagline">
+        <span class="dim">//</span> <span class="accent">谁知道这个宇宙里</span>会发生什么？<br>
+        <span class="dim">$</span> Who knows<span class="sep">·</span>家人们谁懂啊
+      </div>
+
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="section">
+      <div class="section-title">
+        <span class="accent">$</span> ls ./胡闹三件套
+      </div>
+
+      <div class="products">
+        <a class="product-row" href="#" onclick="alert('🍜 胡闹外卖开发中，即将上线！');return false;">
+          <div class="icon">🍜</div>
+          <div class="info">
+            <div class="name">胡闹外卖 <span class="en">/waimai</span></div>
+            <div class="desc">段子手老板 × 戏精骑手 × 魔性评价</div>
+          </div>
+          <span class="badge dev">[dev]</span>
+        </a>
+
+        <a class="product-row" href="#" onclick="alert('🛒 胡闹导购还在设计阶段~');return false;">
+          <div class="icon">🛒</div>
+          <div class="info">
+            <div class="name">胡闹导购 <span class="en">/mart</span></div>
+            <div class="desc">反骨导购阻止你 checkout</div>
+          </div>
+          <span class="badge design">[design]</span>
+        </a>
+
+        <a class="product-row" href="#" onclick="alert('🧠 胡闹大脑已设计好架构~');return false;">
+          <div class="icon">🧠</div>
+          <div class="info">
+            <div class="name">胡闹大脑 <span class="en">/brain</span></div>
+            <div class="desc">控制中心 · AI 追热点推段子</div>
+          </div>
+          <span class="badge idea">[idea]</span>
+        </a>
+      </div>
+    </div>
+
+<!-- ===== FOOTER ===== -->
+    <div class="footer">
+      <span class="accent">●</span> whoknow — 谁都不知道接下来会发生什么 <span class="accent">●</span>
+    </div>
+
+  </div>
+</body>
+</html>
