@@ -66,7 +66,7 @@ function skip() {
   <van-popup
     :show="show"
     position="bottom"
-    :style="{ height: '100vh', width: '100vw', maxWidth: '480px', margin: '0 auto' }"
+    :style="{ height: '100dvh', width: '100vw', maxWidth: '480px', margin: '0 auto' }"
     :close-on-click-overlay="false"
     teleport="body"
   >
@@ -138,10 +138,11 @@ function skip() {
   text-align: center;
   color: #fff;
   gap: 20px;
+  box-sizing: border-box;
 }
 
 .slide-emoji {
-  font-size: 96px;
+  font-size: clamp(64px, 18vw, 96px);
   line-height: 1;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
   animation: bobble 2s ease-in-out infinite;
@@ -169,11 +170,12 @@ function skip() {
 
 .onboarding-footer {
   background: #fff;
-  padding: 20px 24px 32px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding-bottom: calc(32px + env(safe-area-inset-bottom, 0));
+  flex-shrink: 0;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0));
 }
 
 .dots {
@@ -205,9 +207,9 @@ function skip() {
 .btn-skip,
 .btn-next {
   flex: 1;
-  height: 48px;
+  height: clamp(40px, 11vw, 48px);
   border-radius: 24px;
-  font-size: 15px;
+  font-size: clamp(13px, 3.6vw, 15px);
   font-weight: 700;
   border: none;
   cursor: pointer;
