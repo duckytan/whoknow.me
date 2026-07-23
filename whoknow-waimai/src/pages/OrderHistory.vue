@@ -84,6 +84,7 @@ function formatTime(ts: number) {
           <span class="card-time">{{ formatTime(order.createdAt) }}</span>
           <div class="card-right">
             <span v-if="order.review" class="review-badge">📝 已评价</span>
+            <span v-else-if="order.status === 'completed'" class="review-pending">🎭 去评价</span>
             <span class="card-price">¥{{ order.totalPrice.toFixed(2) }}</span>
             <van-icon name="arrow" color="#bbb" />
           </div>
@@ -187,6 +188,21 @@ function formatTime(ts: number) {
   font-size: 11px;
   color: #07c160;
   font-weight: 600;
+}
+
+.review-pending {
+  font-size: 11px;
+  color: #fff;
+  font-weight: 700;
+  background: #ff4757;
+  padding: 2px 8px;
+  border-radius: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
 .card-price {
