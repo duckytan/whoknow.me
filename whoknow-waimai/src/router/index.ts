@@ -63,6 +63,12 @@ const router = createRouter({
       component: () => import('@/pages/AchievementWall.vue'),
       meta: { title: '我的成就' },
     },
+    {
+      path: '/feed',
+      name: 'FeedPage',
+      component: () => import('@/pages/FeedPage.vue'),
+      meta: { title: '胡闹动态' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }
