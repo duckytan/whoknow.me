@@ -184,19 +184,31 @@ export function triggerOrderFlow(orderId: string): () => void {
   ]
 
   // 接单
+  // v13 P0-4 修复（7-23 main CDP 报告）：
+  // 用户没填备注时，老板不该按人设发火——用中性接单语，避免无理由负面反应
+  // 有备注才走 boss 人设吐槽 + 地址反应
   safeSetTimeout(() => {
-    let quote = getBossQuoteFromJson(personality, vars)
     const addrReaction = getAddressReaction(addressName, vars)
-    if (addrReaction) {
-      quote = addrReaction + ' ' + quote
+    let quote: string
+    if (!remarkText) {
+      // 无备注 → 中性接单（不按性格发火）
+      quote = '老板瞄了一眼菜单：「接了，灶台火起了，等着」'
+    } else {
+      // 有备注 → 保留原逻辑：性格文案 + 地址反应
+      quote = getBossQuoteFromJson(personality, vars)
+      if (addrReaction) {
+        quote = addrReaction + ' ' + quote
+      }
     }
     orderStore.updateOrderStatus(orderId, 'accepted', `【老板】${quote}`)
   }, t1)
 
   // 出餐
+  // v13 P0-4 修复（7-23 main CDP 报告）：
+  // 用户没填备注时，不再触发 boss_complaining（避免无理由负面）
   safeSetTimeout(() => {
     const remarkReaction = remarkText ? getRemarkReaction(remarkText, vars) : null
-    const isBossComplaining = Math.random() < (remarkReaction ? 0.35 : 0.25)
+    const isBossComplaining = remarkReaction ? Math.random() < 0.35 : false
     if (remarkReaction && isBossComplaining) {
       const complaint = getBossComplainingFromJson(personality, vars)
       orderStore.updateOrderStatus(orderId, 'boss_complaining', `【老板发疯中】${remarkReaction} 「而且」${complaint}`)
