@@ -15,7 +15,15 @@ function loadCart(): CartItem[] {
 }
 
 function saveCart(items: CartItem[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+  // v18 P0 bug fix（7-23 锡哥拍板）· 实测 QuotaExceededError 真实抛错
+  // 加 try/catch：localStorage 写满 / 隐私模式 / 不能用 → 静默丢弃，不冒泡到 UI
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+  } catch (e) {
+    // 静默失贩 · UI 层跟据 in-memory `items` 状态继续走
+    // localStorage 可能未同步但用户不至于白屏
+    console.warn('[cart] localStorage 写失败:', (e as Error).name)
+  }
 }
 
 export const useCartStore = defineStore('cart', () => {

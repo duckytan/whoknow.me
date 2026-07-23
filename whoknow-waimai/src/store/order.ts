@@ -24,7 +24,13 @@ function loadOrders(): Order[] {
 }
 
 function saveOrders(orders: Order[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(orders))
+  // v18 P0 bug fix（7-23 锡哥拍板）· 实测 QuotaExceededError 真实抛错
+  // 加 try/catch：localStorage 写满 / 隐私模式 / 不能用 → 静默丢弃，不冒泡到 UI
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(orders))
+  } catch (e) {
+    console.warn('[order] localStorage 写失败:', (e as Error).name)
+  }
 }
 
 export const useOrderStore = defineStore('order', () => {
