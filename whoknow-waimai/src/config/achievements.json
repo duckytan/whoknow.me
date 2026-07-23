@@ -1,0 +1,110 @@
+[
+  {
+    "id": "first_order",
+    "name": "初次点单",
+    "description": "恭喜你迈出了胡闹的第一步——胃来了，脑子没来",
+    "tier": "common",
+    "icon": "🥇",
+    "hint": null,
+    "condition": { "type": "order_count", "value": 1 }
+  },
+  {
+    "id": "midnight_feast",
+    "name": "饿鬼出动",
+    "description": "这个点了还在点外卖，你确定不是梦游？",
+    "tier": "common",
+    "icon": "🦉",
+    "hint": null,
+    "condition": { "type": "midnight_order", "value": 1 }
+  },
+  {
+    "id": "remark_maniac",
+    "name": "备注狂魔",
+    "description": "老板看了你的备注，把菜单撕了",
+    "tier": "common",
+    "icon": "✍️",
+    "hint": null,
+    "condition": { "type": "remark_count", "value": 3 }
+  },
+  {
+    "id": "regular",
+    "name": "回头客",
+    "description": "老板开始记住你的口味了——以及你欠的饭钱",
+    "tier": "common",
+    "icon": "🔄",
+    "hint": null,
+    "condition": { "type": "same_shop", "value": 3 }
+  },
+  {
+    "id": "big_spender",
+    "name": "月光族",
+    "description": "花了这么多假钱——你对自己真大方",
+    "tier": "common",
+    "icon": "💸",
+    "hint": null,
+    "condition": { "type": "order_amount", "value": 100 }
+  },
+  {
+    "id": "review_master",
+    "name": "好评如潮",
+    "description": "你比美团 CEO 还认真",
+    "tier": "rare",
+    "icon": "⭐",
+    "hint": null,
+    "condition": { "type": "review_count", "value": 5 }
+  },
+  {
+    "id": "critic",
+    "name": "差评师",
+    "description": "你确定你点的不是心情？",
+    "tier": "rare",
+    "icon": "💩",
+    "hint": null,
+    "condition": { "type": "low_rating_count", "value": 3 }
+  },
+  {
+    "id": "iron_fan",
+    "name": "头号铁粉",
+    "description": "你已经是这家店的荣誉股东了——虽然你没投钱",
+    "tier": "rare",
+    "icon": "🏆",
+    "hint": null,
+    "condition": { "type": "same_shop", "value": 10 }
+  },
+  {
+    "id": "boss_annoyer",
+    "name": "暴躁克星",
+    "description": "你不是在点外卖，是在收集老板的脏话",
+    "tier": "rare",
+    "icon": "😤",
+    "hint": null,
+    "condition": { "type": "boss_anger", "value": 3 }
+  },
+  {
+    "id": "chaos_rich",
+    "name": "胡闹富翁",
+    "description": "你已经下了这么多单——这够吃一顿真的了",
+    "tier": "rare",
+    "icon": "💰",
+    "hint": null,
+    "condition": { "type": "order_count", "value": 20 }
+  },
+  {
+    "id": "true_chaos",
+    "name": "真·胡闹",
+    "description": "恭喜，你被胡闹选中了——这运气建议去买彩票",
+    "tier": "hidden",
+    "icon": "🥚",
+    "hint": "需要一点运气",
+    "condition": { "type": "chaos_bonus", "value": 1 }
+  },
+  {
+    "id": "boss_nightmare",
+    "name": "老板的噩梦",
+    "description": "老板：又是胡闹拌面？我求你了换一个吧",
+    "tier": "hidden",
+    "icon": "😈",
+    "hint": "同一道菜重复点…很多次",
+    "condition": { "type": "same_dish", "value": 10 }
+  }
+]

@@ -57,6 +57,12 @@ const router = createRouter({
       component: () => import('@/pages/TermsOfService.vue'),
       meta: { title: '用户协议', hideBanner: true },
     },
+    {
+      path: '/achievements',
+      name: 'AchievementWall',
+      component: () => import('@/pages/AchievementWall.vue'),
+      meta: { title: '我的成就' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

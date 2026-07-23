@@ -9,6 +9,7 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import ComplianceBanner from '@/components/base/ComplianceBanner.vue'
+import AchievementPopup from '@/components/achievement/AchievementPopup.vue'
 
 declare const __APP_VERSION__: string
 
@@ -20,6 +21,7 @@ const appVersion = __APP_VERSION__
 <template>
   <ComplianceBanner v-if="showBanner" />
   <router-view />
+  <AchievementPopup />
   <div class="version-badge">{{ appVersion }}</div>
 </template>
 

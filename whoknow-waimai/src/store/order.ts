@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import type { Order } from '@/types'
 import { sanitizeQuote } from '@/utils/npcEngine'
 import { STORAGE_KEYS } from '@/utils/storageKeys'
+import { useAchievementStore } from '@/store/achievement'
+import { useShopStore } from '@/store/shop'
 
 const STORAGE_KEY = STORAGE_KEYS.orders
 
@@ -44,6 +46,12 @@ export const useOrderStore = defineStore('order', () => {
     orders.value.unshift(order)
     currentOrderId.value = order.id
     saveOrders(orders.value)
+    // v18 成就检测：下单后检查是否满足成就条件
+    try {
+      const achStore = useAchievementStore()
+      const shopStore = useShopStore()
+      achStore.check(order, orders.value, shopStore.shops as any[])
+    } catch { /* 成就检测不影响主流程 */ }
   }
 
   function updateOrderStatus(orderId: string, status: Order['status'], npcQuote?: string) {
@@ -74,6 +82,12 @@ export const useOrderStore = defineStore('order', () => {
     if (!order) return
     order.review = review
     saveOrders(orders.value)
+    // v18 成就检测：评价后检查
+    try {
+      const achStore = useAchievementStore()
+      const shopStore = useShopStore()
+      achStore.check(order, orders.value, shopStore.shops as any[])
+    } catch {}
   }
 
   return { orders, currentOrderId, currentOrder, createOrder, updateOrderStatus, getOrderById, assignRider, addReview }

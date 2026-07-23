@@ -13,6 +13,7 @@ export const STORAGE_KEYS = {
   cart: 'chaos_cart',
   demoSpeed: 'chaos_demo_speed',
   onboarded: 'chaos_onboarded', // v14 P0-5 onboarding 是否已看过
+  achievements: 'chaos_achievements', // v18 成就系统
 } as const
 
 export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS]
