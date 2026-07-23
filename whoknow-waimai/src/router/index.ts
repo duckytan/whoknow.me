@@ -45,6 +45,18 @@ const router = createRouter({
       component: () => import('@/pages/OrderDetail.vue'),
       meta: { title: '订单详情' },
     },
+    {
+      path: '/privacy',
+      name: 'PrivacyPolicy',
+      component: () => import('@/pages/PrivacyPolicy.vue'),
+      meta: { title: '隐私政策', hideBanner: true },
+    },
+    {
+      path: '/terms',
+      name: 'TermsOfService',
+      component: () => import('@/pages/TermsOfService.vue'),
+      meta: { title: '用户协议', hideBanner: true },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }
