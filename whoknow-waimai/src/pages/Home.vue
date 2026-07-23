@@ -3,7 +3,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useShopStore } from '@/store/shop'
 import { useOrderStore } from '@/store/order'
 import AppHeader from '@/components/base/AppHeader.vue'
-import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
 import OnboardingGuide from '@/components/base/OnboardingGuide.vue'
 import { STORAGE_KEYS } from '@/utils/storageKeys'
@@ -151,7 +150,7 @@ onMounted(() => {
     </div>
   </div>
 
-  <AppTabBar active="home" />
+  <!-- v18: TabBar 移到 App.vue 全局挂载 -->
 
   <!-- v14 P0-5 onboarding 引导（首次进站弹一次）-->
   <OnboardingGuide :show="showOnboarding" @close="dismissOnboarding" />

@@ -7,7 +7,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useOrderStore } from '@/store/order'
 import { generateFeed, formatFeedTime } from '@/utils/feedEngine'
-import AppTabBar from '@/components/base/AppTabBar.vue'
 
 const orderStore = useOrderStore()
 const feed = ref(generateFeed(orderStore.orders))
@@ -112,7 +111,7 @@ function handleShare(item: any) {
       </div>
     </div>
 
-    <AppTabBar active="feed" />
+    <!-- v18: TabBar 移到 App.vue 全局挂载 -->
   </div>
 </template>
 

@@ -6,7 +6,6 @@
 import { useAchievementStore } from '@/store/achievement'
 import { showToast } from 'vant'
 import { computed } from 'vue'
-import AppTabBar from '@/components/base/AppTabBar.vue'
 
 const store = useAchievementStore()
 
@@ -74,7 +73,7 @@ function handleClaim(id: string) {
       </div>
     </div>
 
-    <AppTabBar active="achievements" />
+    <!-- v18: TabBar 移到 App.vue 全局挂载 -->
   </div>
 </template>
 

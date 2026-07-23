@@ -2,7 +2,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useShopStore } from '@/store/shop'
-import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
 import type { Shop } from '@/types'
 import shopsData from '@/data/shops.json'
@@ -108,7 +107,7 @@ const filteredShops = computed(() => {
     </div>
   </div>
 
-  <AppTabBar active="home" />
+  <!-- v18: TabBar 移到 App.vue 全局挂载 -->
 </template>
 
 <style lang="scss" scoped>
