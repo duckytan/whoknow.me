@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AchievementPopup: typeof import('./src/components/achievement/AchievementPopup.vue')['default']
     AppHeader: typeof import('./src/components/base/AppHeader.vue')['default']
     AppTabBar: typeof import('./src/components/base/AppTabBar.vue')['default']
     BossBubble: typeof import('./src/components/npc/BossBubble.vue')['default']
