@@ -1,4 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '@/pages/Home.vue'
+import ShopList from '@/pages/ShopList.vue'
+import ShopDetail from '@/pages/ShopDetail.vue'
+import Checkout from '@/pages/Checkout.vue'
+import CartPage from '@/pages/CartPage.vue'
+import OrderHistory from '@/pages/OrderHistory.vue'
+import OrderDetail from '@/pages/OrderDetail.vue'
+import PrivacyPolicy from '@/pages/PrivacyPolicy.vue'
+import TermsOfService from '@/pages/TermsOfService.vue'
+import AchievementWall from '@/pages/AchievementWall.vue'
+import FeedPage from '@/pages/FeedPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,67 +17,67 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: () => import('@/pages/Home.vue'),
+      component: Home,
       meta: { title: '胡闹外卖' },
     },
     {
       path: '/shops',
       name: 'ShopList',
-      component: () => import('@/pages/ShopList.vue'),
+      component: ShopList,
       meta: { title: '商家列表' },
     },
     {
       path: '/shop/:id',
       name: 'ShopDetail',
-      component: () => import('@/pages/ShopDetail.vue'),
+      component: ShopDetail,
       meta: { title: '点餐' },
     },
     {
       path: '/checkout',
       name: 'Checkout',
-      component: () => import('@/pages/Checkout.vue'),
+      component: Checkout,
       meta: { title: '确认下单' },
     },
     {
       path: '/cart',
       name: 'CartPage',
-      component: () => import('@/pages/CartPage.vue'),
+      component: CartPage,
       meta: { title: '购物车' },
     },
     {
       path: '/orders',
       name: 'OrderHistory',
-      component: () => import('@/pages/OrderHistory.vue'),
+      component: OrderHistory,
       meta: { title: '我的订单' },
     },
     {
       path: '/order/:id',
       name: 'OrderDetail',
-      component: () => import('@/pages/OrderDetail.vue'),
+      component: OrderDetail,
       meta: { title: '订单详情' },
     },
     {
       path: '/privacy',
       name: 'PrivacyPolicy',
-      component: () => import('@/pages/PrivacyPolicy.vue'),
+      component: PrivacyPolicy,
       meta: { title: '隐私政策', hideBanner: true },
     },
     {
       path: '/terms',
       name: 'TermsOfService',
-      component: () => import('@/pages/TermsOfService.vue'),
+      component: TermsOfService,
       meta: { title: '用户协议', hideBanner: true },
     },
     {
       path: '/achievements',
       name: 'AchievementWall',
-      component: () => import('@/pages/AchievementWall.vue'),
+      component: AchievementWall,
       meta: { title: '我的成就' },
     },
     {
       path: '/feed',
       name: 'FeedPage',
-      component: () => import('@/pages/FeedPage.vue'),
+      component: FeedPage,
       meta: { title: '胡闹动态' },
     },
   ],
