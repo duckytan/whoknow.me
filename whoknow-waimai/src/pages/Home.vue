@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useShopStore } from '@/store/shop'
 import { useOrderStore } from '@/store/order'
 import AppHeader from '@/components/base/AppHeader.vue'
 import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
+import OnboardingGuide from '@/components/base/OnboardingGuide.vue'
+import { STORAGE_KEYS } from '@/utils/storageKeys'
 
 const shopStore = useShopStore()
 const orderStore = useOrderStore()
@@ -56,6 +58,31 @@ const sortOpts = [
   { key: 'sales', label: '月销最多' },
   { key: 'distance', label: '距离最近' },
 ]
+
+// v14 P0-5 onboarding（7-23 锡哥拍板）
+// 首次进站检查 localStorage，已看过不弹，未看过弹 3 屏引导
+const showOnboarding = ref(false)
+function checkOnboarding() {
+  try {
+    const done = localStorage.getItem(STORAGE_KEYS.onboarded)
+    if (!done) showOnboarding.value = true
+  } catch {
+    showOnboarding.value = true // localStorage 不可用 → 保守弹一次
+  }
+}
+function dismissOnboarding() {
+  showOnboarding.value = false
+  try {
+    localStorage.setItem(STORAGE_KEYS.onboarded, '1')
+  } catch {
+    // ignore
+  }
+}
+
+onMounted(() => {
+  // 300ms 后检查，避免与首屏渲染冲突
+  setTimeout(checkOnboarding, 300)
+})
 </script>
 
 <template>
@@ -122,6 +149,9 @@ const sortOpts = [
   </div>
 
   <AppTabBar active="home" />
+
+  <!-- v14 P0-5 onboarding 引导（首次进站弹一次）-->
+  <OnboardingGuide :show="showOnboarding" @close="dismissOnboarding" />
 </template>
 
 
