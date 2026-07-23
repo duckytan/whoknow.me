@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import type { Shop } from '@/types'
+import { trackEvent } from '@/utils/metrics'
 
 const props = defineProps<{
   shop: Shop
@@ -25,6 +26,8 @@ const personalityColor: Record<Shop['bossPersonality'], string> = {
 }
 
 function goShop() {
+  // v17 数据埋点（决策 #023）
+  trackEvent('shop_click', { shopId: props.shop.id, personality: props.shop.bossPersonality })
   router.push(`/shop/${props.shop.id}`)
 }
 </script>

@@ -5,6 +5,7 @@ import { useCartStore } from '@/store/cart'
 import { useShopStore } from '@/store/shop'
 import { useOrderStore } from '@/store/order'
 import { triggerOrderFlow } from '@/utils/npcEngine'
+import { trackEvent } from '@/utils/metrics'
 import type { Order } from '@/types'
 
 const router = useRouter()
@@ -46,6 +47,15 @@ function generateOrderId(): string {
 async function submitOrder() {
   if (!shop.value || cartStore.isEmpty) return
   submitting.value = true
+
+  // v17 数据埋点（决策 #023）
+  trackEvent('order_submit', {
+    shopId: shop.value.id,
+    itemCount: cartStore.totalCount,
+    totalPrice: totalWithFee.value,
+    hasRemark: !!remark.value,
+    address: address.value,
+  })
 
   const orderId = generateOrderId()
   const newOrder: Order = {

@@ -7,6 +7,7 @@ import AppTabBar from '@/components/base/AppTabBar.vue'
 import ShopCard from '@/components/shop/ShopCard.vue'
 import OnboardingGuide from '@/components/base/OnboardingGuide.vue'
 import { STORAGE_KEYS } from '@/utils/storageKeys'
+import { track } from '@/utils/metrics'
 
 const shopStore = useShopStore()
 const orderStore = useOrderStore()
@@ -77,6 +78,8 @@ function dismissOnboarding() {
   } catch {
     // ignore
   }
+  // v17 数据埋点：onboarding 完成（决策 #023）
+  track('onboarding_complete')
 }
 
 onMounted(() => {

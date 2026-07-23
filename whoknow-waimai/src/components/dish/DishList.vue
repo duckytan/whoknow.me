@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import type { Dish } from '@/types'
 import { useCartStore } from '@/store/cart'
+import { trackEvent } from '@/utils/metrics'
 
 const props = defineProps<{
   dishes: Dish[]
@@ -33,6 +34,8 @@ const currentDishes = computed(() => {
 
 function add(dish: Dish) {
   cartStore.addItem(dish)
+  // v17 数据埋点（决策 #023）
+  trackEvent('dish_add', { dishId: dish.id, category: dish.category, price: dish.price })
 }
 
 function remove(dish: Dish) {

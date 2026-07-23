@@ -13,6 +13,7 @@
 import { ref, computed, watch } from 'vue'
 import { generateReviewText, generateBossReply, REVIEW_TAGS } from '@/utils/reviewGenerator'
 import type { ReviewContext } from '@/utils/reviewGenerator'
+import { trackEvent } from '@/utils/metrics'
 
 const props = defineProps<{
   show: boolean
@@ -53,6 +54,11 @@ function toggleTag(label: string) {
 }
 
 function handleSubmit() {
+  // v17 数据埋点（决策 #023）
+  trackEvent('review_submit', {
+    rating: rating.value,
+    tagCount: selectedTags.value.length,
+  })
   emit('submit', {
     rating: rating.value,
     tags: selectedTags.value,
@@ -69,6 +75,8 @@ function handleClose() {
 }
 
 function handleShare() {
+  // v17 数据埋点（决策 #023）
+  trackEvent('review_share', { method: navigator.share ? 'native' : 'clipboard' })
   // v15：调用 navigator.share 优先；不支持则降级为复制文本
   const shareText = `【胡闹外卖】给 ${props.ctx.shopName} 打了个 ${rating.value} 星：「${reviewText.value}」\n老板回复：${bossReply.value}\n#胡闹外卖`
   if (navigator.share) {
