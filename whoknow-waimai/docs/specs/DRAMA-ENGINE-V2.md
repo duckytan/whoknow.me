@@ -100,7 +100,7 @@ interface DramaEvent {
 ### 阶段 1：接单 — 老板反应
 
 **骰子判定维度**：
-- 地址是否奇葩（公厕/百慕大/ICU → bossMood -20~-30）
+- 地址是否奇葩（天台/出租屋/医院 → bossMood -20~-30）
 - 备注是否"刺激"（多放辣/别骂了/才艺 → bossMood 加减）
 - 是否老顾客（回头客 → bossMood +10）
 - 时间（凌晨/饭点高峰 → bossMood -10）
@@ -130,12 +130,12 @@ interface DramaEvent {
 ### 阶段 3：配送 — 骑手史诗
 
 **骰子判定**：
-- 骑手性格（快/稳/迷路）vs 地址（百慕大自动灾难）
+- 骑手性格（快/稳/迷路）vs 地址（出租屋自动灾难）
 - 路线难度（公司门禁 +10% time）
 - 配送中途事件概率
 
 **标签影响**：
-- `rider_lost` + `address=bermuda` → 特殊迷路剧情
+- `rider_lost` + `address=weird_addr` → 特殊迷路剧情
 - `order_large`（很多菜） → 骑手抱怨
 - `already_delayed`（前面已经有 delay） → 骑手油门加到底
 
@@ -154,15 +154,15 @@ interface DramaEvent {
 
 > ⚠️ **数据结构已迁出权威规范**：本 §四 与 §六 的字段定义（Order / DramaState / UserStats / DramaBranch / DramaEvent）已被 **`docs/specs/DATA-STRUCTURE-v1-2026-07-24.md`** 取代为单一事实来源。本文件保留作引擎思路沿革，但**字段以 DATA-STRUCTURE 为准**：
 > - `DramaBranch` 改用**内联 `chain[]` 链表**（本文件原 `firstEvent` + 独立 `DramaEvent[]` 写法作废）；
-> - 原示例中的禁忌词红灯字段（`icu` / `bomb` / `food_poison` / `bomb_survivor` / `icu_survivor` / `bermuda` / `haunted_boss_*`）**数据结构层即日起禁用**，合规替换见 DATA-STRUCTURE §5.2 / §7；
-> - 具体台词文本（上吊 / 炸弹 / 警察 / ICU 诈尸等）仍全是 `禁忌词清单-v1.0` 红灯，**内容层待码农虾按禁忌词重写**，本文件不作权威。
+> - 原示例中的禁忌词红灯字段（`hosp` / `bomb` / `dark_dish` / `rare_dish_survivor` / `hosp_survivor` / `weird_addr` / `blacklist_boss_*`）**数据结构层即日起禁用**，合规替换见 DATA-STRUCTURE §5.2 / §7；
+> - 具体台词文本（ / 隐藏料理 / 居委会 / 医院 拉黑等）仍全是 `禁忌词清单-v1.0` 红灯，**内容层待码农虾按禁忌词重写**，本文件不作权威。
 
 ### 订单新增字段
 
 ```typescript
 interface Order {
   // ...现有字段
-  addressTag: 'home' | 'school' | 'company' | 'toilet' | 'bermuda' | 'icu'
+  addressTag: 'home' | 'school' | 'company' | 'rooftop' | 'weird_addr' | 'hosp'
   remarkTag: 'none' | 'more_spicy' | 'less_spicy' | 'no_coriander' | 'no_scold' | 'show_time'
   dramaState: {
     bossMood: number
@@ -191,7 +191,7 @@ interface UserStats {
   lastRiderId?: string                 // 上次遇到的骑手
   canceledOrders: number               // 取消订单次数
   flags: string[]                       // 叙事标记，跨订单持久化
-  // 例: ["married_r003", "food_poison_s001", "bomb_survivor"]
+  // 例: ["married_r003", "dark_dish_s001", "rare_dish_survivor"]
 }
 ```
 
@@ -211,13 +211,13 @@ interface UserStats {
 | flag 示例 | 来源 | 后续影响 |
 |:---------|:-----|:---------|
 | `married_{riderId}` | 破产救赎→结婚 | 下次遇到同骑手，触发「宿世姻缘」 |
-| `food_poison_{shopId}` | 某店食物中毒 | 下次点该店，老板以为你诈尸，吓进医院 |
-| `bomb_survivor` | 炸弹幸存 | 下次点餐，警察上门回访 |
-| `icu_survivor` | 暴食进过 ICU | 老板：「又是你？上次吃进医院的？」 |
+| `dark_dish_{shopId}` | 某店食物离奇 | 下次点该店，老板以为你拉黑，吓进医院 |
+| `rare_dish_survivor` | 隐藏料理幸存 | 下次点餐，居委会上门回访 |
+| `hosp_survivor` | 暴食进过 医院 | 老板：「又是你？上次吃进医院的？」 |
 | `blacklisted_{shopId}` | 差评过多 | 再也点不了这家店 |
 | `saved_{riderId}` | 被骑手救过 | 下次见面，骑手：「最近还好吗？」 |
 
-**条件语法**：`flag(married_r003)`、`flag(food_poison, s001)`
+**条件语法**：`flag(married_r003)`、`flag(dark_dish, s001)`
 
 **生命周期**：永久 / 单次消耗 / 有时效（如 7 天后忘仇）
 
@@ -232,7 +232,7 @@ interface UserStats {
 
 | # | 参数 | 数据类型 | 值范围 / 例子 | 影响方向 |
 |:-:|:----|:--------:|:-------------:|:--------|
-| 1 | `address` | 枚举 | 家庭/学校/公司/公厕/百慕大/ICU | bossMood ±30，迷路概率偏移 |
+| 1 | `address` | 枚举 | 家庭/学校/公司/天台/出租屋/医院 | bossMood ±30，迷路概率偏移 |
 | 2 | `remark` | 枚举 | 多放辣/少放辣/不要香菜/别骂了/才艺 | bossMood ±20 |
 | 3 | `orderTotal` | 数字 | ¥5 ~ ¥544 | 低于 20 = 穷鬼，高于 300 = 破产 |
 | 4 | `avgDishPrice` | 数字 | ¥5 ~ ¥68 | 低于 10 → 骑手拒单风险 |
@@ -331,8 +331,8 @@ interface UserStats {
 // 例子
 "orderTotal < 20"                                // 金额小于 20
 "avgDishPrice < 10 & dishCount > 3"              // 便宜又多
-"bossMood > -30 | hasTag(bermuda)"               // 情绪不差或百慕大
-"shopVisitCount >= 3 & !flag(hasHadBomb)"        // 回头客且没点过炸弹
+"bossMood > -30 | hasTag(weird_addr)"               // 情绪不差或出租屋
+"shopVisitCount >= 3 & !flag(hasHadDarkDish)"        // 回头客且没点过隐藏料理
 "timeSlot ? [午夜, 深夜] & todayOrderCount >= 3"  // 深夜且今天第 3 单
 "luckToday > 0.3"                                 // 运势不错
 ```
@@ -345,7 +345,7 @@ interface DramaBranch {
   name: string
   description: string
   weight: number                        // 权重（多个分支同时触发时，按权重随机选）
-  neverExpire: boolean                  // 永不过期（如炸弹套餐）
+  neverExpire: boolean                  // 永不过期（如隐藏料理套餐）
 
   trigger: {
     condition: string                   // 条件字符串，引擎自动解析
@@ -390,9 +390,9 @@ enum Rarity {
  * 稀有度示例：
  *   穷鬼套餐        → common   （¥<20 就有，随便触发）
  *   骑手拒单        → uncommon （均价<10 才行）
- *   暴食进 ICU      → rare     （≥3单 + 40%骰子）
+ *   暴食进 医院      → rare     （≥3单 + 40%骰子）
  *   破产救赎→结婚   → epic     （¥≥300 + 30% + 30%随机）
- *   炸弹套餐        → legendary（点隐藏炸弹+一命通关）
+ *   隐藏料理套餐        → legendary（点隐藏隐藏料理+一命通关）
  *   宿世姻缘        → epic     （上一轮结过婚才行）
  */
 
@@ -430,201 +430,126 @@ interface DramaEvent {
     (next)                (next)                (next)                (end)
 ```
 
-### 6.4 5 个剧情分支实例（事件链格式）
+### 6.4 7 个剧情分支实例（合规版 · `branches[]` 形状，对齐 DATA-STRUCTURE §3.6）
 
-#### 分支 #1：穷鬼套餐 — 老板摆烂 🗑️
+> ⚠️ 以下为**禁忌词洗稿后**的合规示例，已落成 `branches[]` / `chain[].text` 内联链表形状（取代本文件原 `firstEvent` + 独立 `DramaEvent[]` 写法）。
+> 可直接构建的 seed（全 7 条，码农虾拉取即用）见 **`docs/specs/DRAMA-SEED-v1-2026-07-24.json`**。
+> 红线已洗：原示例的「 / 医院 / 隐藏料理 / 居委会 / 拉黑 / 拉黑」全部改写，绝不上线。
 
-```
-条件: "orderTotal < 20"
-权重: 5
+#### 分支 #1：穷鬼套餐 — 老板摆烂（common）
 
-事件链:
-event_poor_accept:
-  phase: accept
-  text: "¥{price}也好意思点？锅都懒得开"
-  stateModifiers: { bossMood: -50 }
-  next: event_poor_cook
-
-event_poor_cook:
-  phase: cook
-  text: "老板在躺椅上玩手机，厨房没动静"
-  delay: 15000
-  stateModifiers: { bossMood: -10 }
-  next: event_poor_deliver
-
-event_poor_deliver:
-  phase: deliver
-  text: "骑手：等了好久才出餐，这单亏了"
-  next: event_poor_end
-
-event_poor_end:
-  phase: complete
-  text: "下次低于¥20我不接单了"
+```json
+{
+  "id": "poor", "name": "穷鬼套餐", "weight": 5,
+  "trigger": { "condition": "orderTotal < 20", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "common", "achievements": ["poor_meal"],
+  "chain": [
+    { "phase": "accept", "speaker": "boss", "text": "¥{price}也好意思点？锅都懒得开", "moodDelta": -30 },
+    { "phase": "cook", "speaker": "boss", "text": "老板在躺椅上玩手机，厨房没动静", "delay": 15000 },
+    { "phase": "deliver", "speaker": "rider", "text": "等了好久才出餐，这单亏了" },
+    { "phase": "complete", "speaker": "boss", "text": "下次低于这个数，我建议你还是好好吃饭", "effect": { "tags": ["boss_complained"] } }
+  ]
+}
 ```
 
-#### 分支 #2：便宜菜多 — 骑手拒单 🛵❌
+#### 分支 #2：便宜菜多 — 骑手拒单（uncommon）
 
-```
-条件: "avgDishPrice < 10"
-权重: 3
-
-事件链:
-event_cheap_accept:
-  phase: accept
-  text: "都是便宜货，做起来没劲"
-  next: event_cheap_no_rider
-
-event_cheap_no_rider:
-  phase: deliver
-  text: "系统广播：该订单无人接单"
-  stateModifiers: { riderMorale: -40 }
-  next: event_cheap_force
-
-event_cheap_force:
-  phase: deliver
-  text: "系统强行指派——骑手：¥{fee}的配送费？"
-  stateModifiers: { riderMorale: -30 }
-
-event_cheap_end:
-  phase: complete
-  text: "骑手全程冷漠脸，台词都懒得多说一句"
+```json
+{
+  "id": "cheap_no_rider", "name": "便宜菜多 · 骑手拒单", "weight": 3,
+  "trigger": { "condition": "avgDishPrice < 10", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "uncommon", "achievements": ["cheap_ghost"],
+  "chain": [
+    { "phase": "accept", "speaker": "boss", "text": "都是便宜货，做起来没劲" },
+    { "phase": "deliver", "speaker": "system", "text": "系统广播：该订单无人接单" },
+    { "phase": "deliver", "speaker": "system", "text": "系统强行指派——骑手：¥{fee}的配送费？" },
+    { "phase": "complete", "speaker": "rider", "text": "骑手全程冷漠脸，台词都懒得多说一句" }
+  ]
+}
 ```
 
-#### 分支 #3：破产 → 上吊 → 被救 → 结婚 💍
+#### 分支 #3：破产 · 被接济 · 结成眷侣（epic）
 
-```
-条件: "orderTotal >= 300"
-权重: 1
-概率: 0.3（只有 30% 触发，其他 70% 正常送达）
-
-事件链:
-event_bankrupt:
-  phase: complete
-  text: "系统：用户因买这顿饭破产，正在家中上吊"
-  next: [event_bro, event_love, event_wedding]
-  nextWeights: [6, 3, 1]
-  ↓
-  ├─ 权重 6 → event_bro: 跟骑手成了好兄弟
-  ├─ 权重 3 → event_love: 跟骑手在一起了
-  └─ 权重 1 → event_wedding: 婚礼上那单外卖被摆 C 位
+```json
+{
+  "id": "bankrupt_love", "name": "破产 · 被接济 · 结成眷侣", "weight": 1,
+  "trigger": { "condition": "orderTotal >= 300", "probability": 0.3, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "epic", "achievements": ["bankrupt_legend"],
+  "chain": [
+    { "phase": "complete", "speaker": "system", "text": "系统：这顿饭把你吃破产了，余额瞬间归零",
+      "next": ["bk_bro", "bk_crush", "bk_wed"], "nextWeights": [6, 3, 1] },
+    { "phase": "complete", "speaker": "rider", "id": "bk_bro", "text": "看你可怜，这单我垫了，下次别这么狠", "effect": { "flags": ["bro_{riderId}"] } },
+    { "phase": "complete", "speaker": "rider", "id": "bk_crush", "text": "要不…这顿我请？咱俩也算认识了", "effect": { "flags": ["crush_{riderId}"] } },
+    { "phase": "complete", "speaker": "boss", "id": "bk_wed", "text": "婚礼上那单外卖被摆了 C 位——你们就这么成了", "effect": { "flags": ["married_{riderId}"] } }
+  ]
+}
 ```
 
-#### 分支 #4：暴饮暴食 → ICU 抢救 🏥
+#### 分支 #4：暴饮暴食 · 老板心疼（rare）
 
-```
-条件: "todayOrderCount >= 3"
-权重: 3
-概率: 0.2
-递增: { param: "todayOrderCount", threshold: 3, rate: 0.2 }
-  → 3单=20%  4单=40%  5单=60%  6单=80%  7单+=100%
-
-事件链:
-event_overeat_warn:
-  phase: complete
-  text: "系统：用户今天已经吃了 3 顿外卖了"
-  next: [event_overeat_ok, event_overeat_icu]
-  nextWeights: [6, 4]
-  ↓
-  ├─ 权重 6 → event_overeat_ok: "还好，年轻，扛得住"
-  └─ 权重 4 → event_overeat_icu: "肚子剧痛进 ICU，护士是你小学同学"
-
-#### 分支 #5：炸弹套餐 💣（隐藏菜单）
-
-```
-条件: "hasTag(bomb_order)"   ← 点了隐藏菜品「炸弹」
-权重: 10（优先触发）
-概率: 1.0（必触发）
-
-事件链:
-event_bomb_accept:
-  phase: accept
-  text: "老板看着单子沉默三秒：这是谁点的？"
-  stateModifiers: { bossMood: -80 }
-  next: event_bomb_cook
-
-event_bomb_cook:
-  phase: cook
-  text: "厨房爆炸了！老板进 ICU——厨师：我就说那玩意儿不能放厨房"
-  next: event_bomb_deliver
-
-event_bomb_deliver:
-  phase: deliver
-  text: "骑手发现袋子冒烟——路上炸了，骑手进 ICU"
-  next: event_bomb_police
-
-event_bomb_police:
-  phase: complete
-  text: "警察上门调查——用户：我就点了个外卖……"
-  next: [event_bomb_friend, event_bomb_love]
-  nextWeights: [7, 3]
-  ↓
-  ├─ 权重 7 → 跟骑手在 ICU 结成生死之交
-  └─ 权重 3 → "下次点炸弹提前说一声，我穿防弹衣"
+```json
+{
+  "id": "overeat_cares", "name": "暴饮暴食 · 老板心疼", "weight": 3,
+  "trigger": { "condition": "todayOrderCount >= 3", "probability": 0.2,
+    "probabilityScaling": { "param": "todayOrderCount", "threshold": 3, "rate": 0.2 }, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "rare", "achievements": ["overeat_warn"],
+  "chain": [
+    { "phase": "complete", "speaker": "system", "text": "系统：你今天已经第 {todayOrderCount} 顿外卖了",
+      "next": ["oe_ok", "oe_care"], "nextWeights": [6, 4] },
+    { "phase": "complete", "speaker": "boss", "id": "oe_ok", "text": "还好，年轻，扛得住——不过少油少盐啊" },
+    { "phase": "complete", "speaker": "boss", "id": "oe_care", "text": "你这样不行，我给你加了个溏心蛋，补补", "effect": { "flags": ["boss_cares_{shopId}"] } }
+  ]
+}
 ```
 
-#### 分支 #6：宿世姻缘 💕（flags 触发）
+#### 分支 #5：黑暗料理 · 隐藏私房菜（legendary）
 
-```
-条件: "flag(married_r003) & riderId = r003"
-权重: 8（高权重，优先触发）
-概率: 0.6
-
-事件链:
-event_fate_accept:
-  phase: accept
-  text: "骑手 r003 接单了——他愣住了："是您？""
-  stateModifiers: { riderMorale: +30 }
-  next: event_fate_cook
-
-event_fate_cook:
-  phase: cook
-  text: "老板：你对象来接单了，菜我做快点儿"
-  delay: -5000（出餐加速）
-  next: event_fate_deliver
-
-event_fate_deliver:
-  phase: deliver
-  text: "骑手：好久不见……上次之后我一直想着那顿饭"
-  next: event_fate_end
-
-event_fate_end:
-  phase: complete
-  text: "你们在门口聊了半小时，订单显示已送达"
-  effect: { flags: ["fate_reunion"] }
+```json
+{
+  "id": "dark_dish", "name": "黑暗料理 · 隐藏私房菜", "weight": 10,
+  "trigger": { "condition": "hasTag(dark_dish)", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "legendary", "achievements": ["dark_chef"],
+  "chain": [
+    { "phase": "accept", "speaker": "boss", "text": "你点了「老板私房菜」？那玩意儿我都没敢给员工试吃", "moodDelta": -80 },
+    { "phase": "cook", "speaker": "boss", "text": "厨房传来可疑的咕嘟声，老板脸色越来越白", "delay": 15000 },
+    { "phase": "deliver", "speaker": "rider", "text": "取餐时袋子在动……我有点不敢拿" },
+    { "phase": "complete", "speaker": "boss", "text": "你吃完给了好评：很有创意。老板盯着你看了三秒：你没事吧？", "effect": { "flags": ["dark_dish_{shopId}"] } }
+  ]
+}
 ```
 
-#### 分支 #7：诈尸还魂 👻（flags 触发）
+#### 分支 #6：宿世姻缘 · 旧识重逢（epic · flags 触发）
 
-```
-条件: "flag(food_poison, s001) & shopId = s001"
-权重: 10
-概率: 0.5
-
-事件链:
-event_ghost_accept:
-  phase: accept
-  text: "老板核对订单：这个用户不是上次吃死那个吗？？"
-  stateModifiers: { bossMood: -60 }
-  next: event_ghost_cook
-
-event_ghost_cook:
-  phase: cook
-  text: "老板在厨房哆哆嗦嗦做饭，时不时探头看你是不是还在"
-  delay: +10000
-  next: event_ghost_deliver
-
-event_ghost_deliver:
-  phase: deliver
-  text: "骑手取餐时发现老板脸色发白"
-  next: event_ghost_end
-
-event_ghost_end:
-  phase: complete
-  text: "老板终于鼓起勇气开门：你……你不是死了吗？！然后晕了过去"
-  effect: { flags: ["haunted_boss_s001"] }
+```json
+{
+  "id": "fate_reunion", "name": "宿世姻缘 · 旧识重逢", "weight": 8,
+  "trigger": { "condition": "flag(married_{riderId}) & riderId = {riderId}", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "epic", "achievements": ["fate_bound"],
+  "chain": [
+    { "phase": "accept", "speaker": "rider", "text": "接单了——他愣住：是您？" },
+    { "phase": "cook", "speaker": "boss", "text": "你对象来接单了，菜我做快点儿", "delay": -5000 },
+    { "phase": "deliver", "speaker": "rider", "text": "好久不见……上次之后我一直想着那顿饭" },
+    { "phase": "complete", "speaker": "rider", "text": "你们在门口聊了半小时，订单显示已送达", "effect": { "flags": ["fate_reunion"] } }
+  ]
+}
 ```
 
----
+#### 分支 #7：拉黑重逢 · 冰释前嫌（legendary · flags 触发）
+
+```json
+{
+  "id": "blacklist_reunion", "name": "拉黑重逢 · 冰释前嫌", "weight": 10,
+  "trigger": { "condition": "flag(blacklisted_{shopId}) & shopId = {shopId}", "probability": 0.5, "cooldownMin": 0, "maxPerUser": 0 },
+  "rarity": "legendary", "achievements": ["reconciled"],
+  "chain": [
+    { "phase": "accept", "speaker": "boss", "text": "核对订单：你不是被我拉黑了吗？", "moodDelta": -60 },
+    { "phase": "cook", "speaker": "boss", "text": "老板在厨房犹豫要不要给你做，最后还是开了火", "delay": 10000 },
+    { "phase": "deliver", "speaker": "rider", "text": "取餐时老板偷偷往里多塞了双筷子" },
+    { "phase": "complete", "speaker": "boss", "text": "老板终于开门：上次骂我菜咸，这次……算你赢。拉黑解除", "effect": { "flags": ["reconciled_{shopId}"] } }
+  ]
+}
+```
+
 
 ## 七、台词数据格式
 
@@ -635,10 +560,10 @@ event_ghost_end:
   "boss": [
     { "text": "催什么催！锅还没热呢！", "moodRange": [-100, -30], "tags": ["any"] },
     { "text": "又是你？第{n}次了",         "moodRange": [-20, 50],  "tags": ["regular"] },
-    { "text": "送到公厕？？认真的吗",       "moodRange": [-100, 0],  "tags": ["toilet"] }
+    { "text": "送到天台？？认真的吗",       "moodRange": [-100, 0],  "tags": ["rooftop"] }
   ],
   "rider_lost_extreme": [
-    { "text": "我不小心骑进了异次元……不过还是到了", "moodRange": [0, 100], "tags": ["bermuda", "lost"] }
+    { "text": "我不小心骑进了异次元……不过还是到了", "moodRange": [0, 100], "tags": ["weird_addr", "lost"] }
   ]
 }
 ```
@@ -657,8 +582,8 @@ event_ghost_end:
 稀有度      颜色        示例
 common      铜色 🥉    "第一次点外卖" "第一次被老板骂"
 uncommon    银色 🥈    "穷鬼套餐达成" "连续点餐3天"
-rare        金色 🥇    "暴进ICU" "骑手拒单成就"
-epic        紫色 💜    "破产救赎" "炸弹幸存者"
+rare        金色 🥇    "暴进医院" "骑手拒单成就"
+epic        紫色 💜    "破产救赎" "隐藏料理幸存者"
 legendary   橙色 🔶    "全成就收集" "跟所有骑手结过婚"
 ```
 
@@ -688,7 +613,7 @@ achievementUnlocked: string[]           // 已解锁的 achievement ID 列表
 │  🏆 成就 · 0/20 已点亮   │
 │                         │
 │  🥉 🥉 🥉  🥈  🥇  💜  │
-│  第1单 被骂 穷鬼  连3天 ICU   │
+│  第1单 被骂 穷鬼  连3天 医院   │
 │  (亮) (亮) (亮) (暗) (暗) │
 │                         │
 │  所有成就按稀有度排列      │
@@ -705,9 +630,9 @@ achievementUnlocked: string[]           // 已解锁的 achievement ID 列表
 | poor_meal | 穷鬼套餐 | uncommon | 触发穷鬼分支 |
 | streak_3 | 连续三天 | uncommon | 连续点餐 3 天 |
 | rider_refuse | 我要投诉 | rare | 触发骑手拒单 |
-| icu_visit | ICU 观光 | rare | 暴食进 ICU |
+| hosp_visit | 医院 观光 | rare | 暴食进 医院 |
 | bankrupt_love | 破产爱情 | epic | 破产救赎→结婚结局 |
-| bomb_survivor | 炸弹幸存 | legendary | 触发炸弹结局 |
+| rare_dish_survivor | 隐藏料理幸存 | legendary | 触发隐藏料理结局 |
 | all_riders | 骑手全图鉴 | legendary | 遇过全部 5 个骑手 |
 | fate_reunion | 宿世姻缘 | epic | 触发宿世姻缘分支 |
 
@@ -726,7 +651,7 @@ achievementUnlocked: string[]           // 已解锁的 achievement ID 列表
 │  🔥 最新动态              │
 │                         │
 │  🏆 用户XXX 达成了       │
-│   「炸弹幸存者」传说成就！│
+│   「隐藏料理幸存者」传说成就！│
 │   · 2分钟前              │
 │                         │
 │  💍 用户OOO 在 xx烧烤    │
@@ -781,7 +706,7 @@ achievementUnlocked: string[]           // 已解锁的 achievement ID 列表
 
 ## 十一、一句话总结
 
-> **不是"如果地址=公厕，就说公厕台词"**  
-> **而是"地址=公厕 → bossMood -30 → 出餐慢 → 配送急 → 一单跌宕起伏的外卖人生"**
+> **不是"如果地址=天台，就说天台台词"**  
+> **而是"地址=天台 → bossMood -30 → 出餐慢 → 配送急 → 一单跌宕起伏的外卖人生"**
 
 命运算出来了，台词自然会生成。
