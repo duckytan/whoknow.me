@@ -33,19 +33,19 @@ const slides = [
     emoji: '🎭',
     title: '假外卖，真段子',
     desc: '这里没有真饭。只有 15 个戏精老板和 5 个奇葩骑手，陪你演一出好戏。',
-    bg: 'linear-gradient(135deg, #ff6b35, #ff9a3c)',
+    bg: 'linear-gradient(135deg, #ff7849, #ffa05c)',
   },
   {
     emoji: '🍜',
     title: '随便点，没成本',
     desc: '想点啥点啥，0 元下单不给真吃。放心吐槽、放心给差评，他们都会接住。',
-    bg: 'linear-gradient(135deg, #ff4757, #ff6b35)',
+    bg: 'linear-gradient(135deg, #ff4757, #ff7849)',
   },
   {
     emoji: '🥚',
     title: '彩蛋藏在这',
     desc: '备注栏写点奇葩的 / 地址选"百慕大" / 给 5 星时手抖——NPC 会给你专属演出。',
-    bg: 'linear-gradient(135deg, #e55a26, #ff8c42)',
+    bg: 'linear-gradient(135deg, #e8632f, #ff9c5e)',
   },
 ]
 
@@ -195,7 +195,7 @@ function skip() {
   &.active {
     width: 24px;
     border-radius: 4px;
-    background: #ff6b35;
+    background: #ff7849;
   }
 }
 
@@ -228,7 +228,7 @@ function skip() {
 }
 
 .btn-next {
-  background: #ff6b35;
+  background: #ff7849;
   color: #fff;
   box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }

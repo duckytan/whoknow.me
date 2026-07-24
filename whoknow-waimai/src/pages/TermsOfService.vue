@@ -117,7 +117,7 @@ import AppHeader from '@/components/base/AppHeader.vue'
   }
 
   strong {
-    color: #ff6b35;
+    color: #ff7849;
   }
 }
 

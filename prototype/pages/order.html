@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>订单详情 · 戏精外卖</title>
+<link rel="stylesheet" href="../css/meituan.css">
+</head>
+<body>
+<div class="phone order-detail" style="padding-bottom:0;">
+
+  <!-- 配送地图 -->
+  <div class="map">
+    <div class="road"></div>
+    <div class="from"></div>
+    <div class="to"></div>
+    <div class="route"></div>
+    <div class="rider-dot">🛵</div>
+    <div class="topbar">
+      <span class="back">‹</span>
+      <span class="ttl">订单详情</span>
+      <span class="ic">📞</span>
+    </div>
+  </div>
+
+  <!-- ETA 黄条 -->
+  <div class="eta-bar">
+    <div class="big">骑手正在火速赶往您家<b> 12 </b>分钟<small>内送达</small></div>
+    <div class="bubble">
+      <div class="av">⚡</div>
+      <div class="t">
+        <b>雷速飞</b>：亲，您的窑鸡快被我送熟了，怕是等不到开盒了。<span class="sig">— 雷速飞 / 全勤王 · 1000+ 单 / 0 投诉</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 骑手卡 -->
+  <div class="rider-card">
+    <div class="av">⚡</div>
+    <div class="info">
+      <div class="nm">雷速飞 <span class="persona persona--rider">闪电骑手</span></div>
+      <div class="sub">本月 106 单 · 送达率 99.7% · 距离您 1.2 km</div>
+    </div>
+    <div class="acts">
+      <span class="a ph">📞</span>
+      <span class="a">💬</span>
+    </div>
+  </div>
+
+  <!-- 进度时间线 -->
+  <div class="timeline">
+    <div class="row on">
+      <div class="dot-col"><span class="dot"></span><span class="line"></span></div>
+      <div class="txt">订单已送达门口等您开门<span class="t">21:02 · 雷速飞放在您家鞋柜上</span></div>
+    </div>
+    <div class="row on">
+      <div class="dot-col"><span class="dot"></span><span class="line"></span></div>
+      <div class="txt">骑手正在配送<span class="t">20:50 · 距离您 1.2 km</span></div>
+    </div>
+    <div class="row on">
+      <div class="dot-col"><span class="dot"></span><span class="line"></span></div>
+      <div class="txt">商家已出餐 · 正在交接骑手<span class="t">20:42 · 哈哈蒸鸡（窑鸡、小吃、炖盅）</span></div>
+    </div>
+    <div class="row">
+      <div class="dot-col"><span class="dot"></span></div>
+      <div class="txt">商家正在配餐<span class="t">20:35 · 厨房出餐中</span></div>
+    </div>
+    <div class="row">
+      <div class="dot-col"><span class="dot"></span></div>
+      <div class="txt">订单已支付成功<span class="t">20:30 · 美团支付 · 庄**尾号 1288</span></div>
+    </div>
+  </div>
+
+  <!-- 订单商品 -->
+  <div class="detail-card">
+    <div class="ttl">订单商品</div>
+    <div class="g">
+      <div class="pic">🍗<span class="bd">招牌</span></div>
+      <div class="info">
+        <div class="nm">广式窑鸡整只（520g）</div>
+        <div class="w">中辣 / 不要辣 / 配手套 / 不切</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:14px;font-weight:800;color:var(--mt-price);">¥69.8</div>
+        <div style="font-size:11px;color:var(--mt-text-3);margin-top:2px;">¥88</div>
+      </div>
+    </div>
+    <div class="g">
+      <div class="pic">🍚</div>
+      <div class="info">
+        <div class="nm">椰子炖乌鸡汤</div>
+        <div class="w">小盅 / 不加盐</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:14px;font-weight:800;color:var(--mt-price);">¥28.0</div>
+      </div>
+    </div>
+    <div class="g">
+      <div class="pic">🥗</div>
+      <div class="info">
+        <div class="nm">手撕包菜（加辣）</div>
+        <div class="w">标准份 / 蒜多</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:14px;font-weight:800;color:var(--mt-price);">¥12.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 费用明细 -->
+  <div class="detail-foot">
+    <div class="row"><span>商品总价</span><span class="r">¥109.8</span></div>
+    <div class="row"><span>包装费</span><span class="r">¥2.0</span></div>
+    <div class="row"><span>配送费</span><span class="r">¥3.0</span></div>
+    <div class="row"><span>满减优惠</span><span class="r red">-¥28.0</span></div>
+    <div class="row"><span>红包</span><span class="r red">-¥3.5</span></div>
+    <div class="row" style="border-top:1px dashed var(--mt-line); margin-top:6px; padding-top:10px; font-size:15px; font-weight:800;"><span>合计</span><span class="r red">¥83.3</span></div>
+  </div>
+
+  <!-- 送达彩蛋 -->
+  <div style="margin:0 14px 16px;background:linear-gradient(135deg,#FFE9D6,#FFDAB0);padding:14px;border-radius:10px;">
+    <div style="font-size:13px;font-weight:800;color:var(--mt-text);">🥚 本单送达彩蛋</div>
+    <div style="font-size:12px;color:var(--mt-text-2);margin-top:4px;line-height:1.5;">骑手雷速飞在袋子里塞了张纸条：「你家炒鸡真香，建议下次直接让我试味。」—— 已为你记入「戏精点评」成就进度。</div>
+  </div>
+
+  <!-- 底部操作 -->
+  <div class="detail-pay">
+    <span class="ghost">联系骑手</span>
+    <span class="ghost">投诉订单</span>
+    <span class="yellow">再来一单</span>
+  </div>
+
+</div>
+</body>
+</html>

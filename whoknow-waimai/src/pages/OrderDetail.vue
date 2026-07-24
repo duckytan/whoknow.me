@@ -246,7 +246,7 @@ onMounted(() => {
 
       <!-- 进度条 -->
       <div class="progress-card">
-        <van-steps :active="currentStep" active-color="#ff6b35">
+        <van-steps :active="currentStep" active-color="#ff7849">
           <van-step>等待接单</van-step>
           <van-step>已接单</van-step>
           <van-step>出餐中</van-step>
@@ -299,7 +299,7 @@ onMounted(() => {
         </div>
 
         <div v-if="!isCompleted" class="loading-hint">
-          <van-loading size="16" color="#ff6b35" />
+          <van-loading size="16" color="#ff7849" />
           <span>NPC 正在剧情中，请等待下一幕...</span>
           <span v-if="countdownSeconds > 0" class="countdown">
             ⏱️ 下一幕还有 {{ countdownSeconds }} 秒
@@ -396,7 +396,7 @@ onMounted(() => {
 }
 
 .status-card {
-  background: linear-gradient(135deg, #ff6b35, #ff9a5c);
+  background: linear-gradient(135deg, #ff7849, #ffac6e);
   color: #fff;
   padding: 16px;
   display: flex;
@@ -470,7 +470,7 @@ onMounted(() => {
 .speed-btn:hover { background: rgba(255, 255, 255, 0.25); }
 .speed-btn.active {
   background: white;
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 700;
   border-color: white;
 }
@@ -535,7 +535,7 @@ onMounted(() => {
 }
 
 .countdown {
-  background: linear-gradient(90deg, #ff6b35, #ff9a3c);
+  background: linear-gradient(90deg, #ff7849, #ffa05c);
   color: white;
   padding: 2px 8px;
   border-radius: 10px;
@@ -575,8 +575,8 @@ onMounted(() => {
 }
 
 .egg-btn {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #ff7849 !important;
+  border-color: #ff7849 !important;
   margin-top: 8px;
   padding: 0 28px;
   font-weight: 700;
@@ -587,7 +587,7 @@ onMounted(() => {
 }
 
 .total-label { font-size: 15px; font-weight: 700; }
-.total-price { font-size: 16px; font-weight: 700; color: #ff6b35; }
+.total-price { font-size: 16px; font-weight: 700; color: #ff7849; }
 
 .remark-block {
   padding: 8px 16px 12px;
@@ -610,8 +610,8 @@ onMounted(() => {
 }
 
 .review-btn {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #ff7849 !important;
+  border-color: #ff7849 !important;
   font-weight: 700;
 }
 

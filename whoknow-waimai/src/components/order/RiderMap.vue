@@ -120,7 +120,7 @@ onUnmounted(() => { if (shakeTimer) clearInterval(shakeTimer) })
       <path
         :d="PATH"
         fill="none"
-        stroke="#ff6b35"
+        stroke="#ff7849"
         stroke-width="3"
         stroke-dasharray="6 4"
         opacity="0.6"
@@ -130,7 +130,7 @@ onUnmounted(() => { if (shakeTimer) clearInterval(shakeTimer) })
       <path
         :d="PATH"
         fill="none"
-        stroke="#ff6b35"
+        stroke="#ff7849"
         stroke-width="4"
         :stroke-dasharray="`${progress * 280} 280`"
         opacity="0.9"
@@ -144,7 +144,7 @@ onUnmounted(() => { if (shakeTimer) clearInterval(shakeTimer) })
 
       <!-- 起点（商家） -->
       <g transform="translate(30, 88)">
-        <rect x="-10" y="-10" width="22" height="22" rx="4" fill="#ff6b35" opacity="0.9" />
+        <rect x="-10" y="-10" width="22" height="22" rx="4" fill="#ff7849" opacity="0.9" />
         <text x="1" y="7" font-size="14" text-anchor="middle" dominant-baseline="middle">🏪</text>
       </g>
 
@@ -153,7 +153,7 @@ onUnmounted(() => { if (shakeTimer) clearInterval(shakeTimer) })
         :transform="`translate(${riderPos[0] + (shake ? 3 : 0)}, ${riderPos[1] - 18})`"
         class="rider-icon"
       >
-        <circle cx="0" cy="0" r="16" fill="#fff" stroke="#ff6b35" stroke-width="2" />
+        <circle cx="0" cy="0" r="16" fill="#fff" stroke="#ff7849" stroke-width="2" />
         <text x="0" y="6" font-size="16" text-anchor="middle" dominant-baseline="middle">
           {{ riderAvatar }}
         </text>
@@ -186,7 +186,7 @@ onUnmounted(() => { if (shakeTimer) clearInterval(shakeTimer) })
   padding: 2px 8px;
   border-radius: 10px;
   background: #fff3ee;
-  color: #ff6b35;
+  color: #ff7849;
 
   &.completed {
     background: #e8f5e9;

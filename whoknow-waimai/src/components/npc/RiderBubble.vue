@@ -22,8 +22,8 @@ defineProps<{
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: #fffbf0;
-  border-left: 3px solid #f39c12;
+  background: #eafaf0;
+  border-left: 3px solid #4fc46a;
   border-radius: 0 8px 8px 0;
   padding: 10px 12px;
   margin: 8px 0;
@@ -38,7 +38,7 @@ defineProps<{
 .rider-name {
   font-size: 12px;
   font-weight: 700;
-  color: #f39c12;
+  color: #4fc46a;
   margin-bottom: 3px;
 }
 

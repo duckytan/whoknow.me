@@ -240,7 +240,7 @@ async function submitOrder() {
 .total-price {
   font-size: 18px;
   font-weight: 700;
-  color: #ff6b35;
+  color: #ff7849;
 }
 
 .section-hint {
@@ -271,9 +271,9 @@ async function submitOrder() {
   user-select: none;
 }
 .address-chip.selected {
-  border-color: #ff6b35;
+  border-color: #ff7849;
   background: #fff5f0;
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 600;
 }
 .address-chip:active {
@@ -348,13 +348,13 @@ async function submitOrder() {
 }
 
 .submit-count { font-size: 11px; color: #999; }
-.submit-price { font-size: 18px; font-weight: 700; color: #ff6b35; }
+.submit-price { font-size: 18px; font-weight: 700; color: #ff7849; }
 
 .submit-btn {
   flex-shrink: 0;
   padding: 0 20px !important;
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #ff7849 !important;
+  border-color: #ff7849 !important;
   font-weight: 700;
 }
 </style>

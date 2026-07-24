@@ -113,7 +113,7 @@ function handleClaim(id: string) {
 .progress-fill {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, #ff6b6b, #ffa94d);
+  background: linear-gradient(90deg, #6eda78, #8b5cf6);
   border-radius: 3px;
   transition: width 0.3s;
 }
@@ -149,13 +149,13 @@ function handleClaim(id: string) {
   opacity: 0.55;
 }
 .achievement-card.unclaimed {
-  border-color: #ffa94d;
-  background: #fffbe6;
+  border-color: #6eda78;
+  background: #eafaf0;
   animation: pulse-border 1.5s ease-in-out infinite;
 }
 @keyframes pulse-border {
-  0%, 100% { border-color: #ffa94d; }
-  50% { border-color: #ffd43b; }
+  0%, 100% { border-color: #6eda78; }
+  50% { border-color: #4fc46a; }
 }
 
 .card-icon {
@@ -202,7 +202,7 @@ function handleClaim(id: string) {
   padding: 6px 14px;
   border: none;
   border-radius: 20px;
-  background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  background: linear-gradient(135deg, #6eda78, #8b5cf6);
   color: #fff;
   font-size: 13px;
   font-weight: 600;

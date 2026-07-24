@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>胡闹外卖 · 高仿美团原型 v3</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1c1c1e; color: #fff; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; min-height: 100vh; }
+  a { text-decoration: none; color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 28px 32px; }
+  .hd { text-align: center; margin-bottom: 32px; }
+  .hd .logo { display: inline-block; background: #FFD100; color: #1a1a1a; padding: 8px 18px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing: 1px; }
+  .hd h1 { font-size: 38px; margin: 18px 0 8px; font-weight: 800; }
+  .hd p { color: #999; font-size: 14px; margin: 0; }
+  .info { background: #FFD100; color: #1a1a1a; padding: 16px 20px; border-radius: 12px; font-size: 13px; margin-bottom: 14px; line-height: 1.7; }
+  .info b { font-weight: 800; }
+  .info2 { background: #2c2c2e; color: #c0c0c0; padding: 14px 18px; border-radius: 10px; font-size: 12px; margin-bottom: 24px; line-height: 1.65; border-left: 4px solid #FFD100; }
+  .info2 b { color: #fff; }
+  .info2 .dot { display: inline-block; width: 4px; height: 4px; background: #FFD100; border-radius: 50%; margin: 0 6px; vertical-align: middle; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .card { background: #2c2c2e; border: 1px solid #3a3a3c; border-radius: 16px; padding: 22px; transition: all .15s; display: block; position: relative; }
+  .card:hover { transform: translateY(-2px); border-color: #FFD100; }
+  .card .badge-done { position: absolute; top: 14px; right: 14px; background: var(--mt-yellow,#FFD100); color: #1a1a1a; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 999px; letter-spacing: 1px; }
+  .card .no { color: #FFD100; font-size: 11px; font-weight: 800; letter-spacing: 2px; }
+  .card .nm { font-size: 19px; font-weight: 700; margin: 10px 0 6px; color: #fff; }
+  .card .ds { color: #999; font-size: 12px; line-height: 1.65; }
+  .card .em { font-size: 36px; margin-bottom: 4px; display: block; line-height: 1; }
+  .card .go { color: #FFD100; font-size: 12px; margin-top: 14px; display: inline-block; font-weight: 600; }
+  .ft { text-align: center; color: #666; font-size: 11px; margin-top: 56px; line-height: 1.7; }
+  .ft .l { color: #999; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hd">
+    <div class="logo">HIGH FIDELITY PROTOTYPE v3 · 12/12 DONE</div>
+    <h1>胡闹外卖 · 美团高仿原型</h1>
+    <p>基于 5 张真实美团长截图逐像素校准 · 戏精灵魂保留</p>
+  </div>
+
+  <div class="info">
+    <b>v3 阶段交付（2026-07-24）：</b>
+    <br>本月 12 页原型图全部点亮。从首页 → 商家列表 → 店铺详情 → 购物车 → 确认订单 → 骑手地图 → 我的订单 → 客服对话 → 评价 → 成就墙 → 隐私协议 → 用户协议，真实可点，戏精灵魂贯穿始终。
+  </div>
+  <div class="info2">
+    <b>戏精灵魂锚点</b>（贯穿 12 页的隐藏彩蛋）：
+    <span class="dot"></span>5 种 NPC 老板人格（暴躁/佛系/怪/懒/哲学）
+    <span class="dot"></span>3 位戏精骑手（雷速飞/李慢慢/张迷路）
+    <span class="dot"></span>零卡路里模式（基于您填的体重，胡编您的摄入）
+    <span class="dot"></span>成就体系（80% 都是戏精含量超标）
+    <span class="dot"></span>所有法律文案都用「胡闹式法律」写了
+  </div>
+
+  <div class="grid">
+    <a href="pages/home.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🏠</span>
+      <div class="no">01</div>
+      <div class="nm">首页</div>
+      <div class="ds">黄色大区 + 5×2 金刚区 3D 彩色圆形图标 + 神抢手横滑 + 附近商家大卡 + 浮窗购物车 + TabBar 黄圆高亮</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/shoplist.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">📋</span>
+      <div class="no">02</div>
+      <div class="nm">商家列表</div>
+      <div class="ds">搜索结果 + 排序筛选条 + 商家大卡（满减神券 chip / 满减赠送 / 神抢手）</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/shop.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🍗</span>
+      <div class="no">03</div>
+      <div class="nm">店铺详情</div>
+      <div class="ds">暗顶 + 大图轮播 + 外送自取 toggle + 满减 chip + 点菜/评价/商家 tab + 左浮动章节 + 黄色步进器 + 黑底购物车条</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/cart.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🛒</span>
+      <div class="no">04</div>
+      <div class="nm">购物车</div>
+      <div class="ds">零卡路里调侃提醒 + 多店铺分组（孔子饺子馆 / 暴躁麻辣烫 / 老王烧烤）+ 失效商品 + 买了又买横滑 + 黑底结算</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/checkout.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">💳</span>
+      <div class="no">05</div>
+      <div class="nm">确认订单</div>
+      <div class="ds">弹窗式 + 配送方式双卡 + 地址 + 商品 + 主食提示 + 费用明细 + 备注餐具 + 支付方式列表 + 可享权益 + 底部提交栏</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/order.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🛵</span>
+      <div class="no">06</div>
+      <div class="nm">订单详情</div>
+      <div class="ds">配送地图（网格 + 商家/骑手/送达标记）+ ETA 黄条 + 戏精骑手气泡「您的窑鸡快被我送熟了」+ 骑手卡 + 进度时间线 + 送达彩蛋</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/orders.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">📦</span>
+      <div class="no">07</div>
+      <div class="nm">我的订单</div>
+      <div class="ds">黄色大区 + 全部/待评价(1)/退款售后 tab + 多订单卡 + 满减chip + 神抢手商品 + 黄色「附近汉堡」按钮 + 买过的店横滑 + TabBar</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/service.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">💬</span>
+      <div class="no">08</div>
+      <div class="nm">客服对话</div>
+      <div class="ds">白顶 + 灰底黄系统提示 + 订单上下文白卡 + 商家/用户左右气泡 + 暴躁老板戏精回复「我的鸡也想退单吗」+ 底部快捷 chip + 输入框</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/feed.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🌟</span>
+      <div class="no">09</div>
+      <div class="nm">动态 / 评价</div>
+      <div class="ds">店铺信息行 + 3 项评分（口味/包装/配送）+ 标签云（窑鸡/椰子炖/老板戏精/凌晨下单）+ 多张戏精评价卡 + 评价配图</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/achievements.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🏆</span>
+      <div class="no">10</div>
+      <div class="nm">成就墙</div>
+      <div class="ds">黄橙渐变 Hero + Lv.7 干饭哲学家 + 数据统计 + 已解锁 6 项「零卡路里大师 / 闪电催单王 / 凌晨干饭人」 + 进行中 4 项进度条</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/privacy.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">🔒</span>
+      <div class="no">11</div>
+      <div class="nm">隐私协议</div>
+      <div class="ds">黄顶 + 9 章胡闹式法律（数据收集 / 不做什么 / 共享 / 您的权利 / 戏精模式提醒 / 未成年人 / 联系）</div>
+      <div class="go">打开 →</div>
+    </a>
+    <a href="pages/terms.html" class="card">
+      <span class="badge-done">✓</span>
+      <span class="em">📜</span>
+      <div class="no">12</div>
+      <div class="nm">用户协议</div>
+      <div class="ds">黄顶 + 9 章胡闹用户协议（签协议目的 / 服务内容 / 承诺 / 退款政策 / 内容 / 争议解决 / 注销 / 杂项）</div>
+      <div class="go">打开 →</div>
+    </a>
+  </div>
+
+  <div class="ft">
+    <div class="l">© 胡闹宇宙 whoknow · 高保真原型 v3 · 12/12 完成</div>
+    <div>校准于真实美团外卖 2026-07 · 戏精灵魂由 whoknow-waimai NPC 引擎驱动</div>
+  </div>
+</div>
+</body>
+</html>

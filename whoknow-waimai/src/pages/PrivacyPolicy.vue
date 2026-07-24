@@ -113,15 +113,15 @@ import AppHeader from '@/components/base/AppHeader.vue'
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 12px;
-    color: #ff6b35;
+    color: #ff7849;
   }
 
   strong {
-    color: #ff6b35;
+    color: #ff7849;
   }
 
   a {
-    color: #ff6b35;
+    color: #ff7849;
     text-decoration: underline;
   }
 }

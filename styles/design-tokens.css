@@ -1,0 +1,205 @@
+/**
+ * whoknow · 品牌设计令牌 (design-tokens.css)
+ * ─────────────────────────────────────────────
+ * UI Designer · 2026-07-24
+ * 配套规范：BRAND.md
+ *
+ * 用法：
+ *   主站/暗色：  <html data-theme="dark">   + 引入本文件
+ *   子产品/浅色：<html data-theme="light">  + 引入本文件
+ *   双锚色（--brand-*）在明暗主题下保持一致，用于"一眼认出是 wh闹"。
+ *
+ * 注意：字体需自行 @import（见文件底部注释或 BRAND.md）。
+ */
+
+/* ============================================================
+ * 1. 全局令牌（与主题无关）
+ * ============================================================ */
+:root {
+  /* ---- 品牌锚色（贯穿明暗，不可替换）---- */
+  --brand-green: #6eda78;   /* 胡闹绿：主品牌、活力、梗点 */
+  --brand-orange: #ff7849;  /* 橙红：主行动 CTA、胡闹强调 */
+  --brand-purple: #8b5cf6;  /* 宇宙紫：神秘、次级强调、光晕 */
+
+  /* ---- 语义色（明暗共用；暗底请用 *-on-dark 文字变体）---- */
+  --c-success: #10b981;
+  --c-warning: #f59e0b;
+  --c-error: #ef4444;
+  --c-info: #3b82f6;
+  --c-success-on-dark: #6ee7b7;
+  --c-warning-on-dark: #fcd34d;
+  --c-error-on-dark: #fca5a5;
+  --c-info-on-dark: #93c5fd;
+
+  /* ---- 字体阵容 ---- */
+  --font-display: 'Bungee', 'ZCOOL QingKe HuangYou', sans-serif;
+  --font-title: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+  --font-script: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;  /* 手写梗（主）：站酷快乐体，强可读；毛笔楷书 Ma Shan Zheng 作笔刷/印章 */
+  --font-brush: 'Ma Shan Zheng', cursive;                   /* 印章 / 签名 / 笔刷装饰（毛笔楷书，仍可读） */
+  --font-body: 'Inter', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---- 字号阶梯（1.25 比例 · 4px 对齐）---- */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 30px;
+  --fs-4xl: 36px;
+  --fs-display: clamp(48px, 12vw, 72px);
+
+  /* ---- 字重 ---- */
+  --fw-regular: 400;
+  --fw-medium: 600;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  /* ---- 行高 ---- */
+  --lh-body: 1.6;
+  --lh-title: 1.2;
+
+  /* ---- 间距系统（4px 基准）---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* ---- 圆角 ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* ---- 容器（主站移动优先，最大 640 居中）---- */
+  --container-max: 640px;
+
+  /* ---- Z 轴层级（见 BRAND.md §15.3）---- */
+  --z-base: 0;
+  --z-sticky: 100;
+  --z-overlay: 1000;
+  --z-modal: 2000;
+  --z-toast: 3000;
+
+  /* ---- 动效 ---- */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 150ms;
+  --t-normal: 300ms;
+  --t-slow: 500ms;
+
+  /* ---- 字体引入（如需统一注入，取消下方注释）----
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+  */
+}
+
+/* ============================================================
+ * 2. 宇宙暗色主题（主站 / 品牌门面）
+ * ============================================================ */
+[data-theme="dark"] {
+  --bg: #0a0612;
+  --bg-2: #120a1a;
+  --bg-3: #1a1126;
+  --line: #1f1828;
+  --line-2: #2a2236;
+  --fg: #ededef;
+  --fg-dim: #a094b8;
+  --fg-mute: #6b6480;
+
+  /* 氛围光晕（背景用，非组件） */
+  --glow-purple: radial-gradient(500px 400px at 20% 0%, rgba(139,92,246,.18), transparent 70%);
+  --glow-green: radial-gradient(600px 400px at 85% 100%, rgba(110,218,120,.10), transparent 70%);
+  --glow-orange: radial-gradient(400px 300px at 50% 30%, rgba(255,120,73,.06), transparent 70%);
+  --grid-dots: radial-gradient(circle, rgba(255,255,255,.025) 1px, transparent 1px);
+
+  /* 阴影（霓虹光晕替代投影） */
+  --shadow-glow-green: 0 0 24px rgba(110, 218, 120, .25);
+  --shadow-glow-orange: 0 0 24px rgba(255, 120, 73, .25);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, .4);
+
+  /* 主题化按钮/控件用色 */
+  --btn-primary-bg: var(--brand-orange);
+  --btn-primary-fg: #ffffff;
+  --btn-green-bg: var(--brand-green);
+  --btn-green-fg: #0a0612;
+  --focus-ring: 2px solid var(--brand-green);
+}
+
+/* ============================================================
+ * 3. 产品浅色主题（外卖 / 导购 App）
+ * ============================================================ */
+[data-theme="light"] {
+  --bg: #f7f7f8;
+  --bg-2: #ffffff;
+  --bg-3: #f0f0f2;
+  --line: #ededed;
+  --line-2: #dcdce0;
+  --fg: #222222;
+  --fg-dim: #666666;
+  --fg-mute: #999999;
+
+  /* 阴影（标准投影） */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, .12);
+
+  /* 主题化按钮/控件用色 */
+  --btn-primary-bg: var(--brand-orange);
+  --btn-primary-fg: #ffffff;
+  --btn-green-bg: var(--brand-green);
+  --btn-green-fg: #0a3d18;
+  --focus-ring: 2px solid var(--brand-orange);
+}
+
+/* ============================================================
+ * 4. 基础重置与全局排版（可选启用）
+ * ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  color: var(--fg);
+  background-color: var(--bg);
+}
+
+/* 容器：主站移动优先，居中手机感 */
+.wh-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--sp-4);
+}
+
+/* ============================================================
+ * 5. 无障碍：动效降级
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

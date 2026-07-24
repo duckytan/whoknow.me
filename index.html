@@ -1,61 +1,51 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>whoknow · 胡闹宇宙</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0612'/%3E%3Ctext x='50' y='72' font-family='Inter,sans-serif' font-size='70' font-weight='900' fill='%23ff7849' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
-  <meta name="description" content="谁知道这个宇宙里会发生什么？" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0612'/%3E%3Ctext x='50' y='72' font-family='Inter,sans-serif' font-size='70' font-weight='900' fill='%236eda78' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="谁知道这个宇宙里会发生什么？胡闹 × Who knows? × 家人们谁懂啊。" />
   <meta name="theme-color" content="#0a0612" />
+
+  <!-- 品牌设计令牌：BRAND.md §10 / styles/design-tokens.css -->
+  <link rel="stylesheet" href="styles/design-tokens.css" />
+
+  <!-- 品牌字体阵容：BRAND.md §3.1 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=Liu+Jian+Mao+Cao&display=swap');
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --green: #6eda78;
-      --green-dim: rgba(110, 218, 120, 0.12);
-      --orange: #ff7849;
-      --bg: #0a0612;
-      --bg-2: #120a1a;
-      --line: #1f1828;
-      --line-2: #2a2236;
-      --fg: #ededef;
-      --fg-dim: #a094b8;
-      --fg-mute: #6b6480;
-    }
-
-    html, body { background: var(--bg); }
+    /* ============================================================
+       页面级样式——所有色值/间距/圆角/动效一律引用 design-tokens.css 令牌
+       非品牌色（如原 #fde047 黄）已全部替换为品牌锚色 绿/橙/紫
+       ============================================================ */
 
     body {
-      font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
-      color: var(--fg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* 背景：左上极淡绿光晕 + 网格点阵 */
+    /* 背景：左上紫晕 + 右下绿晕 + 中橙晕（引用令牌渐变变量 · BRAND §2.2） */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse 500px 400px at 20% 0%, rgba(139, 92, 246, 0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 600px 400px at 85% 100%, rgba(110, 218, 120, 0.10) 0%, transparent 70%),
-        radial-gradient(ellipse 400px 300px at 50% 30%, rgba(255, 120, 73, 0.06) 0%, transparent 70%);
+      background: var(--glow-purple), var(--glow-green), var(--glow-orange);
       pointer-events: none;
       z-index: 0;
     }
 
+    /* 点阵网格（引用令牌 · BRAND §2.2） */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-image: var(--grid-dots);
       background-size: 28px 28px;
       pointer-events: none;
       z-index: 0;
@@ -64,9 +54,9 @@
     .container {
       position: relative;
       z-index: 1;
-      max-width: 640px;
+      max-width: var(--container-max);
       width: 100%;
-      padding: 4rem 2rem 2rem;
+      padding: var(--sp-16) var(--sp-4) var(--sp-4);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -74,108 +64,102 @@
     }
 
     /* ===== Hero ===== */
-    .hero {
-      text-align: center;
-      padding-top: 4rem;
-      width: 100%;
-    }
+    .hero { text-align: center; padding-top: var(--sp-6); width: 100%; }
 
-    /* 顶部小标：mono 字体 · 标签感 */
+    /* 顶部小标：mono 字体 · 标签感（BRAND §18 按钮/标签风） */
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      gap: var(--sp-2);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       color: var(--fg-mute);
       letter-spacing: 0.15em;
       padding: 0.4rem 0.9rem;
       border: 1px solid var(--line);
-      border-radius: 99px;
+      border-radius: var(--radius-pill);
       background: transparent;
     }
-
     .eyebrow .dot {
-      width: 6px;
-      height: 6px;
-      background: #444;
+      width: 6px; height: 6px;
+      background: var(--fg-mute);
       border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
     }
-
     @keyframes pulse-dot {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.4); }
     }
 
-    /* 主标：单行 whoknow · 不要再花 */
+    /* 眉标：固定到页面左上角（仅移动这行字；logo/胡闹仍居中于 hero，尺寸不变） */
+    .corner-eyebrow {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 50;
+      padding: var(--sp-4) var(--sp-5);
+      pointer-events: none;   /* 纯展示，绝不挡下方点击 */
+    }
+
+    /* 品牌名已回归 HERO 居中（见下方 .hero），不再使用固定角标 */
+
+    /* 主标：Bungee 字标，黑描边 + 白光晕（立体） */
     .logo {
-      font-family: 'Bungee', 'Inter', 'PingFang SC', sans-serif;
+      font-family: var(--font-display);
       font-size: 6rem;
       font-weight: 400;
       letter-spacing: -0.02em;
       line-height: 1;
-      margin-top: 2rem;
+      margin-top: var(--sp-12);
       transform: rotate(-5deg);
       display: flex;
       align-items: baseline;
       justify-content: center;
-      gap: 0;
+      color: var(--fg);                 /* 字标主体白 */
       text-shadow:
-        /* 黑描边 */
-        -3px -3px 0 #0a0612,
-        3px -3px 0 #0a0612,
-        -3px 3px 0 #0a0612,
-        3px 3px 0 #0a0612,
-        /* 底部黑色硬阴影（立体投影） */
-        0 10px 0 rgba(0, 0, 0, 0.6),
-        0 14px 20px rgba(0, 0, 0, 0.4),
-        /* 立体高光：左上方斜射白光（制造高光面） */
-        -2px -2px 4px rgba(255, 255, 255, 0.6),
-        /* 外发光：4 层白光（从近到远衰减） */
-        0 0 12px rgba(255, 255, 255, 0.45),
-        0 0 24px rgba(255, 255, 255, 0.3),
-        0 0 48px rgba(255, 255, 255, 0.15),
-        0 0 80px rgba(255, 255, 255, 0.08);
+        -3px -3px 0 #0a0612, 3px -3px 0 #0a0612,
+        -3px 3px 0 #0a0612, 3px 3px 0 #0a0612,
+        0 10px 0 rgba(0,0,0,.6), 0 14px 20px rgba(0,0,0,.4),
+        -2px -2px 4px rgba(255,255,255,.6),
+        0 0 12px rgba(255,255,255,.45), 0 0 24px rgba(255,255,255,.3),
+        0 0 48px rgba(255,255,255,.15), 0 0 80px rgba(255,255,255,.08);
+      animation: logo-breathe 3s ease-in-out infinite;
+    }
+    @keyframes logo-breathe {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50% { transform: rotate(-5deg) scale(1.04); }
     }
 
-    .logo-who {
-      color: #fde047;
-    }
-
+    /* 锚色 k：胡闹绿（品牌签名锚点 · BRAND §12.4） */
     .logo-k {
-      color: var(--orange);
+      color: var(--brand-green);
       position: relative;
       display: inline-block;
       animation: bounce-k 1.8s ease-in-out infinite;
       margin: 0 0.05em;
     }
-
     @keyframes bounce-k {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-8px) scale(1.1); }
     }
-
     .logo-k::before {
       content: '\01F525';
       position: absolute;
-      top: -1.4em;
-      left: 50%;
+      top: -0.7em; left: 50%;
       transform: translateX(-50%);
-      font-size: 0.42em;
-      filter: drop-shadow(0 0 10px rgba(255, 120, 73, 0.9));
+      font-size: 0.32em;
+      filter: drop-shadow(0 0 5px var(--brand-orange));
+      pointer-events: none;
       animation: flicker-flame 0.4s ease-in-out infinite alternate;
     }
-
     @keyframes flicker-flame {
       0% { opacity: 0.85; transform: translateX(-50%) scale(1) translateY(0); }
       100% { opacity: 1; transform: translateX(-50%) scale(1.15) translateY(-3px) rotate(-4deg); }
     }
 
-    /* ===== KUSO 脚注：紧贴 K 下方，像注释 ===== */
+    /* KUSO 脚注：紧贴 K 下方，字母用品牌锚色（去黄 · BRAND §2.1） */
     .logo-kuso {
       position: absolute;
-      top: 100%;
-      left: 50%;
+      top: 100%; left: 50%;
       transform: translateX(-50%);
       display: inline-flex;
       gap: 0.08em;
@@ -184,653 +168,359 @@
       z-index: 3;
       white-space: nowrap;
     }
-
     .k-letter {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.14em;
-      font-weight: 400;
-      color: var(--c, #888);
-      display: inline-block;
-      opacity: 0.85;
+      font-family: var(--font-mono);
+      font-size: 0.14em; font-weight: 400;
+      display: inline-block; opacity: 0.85;
       letter-spacing: 0.02em;
-      animation-delay: var(--d, 0s);
       transform-origin: center bottom;
+      animation-delay: var(--d, 0s);
     }
-
-    /* 字母 1：安静型 —— 微浮 + 呼吸灯 */
-    .k-letter-1 {
-      animation:
-        kid-float 1.4s ease-in-out infinite,
-        kid-breathe 2.6s ease-in-out infinite;
-    }
-
-    @keyframes kid-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-2px); }
-    }
-
+    .k-letter-1 { animation: kid-float 1.4s ease-in-out infinite, kid-breathe 2.6s ease-in-out infinite; }
+    .k-letter-2 { animation: kid-jump 0.8s cubic-bezier(.5,0,.5,1) infinite; }
+    .k-letter-3 { animation: kid-spin 2.2s linear infinite; }
+    .k-letter-4 { animation: kid-sway 1.6s ease-in-out infinite; }
+    @keyframes kid-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)} }
     @keyframes kid-breathe {
-      0%, 100% {
-        opacity: 0.4;
-        filter: brightness(0.7);
-        text-shadow: 0 0 0 transparent;
-      }
-      50% {
-        opacity: 1;
-        filter: brightness(1.4);
-        text-shadow: 0 0 8px rgba(253, 224, 71, 0.8);
-      }
+      0%,100%{opacity:.4;filter:brightness(.7);text-shadow:0 0 0 transparent}
+      50%{opacity:1;filter:brightness(1.4);text-shadow:0 0 8px var(--brand-green)}
     }
+    @keyframes kid-jump { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    @keyframes kid-spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    @keyframes kid-sway { 0%,100%{transform:translateX(0) rotate(0)} 25%{transform:translateX(-1.5px) rotate(-4deg)} 75%{transform:translateX(1.5px) rotate(4deg)} }
+    .k-letter-1{transform:translateY(-0.5px)} .k-letter-2{transform:translateY(.5px)}
+    .k-letter-3{transform:translateY(-1px – 0)} .k-letter-4{transform:translateY(1px)}
 
-    /* 字母 2：兴奋型 —— 小跳（克制） */
-    .k-letter-2 {
-      animation: kid-jump 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    }
-
-    @keyframes kid-jump {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    /* 字母 3：旋转型 —— 微旋转 */
-    .k-letter-3 {
-      animation: kid-spin 2.2s linear infinite;
-    }
-
-    @keyframes kid-spin {
-      from { transform: rotate(0); }
-      to { transform: rotate(360deg); }
-    }
-
-    /* 字母 4：摇摆型 —— 微摆 */
-    .k-letter-4 {
-      animation: kid-sway 1.6s ease-in-out infinite;
-    }
-
-    @keyframes kid-sway {
-      0%, 100% { transform: translateX(0) rotate(0); }
-      25% { transform: translateX(-1.5px) rotate(-4deg); }
-      75% { transform: translateX(1.5px) rotate(4deg); }
-    }
-
-    /* 给字母起始微错位 */
-    .k-letter-1 { transform: translateY(-0.5px); }
-    .k-letter-2 { transform: translateY(0.5px); }
-    .k-letter-3 { transform: translateY(-1px); }
-    .k-letter-4 { transform: translateY(1px); }
-
-    .logo-now {
-      color: #fde047;
-    }
-
-
-
-    /* 中文"胡闹"：作为 logo 的小尾巴，不抢主标 */
+    /* 中文"胡闹"：ZCOOL 黄油体，橙 + 绿锚点（去黄 · BRAND §3.1） */
     .chinese-brand {
-      font-family: 'ZCOOL QingKe HuangYou', 'Liu Jian Mao Cao', 'Noto Sans SC', cursive;
-      font-size: 3.5rem;
-      font-weight: 400;
-      color: var(--orange);
-      letter-spacing: 0.2em;
-      margin-right: -0.2em;
-      margin-top: 1.5rem;
+      font-family: var(--font-title);
+      font-size: 3.5rem; font-weight: 400;
+      letter-spacing: 0.2em; margin-right: -0.2em;
+      margin-top: var(--sp-6);
       transform: rotate(6deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3em;
+      display: flex; align-items: center; justify-content: center; gap: 0.3em;
       position: relative;
-      text-shadow:
-        -2px -2px 0 #0a0612,
-        2px -2px 0 #0a0612,
-        -2px 2px 0 #0a0612,
-        2px 2px 0 #0a0612;
+      text-shadow: -2px -2px 0 #0a0612, 2px -2px 0 #0a0612, -2px 2px 0 #0a0612, 2px 2px 0 #0a0612;
     }
-
-    /* 涂鸦下划线 = 滑梯 */
+    .chinese-brand .char { display: inline-block; color: var(--brand-orange); }
+    .chinese-brand .char.accent { color: var(--brand-green); }
     .chinese-brand::before {
-      content: '';
-      position: absolute;
-      bottom: -0.15em;
-      left: -0.2em;
-      right: -0.2em;
+      content: ''; position: absolute; bottom: -0.15em; left: -0.2em; right: -0.2em;
       height: 4px;
-      background: linear-gradient(90deg, transparent, #fde047 5%, #fde047 95%, transparent);
-      transform: rotate(1deg);
-      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand-green) 5%, var(--brand-green) 95%, transparent);
+      transform: rotate(1deg); border-radius: 2px;
     }
-
-    /* ✨ 星星：在「闹」字滑去的终点 */
     .chinese-brand::after {
-      content: '\2728';
-      position: absolute;
-      top: 1em;
-      right: -1.2em;
-      font-size: 0.5em;
+      content: '\2728'; position: absolute; top: 1em; right: -1.2em;
+      font-size: 0.5em; color: var(--brand-green);
       animation: twinkle 1.5s ease-in-out infinite;
     }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.4; transform: scale(0.9) rotate(0); }
-      50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
-    }
-
-    .chinese-brand .char {
-      display: inline-block;
-      color: var(--orange);
-    }
-
-    /* 「胡」字：模仿 KUSO 里的 u —— 微微上下跳动 */
-    .chinese-brand .char:first-child {
-      animation: hu-jump 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      transform-origin: center bottom;
-    }
-
-    @keyframes hu-jump {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-0.08em); }
-    }
-
-    /* 「闹」字 = 滑滑梯：沿斜坡向 ✨ 滑去 */
-    .chinese-brand .char.accent {
-      color: #fde047;
-      animation: slide-down 3.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-      display: inline-block;
-      transform-origin: center center;
-    }
-
+    @keyframes twinkle { 0%,100%{opacity:.4;transform:scale(.9) rotate(0)} 50%{opacity:1;transform:scale(1.2) rotate(20deg)} }
+    .chinese-brand .char:first-child { animation: hu-jump .8s cubic-bezier(.5,0,.5,1) infinite; transform-origin: center bottom; }
+    @keyframes hu-jump { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-0.08em)} }
+    .chinese-brand .char.accent { animation: slide-down 3.2s cubic-bezier(.45,.05,.55,.95) infinite; transform-origin: center center; }
     @keyframes slide-down {
-      0% {
-        opacity: 0;
-        transform: translate(-0.1em, -0.05em) rotate(0deg) scale(0.7);
-      }
-      15% {
-        opacity: 1;
-        transform: translate(0, -0.05em) rotate(-2deg) scale(0.85);
-      }
-      40% {
-        opacity: 1;
-        transform: translate(0.6em, 0.02em) rotate(3deg) scale(0.95);
-      }
-      70% {
-        opacity: 1;
-        transform: translate(1.4em, 0.12em) rotate(6deg) scale(1.0);
-      }
-      88% {
-        opacity: 0.9;
-        transform: translate(2.1em, 0.20em) rotate(9deg) scale(1.05);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(2.6em, 0.26em) rotate(12deg) scale(1.1);
-      }
+      0%{opacity:0;transform:translate(-0.1em,-0.05em) rotate(0) scale(.7)}
+      15%{opacity:1;transform:translate(0,-0.05em) rotate(-2deg) scale(.85)}
+      40%{opacity:1;transform:translate(0.6em,0.02em) rotate(3deg) scale(.95)}
+      70%{opacity:1;transform:translate(1.4em,0.12em) rotate(6deg) scale(1)}
+      88%{opacity:.9;transform:translate(2.1em,0.2em) rotate(9deg) scale(1.05)}
+      100%{opacity:0;transform:translate(2.6em,0.26em) rotate(12deg) scale(1.1)}
     }
 
-    /* 副标：和主标统一字体 + 加描边立体 */
+    /* Hero 主副标语（由 js/home-render.js 从 JSON 注入 · 截图高光 · BRAND §14.4） */
     .tagline {
-      margin-top: 2.5rem;
-      font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-      font-size: 1.05rem;
-      color: var(--fg);
-      line-height: 1.8;
-      letter-spacing: 0;
-      font-weight: 600;
-      text-shadow:
-        -1px -1px 0 #0a0612,
-        1px -1px 0 #0a0612,
-        -1px 1px 0 #0a0612,
-        1px 1px 0 #0a0612;
-      transition: opacity 0.4s ease-out;
+      margin-top: var(--sp-8);
+      font-family: var(--font-body);
+      font-size: 1.05rem; color: var(--fg);
+      line-height: 1.8; font-weight: 600;
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612;
     }
-
-
-    /* 入场 C：模糊淡入（用 keyframes 动画，避开 reflow 问题） */
-    #tagline-top {
-      display: inline-block;
-    }
-
-    /* 新内容入场动画 */
-    #tagline-top.entering {
-      animation: enter-blur 0.5s ease-out forwards;
-    }
-
-    @keyframes enter-blur {
-      0% {
-        opacity: 0;
-        filter: blur(10px);
-      }
-      100% {
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
-
-    /* 退场 E：字母飞散 */
-    .char-anim {
-      display: inline-block;
-    }
-
-    #tagline-top.flying .char-anim {
-      animation: char-fly 0.5s ease-in forwards;
-    }
-
-    @keyframes char-fly {
-      0% { transform: translate(0, 0) rotate(0); opacity: 1; }
-      100% { transform: translate(var(--dx, 30px), var(--dy, -50px)) rotate(var(--rot, 90deg)); opacity: 0; }
-    }
-
-
-    .tagline .accent {
-      color: #fde047;
-      font-weight: 800;
-      font-style: italic;
-    }
-    .tagline .dim {
-      color: var(--fg-dim);
-      font-weight: 400;
-    }
-    .tagline .sep {
-      color: var(--fg-mute);
-      margin: 0 0.5rem;
-      font-weight: 400;
-    }
+    .tagline .accent { color: var(--brand-green); font-weight: 800; font-style: italic; }
+    .tagline .dim { color: var(--fg-dim); font-weight: 400; }
+    .tagline .sep { color: var(--fg-mute); margin: 0 0.5rem; font-weight: 400; }
     .tagline .question {
-      display: inline-block;
-      color: #fde047;
-      font-size: 1.4em;
-      font-weight: 900;
-      vertical-align: middle;
-      margin-right: 0.15em;
-      transform: rotate(-8deg);
-      text-shadow:
-        -1px -1px 0 #0a0612,
-        1px -1px 0 #0a0612,
-        -1px 1px 0 #0a0612,
-        1px 1px 0 #0a0612,
-        0 2px 0 rgba(0, 0, 0, 0.4);
+      display: inline-block; color: var(--brand-green);
+      font-size: 1.4em; font-weight: 900; vertical-align: middle;
+      margin-right: 0.15em; transform: rotate(-8deg);
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612, 0 2px 0 rgba(0,0,0,.4);
     }
+
+    /* 入场/退场动画（JS 驱动） */
+    #tagline-top { display: inline-block; }
+    #tagline-top.entering { animation: enter-blur 0.5s ease-out forwards; }
+    @keyframes enter-blur { 0%{opacity:0;filter:blur(10px)} 100%{opacity:1;filter:blur(0)} }
+    .char-anim { display: inline-block; }
+    #tagline-top.flying .char-anim { animation: char-fly 0.5s ease-in forwards; }
+    @keyframes char-fly {
+      0%{transform:translate(0,0) rotate(0);opacity:1}
+      100%{transform:translate(var(--dx,30px),var(--dy,-50px)) rotate(var(--rot,90deg));opacity:0}
+    }
+
+    /* 品牌宣言（定位段）：主标语与 CTA 之间的价值主张 · 暗色玻璃卡质感 */
+    .manifesto {
+      margin: var(--sp-8) auto 0;
+      max-width: 640px;
+      font-family: var(--font-body);
+      font-size: 0.98rem; line-height: 1.85; font-weight: 500;
+      color: var(--fg-dim); text-align: center;
+      padding: var(--sp-4) var(--sp-5);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--bg-2);
+      box-shadow: var(--shadow-sm);
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612;
+    }
+    .manifesto .accent { color: var(--brand-green); font-weight: 700; }
+
+    /* ===== Hero CTA（BRAND §7.1 / §18 按钮态） ===== */
+    .hero-cta {
+      margin-top: var(--sp-8);
+      display: flex; gap: var(--sp-3); flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4em;
+      min-height: 44px; padding: 0 var(--sp-6);
+      font-family: var(--font-body); font-size: var(--fs-base); font-weight: 600;
+      border: none; border-radius: var(--radius-md);
+      text-decoration: none; cursor: pointer; user-select: none;
+      transition: transform var(--t-fast) var(--ease-smooth), box-shadow var(--t-fast) var(--ease-smooth), background-color var(--t-fast) var(--ease-smooth);
+    }
+    .btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    .btn--primary { background: var(--btn-primary-bg); color: var(--btn-primary-fg); }
+    .btn--primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); background: var(--brand-orange); }
+    .btn--ghost { background: transparent; color: var(--fg-dim); border: 1px solid var(--line-2); }
+    .btn--ghost:hover { color: var(--fg); border-color: var(--brand-green); transform: translateY(-1px); }
 
     /* ===== Section ===== */
-    .section {
-      margin-top: 6rem;
-      width: 100%;
-    }
-
+    .section { margin-top: var(--sp-16); width: 100%; scroll-margin-top: var(--sp-8); }
     .section-title {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.7rem;
-      color: var(--fg-mute);
-      letter-spacing: 0.2em;
-      text-align: center;
-      margin-bottom: 1.5rem;
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      letter-spacing: 0.2em; text-align: center; margin-bottom: var(--sp-6);
     }
 
-    .section-title .accent { color: var(--fg-mute); }
-
-    /* α: 戏精评价卡 */
-    .products {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      width: 100%;
-    }
-
+    /* 戏精评价卡 → 纯展示（顶部已有产品入口 CTA，此处取消一切点击行为 · BRAND §14.4） */
+    .products { display: flex; flex-direction: column; gap: var(--sp-4); width: 100%; }
     .review-card {
+      display: block;
       background: var(--bg-2);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 1.2rem 1.3rem;
+      border-radius: var(--radius-lg);
+      padding: var(--sp-4) var(--sp-5);
       position: relative;
-      transition: all 0.2s ease;
-      cursor: pointer;
+      color: inherit;
+      transition: border-color var(--t-fast) var(--ease-smooth);
     }
-
-    .review-card:hover {
-      border-color: var(--orange);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
+    .review-card:hover { border-color: var(--brand-orange); }
+    .review-card.is-coming { opacity: 0.86; }
+    .review-card.is-coming:hover { border-color: var(--brand-green); }
     .review-card::before {
-      content: '\201C';
-      position: absolute;
-      top: -10px;
-      left: 10px;
-      font-family: 'Georgia', serif;
-      font-size: 4rem;
-      line-height: 1;
-      color: var(--orange);
-      opacity: 0.5;
+      content: '\201C'; position: absolute; top: -10px; left: 10px;
+      font-family: 'Georgia', serif; font-size: 4rem; line-height: 1;
+      color: var(--brand-orange); opacity: 0.5;
     }
-
-    .review-text {
-      font-size: 0.95rem;
-      color: var(--fg);
-      line-height: 1.6;
-      margin-bottom: 0.8rem;
-      padding-top: 0.3rem;
-    }
-
-    .review-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      color: var(--fg-mute);
-    }
-
-    .review-meta .author {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
+    .review-text { font-size: 0.95rem; color: var(--fg); line-height: 1.6; margin-bottom: var(--sp-3); padding-top: 0.3rem; }
+    .review-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); font-size: 0.78rem; color: var(--fg-mute); }
+    .review-meta .author { display: flex; align-items: center; gap: 0.4rem; }
     .review-meta .author .avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 1px solid var(--line-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--bg); border: 1px solid var(--line-2);
+      display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
     }
-
-    .review-meta .stars {
-      color: var(--orange);
-      letter-spacing: 0.1em;
-    }
-
+    .review-meta .review-stars { color: var(--brand-orange); letter-spacing: 0.1em; }
     .review-product {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--fg-mute);
-      letter-spacing: 0.05em;
-      margin-top: 0.4rem;
-      padding-top: 0.5rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      letter-spacing: 0.05em; margin-top: 0.4rem; padding-top: 0.5rem;
+      border-top: 1px solid var(--line); display: flex; align-items: center; gap: 0.4rem;
     }
+    .review-product .tag { background: var(--bg); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid var(--line-2); }
+    .badge-live { margin-left: auto; font-size: 0.7rem; color: var(--brand-green); font-weight: 600; }
 
-    .review-product .tag {
-      background: var(--bg);
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-      border: 1px solid var(--line-2);
-    }
-
-    .badge-live {
-      margin-left: auto;
-      font-size: 0.7rem;
-      color: var(--green);
-      font-weight: 600;
-    }
-
-/* ===== Footer ===== */
+    /* ===== Footer ===== */
     .footer {
-      margin-top: auto;
-      padding: 3rem 0 1.5rem;
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 0.7rem;
-      color: var(--fg-mute);
-      text-align: center;
-      letter-spacing: 0.05em;
+      margin-top: auto; padding: var(--sp-12) 0 var(--sp-6);
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      text-align: center; letter-spacing: 0.05em;
+    }
+    .footer .accent { color: var(--brand-orange); }
+
+    /* ===== 星空层（移植自 index1：满屏纯白星点 + 呼吸闪烁 · 经典"胡闹宇宙"质感） ===== */
+    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .star {
+      position: absolute; border-radius: 50%; background: #fff; opacity: .6;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .15; transform: scale(.7); }
+      50% { opacity: .9; transform: scale(1.1); }
     }
 
-    .footer .accent { color: var(--orange); }
-
-    /* ===== Mobile ===== */
-    @media (max-width: 480px) {
-      .container { padding: 2.5rem 1.25rem 1.5rem; }
-      .hero { padding-top: 2rem; }
-      .logo { font-size: 3.8rem; }
-      .chinese-brand { font-size: 1.8rem; }
-      .product-row { padding: 0.9rem 1rem; }
-    }
-  
-    /* X: hero 整体轻微晃动 */
-    .hero {
-      animation: hero-shake 2.5s ease-in-out infinite;
-    }
-
+    /* Hero 轻微晃动 */
+    .hero { animation: hero-shake 2.5s ease-in-out infinite; }
     @keyframes hero-shake {
-      0%, 100% { transform: translate(0, 0) rotate(0); }
-      25% { transform: translate(-0.5px, 0.3px) rotate(-0.15deg); }
-      50% { transform: translate(0.4px, -0.2px) rotate(0.1deg); }
-      75% { transform: translate(-0.3px, -0.4px) rotate(0.15deg); }
+      0%,100%{transform:translate(0,0) rotate(0)}
+      25%{transform:translate(-0.5px,0.3px) rotate(-0.15deg)}
+      50%{transform:translate(0.4px,-0.2px) }
+      75%{transform:translate(-0.3px,-0.4px) rotate(0.15deg)}
     }
 
-    @keyframes logo-breathe {
-      0%, 100% { transform: rotate(-5deg) scale(1); }
-      50% { transform: rotate(-5deg) scale(1.04); }
+    /* ===== 响应式：移动优先（BRAND §9） ===== */
+    @media (max-width: 768px) {
+      .container { padding: var(--sp-12) var(--sp-4) var(--sp-4); }
+      .hero { padding-top: var(--sp-4); }
+      .logo { font-size: 3.6rem; margin-top: var(--sp-8); }
+      .chinese-brand { font-size: 2rem; }
     }
-    .logo {
-      animation: logo-breathe 3s ease-in-out infinite;
-    }
-    /* ⚠️ transform 已被 keyframes 完全接管，rotate(-5deg) 在 keyframes 0%/100% 里保留 */
-    /* W: 产品卡 hover 反骨 */
-    .product-row:hover .name::after {
-      content: '点啥点，这功能还在设计~';
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--orange);
-      margin-top: 0.2rem;
-      font-style: italic;
+    @media (max-width: 480px) {
+      .logo { font-size: 2.8rem; }
+      .chinese-brand { font-size: 1.6rem; }
     }
 
-    /* Y: 背景粒子 */
-    .particle {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      animation: particle-float var(--dur, 8s) ease-in-out infinite;
-      animation-delay: var(--delay, 0s);
+    /* ===== 无障碍：动效降级（BRAND §8 / §17 · 与 design-tokens.css 互补） ===== */
+    @media (prefers-reduced-motion: reduce) {
+      .hero, .logo, .logo-k, .logo-kuso, .chinese-brand, .chinese-brand .char,
+      .k-letter, .eyebrow .dot, .chinese-brand::after, .star {
+        animation: none !important;
+      }
+      .review-card:hover, .btn:hover { transform: none !important; }
     }
-
-    @keyframes particle-float {
-      0%, 100% { transform: translate(0, 0); opacity: 0; }
-      10% { opacity: var(--max-opacity, 0.6); }
-      90% { opacity: var(--max-opacity, 0.6); }
-      50% { transform: translate(var(--dx, 30px), var(--dy, -40px)); }
-    }
-
   </style>
 </head>
 <body>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <!-- 眉标：固定页面左上角（仅此一行字移入角落，logo 仍在 hero 居中） -->
+  <div class="corner-eyebrow">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span><span data-eyebrow></span></span>
+  </div>
+
   <div class="container">
 
     <!-- ===== HERO ===== -->
-    <div class="hero">
+    <header class="hero">
+      <!-- 主标：h1 + aria-label，装饰内容对读屏隐藏 -->
+      <h1 class="logo" aria-label="whoknow 胡闹宇宙">
+        <span aria-hidden="true">
+          <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-kuso">
+            <span class="k-letter k-letter-1" style="color:var(--brand-green);--d:0s;">k</span>
+            <span class="k-letter k-letter-2" style="color:var(--brand-orange);--d:0.2s;">u</span>
+            <span class="k-letter k-letter-3" style="color:var(--brand-purple);--d:0.4s;">s</span>
+            <span class="k-letter k-letter-4" style="color:var(--brand-green);--d:0.6s;">o</span>
+          </span><span class="logo-now">now</span>
+        </span>
+      </h1>
 
-      <!-- 主标：纯文字，单一绿色锚点 K -->
-      <div class="logo">
-        <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-kuso">
-          <span class="k-letter k-letter-1" style="--c:#fde047;--d:0s;">k</span>
-          <span class="k-letter k-letter-2" style="--c:#ff7849;--d:0.2s;">u</span>
-          <span class="k-letter k-letter-3" style="--c:#6eda78;--d:0.4s;">s</span>
-          <span class="k-letter k-letter-4" style="--c:#a78bfa;--d:0.6s;">o</span>
-        </span><span class="logo-now">now</span>
-      </div>
-
-      <!-- 胡闹：小一号，灰绿色，作为副标 -->
-      <div class="chinese-brand">
+      <!-- 中文品牌名 -->
+      <div class="chinese-brand" aria-hidden="true">
         <span class="char">胡</span><span class="char accent">闹</span>
       </div>
 
-      <!-- Tagline: 上行随机切换 + 下行固定 -->
-      <div class="tagline" id="tagline">
-        <span id="tagline-top"><!-- JS 注入：? + slogan 主体 --></span>
+      <!-- 副标语：上行 JSON 段子随机切换 + 下行品牌 tail（由 js/home-render.js 注入 · BRAND §14.4） -->
+      <p class="tagline" id="tagline">
+        <span id="tagline-top"></span>
         <br>
-        <span class="accent">— WHO KNOWS?</span> <span class="sep">·</span> 家人们<span class="dim">谁懂</span>
-      </div>
-      <script>
-        (function() {
-          var slogans = [
-            '这个导购员居然阻止我买化妆品',
-            '骑手送外卖时居然跟我聊哲学',
-            '老板推荐菜时给我讲了个段子',
-            'AI 居然用段子给我推新品',
-            '下一秒会发生啥',
-            '这个宇宙里啥都敢胡来'
-          ];
+        <span data-tagline-tail></span>
+      </p>
 
-          var currentSlogan = slogans[0];
-          var topEl = document.getElementById('tagline-top');
+      <!-- 品牌宣言（定位段）：由 js/home-render.js 从 data/home.json 注入 -->
+      <p class="manifesto" data-manifesto></p>
 
-          // 入场用 C：模糊淡入 → 不需要逐字动画，只要整体淡入
-          function buildHTML(text) {
-            return '<span class="question">?</span><span class="slogan-zh">' + text + '</span>';
-          }
+      <!-- Hero CTA（由 js/home-render.js 从 data/home.json 注入 · BRAND §7.1） -->
+      <div class="hero-cta" data-ctas></div>
+    </header>
 
-          function render() {
-            var next;
-            do {
-              next = slogans[Math.floor(Math.random() * slogans.length)];
-            } while (next === currentSlogan && slogans.length > 1);
-            currentSlogan = next;
+    <!-- ===== PRODUCTS（评论卡片由 js/home-render.js 从 data/home.json 注入） ===== -->
+    <main>
+      <section class="section" id="products">
+        <div class="section-title" data-section-title></div>
+        <div class="products" data-reviews></div>
+      </section>
+    </main>
 
-            // 退场 E：字母飞散
-            // 先把当前内容拆成字符，每个字符加随机飞散方向
-            var chars = topEl.querySelectorAll('.slogan-zh, .question');
-            chars.forEach(function(el) {
-              if (el.classList.contains('question')) {
-                // ? 字符 - 直接飞散
-                var dx = (Math.random() - 0.5) * 80;
-                var dy = -40 - Math.random() * 50;
-                var rot = (Math.random() - 0.5) * 240;
-                el.style.setProperty('--dx', dx + 'px');
-                el.style.setProperty('--dy', dy + 'px');
-                el.style.setProperty('--rot', rot + 'deg');
-                el.classList.add('char-anim');
-              } else {
-                // slogan 主体：每个字符拆出来
-                var text = el.textContent;
-                var spans = '';
-                for (var i = 0; i < text.length; i++) {
-                  var dx = (Math.random() - 0.5) * 80;
-                  var dy = -40 - Math.random() * 50;
-                  var rot = (Math.random() - 0.5) * 240;
-                  spans += '<span class="char-anim" style="--dx: ' + dx + 'px; --dy: ' + dy + 'px; --rot: ' + rot + 'deg;">' + text[i] + '</span>';
-                }
-                el.outerHTML = spans;
-              }
-            });
-
-            topEl.classList.add('flying');
-
-            setTimeout(function() {
-              // 退场动画完成
-              topEl.classList.remove('flying');
-
-              // 入场 C：模糊淡入（用 keyframes 动画）
-              // 1. 替换内容（新 DOM 默认无 .entering）
-              topEl.innerHTML = buildHTML(next);
-              // 2. 强制 reflow，确保浏览器先渲染默认状态
-              void topEl.offsetWidth;
-              // 3. 加 .entering class → 触发 keyframes 动画
-              topEl.classList.add('entering');
-              // 4. 动画结束后移除 class（下次切换能再加）
-              setTimeout(function() {
-                topEl.classList.remove('entering');
-              }, 500);
-            }, 500);
-          }
-
-          currentSlogan = slogans[Math.floor(Math.random() * slogans.length)];
-          topEl.innerHTML = buildHTML(currentSlogan);
-
-          setInterval(render, 3000);
-        })();
-      </script>
-
-    </div>
-
-    <!-- ===== PRODUCTS ===== -->
-    <div class="section">
-      <div class="products">
-        <div class="review-card" onclick="window.location.href='/waimai'" style="cursor:pointer;">
-          <div class="review-text">骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣</div>
-          <div class="review-meta">
-            <div class="author">
-              <div class="avatar">🐱</div>
-              <span>家人们谁懂啊</span>
-            </div>
-            <div class="stars">★★★★★</div>
-          </div>
-          <div class="review-product">
-            <span class="tag">🍜 胡闹外卖</span>
-            <span>/waimai</span>
-            <span class="badge-live">🟢 去点一单</span>
-          </div>
-        </div>
-
-        <div class="review-card" onclick="alert('🛒 胡闹导购还在设计阶段~');">
-          <div class="review-text">导购员居然劝我别买，说我已经有 7 支口红了 💄</div>
-          <div class="review-meta">
-            <div class="author">
-              <div class="avatar">🐶</div>
-              <span>被劝退的小姐姐</span>
-            </div>
-            <div class="stars">★★★★★</div>
-          </div>
-          <div class="review-product">
-            <span class="tag">🛒 胡闹导购</span>
-            <span>/mart</span>
-            <span style="margin-left: auto;">[设计]</span>
-          </div>
-        </div>
-
-        <div class="review-card" onclick="alert('🧠 胡闹大脑已设计好架构~');">
-          <div class="review-text">AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖</div>
-          <div class="review-meta">
-            <div class="author">
-              <div class="avatar">🦊</div>
-              <span>单身的码农</span>
-            </div>
-            <div class="stars">★★★★★</div>
-          </div>
-          <div class="review-product">
-            <span class="tag">🧠 胡闹大脑</span>
-            <span>/brain</span>
-            <span style="margin-left: auto;">[规划]</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-<!-- ===== FOOTER V: 互动彩蛋 ===== -->
-    <div class="footer">
-      <span class="accent">→</span> 下一个胡闹，由你决定 <span class="dim">// 我们也不知道下一步会怎样</span>
-    </div>
+    <!-- ===== FOOTER（由 js/home-render.js 从 data/home.json 注入） ===== -->
+    <footer class="footer" data-footer></footer>
 
   </div>
 
-      <script>
-        (function() {
-          // 12 个粒子，颜色随机
-          var colors = ['#6eda78', '#ff7849', '#fde047', '#a78bfa', '#ff3b8b'];
-          for (var i = 0; i < 14; i++) {
-            var p = document.createElement('div');
-            p.className = 'particle';
-            p.style.width = (3 + Math.random() * 4) + 'px';
-            p.style.height = p.style.width;
-            p.style.background = colors[Math.floor(Math.random() * colors.length)];
-            p.style.left = (Math.random() * 100) + 'vw';
-            p.style.top = (Math.random() * 100) + 'vh';
-            p.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
-            p.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
-            p.style.setProperty('--dur', (6 + Math.random() * 6) + 's');
-            p.style.setProperty('--delay', (Math.random() * 5) + 's');
-            p.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.4));
-            document.body.appendChild(p);
-          }
-        })();
-      </script>
-  </body>
+  <!-- 星空：移植自 index1 的星点生成；reduced-motion 下不生成 -->
+  <script>
+    (function() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var s = document.getElementById('stars');
+      for (var i = 0; i < 46; i++) {
+        var d = document.createElement('div');
+        d.className = 'star';
+        var sz = Math.random() * 2 + 1;
+        d.style.width = sz + 'px';
+        d.style.height = sz + 'px';
+        d.style.left = (Math.random() * 100) + 'vw';
+        d.style.top = (Math.random() * 100) + 'vh';
+        d.style.animationDelay = (Math.random() * 3) + 's';
+        d.style.opacity = (Math.random() * 0.5 + 0.2);
+        s.appendChild(d);
+      }
+    })();
+  </script>
+
+  <!-- 页内兜底数据：仅当以 file:// 直接打开（无服务器）时启用；
+       正式管理与部署请以 data/home.json 为准（两者需保持一致） -->
+  <script type="application/json" id="home-data">
+  {
+    "brand": {
+      "eyebrow": "胡闹宇宙 · WHO KNOWS?",
+      "sectionTitle": "// 已经在胡闹 & 即将胡闹",
+      "footer": "<span class=\"accent\">→</span> 下一个胡闹，由你决定 <span class=\"dim\">// 我们也不知道下一步会怎样</span>"
+    },
+    "manifesto": "一个披着真实 App 外衣的<span class=\"accent\">胡闹宇宙</span>：外卖越点越瘦，导购反手劝你别买，AI 用段子给你推新品。<span class=\"accent\">下一个胡闹，由你决定。</span>",
+    "tagline": {
+      "slogans": [
+        "这个导购员居然阻止我买化妆品",
+        "骑手送外卖时居然跟我聊哲学",
+        "老板推荐菜时给我讲了个段子",
+        "AI 居然用段子给我推新品",
+        "下一秒会发生啥",
+        "这个宇宙里啥都敢胡来"
+      ],
+      "tail": "<span class=\"accent\">— WHO KNOWS?</span> <span class=\"sep\">·</span> 家人们<span class=\"dim\">谁懂</span>"
+    },
+    "ctas": [
+      { "label": "🍜 去胡闹外卖", "href": "/waimai", "type": "primary" },
+      { "label": "看看胡闹宇宙 ↓", "href": "#products", "type": "ghost" }
+    ],
+    "reviews": [
+      {
+        "text": "骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣",
+        "author": "家人们谁懂啊",
+        "avatar": "🐱",
+        "stars": 5,
+        "product": { "name": "胡闹外卖", "emoji": "🍜", "path": "/waimai" },
+        "status": "live",
+        "statusText": "🟢 已上线"
+      },
+      {
+        "text": "导购员居然劝我别买，说我已经有 7 支口红了 💄",
+        "author": "被劝退的小姐姐",
+        "avatar": "🐶",
+        "stars": 5,
+        "product": { "name": "胡闹导购", "emoji": "🛒", "path": "/mart" },
+        "status": "designing",
+        "statusText": "[设计中]"
+      },
+      {
+        "text": "AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖",
+        "author": "单身的码农",
+        "avatar": "🦊",
+        "stars": 5,
+        "product": { "name": "胡闹大脑", "emoji": "🧠", "path": "/brain" },
+        "status": "planning",
+        "statusText": "[规划中]"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 首页数据加载器：从 data/home.json 注入 段子 / 评论 / 入口按钮 / 品牌文案 -->
+  <script src="js/home-render.js" defer></script>
+</body>
 </html>

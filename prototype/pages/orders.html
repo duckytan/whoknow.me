@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>我的订单 · 戏精外卖</title>
+<link rel="stylesheet" href="../css/meituan.css">
+</head>
+<body>
+<div class="phone order-page" style="padding-bottom:0;">
+
+  <!-- 黄顶 -->
+  <div style="background:var(--mt-yellow);">
+    <div class="statusbar"><span>20:43</span><span class="icons">⚡ 🛜 ▮▮▮▮ 99%</span></div>
+    <div style="padding:4px 14px 0;display:flex;align-items:center;justify-content:space-between;">
+      <div style="width:30px;"></div>
+      <div style="font-size:20px;font-weight:800;color:#1a1a1a;">订单</div>
+      <div style="display:flex;gap:14px;font-size:18px;color:#1a1a1a;width:60px;justify-content:flex-end;">
+        <span>🔍</span>
+        <span style="position:relative;">💬<span style="position:absolute;top:-4px;right:-6px;min-width:16px;height:16px;background:var(--mt-price);color:#fff;border-radius:8px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;">88</span></span>
+      </div>
+    </div>
+    <!-- 三 tab -->
+    <div class="order-tabs">
+      <div class="t on">全部订单</div>
+      <div class="t">待评价<span class="n">1</span></div>
+      <div class="t">退款/售后</div>
+    </div>
+  </div>
+
+  <!-- 订单卡1：商家订单（含满减chip） -->
+  <div class="order-card">
+    <div class="top">
+      <div class="logo">🥟</div>
+      <div class="nm">孔子饺子馆·手工现包（人民公园店）<span class="persona persona--philo">哲学</span></div>
+      <span class="arr">›</span>
+      <span class="status">已完成</span>
+    </div>
+    <div class="chips">
+      <span class="ch">39减22</span>
+      <span class="ch">69减33</span>
+      <span class="ch">99减41</span>
+      <span class="ch">0.1折起</span>
+      <span class="ch">2件98元</span>
+    </div>
+    <div class="goods-row">
+      <div class="pic">🥟<span class="badge">招牌</span></div>
+      <div class="info">
+        <div class="nm">[手工] 孔府私房鲜肉水饺（12 只）</div>
+      </div>
+      <div class="r">
+        <div class="p">¥35.49</div>
+        <div class="q">共 2 件</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <span class="b b-ghost">哲学探讨下</span>
+      <span class="b b-y">评价</span>
+      <span class="b b-y2">再来一单<span class="save">同款可省 ¥1.8</span></span>
+    </div>
+  </div>
+
+  <!-- 订单卡2：KFC 示例卡 -->
+  <div class="order-card">
+    <div class="top">
+      <div class="logo" style="background:linear-gradient(135deg,#D05050,#FF8080);color:#fff;font-size:10px;font-weight:800;">KFC</div>
+      <div class="nm">这鸡的急送（沙洲路店）<span class="persona persona--angry">暴躁</span></div>
+      <span class="arr">›</span>
+      <span class="status">已完成</span>
+    </div>
+    <div class="chips">
+      <span class="ch" style="background:var(--mt-bg);color:var(--mt-text-2);border-color:transparent;">超出配送范围</span>
+    </div>
+    <div class="goods-row" style="align-items:flex-start;">
+      <div class="pic" style="background:linear-gradient(135deg,#5A8F3A,#A0D080);position:relative;">🍗
+        <span class="badge" style="background:linear-gradient(90deg,#FF7E45,#FF4B10);left:auto;right:0;border-radius:0 0 0 4px;">神抢手</span>
+      </div>
+      <div class="info">
+        <div class="nm">热辣炸鸡可乐套餐</div>
+        <div style="font-size:11px;color:var(--mt-text-3);margin-top:4px;">"原味鸡出餐部位随机搭配，详情以实物为准"</div>
+      </div>
+      <div class="r">
+        <div class="p">¥46.4</div>
+        <div class="q">共 1 件</div>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:flex-start;padding-top:20px;">
+      <span class="b b-y" style="margin-left:auto;"><span style="margin-right:4px;">🍔</span>附近汉堡</span>
+    </div>
+  </div>
+
+  <!-- 买过的店 -->
+  <div class="bought">
+    <div class="head">
+      <span>买过的店</span>
+      <span class="more">查看更多商家 ›</span>
+    </div>
+    <div class="scroll">
+      <div class="b">
+        <div class="logo c1"><div class="img">🍗</div></div>
+        <div class="nm">哈哈蒸鸡…</div>
+        <div class="cnt">买过 <span class="n">6</span> 次</div>
+      </div>
+      <div class="b">
+        <div class="logo c2"><div class="img">🛒</div></div>
+        <div class="nm">百汇精品超市</div>
+        <div class="cnt">买过 <span class="n">3</span> 次</div>
+      </div>
+      <div class="b">
+        <div class="logo c3"><div class="img">🥬</div></div>
+        <div class="nm">联兴商店</div>
+        <div class="cnt">买过 <span class="n">1</span> 次</div>
+      </div>
+      <div class="b">
+        <div class="logo c4"><div class="img">🌲</div></div>
+        <div class="nm">一风便利店</div>
+        <div class="cnt">买过 <span class="n">1</span> 次</div>
+      </div>
+      <div class="b">
+        <div class="logo c1"><div class="img">🥟</div></div>
+        <div class="nm">孔子饺子馆…</div>
+        <div class="cnt">买过 <span class="n">2</span> 次</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabbar -->
+  <div class="tabbar">
+    <div class="tb on"><div class="ico-wrap">🛵</div>外卖</div>
+    <div class="tb"><div class="ico-wrap">🏪</div>订单</div>
+    <div class="tb"><div class="ico-wrap">⭐</div>收藏</div>
+    <div class="tb"><div class="ico-wrap">👤</div>我的</div>
+  </div>
+
+</div>
+</body>
+</html>

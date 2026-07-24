@@ -152,6 +152,11 @@ interface DramaEvent {
 
 ## 四、数据模型
 
+> ⚠️ **数据结构已迁出权威规范**：本 §四 与 §六 的字段定义（Order / DramaState / UserStats / DramaBranch / DramaEvent）已被 **`docs/specs/DATA-STRUCTURE-v1-2026-07-24.md`** 取代为单一事实来源。本文件保留作引擎思路沿革，但**字段以 DATA-STRUCTURE 为准**：
+> - `DramaBranch` 改用**内联 `chain[]` 链表**（本文件原 `firstEvent` + 独立 `DramaEvent[]` 写法作废）；
+> - 原示例中的禁忌词红灯字段（`icu` / `bomb` / `food_poison` / `bomb_survivor` / `icu_survivor` / `bermuda` / `haunted_boss_*`）**数据结构层即日起禁用**，合规替换见 DATA-STRUCTURE §5.2 / §7；
+> - 具体台词文本（上吊 / 炸弹 / 警察 / ICU 诈尸等）仍全是 `禁忌词清单-v1.0` 红灯，**内容层待码农虾按禁忌词重写**，本文件不作权威。
+
 ### 订单新增字段
 
 ```typescript
@@ -302,6 +307,8 @@ interface UserStats {
 ---
 
 ## 六、剧情分支系统（DramaBranch）
+
+> ⚠️ 分支**数据结构权威**见 `docs/specs/DATA-STRUCTURE-v1-2026-07-24.md` §3.6。本文件原 `DramaBranch.firstEvent` + 独立 `DramaEvent[]` 写法已作废，改用内联 `chain[]`。§6.2 接口定义与 §6.4 示例仅作引擎思路参考，**字段名/示例值含禁忌词红灯，不可直接落地**。
 
 每个「离谱连锁剧情」注册为一个 DramaBranch，引擎按条件触发并执行链式反应。
 

@@ -136,8 +136,8 @@ const filteredShops = computed(() => {
     white-space: nowrap;
 
     &.active {
-      background: #fff0eb;
-      color: #ff6b35;
+      background: #fff2ec;
+      color: #ff7849;
       font-weight: 700;
     }
   }
@@ -149,7 +149,7 @@ const filteredShops = computed(() => {
   color: #999;
   background: #f5f5f5;
 
-  strong { color: #ff6b35; }
+  strong { color: #ff7849; }
   .keyword-hint { margin-left: 4px; color: #666; }
 }
 

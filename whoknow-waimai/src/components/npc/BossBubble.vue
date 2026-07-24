@@ -6,11 +6,11 @@ defineProps<{
 }>()
 
 const personalityConfig = {
-  angry:        { emoji: '😤', color: '#ff4444', bg: '#fff0f0', label: '暴躁' },
+  angry:        { emoji: '😤', color: '#ff7849', bg: '#fff2ec', label: '暴躁' },
   gentle:       { emoji: '🥰', color: '#ff69b4', bg: '#fff5f9', label: '温柔' },
-  weird:        { emoji: '🤪', color: '#9b59b6', bg: '#f9f0ff', label: '奇葩' },
+  weird:        { emoji: '🤪', color: '#8b5cf6', bg: '#f3edff', label: '奇葩' },
   lazy:         { emoji: '😪', color: '#95a5a6', bg: '#f5f5f5', label: '佛系' },
-  philosophical:{ emoji: '🧘', color: '#27ae60', bg: '#f0fff4', label: '哲学' },
+  philosophical:{ emoji: '🧘', color: '#4fc46a', bg: '#eafaf0', label: '哲学' },
 }
 </script>
 

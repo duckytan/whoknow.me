@@ -26,7 +26,7 @@ const PERSONALITY_AVATAR: Record<string, string> = {
         <van-rate
           :model-value="review.rating"
           :count="5"
-          color="#ff6b35"
+          color="#ff7849"
           void-color="#ddd"
           size="12"
           readonly
@@ -116,7 +116,7 @@ const PERSONALITY_AVATAR: Record<string, string> = {
   font-size: 11px;
   padding: 2px 8px;
   background: #fff3ee;
-  color: #ff6b35;
+  color: #ff7849;
   border-radius: 10px;
 }
 
@@ -131,7 +131,7 @@ const PERSONALITY_AVATAR: Record<string, string> = {
   background: #fafafa;
   border-radius: 8px;
   padding: 10px 12px;
-  border-left: 3px solid #ff6b35;
+  border-left: 3px solid #ff7849;
 }
 
 .boss-reply-header {
@@ -146,7 +146,7 @@ const PERSONALITY_AVATAR: Record<string, string> = {
 
 .boss-label {
   font-weight: 700;
-  color: #ff6b35;
+  color: #ff7849;
 }
 
 .boss-reply-text {

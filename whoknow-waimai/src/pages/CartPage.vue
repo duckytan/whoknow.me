@@ -163,7 +163,7 @@ function goCheckout() {
 
 .cart-item__price {
   font-size: 12px;
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 700;
   margin-top: 2px;
 }
@@ -204,7 +204,7 @@ function goCheckout() {
 .submit-price {
   font-size: 20px;
   font-weight: 700;
-  color: #ff6b35;
+  color: #ff7849;
   margin-left: 8px;
 }
 

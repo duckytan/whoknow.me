@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>首页 · 胡闹外卖</title>
+<link rel="stylesheet" href="../css/meituan.css">
+</head>
+<body>
+<div class="phone">
+  <!-- 顶部黄色大区（黄延伸到金刚区下方） -->
+  <div class="yellow-zone">
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="icons">📶 📡 🔋</span>
+    </div>
+
+    <!-- 顶栏：< + 外卖(选中下划线) + 首页(粗) + 自取 + 右侧88红点图标 -->
+    <div class="mt-nav">
+      <div class="mt-nav__top">
+        <div class="mt-nav__back">‹</div>
+        <div class="mt-nav__sub on">外卖</div>
+        <div class="mt-nav__title">首页</div>
+        <div class="mt-nav__sub">自取</div>
+        <div class="mt-nav__icons">
+          <div class="mt-nav__icon">🎫<span class="badge">88</span></div>
+        </div>
+      </div>
+      <div class="addr-row">
+        <span class="pin">📍</span>
+        <span>汇展华城</span>
+        <span style="opacity:.7">›</span>
+      </div>
+      <div class="mt-search">
+        <span class="s-ico">🔍</span>
+        <input placeholder="肯德基">
+        <span class="s-btn">搜索</span>
+      </div>
+    </div>
+
+    <!-- 金刚区：5×2 = 10 个 3D 立体彩色圆形图标 -->
+    <div class="cat-grid">
+      <div class="cat-item"><div class="ico-wrap cat-red">🍴</div><div class="txt">美食</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-pink">🧋</div><div class="txt">甜点饮品</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-blue">🛒</div><div class="txt">超市便利</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-green">🍎</div><div class="txt">蔬菜水果</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-cyan">💊</div><div class="txt">看病买药</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-purple">🌙</div><div class="txt">夜宵</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-orange">🍱</div><div class="txt">拼好饭</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-red2">🏃</div><div class="txt">跑腿</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-amber" style="font-size:22px;font-weight:800;">¥</div><div class="txt">天天津贴</div></div>
+      <div class="cat-item"><div class="ico-wrap cat-yellow">🥘</div><div class="txt">家常菜</div></div>
+    </div>
+    <div class="cat-dots">
+      <span class="on"></span><span></span>
+    </div>
+  </div>
+
+  <!-- 主体白底区 -->
+  <div class="scroll">
+    <!-- 神抢手条 -->
+    <div class="hot-bar">
+      <div class="title">神抢手 <span class="badge">限时秒杀中</span></div>
+      <div class="more">更多 ›</div>
+    </div>
+    <div class="hot-scroll">
+      <div class="hot-card">
+        <div class="pic">🍣<div class="tag-c">16件</div></div>
+        <div class="nm">大赞寿司（韶关店）</div>
+        <div class="p">¥21.8</div>
+        <div class="sub">买贵必赔</div>
+      </div>
+      <div class="hot-card">
+        <div class="pic">🥘</div>
+        <div class="nm">胖哥鲜·蟹肉煲</div>
+        <div class="p">¥20</div>
+        <div class="sub red">低至5.2折</div>
+      </div>
+      <div class="hot-card">
+        <div class="pic">🍱</div>
+        <div class="nm">苍井外带寿司</div>
+        <div class="p">¥23.9</div>
+        <div class="sub">买贵必赔</div>
+      </div>
+      <div class="hot-card">
+        <div class="pic">🍗</div>
+        <div class="nm">哈哈蒸鸡</div>
+        <div class="p">¥25.3</div>
+        <div class="sub">买贵必赔</div>
+      </div>
+    </div>
+
+    <!-- 附近/特价 tab -->
+    <div class="tabs-bar">
+      <div class="t on">附近商家</div>
+      <div class="t">特价外卖</div>
+    </div>
+
+    <!-- 商家大卡（江小鱼挪威三文鱼 - 真实截图同款） -->
+    <div class="shop-card">
+      <div class="logo"><div class="img">🐟</div><div class="badge">品质优选</div></div>
+      <div class="info">
+        <div class="name">江小鱼挪威三文鱼（芙蓉市）</div>
+        <div class="meta">
+          <span class="score">4.8</span>
+          <span class="tag-x">菜量实在</span>
+          <span class="tag-x2">月售100+</span>
+          <span class="tag-x2">无明厨亮灶</span>
+          <span class="tag-x3">商家自配</span>
+        </div>
+        <div class="row3">
+          <span>起送 ¥48</span>
+          <span>配送约 ¥0</span>
+          <span class="r">521m · 36分钟</span>
+        </div>
+        <div class="promo-bar">
+          <span class="ico">神券</span>
+          <span class="t">满41减16 | 满48减19</span>
+          <span class="ico" style="margin-left:auto">新客减1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 老王烧烤（戏精老板） -->
+    <div class="shop-card">
+      <div class="logo"><div class="img">🍢</div><div class="badge">招牌</div></div>
+      <div class="info">
+        <div class="name">老王烧烤 <span class="persona persona--angry">暴躁</span></div>
+        <div class="meta">
+          <span class="score">4.9</span>
+          <span class="tag-x">买贵必赔</span>
+          <span class="tag-x2">月售 5600+</span>
+          <span class="tag-x2">28分钟</span>
+          <span class="tag-x3">准时宝</span>
+        </div>
+        <div class="row3">
+          <span>起送 ¥30</span>
+          <span>配送 ¥3</span>
+          <span class="r">1.2km</span>
+        </div>
+        <div class="promo-bar">
+          <span class="ico">满减</span>
+          <span class="t">满50减15 | 满100减30</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 孔子饺子馆（哲学老板） -->
+    <div class="shop-card">
+      <div class="logo"><div class="img">🥟</div></div>
+      <div class="info">
+        <div class="name">孔子饺子馆 <span class="persona persona--philo">哲学</span></div>
+        <div class="meta">
+          <span class="score">4.7</span>
+          <span class="tag-x">招牌必点</span>
+          <span class="tag-x2">月售 2200+</span>
+          <span class="tag-x2">22分钟</span>
+          <span class="tag-x3">新店</span>
+        </div>
+        <div class="row3">
+          <span>起送 ¥20</span>
+          <span>配送 ¥2</span>
+          <span class="r">800m</span>
+        </div>
+        <div class="promo-bar">
+          <span class="ico">满减</span>
+          <span class="t">满30减8 | 满60减18</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 暴躁麻辣烫 -->
+    <div class="shop-card">
+      <div class="logo"><div class="img">🌶️</div><div class="badge">配送快</div></div>
+      <div class="info">
+        <div class="name">暴躁麻辣烫 <span class="persona persona--angry">暴躁</span></div>
+        <div class="meta">
+          <span class="score">4.5</span>
+          <span class="tag-x">疯狂满减</span>
+          <span class="tag-x2">月售 8800+</span>
+          <span class="tag-x2">18分钟</span>
+          <span class="tag-x3">独享</span>
+        </div>
+        <div class="row3">
+          <span>起送 ¥25</span>
+          <span>配送 ¥3</span>
+          <span class="r">650m</span>
+        </div>
+        <div class="promo-bar">
+          <span class="ico">满减</span>
+          <span class="t">满20减8 | 满40减18 | 满80减35</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 浮窗购物车 -->
+  <div class="float-cart">🛒</div>
+
+  <!-- 底部 TabBar（外卖高亮黄圆 + 上凸） -->
+  <div class="tabbar">
+    <div class="tb on"><div class="ico-wrap">🛵</div>外卖</div>
+    <div class="tb"><div class="ico-wrap" style="background:transparent;font-weight:800;color:#1a1a1a;">神</div>神券</div>
+    <div class="tb"><div class="ico-wrap">📋</div>订单</div>
+    <div class="tb"><div class="ico-wrap">😊</div>我的</div>
+  </div>
+</div>
+</body>
+</html>

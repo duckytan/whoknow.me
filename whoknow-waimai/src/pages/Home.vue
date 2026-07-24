@@ -98,7 +98,7 @@ onMounted(() => {
     </div>
 
     <!-- 轮播 -->
-    <van-swipe class="banner" autoplay="3000" indicator-color="#ff6b35">
+    <van-swipe class="banner" autoplay="3000" indicator-color="#ff7849">
       <van-swipe-item v-for="i in 3" :key="i">
         <div class="banner-item" :class="`banner-item--${i}`">
           <span>{{ ['胡闹外卖开业啦🎉', '15家戏精老板等你点单🎭', '骑手正在飙车赶来🏍️'][i-1] }}</span>
@@ -160,15 +160,16 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .slogan-bar {
-  background: linear-gradient(135deg, #fff0eb, #fff);
+  background: linear-gradient(135deg, #fff2ec, #fff);
   padding: 10px 16px;
   font-size: 13px;
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 6px;
-  border-bottom: 1px solid #ffe4d6;
+  border-left: 3px solid #6eda78;
+  border-bottom: 1px solid #eee;
 
   .slogan-icon { font-size: 16px; }
 }
@@ -186,9 +187,10 @@ onMounted(() => {
     color: #fff;
     border-radius: 0;
 
-    &--1 { background: linear-gradient(135deg, #ff6b35, #ff9a3c); }
-    &--2 { background: linear-gradient(135deg, #ff4757, #ff6b35); }
-    &--3 { background: linear-gradient(135deg, #e55a26, #ff8c42); }
+    // 首屏即露出品牌双锚色：绿=越点越瘦 / 紫=胡闹神秘；橙红保留戏精老板
+    &--1 { background: linear-gradient(135deg, #6eda78, #4fc46a); }  // 品牌绿 — 开业 / 越点越瘦
+    &--2 { background: linear-gradient(135deg, #ff4757, #ff7849); } // 红→橙 — 戏精老板
+    &--3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }  // 品牌紫 — 骑手飙车
   }
 }
 
@@ -209,7 +211,7 @@ onMounted(() => {
     border-radius: 8px;
     transition: background 0.2s;
 
-    &:active { background: #fff0eb; }
+    &:active { background: #fff2ec; }
   }
 
   .category-icon { font-size: 28px; }
@@ -219,7 +221,7 @@ onMounted(() => {
 .category-item {
   &.active {
     .category-icon { transform: scale(1.15); }
-    .category-name { color: #ff6b35; font-weight: 700; }
+    .category-name { color: #ff7849; font-weight: 700; }
   }
 }
 
@@ -240,9 +242,9 @@ onMounted(() => {
     transition: all 0.2s;
 
     &.active {
-      color: #ff6b35;
+      color: #ff7849;
       font-weight: 700;
-      border-bottom-color: #ff6b35;
+      border-bottom-color: #ff7849;
     }
   }
 }

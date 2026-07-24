@@ -81,7 +81,7 @@ function handleClose() {
 }
 .popup-title {
   font-size: 14px;
-  color: #ff6b6b;
+  color: #8b5cf6;
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -101,7 +101,7 @@ function handleClose() {
   padding: 10px 32px;
   border: none;
   border-radius: 25px;
-  background: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  background: linear-gradient(135deg, #6eda78, #8b5cf6);
   color: #fff;
   font-size: 15px;
   font-weight: 600;

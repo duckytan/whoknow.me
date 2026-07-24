@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whoknow · 品牌设计系统 · Styleguide</title>
+  <link rel="stylesheet" href="./styles/design-tokens.css" />
+  <style>
+    /* 引入字体（令牌文件内已注释，这里显式引入以保证预览可用） */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
+    /* 背景层：光晕 + 点阵 */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background: var(--glow-purple), var(--glow-green), var(--glow-orange);
+      pointer-events: none;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: var(--grid-dots);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 980px; margin-inline: auto; padding: var(--sp-8) var(--sp-4) var(--sp-16); }
+
+    /* Hero */
+    .hero { text-align: center; padding: var(--sp-16) 0 var(--sp-12); }
+    .logo {
+      font-family: var(--font-display);
+      font-size: var(--fs-display);
+      line-height: 1;
+      transform: rotate(-4deg);
+      background: linear-gradient(120deg, var(--brand-green), var(--brand-orange));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      display: inline-block;
+    }
+    .hero .tag { font-family: var(--font-mono); color: var(--fg-mute); letter-spacing: .2em; font-size: var(--fs-sm); margin-top: var(--sp-4); }
+    .hero .sub { font-family: var(--font-title); font-size: var(--fs-2xl); margin-top: var(--sp-6); color: var(--fg); }
+    .hero .slogan { font-family: var(--font-script); font-size: var(--fs-3xl); color: var(--brand-orange); margin-top: var(--sp-3); }
+
+    /* Section */
+    section { margin-top: var(--sp-12); }
+    .sec-title { font-family: var(--font-title); font-size: var(--fs-2xl); color: var(--fg); margin-bottom: var(--sp-6); display: flex; align-items: center; gap: var(--sp-3); }
+    .sec-title::before { content: ''; width: 6px; height: 28px; border-radius: 99px; background: linear-gradient(var(--brand-green), var(--brand-orange)); display: inline-block; }
+    .sec-desc { color: var(--fg-dim); font-size: var(--fs-sm); margin-bottom: var(--sp-6); max-width: 640px; }
+
+    .grid { display: grid; gap: var(--sp-4); }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 640px) { .grid.cols-3, .grid.cols-4 { grid-template-columns: repeat(2, 1fr); } }
+
+    /* 色卡 */
+    .swatch { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line-2); background: var(--bg-2); }
+    .swatch .chip { height: 88px; }
+    .swatch .meta { padding: var(--sp-3); }
+    .swatch .name { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg); }
+    .swatch .hex { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg-mute); }
+
+    /* 字体展示 */
+    .type-card { background: var(--bg-2); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: var(--sp-5); }
+    .type-card .label { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg-mute); margin-bottom: var(--sp-2); }
+    .f-display { font-family: var(--font-display); font-size: 40px; color: var(--brand-green); }
+    .f-title { font-family: var(--font-title); font-size: 32px; color: var(--fg); }
+    .f-script { font-family: var(--font-script); font-size: 36px; color: var(--brand-orange); }
+    .f-body { font-family: var(--font-body); font-size: var(--fs-lg); color: var(--fg); }
+    .f-mono { font-family: var(--font-mono); font-size: var(--fs-lg); color: var(--brand-purple); }
+
+    /* 字号阶梯 */
+    .size-row { display: flex; align-items: baseline; gap: var(--sp-4); padding: var(--sp-2) 0; border-bottom: 1px dashed var(--line); }
+    .size-row .px { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg-mute); width: 48px; }
+    .size-row .txt { color: var(--fg); }
+
+    /* 间距条 */
+    .sp-row { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-2); }
+    .sp-bar { background: linear-gradient(90deg, var(--brand-purple), var(--brand-green)); border-radius: 99px; height: 12px; }
+
+    /* 按钮 */
+    .btn-demo { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); font-family: var(--font-body); font-weight: var(--fw-medium); border: none; cursor: pointer; border-radius: var(--radius-md); padding: 0 var(--sp-5); height: 44px; color: #fff; transition: all var(--t-fast) var(--ease-smooth); min-width: 120px; }
+    .btn-demo:hover { transform: translateY(-1px); box-shadow: var(--shadow-card); }
+    .btn-demo:active { transform: translateY(0) scale(.98); }
+    .btn-demo:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-fg); }
+    .btn-green { background: var(--btn-green-bg); color: var(--btn-green-fg); }
+    .btn-ghost { background: transparent; color: var(--fg); border: 1px solid var(--line-2); }
+    .btn-danger { background: var(--c-error); color: #fff; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+
+    /* 卡片 */
+    .card { background: var(--bg-2); border: 1px solid var(--line-2); border-radius: var(--radius-lg); overflow: hidden; transition: all var(--t-normal) var(--ease-smooth); }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow-green); }
+    .card .thumb { height: 96px; background: linear-gradient(135deg, var(--brand-purple), var(--brand-orange)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); color: #fff; font-size: 28px; }
+    .card .body { padding: var(--sp-4); }
+    .card .title { font-family: var(--font-title); font-size: var(--fs-lg); color: var(--fg); }
+    .card .meta { font-size: var(--fs-sm); color: var(--fg-dim); margin-top: var(--sp-1); }
+
+    /* 段子卡 - 截图高亮 */
+    .quote-card { background: linear-gradient(135deg, rgba(110,218,120,.12), rgba(255,120,73,.10)); border: 1px solid var(--brand-green); border-radius: var(--radius-lg); padding: var(--sp-6); }
+    .quote-card .who { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--brand-green); margin-bottom: var(--sp-2); }
+    .quote-card .line { font-family: var(--font-script); font-size: var(--fs-2xl); color: var(--fg); line-height: 1.3; }
+    .quote-card .sc { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg-mute); margin-top: var(--sp-3); }
+
+    /* 标签 */
+    .tag { display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: var(--fs-xs); padding: 4px 12px; border-radius: var(--radius-pill); border: 1px solid var(--line-2); color: var(--fg-dim); }
+    .tag.green { color: var(--brand-green); border-color: var(--brand-green); }
+    .tag.orange { color: var(--brand-orange); border-color: var(--brand-orange); }
+    .tag.purple { color: var(--brand-purple); border-color: var(--brand-purple); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+    /* 输入框 */
+    .field { display: flex; flex-direction: column; gap: var(--sp-2); max-width: 360px; }
+    .field label { font-size: var(--fs-sm); color: var(--fg-dim); }
+    .field input { font-family: var(--font-body); font-size: var(--fs-base); padding: var(--sp-3); border-radius: var(--radius-md); border: 1px solid var(--line-2); background: var(--bg-3); color: var(--fg); transition: all var(--t-fast); }
+    .field input::placeholder { color: var(--fg-mute); }
+    .field input:focus { outline: none; border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(255,120,73,.18); }
+
+    /* 戏精弹层 */
+    .dialog { background: var(--bg-2); border: 1px solid var(--brand-orange); border-radius: var(--radius-xl); padding: var(--sp-6); max-width: 420px; box-shadow: var(--shadow-glow-orange); }
+    .dialog .head { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+    .dialog .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--brand-orange), var(--brand-purple)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); color: #fff; }
+    .dialog .npc { font-family: var(--font-title); font-size: var(--fs-lg); color: var(--fg); }
+    .dialog .role { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--fg-mute); }
+    .dialog .say { font-family: var(--font-script); font-size: var(--fs-xl); color: var(--brand-orange); line-height: 1.4; margin-bottom: var(--sp-5); }
+    .dialog .opts { display: grid; gap: var(--sp-2); }
+    .dialog .opt { font-family: var(--font-body); font-size: var(--fs-sm); padding: var(--sp-3); border-radius: var(--radius-md); border: 1px solid var(--line-2); background: var(--bg-3); color: var(--fg); cursor: pointer; transition: all var(--t-fast); }
+    .dialog .opt:hover { border-color: var(--brand-orange); transform: translateX(2px); }
+
+    /* 浅色主题对比区 */
+    .light-wrap { background: #f7f7f8; border-radius: var(--radius-xl); padding: var(--sp-6); border: 1px solid var(--line-2); }
+    .light-card { background: #fff; border: 1px solid #ededed; border-radius: 16px; overflow: hidden; max-width: 320px; }
+    .light-card .bar { height: 8px; background: linear-gradient(90deg, var(--brand-green), var(--brand-orange)); }
+    .light-card .body { padding: 16px; }
+    .light-card .t { font-family: var(--font-title); font-size: 20px; color: #222; }
+    .light-card .m { font-size: 14px; color: #666; margin-top: 4px; }
+    .light-card .badge { display: inline-flex; font-family: var(--font-mono); font-size: 11px; color: var(--brand-orange); border: 1px solid var(--brand-orange); border-radius: 99px; padding: 3px 10px; margin-top: 10px; }
+
+    footer { text-align: center; margin-top: var(--sp-16); color: var(--fg-mute); font-family: var(--font-mono); font-size: var(--fs-xs); }
+    footer a { color: var(--brand-green); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- Hero -->
+    <header class="hero">
+      <div class="logo">whoknow</div>
+      <div class="tag">BRAND DESIGN SYSTEM · v1.0</div>
+      <div class="sub">胡闹宇宙 · 品牌设计系统</div>
+      <div class="slogan">谁知道接下来会发生什么</div>
+    </header>
+
+    <!-- 品牌锚色 -->
+    <section>
+      <h2 class="sec-title">品牌锚色 · 贯穿明暗</h2>
+      <p class="sec-desc">无论主站暗色还是子产品浅色，这三色必须出现，保证"一眼认出是 whoknow"。</p>
+      <div class="grid cols-3">
+        <div class="swatch"><div class="chip" style="background:var(--brand-green)"></div><div class="meta"><div class="name">胡闹绿</div><div class="hex">#6eda78</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--brand-orange)"></div><div class="meta"><div class="name">橙红</div><div class="hex">#ff7849</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--brand-purple)"></div><div class="meta"><div class="name">宇宙紫</div><div class="hex">#8b5cf6</div></div></div>
+      </div>
+    </section>
+
+    <!-- 暗色主题色板 -->
+    <section>
+      <h2 class="sec-title">宇宙暗色主题 · 主站</h2>
+      <p class="sec-desc">用于 whoknow.me 入口与品牌门面。霓虹·神秘·梗。</p>
+      <div class="grid cols-4">
+        <div class="swatch"><div class="chip" style="background:var(--bg)"></div><div class="meta"><div class="name">--bg</div><div class="hex">#0a0612</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-2)"></div><div class="meta"><div class="name">--bg-2</div><div class="hex">#120a1a</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--bg-3)"></div><div class="meta"><div class="name">--bg-3</div><div class="hex">#1a1126</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--line-2)"></div><div class="meta"><div class="name">--line-2</div><div class="hex">#2a2236</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--fg)"></div><div class="meta"><div class="name">--fg</div><div class="hex">#ededef</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--fg-dim)"></div><div class="meta"><div class="name">--fg-dim</div><div class="hex">#a094b8</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--fg-mute)"></div><div class="meta"><div class="name">--fg-mute</div><div class="hex">#6b6480</div></div></div>
+        <div class="swatch"><div class="chip" style="background:var(--c-success)"></div><div class="meta"><div class="name">--c-success</div><div class="hex">#10b981</div></div></div>
+      </div>
+    </section>
+
+    <!-- 字体 -->
+    <section>
+      <h2 class="sec-title">字体阵容</h2>
+      <div class="grid cols-3">
+        <div class="type-card"><div class="label">Bungee · 展示/Logo</div><div class="f-display">whoknow</div></div>
+        <div class="type-card"><div class="label">ZCOOL 黄油体 · 中文标题</div><div class="f-title">胡闹外卖</div></div>
+        <div class="type-card"><div class="label">ZCOOL 快乐体 · 手写梗（主）</div><div class="f-script">今天你胡闹哪一单</div></div>
+        <div class="type-card"><div class="label">Inter + Noto · 正文</div><div class="f-body">打开即玩，零卡路里解瘾</div></div>
+        <div class="type-card"><div class="label">JetBrains Mono · 标签</div><div class="f-mono"># 今日梗 HOT</div></div>
+        <div class="type-card"><div class="label">组合示例</div><div class="f-body" style="font-family:var(--font-title)">家人们谁懂啊</div></div>
+      </div>
+    </section>
+
+    <!-- 字号阶梯 -->
+    <section>
+      <h2 class="sec-title">字号阶梯</h2>
+      <div class="size-row"><span class="px">12</span><span class="txt" style="font-size:12px">xs · 辅助文字</span></div>
+      <div class="size-row"><span class="px">14</span><span class="txt" style="font-size:14px">sm · 次要正文</span></div>
+      <div class="size-row"><span class="px">16</span><span class="txt" style="font-size:16px">base · 正文基准</span></div>
+      <div class="size-row"><span class="px">20</span><span class="txt" style="font-size:20px">xl · 卡片标题</span></div>
+      <div class="size-row"><span class="px">24</span><span class="txt" style="font-size:24px">2xl · 区块标题</span></div>
+      <div class="size-row"><span class="px">36</span><span class="txt" style="font-size:36px;line-height:1.2">4xl · 大标题</span></div>
+    </section>
+
+    <!-- 间距 & 圆角 -->
+    <section>
+      <h2 class="sec-title">间距系统 · 4px 基准</h2>
+      <div class="sp-row"><span style="font-family:var(--font-mono);font-size:12px;color:var(--fg-mute);width:40px">8</span><span class="sp-bar" style="width:8px"></span></div>
+      <div class="sp-row"><span style="font-family:var(--font-mono);font-size:12px;color:var(--fg-mute);width:40px">16</span><span class="sp-bar" style="width:16px"></span></div>
+      <div class="sp-row"><span style="font-family:var(--font-mono);font-size:12px;color:var(--fg-mute);width:40px">24</span><span class="sp-bar" style="width:24px"></span></div>
+      <div class="sp-row"><span style="font-family:var(--font-mono);font-size:12px;color:var(--fg-mute);width:40px">48</span><span class="sp-bar" style="width:48px"></span></div>
+    </section>
+
+    <!-- 按钮 -->
+    <section>
+      <h2 class="sec-title">按钮组件</h2>
+      <p class="sec-desc">默认 → hover(上移+阴影) → active(压暗) → focus-visible(绿环) → disabled。</p>
+      <div class="btn-row">
+        <button class="btn-demo btn-primary">立即胡闹</button>
+        <button class="btn-demo btn-green">已下单</button>
+        <button class="btn-demo btn-ghost">再想想</button>
+        <button class="btn-demo btn-danger">放弃这单</button>
+        <button class="btn-demo btn-primary" disabled style="opacity:.5;cursor:not-allowed">已售罄</button>
+      </div>
+    </section>
+
+    <!-- 卡片 + 段子卡 -->
+    <section>
+      <h2 class="sec-title">卡片 · 含截图高亮</h2>
+      <div class="grid cols-3">
+        <div class="card"><div class="thumb">🍜</div><div class="body"><div class="title">暴躁老板拌面</div><div class="meta">月售 9999 · 30 分钟必到（不一定）</div></div></div>
+        <div class="card"><div class="thumb">🛒</div><div class="body"><div class="title">反骨导购</div><div class="meta">你这也买？房租交了吗</div></div></div>
+        <div class="quote-card"><div class="who"># 老板 · 毒舌型</div><div class="line">又是你？上周那碗还没吃完吧。</div><div class="sc">↳ 截图价值：极高（发朋友圈）</div></div>
+      </div>
+    </section>
+
+    <!-- 标签 -->
+    <section>
+      <h2 class="sec-title">标签 / 徽章</h2>
+      <div class="tag-row">
+        <span class="tag green">已翻车</span>
+        <span class="tag orange">HOT 今日梗</span>
+        <span class="tag purple">AI 已追热点</span>
+        <span class="tag">零卡路里</span>
+        <span class="tag">越点越瘦</span>
+      </div>
+    </section>
+
+    <!-- 输入框 -->
+    <section>
+      <h2 class="sec-title">输入框</h2>
+      <div class="field">
+        <label for="demo-input">给老板留句话（可选）</label>
+        <input id="demo-input" type="text" placeholder="比如：少放香菜，多放梗" />
+      </div>
+    </section>
+
+    <!-- 戏精弹层 -->
+    <section>
+      <h2 class="sec-title">戏精弹层 · 博弈/回复</h2>
+      <div class="dialog">
+        <div class="head">
+          <div class="avatar">导</div>
+          <div><div class="npc">反骨导购</div><div class="role"># 毒舌型 · 隐藏弱点：被夸</div></div>
+        </div>
+        <div class="say">这个你也买？上月房租交了吗？</div>
+        <div class="opts">
+          <div class="opt">💪 我需要！（坚定眼神）</div>
+          <div class="opt">📊 我比过价了（理性证据）</div>
+          <div class="opt">🥺 求求了（装可怜）</div>
+          <div class="opt">🤷 爱卖不卖（以毒攻毒）</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 浅色主题对比 -->
+    <section>
+      <h2 class="sec-title">双主题统一 · 浅色产品对比</h2>
+      <p class="sec-desc">同一套令牌切到浅色主题，子 App（外卖/导购）保持用户习惯（浅色复刻），但品牌色锚点仍在——顶部品牌条 + 锚色徽章。</p>
+      <div class="light-wrap" data-theme="light">
+        <div class="light-card">
+          <div class="bar"></div>
+          <div class="body">
+            <div class="t">胡闹外卖</div>
+            <div class="m">披着美团外衣的虚拟外卖 · 8 分相似 + 2 分品牌</div>
+            <span class="badge"># 零卡路里</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      whoknow 品牌设计系统 v1.0 · 规范见 <a href="./BRAND.md">BRAND.md</a> · 令牌见 <a href="./styles/design-tokens.css">design-tokens.css</a><br/>
+      UI Designer · 2026-07-24
+    </footer>
+
+  </div>
+</body>
+</html>

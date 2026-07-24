@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>确认订单 · 胡闹外卖</title>
+<link rel="stylesheet" href="../css/meituan.css">
+<style>
+  body { background: #1c1c1e; }
+</style>
+</head>
+<body>
+<div class="phone checkout" style="margin-top:0;">
+  <!-- 平台保障条（暗底） -->
+  <div class="guard-bar">
+    <div class="ico">🛡</div>
+    <div>平台保障 ｜ 撒漏必赔 · 食品安全保障</div>
+    <div class="close">×</div>
+  </div>
+
+  <div class="ct">
+    <!-- 配送方式（外卖配送/到店自取） -->
+    <div class="ct-head">
+      <div class="opt on">外卖配送</div>
+      <div class="opt">到店自取 <span class="badge">新客减2</span></div>
+    </div>
+
+    <!-- 地址卡 -->
+    <div class="addr-card">
+      <div class="pin">📍</div>
+      <div class="a-info">
+        <div class="a-title">紫荆轩南区5栋 1101（近一棉入口）</div>
+        <div class="a-name">鍚先生 13580103389 <span class="ar">联系不上放哪里 ✎</span></div>
+      </div>
+      <div class="arr">›</div>
+    </div>
+
+    <!-- 配送方式双卡（商家自配 / 预约配送） -->
+    <div class="deliver-card">
+      <div class="dc on">
+        <div class="ttl">商家自配</div>
+        <div class="big">21:18-21:33</div>
+      </div>
+      <div class="dc">
+        <div class="ttl">预约配送</div>
+        <div class="big">选择时间 ›</div>
+        <div class="sub">未来7天可送</div>
+      </div>
+    </div>
+
+    <!-- 商品行 -->
+    <div class="cgoods">
+      <div class="shop-row">
+        <span class="nm">哈哈蒸鸡（窑鸡、小吃、炖盅）</span>
+        <span class="self">商家自配</span>
+        <span class="arr">≋</span>
+      </div>
+      <div class="g">
+        <div class="pic">🍗<div class="badge">神抢手</div></div>
+        <div class="info">
+          <div class="nm">蒸鸡半只+（米粉一份）</div>
+          <div class="w">500 克</div>
+          <div class="q">x1</div>
+          <div class="bc">买贵必赔</div>
+        </div>
+        <div class="r">
+          <div class="p">一口价 ¥21.4</div>
+          <div class="o">¥36</div>
+        </div>
+      </div>
+      <div class="g">
+        <div class="pic">🍗<div class="badge">神抢手</div></div>
+        <div class="info">
+          <div class="nm">招牌香辣窑鸡《半只》送饮料一支</div>
+          <div class="w">500 克</div>
+          <div class="q">x1</div>
+          <div class="bc">买贵必赔</div>
+        </div>
+        <div class="r">
+          <div class="p">一口价 ¥25.3</div>
+          <div class="o">¥37.8</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主食提示 -->
+    <div class="staple-tip">
+      <div class="t">主食</div>
+      <div class="a">您未点主食哦 ›</div>
+    </div>
+
+    <!-- 费用明细 -->
+    <div class="fee-card">
+      <div class="row">
+        <div class="l">商品原价</div>
+        <div class="r">¥ 73.8</div>
+      </div>
+      <div class="row">
+        <div class="l">用户配送费 <span class="ico">?</span> <small>活动减5元配送费</small></div>
+        <div class="r red">¥5 <span style="color:var(--mt-price);font-weight:800;margin-left:4px;">免配送费</span></div>
+      </div>
+      <div class="row">
+        <div class="l" style="color:var(--mt-text-3)">美团红包</div>
+        <div class="r sub">含神抢手商品无法使用红包 ›</div>
+      </div>
+      <div class="row">
+        <div class="l">商家代金券、商品优惠</div>
+        <div class="r red">- ¥ 27.1 ∨</div>
+      </div>
+    </div>
+
+    <!-- 备注 + 餐具 -->
+    <div class="remark-card">
+      <div class="row">
+        <div class="l">备注</div>
+        <div class="r">请填写您的要求 ›</div>
+      </div>
+      <div class="row">
+        <div class="l">餐具</div>
+        <div class="r orange">已选无需餐具 ›</div>
+      </div>
+    </div>
+
+    <!-- 支付方式 -->
+    <div class="pay-card">
+      <div class="grp">
+        <div class="ico" style="background:#FFC93C;color:#1a1a1a;">⚡</div>
+        <div class="nm">极速支付</div>
+        <div class="ck on"></div>
+      </div>
+      <div class="div"></div>
+      <div class="grp">
+        <div class="ico" style="background:#FFD100;color:#1a1a1a;">💳</div>
+        <div class="nm">美团支付</div>
+        <div class="ck"></div>
+      </div>
+      <div class="grp sub">
+        <div class="nm">中国工商银行储蓄卡（7353）</div>
+        <div class="ck"></div>
+      </div>
+      <div class="grp sub">
+        <div class="nm">中国工商银行信用卡（3593）</div>
+        <div class="ck"></div>
+      </div>
+      <div class="more">更多美团支付方式 ›</div>
+      <div class="grp">
+        <div class="ico" style="background:#1AAD19;color:#fff;">微</div>
+        <div class="nm">微信支付</div>
+        <div class="ck"></div>
+      </div>
+      <div class="grp">
+        <div class="ico" style="background:#1677FF;color:#fff;">支</div>
+        <div class="nm">支付宝支付</div>
+        <div class="ck"></div>
+      </div>
+      <div class="grp">
+        <div class="ico" style="background:#FFC93C;color:#1a1a1a;">👥</div>
+        <div class="nm">找人代付</div>
+        <div class="ck"></div>
+      </div>
+    </div>
+
+    <!-- 开发票 -->
+    <div class="remark-card">
+      <div class="row">
+        <div class="l">开发票</div>
+        <div class="r">未选择 ›</div>
+      </div>
+    </div>
+
+    <!-- 可享权益（买贵必赔 / 号码保护 / 放心吃） -->
+    <div class="benefit-card">
+      <div class="l">可享权益</div>
+      <div class="r">
+        <span class="it"><span class="ico">🛡</span> 买贵必赔</span>
+        <span class="it"><span class="ico">🛡</span> 号码保护</span>
+        <span class="it"><span class="ico">♡</span> 放心吃 ∨</span>
+      </div>
+    </div>
+
+    <!-- 底部提交栏（左价格 右黄按钮） -->
+    <div class="submit-bar">
+      <div class="price">
+        <div class="p">¥46.7</div>
+        <div class="d">共减 ¥32.1 <span class="ar">∨</span></div>
+      </div>
+      <div class="pay-btn">极速支付 ›</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -81,7 +81,7 @@ function goCart() {
     cursor: pointer;
     transition: background 0.2s;
 
-    .has-items & { background: #ff6b35; }
+    .has-items & { background: #ff7849; }
   }
 
   &__price {

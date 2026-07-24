@@ -165,7 +165,7 @@ function showToast(msg: string) {
       <!-- 星级 -->
       <div class="section">
         <div class="section-label">满分是几星？</div>
-        <van-rate v-model="rating" :count="5" color="#ff6b35" void-color="#ddd" size="28" />
+        <van-rate v-model="rating" :count="5" color="#ff7849" void-color="#ddd" size="28" />
       </div>
 
       <!-- 标签 -->
@@ -300,11 +300,11 @@ function showToast(msg: string) {
 /* v15：AI 引导 */
 .ai-hint {
   background: linear-gradient(90deg, #fff3ee, #fff9f6);
-  color: #ff6b35;
+  color: #ff7849;
   font-size: 12px;
   font-weight: 600;
   padding: 8px 16px;
-  border-left: 3px solid #ff6b35;
+  border-left: 3px solid #ff7849;
   margin: 8px 0;
 }
 
@@ -337,8 +337,8 @@ function showToast(msg: string) {
 
   &.active {
     background: #fff3ee;
-    border-color: #ff6b35;
-    color: #ff6b35;
+    border-color: #ff7849;
+    color: #ff7849;
     font-weight: 600;
   }
 }
@@ -359,7 +359,7 @@ function showToast(msg: string) {
 }
 
 .boss-label {
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -374,8 +374,8 @@ function showToast(msg: string) {
 }
 
 .submit-btn {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #ff7849 !important;
+  border-color: #ff7849 !important;
   font-weight: 700;
 }
 
@@ -400,7 +400,7 @@ function showToast(msg: string) {
 .celebrate-title {
   font-size: 22px;
   font-weight: 800;
-  color: #ff6b35;
+  color: #ff7849;
   margin-top: 12px;
 }
 
@@ -416,7 +416,7 @@ function showToast(msg: string) {
   padding: 16px;
   margin: 20px 0;
   text-align: left;
-  border: 1px dashed #ff6b35;
+  border: 1px dashed #ff7849;
 }
 
 .celebrate-rating {
@@ -429,7 +429,7 @@ function showToast(msg: string) {
 .rating-num {
   font-size: 28px;
   font-weight: 800;
-  color: #ff6b35;
+  color: #ff7849;
 }
 
 .rating-stars {
@@ -448,7 +448,7 @@ function showToast(msg: string) {
   font-size: 11px;
   padding: 2px 10px;
   background: #fff3ee;
-  color: #ff6b35;
+  color: #ff7849;
   border-radius: 10px;
   font-weight: 600;
 }
@@ -470,7 +470,7 @@ function showToast(msg: string) {
 }
 
 .boss-name {
-  color: #ff6b35;
+  color: #ff7849;
   font-weight: 700;
   font-size: 12px;
 }
@@ -489,8 +489,8 @@ function showToast(msg: string) {
 }
 
 .share-btn {
-  background: #ff6b35 !important;
-  border-color: #ff6b35 !important;
+  background: #ff7849 !important;
+  border-color: #ff7849 !important;
   font-weight: 700;
 }
 

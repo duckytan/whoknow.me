@@ -241,12 +241,12 @@ function handleShare(item: any) {
   margin-right: 6px;
 }
 .boss-quote .quote-label {
-  background: #ffe0e0;
-  color: #d63031;
+  background: #fff2ec;
+  color: #ff7849;
 }
 .rider-quote .quote-label {
-  background: #e0f0ff;
-  color: #2979ff;
+  background: #eafaf0;
+  color: #4fc46a;
 }
 .quote-text {
   font-size: 13px;
@@ -309,7 +309,7 @@ function handleShare(item: any) {
 }
 .comment-author {
   font-weight: 600;
-  color: #2979ff;
+  color: #8b5cf6;
   margin-right: 6px;
 }
 .comment-text {

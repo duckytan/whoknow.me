@@ -29,9 +29,14 @@ html, body {
 }
 
 // 主题色
-$primary: #ff6b35;
-$primary-light: #fff0eb;
-$primary-dark: #e55a26;
+$primary: #ff7849;
+$primary-light: #fff2ec;
+$primary-dark: #e8632f;
+// 品牌锚色（新增 · 与主站 BRAND.md 对齐 · 仅用于情感/品牌区点缀，不替代交易流橙色）
+$brand-green: #6eda78;
+$brand-green-dark: #4fc46a;
+$brand-purple: #8b5cf6;
+$brand-purple-dark: #7c3aed;
 $text-primary: #333;
 $text-secondary: #666;
 $text-muted: #999;

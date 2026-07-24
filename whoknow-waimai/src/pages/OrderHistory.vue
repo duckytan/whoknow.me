@@ -19,8 +19,8 @@ const statusLabel: Record<string, string> = {
 
 const statusColor: Record<string, string> = {
   pending: '#999',
-  accepted: '#ff6b35',
-  cooking: '#ff6b35',
+  accepted: '#ff7849',
+  cooking: '#ff7849',
   delivering: '#07c160',
   completed: '#999',
   boss_complaining: '#ee0a24',

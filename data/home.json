@@ -1,0 +1,52 @@
+{
+  "brand": {
+    "eyebrow": "胡闹宇宙 · WHO KNOWS?",
+    "sectionTitle": "// 已经在胡闹 & 即将胡闹",
+    "footer": "<span class=\"accent\">→</span> 下一个胡闹，由你决定 <span class=\"dim\">// 我们也不知道下一步会怎样</span>"
+  },
+  "manifesto": "一个披着真实 App 外衣的<span class=\"accent\">胡闹宇宙</span>：外卖越点越瘦，导购反手劝你别买，AI 用段子给你推新品。<span class=\"accent\">下一个胡闹，由你决定。</span>",
+  "tagline": {
+    "slogans": [
+      "这个导购员居然阻止我买化妆品",
+      "骑手送外卖时居然跟我聊哲学",
+      "老板推荐菜时给我讲了个段子",
+      "AI 居然用段子给我推新品",
+      "下一秒会发生啥",
+      "这个宇宙里啥都敢胡来"
+    ],
+    "tail": "<span class=\"accent\">— WHO KNOWS?</span> <span class=\"sep\">·</span> 家人们<span class=\"dim\">谁懂</span>"
+  },
+  "ctas": [
+    { "label": "🍜 去胡闹外卖", "href": "/waimai", "type": "primary" },
+    { "label": "看看胡闹宇宙 ↓", "href": "#products", "type": "ghost" }
+  ],
+  "reviews": [
+    {
+      "text": "骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣",
+      "author": "家人们谁懂啊",
+      "avatar": "🐱",
+      "stars": 5,
+      "product": { "name": "胡闹外卖", "emoji": "🍜", "path": "/waimai" },
+      "status": "live",
+      "statusText": "🟢 已上线"
+    },
+    {
+      "text": "导购员居然劝我别买，说我已经有 7 支口红了 💄",
+      "author": "被劝退的小姐姐",
+      "avatar": "🐶",
+      "stars": 5,
+      "product": { "name": "胡闹导购", "emoji": "🛒", "path": "/mart" },
+      "status": "designing",
+      "statusText": "[设计中]"
+    },
+    {
+      "text": "AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖",
+      "author": "单身的码农",
+      "avatar": "🦊",
+      "stars": 5,
+      "product": { "name": "胡闹大脑", "emoji": "🧠", "path": "/brain" },
+      "status": "planning",
+      "statusText": "[规划中]"
+    }
+  ]
+}

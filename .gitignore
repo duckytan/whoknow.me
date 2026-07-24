@@ -32,3 +32,6 @@ temp/
 # ── 旧项目引用源码（不推） ──
 opensource-refs/
 research-raw/
+
+# ── agent 本地记忆（非项目文件，不推） ──
+.workbuddy/

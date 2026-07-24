@@ -132,7 +132,7 @@ function goShop() {
     gap: 4px;
     margin-bottom: 4px;
 
-    .delivery-fee { color: #ff6b35; }
+    .delivery-fee { color: #ff7849; }
     .delivery-sep { color: #ddd; }
   }
 

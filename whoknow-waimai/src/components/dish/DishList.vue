@@ -133,11 +133,11 @@ function remove(dish: Dish) {
 
   :deep(.van-sidebar-item--select) {
     background: #fff;
-    color: #ff6b35;
+    color: #ff7849;
     font-weight: 700;
 
     &::before {
-      background: #ff6b35;
+      background: #ff7849;
     }
   }
 }
@@ -210,7 +210,7 @@ function remove(dish: Dish) {
 .dish-price {
   font-size: 16px;
   font-weight: 700;
-  color: #ff6b35;
+  color: #ff7849;
 }
 
 .dish-stepper {
@@ -234,15 +234,15 @@ function remove(dish: Dish) {
   }
 
   &.plus {
-    background: #ff6b35 !important;
-    border-color: #ff6b35 !important;
+    background: #ff7849 !important;
+    border-color: #ff7849 !important;
   }
 }
 
 .stepper-count {
   font-size: 14px;
   font-weight: 700;
-  color: #ff6b35;
+  color: #ff7849;
   min-width: 18px;
   text-align: center;
 }

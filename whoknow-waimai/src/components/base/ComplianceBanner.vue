@@ -111,7 +111,7 @@ onMounted(restore)
   max-width: 480px;
   margin: 0 auto;
   padding: 3px 28px 3px 16px;
-  color: #ff6b35;
+  color: #ff7849;
   position: relative;
 }
 
@@ -141,22 +141,22 @@ onMounted(restore)
 }
 
 .banner-link {
-  color: #ff6b35;
+  color: #ff7849;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .banner-link:hover {
-  color: #e55a26;
+  color: #e8632f;
 }
 
 .banner-sep {
-  color: #ff6b35;
+  color: #ff7849;
   opacity: 0.5;
 }
 
 .banner-sep-text {
-  color: #ff6b35;
+  color: #ff7849;
   opacity: 0.6;
 }
 
@@ -174,7 +174,7 @@ onMounted(restore)
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #ff6b35;
+  color: #ff7849;
   font-size: 16px;
   line-height: 1;
   padding: 2px 6px;

@@ -7,12 +7,12 @@ defineProps<{
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; icon: string }> = {
   pending:          { label: '等待接单', color: '#95a5a6', icon: '⏳' },
-  accepted:         { label: '已接单', color: '#3498db', icon: '✅' },
-  cooking:          { label: '出餐中', color: '#e67e22', icon: '🍳' },
-  boss_complaining: { label: '老板发疯中', color: '#e74c3c', icon: '🤬' },
-  delivering:       { label: '配送中', color: '#2ecc71', icon: '🛵' },
-  rider_lost:       { label: '骑手迷路', color: '#f39c12', icon: '🗺️' },
-  completed:        { label: '已送达', color: '#27ae60', icon: '🎉' },
+  accepted:         { label: '已接单', color: '#ff7849', icon: '✅' },
+  cooking:          { label: '出餐中', color: '#ff7849', icon: '🍳' },
+  boss_complaining: { label: '老板发疯中', color: '#ff7849', icon: '🤬' },
+  delivering:       { label: '配送中', color: '#4fc46a', icon: '🛵' },
+  rider_lost:       { label: '骑手迷路', color: '#ff7849', icon: '🗺️' },
+  completed:        { label: '已送达', color: '#4fc46a', icon: '🎉' },
 }
 </script>
 
