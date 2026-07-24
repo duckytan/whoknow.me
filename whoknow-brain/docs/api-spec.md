@@ -379,7 +379,7 @@ async function getFoodConfig() {
         "trigger": { "condition": "orderTotal < 20", "probability": 1.0 },
         "rarity": "common",
         "chain": [
-          { "phase": "accept", "text": "¥{price}也好意思点？锅都懒得开", "mood": -30 },
+          { "phase": "accept", "text": "¥{price}也好意思点？锅都懒得开", "moodDelta": -30 },
           { "phase": "complete", "text": "下次低于这个数，我建议你好好吃饭" }
         ]
       }
@@ -741,7 +741,7 @@ export async function fetchRemoteConfig(): Promise<any> {
 
 ### D1 · 增补 `food.branches` 字段（最致命，已直改 §JSON Schema）
 - **问题**：原 Schema 只有 `food.boss` / `food.rider` 平铺台词，**无 `branches`**。但 waimai v2 引擎 = DRAMA-ENGINE-V2，核心是 **DramaBranch 条件链**（玩家备注/次数/玩法 → 不同结局）。没 `branches`，brain 生成的 JSON 喂不动引擎。
-- **已改**：§JSON Schema 的 `food` 下新增 `branches[]`，形状以 GDD §9.4 为准（id / name / weight / trigger{condition, probability, probabilityScaling?} / rarity / chain[]{phase, text, mood?, next?, nextWeights?, effect?}）。
+- **已改**：§JSON Schema 的 `food` 下新增 `branches[]`，形状以 GDD §9.4 为准（id / name / weight / trigger{condition, probability, probabilityScaling?} / rarity / chain[]{phase, text, moodDelta?, next?, nextWeights?, effect?}）。
 - **码农虾动作**：`generator/prompt.ts` 拼 food 模板时**必须输出 `branches`**；M0 可先只生成 1–2 条示例分支，M1+ 扩充。
 - **MVP 兼容**：waimai v2 前端约定——`branches` 为空时用内置 seed（GDD §9.4 同款），brain 上线后无缝替换。
 

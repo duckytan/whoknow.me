@@ -4,6 +4,8 @@
 >
 > Who knows? = 胡闹 × Who knows? × 家人们谁懂啊
 
+> 📌 **权威总纲见 [`胡闹宇宙总体设计方案.md`](./胡闹宇宙总体设计方案.md)** —— 架构、里程碑、契约、红线均以该文件为锚；本 README 仅作品牌与域名门面。
+
 **创始人**：Ducky 錡 · 般若 AI
 **品牌域名**：`whoknow.me`
 **品牌命名**：whoknow 系列（统一 `whoknow-*` 前缀）
@@ -78,6 +80,8 @@
 - 后台（AI 做的）→ 写新段子、调平衡、追热搜、分析数据
 - **所有 AI 调用集中在 whoknow-brain，一次预算养活全场**
 
+> ⚠️ 当前（M0）：brain **由锡哥手动生成配置**，无后端 / 无定时任务。图中「AI 分析 / 自动更新」为 **M3 目标**，非现状（见总体设计方案 §2 / §6）。
+
 ### 传播设计
 
 每个交互必须回答：**用户会截图这张页面发朋友圈吗？**
@@ -94,26 +98,20 @@
 
 | 产品 | 状态 | 目录 | GitHub | 描述 |
 |:----:|:----:|:----:|:------:|------|
-| **whoknow-waimai** 🍜 | Day 1 代码完工 | `whoknow-waimai/` | `duckytan/whoknow-waimai` | 胡闹外卖 · 段子外卖 App |
+| **whoknow-waimai** 🍜 | v2 设计完成·重建中 | `whoknow-waimai/` | `duckytan/whoknow-waimai` | 胡闹外卖 · 段子外卖（DRAMA 引擎） |
 | **whoknow-mart** 🛒 | 概念设计完 | `whoknow-mart/` | — | 胡闹导购 · 反骨导购博弈 |
 | **whoknow-brain** 🧠 | 概念阶段 | `whoknow-brain/` | — | 胡闹控制中心 · AI 大脑总控 |
 
 ### 产品路线图
 
+> 详细里程碑（M0–M4，单产品优先）见 **[`胡闹宇宙总体设计方案.md`](./胡闹宇宙总体设计方案.md)** §6。
+
 ```
-Phase 1: whoknow-waimai 上线
-  · 预制文案 + NPC 语录
-  · 验证「胡闹系列」能否吸引用户
-  · 不烧 AI 调用的钱
-
-Phase 2: whoknow-mart MVP
-  · 选招制上线，¥0 运行成本
-  · 后台 AI 分析 + 自动更新配置（每天跑1次）
-  · 验证博弈玩法能否成为传播点
-
-Phase 3: 共用的 whoknow-brain AI 引擎
-  · 外卖 NPC + 导购争辩 + 未来产品 = 同一份 AI 预算
-  · 双11、明星塌房、高温暴雨...自动追热点全部更新
+M0: brain 接入 whoknow-waimai v2（契约对齐，手动配置）
+M1: v2 核心循环重建（7 页 + 记忆引擎 + DRAMA 四阶段）
+M2: 戏精深化 + 截图传播 + 图鉴成就
+M3: brain 自动化（定时生成 / 天气·热搜元参数）
+M4: mart 导购联动（复用契约）
 ```
 
 ---
@@ -179,14 +177,14 @@ brain.whoknow.me     ← 控制中心后台（不对外）
 
 ```
 whoknow.me/
-├── README.md           ← 本文件（胡闹宇宙总纲）
-├── ARCHITECTURE.md     ← 技术架构详解（TODO）
-├── ROADMAP.md          ← 产品路线图（TODO）
-├── BRAND.md            ← 品牌手册 · 视觉规范（TODO）
+├── README.md                  ← 本文件（品牌与域名门面）
+├── 胡闹宇宙总体设计方案.md      ← 📌 权威总纲（架构/里程碑/契约/红线）
+├── BRAND.md                   ← 品牌手册 · 视觉规范
+├── archive/                   ← 已归档的废旧方案/代码（v1 等）
 │
-├── whoknow-waimai/     ← 胡闹外卖（代码项目）
-├── whoknow-mart/       ← 胡闹导购（概念设计）
-└── whoknow-brain/      ← 胡闹控制中心（架构设计）
+├── whoknow-waimai/            ← 胡闹外卖 v2（设计完成·重建中）
+├── whoknow-mart/              ← 胡闹导购（概念·冻结）
+└── whoknow-brain/             ← 胡闹控制中心（契约·M0 接入）
 ```
 
 ---
