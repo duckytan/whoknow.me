@@ -7,7 +7,8 @@ node_modules/
 dist/
 build/
 *.tsbuildinfo
-# 注意：waimai/ 是胡闹外卖 app 的预构建产物，需要提交以支持 Vercel 静态部署
+# 例外：胡闹外卖的预构建产物收进单一项目文件夹 whoknow-waimai/dist/，需提交以支持 Vercel 静态部署（/waimai → whoknow-waimai/dist）
+!whoknow-waimai/dist/
 
 # ── 环境变量 ──
 .env
