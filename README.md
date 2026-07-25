@@ -180,6 +180,7 @@ whoknow.me/
 ├── README.md                      ← 品牌与域名门面
 ├── 胡闹宇宙总体设计方案.md          ← 📌 权威总纲（架构/里程碑/契约/红线）
 ├── BRAND.md                       ← 品牌手册 · 视觉规范
+├── CONSTITUTION.md                ← 项目宪法（铁律/约定合集，三司会审后落地，根级权威）
 ├── vercel.json                    ← 多 App 部署红线（总纲 §11）
 ├── .gitignore / .vercelignore     ← 忽略配置
 ├── build-for-vercel.js            ← 部署辅助脚本

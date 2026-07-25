@@ -22,6 +22,7 @@
 | `README.md` | 门面 | 品牌/域名，仅门面 |
 | `胡闹宇宙总体设计方案.md` | 权威总纲 | 全仓锚点（含中文名，历史原因，新文档勿效仿）|
 | `BRAND.md` | 品牌手册 | 视觉/语气 |
+| `CONSTITUTION.md` | 项目宪法（铁律/约定合集）| 三司会审后落地，根级权威事实源之一（用户 2026-07-26 裁定：须驻根，本规范据此增列）|
 | `vercel.json` | 部署配置 | 多 App 红线（总纲 §11），只追加不删改 |
 | `.gitignore` / `.vercelignore` | 忽略配置 | 全局 `dist/` + 每 app `!dist/` 例外 |
 | `build-for-vercel.js` | 部署辅助脚本 | 脚本变多→建 `scripts/` |
@@ -111,6 +112,7 @@ whoknow-<app>/
 
 ## 8. 已整改 / 遗留（经三司会审 2026-07-26 修订）
 - ✅ 已整改（本规范创建时）：总纲 §8 把 `prototype/` 从"保留"移入"归档"；README 目录结构段更新为当前结构；根 `CURRENT-STATE.md`/`PROJECT-STATUS.md` 移入 `docs/studio/`；`docs/studio/STUDIO-PROGRESS.md` 的 prototype 路径修正。
+- ✅ `CONSTITUTION.md` 列入根白名单（用户 2026-07-26 裁定：项目宪法须驻根；§2 据此增列，原误标"根违规"已撤销；跨设备共享记忆主通道改由 `docs/studio/memory/` 承担）。
 - ✅ 已修订（三司会审后）：权威锚点降为"总纲实施细则"、三铁律降为"约定"、命名改"新文档约定+存量豁免"、`.workbuddy/` 标注为已 gitignore、brain 补单点缓解、归档子目录收敛。
 - ⬜ 遗留待办（事实类，需后续处理）：
   ① 根双 HTML 入口：`index.html` 为主入口，`index1.html` 为同门面级遗留入口（本规范已明确"不强制唯一"）；**保留**——`build-for-vercel.js` 将其复制进 `dist/` 上线产物，属部署源文件，不可删。

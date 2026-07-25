@@ -26,11 +26,11 @@
 - **部署架构**：单 Vercel 整仓托管多 app；每 app 走 `/短名` rewrite → `whoknow-<app>/dist`；`.gitignore` 追加 `!whoknow-<app>/dist/` 例外
 
 ## 多设备 memory 同步策略（2026-07-26 落地）
-- **主通道**：硬知识（铁律/约定/架构/决策）写成仓库文档（`CONSTITUTION.md` / `BRAND.md` / 总纲 / `docs/memory/`）靠 git 同步，多设备零冲突
+- **主通道**：硬知识（铁律/约定/架构/决策）写成仓库文档（`CONSTITUTION.md` / `BRAND.md` / 总纲 / `docs/studio/memory/`）靠 git 同步，多设备零冲突
 - **用户级偏好**（跨项目）：用云盘（OneDrive/iCloud）同步 `~/.workbuddy`，或 symlink 到同步目录
 - **每日工作日志**（`.workbuddy/memory/2026-*.md`）：留本机、不共享（含机器路径、append-only 易并发冲突）
 - **隐式云层（L1）**：长期偏好由系统学进云端 profile 自动跨设备；历史用 `conversation_search` 回查
-- **镜像**：`.workbuddy/memory/MEMORY.md` 已 `git add -f` 强制跟踪作本机镜像
+- **镜像**：`.workbuddy/memory/MEMORY.md` 按规范 §2/§7 保持 gitignored（本机工具态，不污染仓库）；跨设备共享由 `docs/studio/memory/` 承担
 
 ## 关键历史决策
 - 2026-07-26：三司会审（sanshi-20260726-001）确认 12 条铁律方向合理但通胀，产出 `CONSTITUTION.md` 三层重分类
