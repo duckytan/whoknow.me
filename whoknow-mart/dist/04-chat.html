@@ -10,6 +10,7 @@
     <span class="more">⋯</span>
   </div>
   <!-- 破防度（游戏层 · 反骨版 affinity） -->
+  <div class="visit-flag" id="visitFlag" hidden></div>
   <div class="chat-fav">
     <div class="fl"><span>撬动他的「破防度」</span><span><b>70</b> / 100</span></div>
     <div class="fb"><i style="width:70%"></i></div>
@@ -70,4 +71,22 @@
     <div class="ql" style="margin-top:6px;color:#bbb">※ 选 1 后客服立刻回怼，循环至多轮——他要劝你别买，你偏要撬开他。</div>
   </div>
   <div class="chat-input"><span class="ic">😊</span><div class="box">说点什么…</div><span class="ic">➕</span></div>
-</div></div></body></html>
+</div></div>
+<script>
+/* W2 多入口对话延续（渐进增强）：跨会话累计进店次数，第≥5次起浮出"同店第N单差异" */
+(function(){
+  try{
+    var KEY='mart_visit_wangerba';
+    var n=parseInt(localStorage.getItem(KEY)||'0',10)+1;
+    localStorage.setItem(KEY,n);
+    if(n>=5){
+      var f=document.getElementById('visitFlag');
+      if(f){f.innerHTML='🔁 第 '+n+' 次进店磨他 · 他嘴角有点松了（破防起点 +10）';f.classList.add('show');}
+      var b=document.querySelector('.chat-fav .fl b');
+      var bar=document.querySelector('.chat-fav .fb i');
+      if(b){b.textContent='80';} if(bar){bar.style.width='80%';}
+    }
+  }catch(e){/* 隐私模式/无 localStorage 时静默降级为静态 demo */}
+})();
+</script>
+</body></html>
