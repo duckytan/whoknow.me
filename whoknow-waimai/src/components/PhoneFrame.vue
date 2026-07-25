@@ -15,5 +15,6 @@ withDefaults(defineProps<{ showStatus?: boolean; showTab?: boolean }>(), {
       <slot />
     </div>
     <TabBar v-if="showTab" />
+    <div class="wk-mark" aria-hidden="true">?</div>
   </div>
 </template>

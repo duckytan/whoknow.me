@@ -97,7 +97,7 @@ function back() {
       <label>客单价 ¥<input v-model.number="form.avgDishPrice" type="number" /></label>
       <label>菜品数<input v-model.number="form.dishCount" type="number" /></label>
       <label>配送费 ¥<input v-model.number="form.deliveryFee" type="number" /></label>
-      <label>备注<input v-model="form.remark" placeholder="别骂了 / 多放辣" /></label>
+      <label>备注<input v-model="form.remark" placeholder="私房菜 / 拉黑 / 多放辣 / 别骂了" /></label>
       <label>地址<input v-model="form.address" placeholder="奇葩地址会触发彩蛋" /></label>
       <button class="submit-btn" @click="submit">下单 🍜</button>
     </div>

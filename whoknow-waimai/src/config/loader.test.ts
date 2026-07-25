@@ -14,11 +14,11 @@ function loadSeed() {
   return loadSeedBranches(JSON.parse(readFileSync(seedPath, 'utf8')))
 }
 
-test('L1 解析 SEED：顶层数组为 11 分支（含 default 兜底）', () => {
+test('L1 解析 SEED：顶层数组为 12 分支（含 default 兜底 + boss_blacklist）', () => {
   const b = parseBranches(seed)
-  assert.equal(b.length, 11)
+  assert.equal(b.length, 12)
   const ids = b.map((x) => x.id)
-  for (const id of ['poor', 'cheap_no_rider', 'odd_eats', 'remark_more_spicy', 'remark_no_scold', 'address_weird', 'default'])
+  for (const id of ['poor', 'cheap_no_rider', 'odd_eats', 'boss_blacklist', 'remark_more_spicy', 'remark_no_scold', 'address_weird', 'default'])
     assert.ok(ids.includes(id), `缺 ${id}`)
   assert.ok(b.find((x) => x.id === 'default')?.isFallback === true)
 })
@@ -33,9 +33,9 @@ test('L3 结构非法：非数组 / 缺 id / 缺 chain 均拒绝', () => {
   assert.throws(() => parseBranches([{ id: 'x', trigger: { condition: 'x' }, chain: [] }]))
 })
 
-test('L4 loadSeedBranches 端到端返回 11 分支且已校验', () => {
+test('L4 loadSeedBranches 端到端返回 12 分支且已校验', () => {
   const b = loadSeed()
-  assert.equal(b.length, 11)
+  assert.equal(b.length, 12)
 })
 
 test('L5 占位符规范：SEED 不使用原型遗留的 {price}/{fee}（Route B 按设计消解原型 config）', () => {

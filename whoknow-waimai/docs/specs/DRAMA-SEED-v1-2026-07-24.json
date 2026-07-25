@@ -96,7 +96,7 @@
     "name": "黑暗料理 · 隐藏私房菜",
     "weight": 10,
     "trigger": {
-      "condition": "flag(odd_eats_{shopId})",
+      "condition": "remarkTag = odd | flag(odd_eats_{shopId})",
       "probability": 1.0,
       "cooldownMin": 0,
       "maxPerUser": 0
@@ -104,7 +104,7 @@
     "rarity": "legendary",
     "achievements": ["dark_chef"],
     "chain": [
-      { "phase": "accept", "actor": "boss", "text": "你又点「老板私房菜」？上次那顿你还没缓过来吧", "moodDelta": -80 },
+      { "phase": "accept", "actor": "boss", "text": "「老板私房菜」？你胆子真大——上次那顿的阴影还没散呢", "moodDelta": -80 },
       { "phase": "cook", "actor": "boss", "text": "厨房又传来可疑的咕嘟声，老板脸色越来越白", "delay": 15000 },
       { "phase": "deliver", "actor": "rider", "text": "取餐时袋子还在动……我有点不敢拿" },
       { "phase": "complete", "actor": "boss", "text": "你吃完给了好评：很有创意。老板盯着你看了三秒：你没事吧？", "effect": { "flags": ["odd_eats_{shopId}"] } }
@@ -188,6 +188,25 @@
       { "phase": "cook", "actor": "boss", "text": "老板今天出奇地安静，连锅铲都没敲" },
       { "phase": "deliver", "actor": "rider", "text": "骑手：这单气氛诡异地和谐" },
       { "phase": "complete", "actor": "boss", "text": "这次没骂你，记得珍惜——下次未必了", "effect": { "tags": ["remark_no_scold"] } }
+    ]
+  },
+
+  {
+    "id": "boss_blacklist",
+    "name": "拉黑老板 · 结下梁子",
+    "weight": 4,
+    "trigger": {
+      "condition": "remarkTag = blacklist",
+      "probability": 1.0,
+      "cooldownMin": 0,
+      "maxPerUser": 0
+    },
+    "rarity": "uncommon",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "备注写要拉黑我？行，你被记上一笔了", "moodDelta": -40 },
+      { "phase": "cook", "actor": "boss", "text": "老板把你这单单独放一边，火开得格外大" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手听说你跟老板杠上了，默默加快了脚步" },
+      { "phase": "complete", "actor": "boss", "text": "这单做完——我拉黑你了，下次别来了", "effect": { "flags": ["blacklisted_{shopId}"] } }
     ]
   },
 

@@ -103,3 +103,24 @@ test('T9 兜底优先级：remark_no_scold 命中时 selected 非 default', () =
   assert.equal(r.selectedBranchId, 'remark_no_scold')
   assert.notEqual(r.selectedBranchId, 'default')
 })
+
+// 10) P0-1 修复：odd_eats 经备注「私房菜」首次可达（不再自锁），并播种 flag 供回访延续
+test('T10 P0-1 修复：odd_eats 经备注 odd 首次可达并播种 odd_eats_{shopId}', () => {
+  const r = run({ shopId: 's01', remarkTag: 'odd', orderTotal: 50, avgDishPrice: 99 })
+  assert.equal(r.selectedBranchId, 'odd_eats')
+  assert.ok(r.newFlags.includes('odd_eats_s01'))
+})
+
+// 11) P0-1 修复：boss_blacklist 经备注「拉黑」播种 blacklisted_{shopId}（让 blacklist_reunion 后续可触发）
+test('T11 P0-1 修复：boss_blacklist 经备注 blacklist 播种 blacklisted_{shopId}', () => {
+  const r = run({ shopId: 's01', remarkTag: 'blacklist', orderTotal: 50, avgDishPrice: 99 })
+  assert.equal(r.selectedBranchId, 'boss_blacklist')
+  assert.ok(r.newFlags.includes('blacklisted_s01'))
+})
+
+// 12) P0-1 修复：回访带 blacklisted_{shopId} → blacklist_reunion 命中（reconciled 成就不再死锁）
+test('T12 P0-1 修复：回访带 flag 触发 blacklist_reunion，reconciled 可达', () => {
+  const r = run({ shopId: 's01', orderTotal: 50, avgDishPrice: 99 }, { flags: ['blacklisted_s01'] })
+  assert.equal(r.selectedBranchId, 'blacklist_reunion')
+  assert.equal(r.events.length, 4)
+})

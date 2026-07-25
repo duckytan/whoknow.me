@@ -4,6 +4,8 @@
    浅色外卖皮，逐像素对齐原型图
    ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
 :root {
   --mt-yellow: #FFD100;
   --mt-yellow-deep: #FFC300;
@@ -25,6 +27,17 @@
   --role-lazy: #3A7BFF;
   --role-philo: #1FB6A6;
   --role-rider: #FF8A00;
+  /* 品牌锚色（BRAND.md §2.1，贯穿明暗不可替换） */
+  --brand-green: #6eda78;
+  --brand-orange: #ff7849;
+  --brand-purple: #8b5cf6;
+  /* 字体（BRAND.md §3.1） */
+  --font-display: 'Bungee', 'ZCOOL QingKe HuangYou', sans-serif;
+  --font-title: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+  --font-script: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+  --font-brush: 'Ma Shan Zheng', cursive;
+  --font-body: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --radius: 10px;
   --shadow-card: 0 1px 6px rgba(0,0,0,0.05);
   --shadow-pop: 0 6px 24px rgba(0,0,0,0.12);
@@ -107,7 +120,7 @@ button { font-family: inherit; cursor: pointer; }
 .tabbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--maxw); background: #fff; border-top: 1px solid var(--mt-line); display: flex; padding: 4px 0 calc(8px + env(safe-area-inset-bottom)); z-index: 10; }
 .tabbar .tb { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 11px; color: var(--mt-text-2); }
 .tabbar .tb .ico-wrap { width: 36px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #1a1a1a; }
-.tabbar .tb.on .ico-wrap { background: var(--mt-yellow); border-radius: 18px; box-shadow: 0 2px 6px rgba(255,209,0,0.4); margin-top: -6px; height: 38px; }
+.tabbar .tb.on .ico-wrap { background: var(--brand-orange); border-radius: 18px; box-shadow: 0 2px 6px rgba(255,120,73,0.4); margin-top: -6px; height: 38px; }
 .tabbar .tb.on { color: var(--mt-text); font-weight: 700; }
 
 /* ============ 店铺详情 ============ */
@@ -218,7 +231,7 @@ button { font-family: inherit; cursor: pointer; }
 .achv-card { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--mt-line-2); align-items: flex-start; }
 .achv-card:last-child { border-bottom: 0; }
 .achv-card .ic { width: 56px; height: 56px; border-radius: 12px; background: linear-gradient(135deg,#FFEFC2,#FFD98A); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; position: relative; color: #1a1a1a; }
-.achv-card .ic::after { content: ''; position: absolute; bottom: -2px; right: -2px; width: 18px; height: 18px; background: #FF4B10; border-radius: 50%; border: 2px solid #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; content: '✓'; }
+.achv-card .ic::after { content: ''; position: absolute; bottom: -2px; right: -2px; width: 18px; height: 18px; background: var(--brand-green); border-radius: 50%; border: 2px solid #fff; font-size: 11px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; content: '✓'; }
 .achv-card.lock .ic { filter: grayscale(1); opacity: .4; }
 .achv-card.lock .ic::after { content: '🔒'; background: var(--mt-text-3); font-size: 10px; }
 .achv-card .info { flex: 1; }
@@ -229,7 +242,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ============ 段子水印层 ============ */
 .story-watermark { margin: 10px 14px; background: linear-gradient(90deg,#FFF0E0,#FFD9BF); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mt-text); }
-.story-watermark .badge { background: linear-gradient(90deg,#FF7E45,#FF4B10); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+.story-watermark .badge { background: linear-gradient(90deg,var(--brand-orange),#FF4B10); color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 700; }
 
 /* ============ 红线门控 ============ */
 .gate { margin: 14px; padding: 10px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; }
@@ -241,8 +254,22 @@ button { font-family: inherit; cursor: pointer; }
 .form .shop-line { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; margin-bottom: 12px; }
 .form label { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 10px 0; font-size: 14px; color: var(--mt-text-2); }
 .form input { flex: 1; max-width: 60%; background: #fff; border: 1px solid var(--mt-line); color: var(--mt-text); border-radius: 8px; padding: 8px 10px; font-size: 14px; outline: none; }
-.form input:focus { border-color: var(--mt-yellow); }
+.form input:focus { border-color: var(--brand-orange); box-shadow: 0 0 0 3px rgba(255,120,73,0.15); }
 .submit-btn { width: 100%; margin-top: 16px; padding: 14px; background: var(--mt-yellow); color: #1a1a1a; border: none; border-radius: 12px; font-size: 16px; font-weight: 800; }
+
+/* ============ 品牌锚色落地（P0-2，BRAND.md） ============ */
+/* 段子卡：NPC 金句用 ZCOOL KuaiLe 手写体 + 品牌绿高亮底（截图价值 §14.4） */
+.timeline .row .txt { font-family: var(--font-script); font-size: 15px; line-height: 1.65; background: rgba(110,218,120,0.08); border-radius: 10px; padding: 8px 10px; }
+.timeline .row .txt .who { color: var(--brand-orange); font-weight: 800; margin-right: 4px; }
+
+/* 成就卡片：已解锁态品牌绿光晕 */
+.achv-card:not(.lock) .ic { box-shadow: 0 0 0 3px rgba(110,218,120,0.28); }
+
+/* 全局 whoknow 角标（BRAND §12.5：绿底白「?」，一眼认出是 whoknow） */
+.wk-mark { position: absolute; top: 10px; right: 10px; z-index: 50; width: 20px; height: 20px; border-radius: 50%; background: var(--brand-green); color: #fff; font-family: var(--font-display); font-size: 12px; line-height: 1; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(0,0,0,0.2); pointer-events: none; }
+
+/* 成就墙英雄区标题用品牌标题字体 */
+.achv-hero .title { font-family: var(--font-title); }
 
 /* 通用页面容器 */
 .page-pad { padding: 16px 14px; }
