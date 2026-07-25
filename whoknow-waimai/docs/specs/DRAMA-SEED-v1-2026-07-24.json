@@ -381,5 +381,89 @@
         { "phase": "deliver", "actor": "rider", "text": "骑手导航转了三圈，最后问路边猫才找到你", "delay": 15000 },
         { "phase": "complete", "actor": "rider", "text": "张迷路：到了！……你这栋楼，标识真不清" }
       ]
+    },
+    {
+      "id": "default_b",
+      "name": "日常一单 · 吐槽配送费",
+      "weight": 3,
+      "isFallback": true,
+      "trigger": { "condition": "1 = 1", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "common",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "外卖费都快赶上饭钱了，你图啥", "moodDelta": -10 },
+        { "phase": "cook", "actor": "boss", "text": "老板边做边算：你这月外卖花了多少" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：常客了，这单我顺路" },
+        { "phase": "complete", "actor": "boss", "text": "吃吧。下次……要不自己煮顿？", "effect": { "tags": ["ordered"] } }
+      ]
+    },
+    {
+      "id": "default_c",
+      "name": "日常一单 · 催单反被催",
+      "weight": 3,
+      "isFallback": true,
+      "trigger": { "condition": "1 = 1", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "common",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "又催？我比你更想下班", "moodDelta": -5 },
+        { "phase": "cook", "actor": "boss", "text": "老板把锅铲当节拍器敲" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：放心，我电驴比你还急" },
+        { "phase": "complete", "actor": "boss", "text": "到了。趁热，凉了别怪我", "effect": { "tags": ["ordered"] } }
+      ]
+    },
+    {
+      "id": "default_d",
+      "name": "日常一单 · 骑手闲聊",
+      "weight": 3,
+      "isFallback": true,
+      "trigger": { "condition": "1 = 1", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "common",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "新单——今天第几份了？我也忘了", "moodDelta": 0 },
+        { "phase": "cook", "actor": "boss", "text": "老板哼着歌开火，心情还行" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这天气送餐全靠命硬" },
+        { "phase": "complete", "actor": "boss", "text": "收工前最后一单？祝你胃口好", "effect": { "tags": ["ordered"] } }
+      ]
+    },
+    {
+      "id": "poor_b",
+      "name": "穷鬼套餐 · 第二形态",
+      "weight": 5,
+      "trigger": { "condition": "orderTotal < 20", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "common",
+      "achievements": ["poor_meal"],
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "¥{orderTotal}？这够干啥的", "moodDelta": -25 },
+        { "phase": "cook", "actor": "boss", "text": "老板象征性热了下，舍不得开大火" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这单配送费比我腿值钱" },
+        { "phase": "complete", "actor": "boss", "text": "省着点，下一顿别这么寒碜", "effect": { "tags": ["ordered"] } }
+      ]
+    },
+    {
+      "id": "odd_eats_b",
+      "name": "黑暗料理 · 食客反客为主",
+      "weight": 8,
+      "trigger": { "condition": "remarkTag = odd | flag(odd_eats_{shopId})", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "legendary",
+      "achievements": ["dark_chef"],
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "又点私房菜？你比我会整", "moodDelta": -70 },
+        { "phase": "cook", "actor": "boss", "text": "厨房传来不明爆裂声，老板脸色发白" },
+        { "phase": "deliver", "actor": "rider", "text": "取餐时袋子在轻轻弹，我不敢拿" },
+        { "phase": "complete", "actor": "boss", "text": "你吃完发了长评：建议申报非遗。老板沉默", "effect": { "flags": ["odd_eats_{shopId}"] } }
+      ]
+    },
+    {
+      "id": "odd_eats_c",
+      "name": "黑暗料理 · 老板先怂",
+      "weight": 6,
+      "trigger": { "condition": "remarkTag = odd | flag(odd_eats_{shopId})", "probability": 1.0, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "legendary",
+      "achievements": ["dark_chef"],
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "那道菜……我劝你别点", "moodDelta": -50 },
+        { "phase": "cook", "actor": "boss", "text": "老板偷偷查了下做法，最后放弃了" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：老板说这单他不参与" },
+        { "phase": "complete", "actor": "boss", "text": "最后上了一盘正常炒饭：活着就好", "effect": { "flags": ["odd_eats_{shopId}"] } }
+      ]
     }
 ]

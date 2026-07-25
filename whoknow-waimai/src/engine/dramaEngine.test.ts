@@ -145,3 +145,25 @@ test('T15 差异感·骑手：riderId=r003 命中 rider_r003_lost 专属分支',
   assert.equal(r.selectedBranchId, 'rider_r003_lost')
   assert.ok(r.events.some((e) => e.text.includes('张迷路')))
 })
+
+// 16) P2 变体池：普通单多次抽样，基线 4 分支(default/default_b/c/d)均可能命中（抗重复疲劳）
+test('T16 变体池：普通单抽样，基线 4 分支均可能命中', () => {
+  const seen = new Set<string>()
+  for (let i = 0; i < 400; i++) {
+    const r = runDrama(branches, { orderTotal: 50, avgDishPrice: 99 } as any, {} as any)
+    if (r.selectedBranchId) seen.add(r.selectedBranchId)
+  }
+  for (const id of ['default', 'default_b', 'default_c', 'default_d'])
+    assert.ok(seen.has(id), `基线变体未出现: ${id}`)
+})
+
+// 17) P2 变体池：穷鬼单(orderTotal<20)抽样，poor 与 poor_b 均可能命中
+test('T17 变体池：穷鬼单抽样，poor 与 poor_b 均可能命中', () => {
+  const seen = new Set<string>()
+  for (let i = 0; i < 400; i++) {
+    const r = runDrama(branches, { orderTotal: 15, avgDishPrice: 99 } as any, {} as any)
+    if (r.selectedBranchId) seen.add(r.selectedBranchId)
+  }
+  assert.ok(seen.has('poor'), 'poor 未出现')
+  assert.ok(seen.has('poor_b'), 'poor_b 变体未出现')
+})
