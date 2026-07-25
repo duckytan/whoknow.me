@@ -4,55 +4,42 @@
 <body><div class="phone"><div class="screen">
   <div class="statusbar"><span>9:41</span><span class="icons">●●● 5G ▱🔋</span></div>
   <div class="chatbar">
-    <span class="back">‹</span>
-    <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs">客服 · 毒舌·王二麻（在线）</div></div>
+    <span class="back" onclick="location.href='06-collection.html'">‹</span>
+    <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs" id="chatSub">客服 · 毒舌·王二麻（在线）</div></div>
     <span class="more">⋯</span>
   </div>
-  <!-- 破防度归零（反消费胜利态） -->
   <div class="chat-fav" style="background:#fff7f7">
     <div class="fl"><span>撬动他的「破防度」</span><span><b style="color:#E1251B">0</b> / 100</span></div>
     <div class="fb"><i style="width:2%;background:linear-gradient(90deg,#FFB400,#E1251B)"></i></div>
   </div>
   <div class="chat-bg">
+    <div class="syswrap"><div class="sysmsg">💸 反消费胜利 · 他成功劝退了你 = 你没买 = 省了 ¥59.9</div></div>
     <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">在的？哎我跟你说，这 T 恤真别买，59.9 纯属智商税。</div></div>
+      <div class="av" id="npcAv" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who" id="npcName">毒舌·王二麻</div><div class="bub" id="npcLoseLine">劝退文案加载中…</div></div>
     </div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 装可怜</div><div class="bub">下半月要吃土了呜呜🥺</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">吃土？你昨儿还晒火锅呢当我没看见？<span class="fb-float2" style="background:#E1251B">破防 −10</span></div></div>
-    </div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 装可怜</div><div class="bub">真求你了，便宜点吧😭</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">你这招用第三遍了，省省吧。<span class="fb-float2" style="background:#E1251B">破防 −10</span></div></div>
-    </div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 装可怜</div><div class="bub">呜呜求放过</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">……得，你这软磨硬泡的我是真没招了。<span class="fb-float2" style="background:#E1251B">破防 −10 · 归零</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">💸 反消费胜利 · 他成功劝退了你 = 你没买 = 省了 ¥59.9，还逗乐了他</div></div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">券是真没有，您慢走，今天算省钱了。下回换个招再来呗。</div></div>
-    </div>
+    <div class="syswrap"><div class="sysmsg">🏆 这也是赢：反消费态已收录进你的图鉴</div></div>
     <div class="chat-cta">
-      <button class="go">📖 看看 ta 怕什么（图鉴）</button>
+      <button class="go" onclick="location.href='06-collection.html'">📖 看看 ta 怕什么（图鉴）</button>
     </div>
     <div class="chat-cta" style="padding-top:0">
-      <button class="go" style="background:#fff;color:var(--jd);border:1.5px solid var(--jd)">🔁 再来一局（换招撬他）</button>
+      <button class="go" style="background:#fff;color:var(--jd);border:1.5px solid var(--jd)" onclick="location.href='04-chat.html?id='+encodeURIComponent(new URLSearchParams(location.search).get('id')||'wangerba')">🔁 再来一局（换招撬他）</button>
     </div>
   </div>
   <div class="chat-input"><span class="ic">😊</span><div class="box">说点什么…</div><span class="ic">➕</span></div>
-</div></div></body></html>
+</div></div>
+<script src="npc-data.js"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var id = params.get('id') || 'wangerba';
+  var npc = MartNPC.get(id);
+  MartNPC.catchNPC(id);
+  $('#chatSub').textContent = npc.title;
+  $('#npcAv').textContent = npc.emoji;
+  $('#npcAv').style.background = npc.color;
+  $('#npcName').textContent = npc.name;
+  $('#npcLoseLine').textContent = npc.loseLine;
+})();
+</script>
+</body></html>

@@ -4,32 +4,39 @@
 <body><div class="phone"><div class="screen">
   <div class="statusbar"><span>9:41</span><span class="icons">●●● 5G ▱🔋</span></div>
   <div class="chatbar">
-    <span class="back">‹</span>
-    <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs">客服 · 毒舌·王二麻（在线）</div></div>
+    <span class="back" onclick="location.href='06-collection.html'">‹</span>
+    <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs" id="chatSub">客服 · 毒舌·王二麻（在线）</div></div>
     <span class="more">⋯</span>
   </div>
-  <!-- 破防度已满 -->
   <div class="chat-fav">
     <div class="fl"><span>撬动他的「破防度」</span><span><b>100</b> / 100 · 满</span></div>
     <div class="fb"><i style="width:100%"></i></div>
   </div>
-  <div class="chat-bg">
-    <!-- 延续 04 的对话：你继续用弱点招，人设崩塌 -->
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 以毒攻毒</div><div class="bub">少废话，券拿来。</div></div>
-    </div>
+  <div class="chat-bg" id="chatBg">
+    <div class="syswrap"><div class="sysmsg" id="couponMsg">🎉 客服已发放优惠券，已存入卡包</div></div>
     <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">……服了。给你申请个专属券。<span class="fb-float2">破防 +30 → 100</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">🎉 客服 毒舌·王二麻 已发放优惠券 ¥20，已存入卡包</div></div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">其实我也觉得这破玩意不值这个价，可老板逼我卖啊。<br>拿去吧。下回别来了，看着烦。<br><b style="color:#E1251B">—— 但你赢了，撬开了一个死活不卖你的人。</b></div></div>
+      <div class="av" id="npcAv" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who" id="npcName">毒舌·王二麻</div><div class="bub" id="npcWinLine">高光文案加载中…</div></div>
     </div>
     <div class="syswrap"><div class="sysmsg">📸 这一幕值得截图：嘴替你骂了电商，还把他撬破功（设计支柱 P2 · 截图即胜利）</div></div>
-    <div class="chat-cta"><button class="go">用券去下单 ›</button></div>
+    <div class="chat-cta"><button class="go" onclick="location.href='06-collection.html'">📖 查看收录 · 继续挑战 ›</button></div>
+    <div class="chat-cta" style="padding-top:0"><button class="go" style="background:#fff;color:var(--jd);border:1.5px solid var(--jd)" onclick="history.back()">🔁 再来一局</button></div>
   </div>
   <div class="chat-input"><span class="ic">😊</span><div class="box">说点什么…</div><span class="ic">➕</span></div>
-</div></div></body></html>
+</div></div>
+<script src="npc-data.js"></script>
+<script>
+(function(){
+  var params = new URLSearchParams(location.search);
+  var id = params.get('id') || 'wangerba';
+  var npc = MartNPC.get(id);
+  MartNPC.catchNPC(id);
+  $('#chatSub').textContent = npc.title;
+  $('#npcAv').textContent = npc.emoji;
+  $('#npcAv').style.background = npc.color;
+  $('#npcName').textContent = npc.name;
+  $('#npcWinLine').innerHTML = npc.winLine;
+  $('#couponMsg').textContent = '🎉 客服 '+npc.name+' 已发放优惠券 ¥'+npc.coupon+'，已存入卡包';
+})();
+</script>
+</body></html>
