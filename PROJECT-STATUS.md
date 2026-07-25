@@ -8,7 +8,7 @@
 
 ## 一句话
 
-Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器原型 + 配置信封 + 门面部署）。**M1 已启动**，运行时位于 `whoknow-waimai/src/`（Vue3+Vite+Vant 真构建链）；`prototype/` 仅本地原型，不部署。
+Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器原型 + 配置信封 + 门面部署）。**M1 已落地并部署**：运行时 `whoknow-waimai/src/`（Vue3+Vite 真构建链）；**Route B 已执行**（用户选「核心循环优先」）—— 把原型浅色胡闹黄外卖皮套到 M1 内核上，贯通 选店→下单→订单详情(DRAMA 时间线)→历史→成就墙。`prototype/` 仅本地原型，不部署。
 
 ## 现在在哪（7 阶段）
 
@@ -18,7 +18,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | ✅ 完成 | 运行时 whoknow-waimai/src/（Vue3+Vite+Vant）；核心循环重建（下单→NPC 反应→四阶段→记忆）→ `npm run build` PASS + `npm test` 27/27 绿；复盘见 `whoknow-waimai/docs/M1-RETRO-2026-07-25.md` |
+| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` 35/35 绿；已部署 `whoknow.me/waimai`（commit a6a1e35）|
 | 6 打磨 | ⬜ | — |
 | 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
 
@@ -53,7 +53,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 
 - **P0-C**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地，见上）
 - **P0-D**：SEED 7 分支未消费 `remarkTag` / `addressTag`（核心乐趣缺口，P1 假说未兑现）
-- **P0-E**：视觉前品牌（prototype 去美团皮 + `styles/design-tokens.css` 锚色未 import + 无障碍 3 回归）
+- **P0-E（已缓解）**：视觉前品牌 —— Route B 已把 prototype 浅色胡闹黄皮套到 M1（`src/style.css` 重写 + 金刚区分类配色）；`styles/design-tokens.css` 锚色仍独立未 import；无障碍回归待 M2
 
 ## 变更记录
 
@@ -64,3 +64,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | **M1 完成**：Vue3+Vite+Vant 真构建链核心循环落地（`whoknow-waimai/src/`，27/27 测试绿 + 构建 PASS）；构建配置重构（去 project-reference，TS6310 修复）；门面 index.html 导航页已独立 commit 上线 |
 | 2026-07-25 | **M1 app 部署接线已推**（`f832317`）：vercel.json buildCommand 构建 whoknow-waimai 并 cp 到 /waimai（outputDirectory 保持 "."，门面在根）；加 /waimai SPA 回退；.vercelignore 去掉 waimai 源码排除。Vercel 连仓库自动部署，push 后约 1-2 min 上线 `whoknow.me/waimai` |
 | 2026-07-25 | **首页样式修复 + styleguide 恢复**：Vercel dashboard 残留 buildCommand 导致部署回退，改为静态部署 + 覆盖 buildCommand 为 `echo done`；`whoknow.me` 样式与 `/waimai` app 均正常；从 `archive/root-obsolete` 恢复 `docs/styleguide.html` |
+| 2026-07-25 | **Route B 整合 + 部署（commit a6a1e35, push 到 main）**：原型浅色皮套 M1 内核；新增 8 组件 + 6 视图 + shops/achievements 数据层 + 成就/历史接入 memory；测试 27→35 绿；移除未用 public/config 死配置(含旧 {price}/{fee})；`waimai/` 预构建提交，Vercel 静态部署，live 验证 /waimai 返回新构建(HTTP 200, 无 {price}/{fee}) |
