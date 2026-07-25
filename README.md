@@ -177,14 +177,21 @@ brain.whoknow.me     ← 控制中心后台（不对外）
 
 ```
 whoknow.me/
-├── README.md                  ← 本文件（品牌与域名门面）
-├── 胡闹宇宙总体设计方案.md      ← 📌 权威总纲（架构/里程碑/契约/红线）
-├── BRAND.md                   ← 品牌手册 · 视觉规范
-├── archive/                   ← 已归档的废旧方案/代码（v1 等）
-│
-├── whoknow-waimai/            ← 胡闹外卖 v2（设计完成·重建中）
-├── whoknow-mart/              ← 胡闹导购（v1 原型已上线 /mart）
-└── whoknow-brain/             ← 胡闹控制中心（契约·M0 接入）
+├── README.md                      ← 品牌与域名门面
+├── 胡闹宇宙总体设计方案.md          ← 📌 权威总纲（架构/里程碑/契约/红线）
+├── BRAND.md                       ← 品牌手册 · 视觉规范
+├── vercel.json                    ← 多 App 部署红线（总纲 §11）
+├── .gitignore / .vercelignore     ← 忽略配置
+├── build-for-vercel.js            ← 部署辅助脚本
+├── index.html                     ← 主站门面入口（全仓唯一）
+├── data/                          ← 主站全局数据（home.json）
+├── styles/                        ← 主站样式（design-tokens.css）
+├── js/                            ← 主站脚本（home-render.js）
+├── docs/                          ← studio 级跨 App 文档（结构规范见 docs/studio/REPO-STRUCTURE-CONVENTION.md）
+├── whoknow-waimai/                ← 胡闹外卖 v2（重建中）
+├── whoknow-mart/                  ← 胡闹导购（v1 已上线 /mart）
+├── whoknow-brain/                 ← 胡闹控制中心（契约·M0 接入）
+└── archive/                       ← 已归档废旧资产（prototype 等）
 ```
 
 ---

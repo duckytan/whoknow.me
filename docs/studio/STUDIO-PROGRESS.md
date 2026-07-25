@@ -42,7 +42,7 @@
 - **工程（Phase 3）· CONCERNS 未收口**
   - 4 项 P0 工程决策：ADR ✅（ADR-001-data-shape-authority.md）+ forbidden_check 真闸门 ✅（已跑通 prototype/ 扫描）；解析器原型 + 部署验证仍待落
 - **预制作（Phase 4）· 部分**
-  - 在：`prototype/`（12 页高保真）、`whoknow-waimai/tests/`（forbiddenCheck 脚手架 + taboo-list.json）
+  - 在：`archive/root-obsolete/prototype/`（12 页高保真，已归档）、`whoknow-waimai/tests/`（forbiddenCheck 脚手架 + taboo-list.json）
   - 缺：Epic/Story 拆分、首个冲刺计划、垂直切片交付
 - **制作（Phase 5 / M1）· 未开始**
   - M1 = v2 核心循环重建（7 页 + 记忆引擎 + DRAMA 四阶段 + 解析器）
