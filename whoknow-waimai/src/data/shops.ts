@@ -136,3 +136,9 @@ export function getShop(id?: string): Shop | undefined {
 export function getRider(id?: string): Rider | undefined {
   return RIDERS.find((r) => r.id === id)
 }
+
+/** 随机分配一名骑手（3 选 1），让不同单可能落到不同骑手，骑手专属分支才有意义。 */
+export function pickRider(): string {
+  const i = Math.floor(Math.random() * RIDERS.length)
+  return RIDERS[i].id
+}

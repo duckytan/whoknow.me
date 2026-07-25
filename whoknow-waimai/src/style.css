@@ -273,6 +273,38 @@ button { font-family: inherit; cursor: pointer; }
 
 /* 通用页面容器 */
 .page-pad { padding: 16px 14px; }
+
+/* ============ 新增页面（客服/段子流/隐私/条款/我的/设置/关于） ============ */
+.qa-card { background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.qa-card .q { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.qa-card .a { font-size: 13px; color: var(--mt-text-2); line-height: 1.5; }
+
+.feed-card { background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.feed-card .feed-top { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; }
+.feed-card .feed-branch { font-family: var(--font-script); font-size: 15px; color: var(--brand-green); margin: 4px 0; }
+.feed-card .feed-mood { font-size: 12px; color: var(--mt-text-3); }
+
+.legal p { font-size: 13px; line-height: 1.7; color: var(--mt-text-2); margin-bottom: 12px; }
+
+.profile-hero { background: linear-gradient(135deg, var(--brand-green), #4caf50); color: #fff; padding: 28px 16px; text-align: center; }
+.profile-hero .avatar { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 8px; }
+.profile-hero .name { font-size: 18px; font-weight: 800; }
+.profile-hero .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+
+.entry-list { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.entry-list .entry { padding: 14px; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+.entry-list .entry:last-child { border-bottom: none; }
+.entry-list .entry:active { background: var(--mt-yellow-soft); }
+
+.about .logo { font-family: var(--font-title); font-size: 22px; font-weight: 900; color: var(--brand-green); margin-bottom: 8px; }
+.about p { font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+
+.submit-btn.danger { background: #ff4b10; color: #fff; margin-top: 16px; }
+.submit-btn.danger:active { background: #d83a08; }
+
+.more-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.more-links span { background: #fff; border: 1px solid #f0f0f0; border-radius: 999px; padding: 7px 14px; font-size: 13px; color: var(--mt-text-2); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.more-links span:active { background: var(--mt-yellow-soft); }
 .muted { color: var(--mt-text-3); font-size: 12px; }
 
 /* 无障碍：尊重 reduced-motion */

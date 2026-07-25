@@ -50,6 +50,16 @@ const cats = [
       <span>剧本由锡哥手编，非每日 AI 生成</span>
     </div>
 
+    <div class="page-pad">
+      <div class="more-links">
+        <span @click="router.push('/feed')">🎭 段子流</span>
+        <span @click="router.push('/service')">🎧 客服</span>
+        <span @click="router.push('/about')">ℹ️ 关于</span>
+        <span @click="router.push('/privacy')">🔒 隐私</span>
+        <span @click="router.push('/terms')">📜 条款</span>
+      </div>
+    </div>
+
     <div class="page-pad muted">这是「胡闹宇宙」的外卖分区。点单后老板会演戏，骑手会吐槽，系统会补刀。</div>
   </div>
 </template>

@@ -124,3 +124,24 @@ test('T12 P0-1 修复：回访带 flag 触发 blacklist_reunion，reconciled 可
   assert.equal(r.selectedBranchId, 'blacklist_reunion')
   assert.equal(r.events.length, 4)
 })
+
+// 13) 差异感·店间：shopId=s01 命中店铺专属分支（非 default），选店有意义
+test('T13 差异感·店间：shopId=s01 命中 shop_s01_angry 专属分支', () => {
+  const r = run({ shopId: 's01', orderTotal: 50, avgDishPrice: 99 })
+  assert.equal(r.selectedBranchId, 'shop_s01_angry')
+  assert.notEqual(r.selectedBranchId, 'default')
+})
+
+// 14) 差异感·同店递进：第 3 单(shopVisitCount=3) 命中 regular_3rd，同店差异生效（隔离店间干扰，不传 shopId）
+test('T14 差异感·同店：shopVisitCount>=3 命中 regular_3rd', () => {
+  const r = run({ orderTotal: 50, avgDishPrice: 99 }, { history: { shopVisitCount: 3 } })
+  assert.equal(r.selectedBranchId, 'regular_3rd')
+  assert.ok(r.events.some((e) => e.text.includes('第')))
+})
+
+// 15) 差异感·骑手：riderId=r003 命中骑手专属分支（路痴梗），骑手有差异台词
+test('T15 差异感·骑手：riderId=r003 命中 rider_r003_lost 专属分支', () => {
+  const r = run({ orderTotal: 50, avgDishPrice: 99, riderId: 'r003' })
+  assert.equal(r.selectedBranchId, 'rider_r003_lost')
+  assert.ok(r.events.some((e) => e.text.includes('张迷路')))
+})

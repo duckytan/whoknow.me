@@ -248,5 +248,138 @@
       { "phase": "deliver", "actor": "rider", "text": "骑手已接单，预计 30 分钟到你手上" },
       { "phase": "complete", "actor": "boss", "text": "吃吧。常来常新——常来常挨骂", "effect": { "tags": ["ordered"] } }
     ]
-  }
+  },
+
+    {
+      "id": "shop_s01_angry",
+      "name": "老王烧烤 · 暴躁火气",
+      "weight": 6,
+      "trigger": { "condition": "shopId = s01", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "又来我这？火气给你备好了，自己来取", "moodDelta": -20 },
+        { "phase": "cook", "actor": "boss", "text": "老板把辣椒当脾气撒，锅铲敲得震天响", "delay": 8000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手隔着袋子都感觉到热度" },
+        { "phase": "complete", "actor": "boss", "text": "吃慢点，别烫着——虽然我巴不得你烫着", "effect": { "tags": ["shop_s01"] } }
+      ]
+    },
+    {
+      "id": "shop_s02_philo",
+      "name": "孔子饺子馆 · 食不厌精",
+      "weight": 6,
+      "trigger": { "condition": "shopId = s02", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "食不厌精，脍不厌细——这单我亲自包", "moodDelta": 10 },
+        { "phase": "cook", "actor": "boss", "text": "老板一边擀皮一边讲「治大国若烹小鲜」", "delay": 6000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这单包装得像哲学论著" },
+        { "phase": "complete", "actor": "boss", "text": "吃饺子如做人，皮要薄，馅要实——懂？", "effect": { "tags": ["shop_s02"] } }
+      ]
+    },
+    {
+      "id": "shop_s03_gentle",
+      "name": "佛系粥铺 · 别总点外卖",
+      "weight": 6,
+      "trigger": { "condition": "shopId = s03", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "又点？偶尔也自己煮顿热的嘛", "moodDelta": 5 },
+        { "phase": "cook", "actor": "boss", "text": "老板慢悠悠熬粥，像在打坐", "delay": 10000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这单安静得让人想睡觉" },
+        { "phase": "complete", "actor": "boss", "text": "粥好了，趁热。明天的饭……还是自己煮吧", "effect": { "tags": ["shop_s03"] } }
+      ]
+    },
+    {
+      "id": "shop_s04_weird",
+      "name": "怪味研究所 · 不敢问",
+      "weight": 6,
+      "trigger": { "condition": "shopId = s04", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "你点的东西，我也不敢问", "moodDelta": -10 },
+        { "phase": "cook", "actor": "boss", "text": "厨房传来咕嘟声，颜色开始不对劲", "delay": 12000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手取餐时退了半步：这袋子在冒紫烟？" },
+        { "phase": "complete", "actor": "boss", "text": "实验成功。至于成不成功……你尝了再说", "effect": { "tags": ["shop_s04"] } }
+      ]
+    },
+    {
+      "id": "shop_s05_lazy",
+      "name": "懒人便当 · 躺送",
+      "weight": 6,
+      "trigger": { "condition": "shopId = s05", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "能不动手就不动手，这单我躺送", "moodDelta": 0 },
+        { "phase": "cook", "actor": "boss", "text": "老板把食材往微波炉一扔，躺平等叮", "delay": 5000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：便当还是温的，老板是真懒" },
+        { "phase": "complete", "actor": "boss", "text": "吃吧，别谢——谢我也得打字，累", "effect": { "tags": ["shop_s05"] } }
+      ]
+    },
+    {
+      "id": "regular_3rd",
+      "name": "老主顾 · 第3单",
+      "weight": 7,
+      "trigger": { "condition": "shopVisitCount >= 3", "probability": 0.7, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "rare",
+      "achievements": ["regular"],
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "第 {shopVisitCount} 次了吧？脸我都记住了", "moodDelta": 10 },
+        { "phase": "cook", "actor": "boss", "text": "老板给你加了份小菜——老规矩", "delay": -3000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这店认你，优先出餐" },
+        { "phase": "complete", "actor": "boss", "text": "老主顾了，下次报我名免配送费（假的，但我记你人情）", "effect": { "flags": ["regular_{shopId}"] } }
+      ]
+    },
+    {
+      "id": "vip_5th",
+      "name": "铁粉 · 第5单 VIP",
+      "weight": 8,
+      "trigger": { "condition": "shopVisitCount >= 5", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "epic",
+      "achievements": ["vip_fan"],
+      "chain": [
+        { "phase": "accept", "actor": "boss", "text": "第 {shopVisitCount} 单！你是我这店的活招牌", "moodDelta": 20 },
+        { "phase": "cook", "actor": "boss", "text": "老板特意给你做了隐藏菜单，不对外", "delay": -5000 },
+        { "phase": "deliver", "actor": "rider", "text": "骑手：这单老板亲自交代，稳送" },
+        { "phase": "complete", "actor": "boss", "text": "VIP 待遇给你拉满——下次带朋友来，我请", "effect": { "flags": ["vip_{shopId}"] } }
+      ]
+    },
+    {
+      "id": "rider_r001_fast",
+      "name": "雷速飞 · 闪电送达",
+      "weight": 5,
+      "trigger": { "condition": "riderId = r001", "probability": 0.5, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "rider", "text": "雷速飞接单——这单你眨眼就到", "moodDelta": 5 },
+        { "phase": "cook", "actor": "boss", "text": "老板刚出锅，骑手已在门口" },
+        { "phase": "deliver", "actor": "rider", "text": "15 分钟送达，骑手：还热着呢，趁早", "delay": -8000 },
+        { "phase": "complete", "actor": "rider", "text": "雷速飞留下一句：下次还找我，快" }
+      ]
+    },
+    {
+      "id": "rider_r002_slow",
+      "name": "李慢慢 · 慢工出细活",
+      "weight": 5,
+      "trigger": { "condition": "riderId = r002", "probability": 0.5, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "rider", "text": "李慢慢接单——慢是慢了点，稳", "moodDelta": 0 },
+        { "phase": "cook", "actor": "boss", "text": "老板和骑手都讲究个稳，没人催" },
+        { "phase": "deliver", "actor": "rider", "text": "送达时饭菜码得整整齐齐，像艺术品", "delay": 6000 },
+        { "phase": "complete", "actor": "rider", "text": "李慢慢：慢工出细活，你尝尝这摆盘" }
+      ]
+    },
+    {
+      "id": "rider_r003_lost",
+      "name": "张迷路 · 路痴担当",
+      "weight": 5,
+      "trigger": { "condition": "riderId = r003", "probability": 0.5, "cooldownMin": 0, "maxPerUser": 0 },
+      "rarity": "uncommon",
+      "chain": [
+        { "phase": "accept", "actor": "rider", "text": "张迷路接单——地址我……再确认下", "moodDelta": -5 },
+        { "phase": "cook", "actor": "boss", "text": "老板：他又能准时到？我赌五毛" },
+        { "phase": "deliver", "actor": "rider", "text": "骑手导航转了三圈，最后问路边猫才找到你", "delay": 15000 },
+        { "phase": "complete", "actor": "rider", "text": "张迷路：到了！……你这栋楼，标识真不清" }
+      ]
+    }
 ]

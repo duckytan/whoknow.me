@@ -6,7 +6,7 @@ import { runDrama, type RunResult } from '../engine/dramaEngine'
 import { loadSeedBranches, type Branch } from '../config/loader'
 import { memory } from '../store/memoryStore'
 import { runForbiddenCheck, type TabooList } from '../core/forbiddenCheck'
-import { getShop, getRider } from '../data/shops'
+import { getShop, getRider, pickRider } from '../data/shops'
 import { getAchievement } from '../data/achievements'
 import seedRaw from '../../docs/specs/DRAMA-SEED-v1-2026-07-24.json'
 import tabooRaw from '../../tests/taboo-list.json'
@@ -21,11 +21,12 @@ const router = useRouter()
 
 const shopId = (route.query.shop as string) || 's01'
 const shop = getShop(shopId)
-const rider = getRider('r001')
+const assignedRiderId = pickRider()
+const rider = getRider(assignedRiderId)
 
 const form = ref<OrderForm>({
   shopId,
-  riderId: 'r001',
+  riderId: assignedRiderId,
   orderTotal: 32,
   avgDishPrice: 16,
   dishCount: 2,
@@ -49,6 +50,7 @@ function submit() {
   const oi = buildOrderInput(form.value)
   const sid = oi.shopId ?? 's01'
   const hist = memory.getHistoryParams(sid)
+  hist.shopVisitCount = (hist.shopVisitCount ?? 0) + 1 // 含本次，驱动同店递进分支(第3/5单)
   const mem = memory.getShopMemory(sid)
   const r = runDrama(branches, oi, { random: Math.random, history: hist, flags: mem.flags })
   result.value = r

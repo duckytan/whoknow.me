@@ -22,6 +22,8 @@ export const ACHIEVEMENTS: AchievementMeta[] = [
   { id: 'spicy_soul', name: '辣度灵魂', icon: '🌶️', persona: 'angry', desc: '辣到你今天少喝两杯水。', reward: '辣度勋章' },
   { id: 'peace_please', name: '和平使者', icon: '🕊️', persona: 'gentle', desc: '备注别骂了，老板今天憋着。', reward: '宁静头像框' },
   { id: 'lost_rider', name: '迷路骑手', icon: '🧭', persona: 'lazy', desc: '奇葩地址，骑手靠问路才找到。', reward: '导航神券' },
+  { id: 'regular', name: '老主顾', icon: '🤝', persona: 'philo', desc: '同店连下 3 单，老板记住了你。', reward: '常客徽章' },
+  { id: 'vip_fan', name: '铁粉 VIP', icon: '👑', persona: 'philo', desc: '同店连下 5 单，隐藏菜单向你敞开。', reward: 'VIP 勋章' },
 ]
 
 export function getAchievement(id: string): AchievementMeta | undefined {
