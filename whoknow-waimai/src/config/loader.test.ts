@@ -14,14 +14,14 @@ function loadSeed() {
   return loadSeedBranches(JSON.parse(readFileSync(seedPath, 'utf8')))
 }
 
-test('L1 解析 SEED：顶层数组为 28 分支（含 default 兜底 + 变体池 default_b/c/d + poor_b + odd_eats_b/c + 店间/同店/骑手专属）', () => {
+test('L1 解析 SEED：顶层数组为 40 分支（含 default 兜底 + 基线变体池 default_b~h + poor_b + odd_eats_b/c + 店间/同店/骑手专属变体）', () => {
   const b = parseBranches(seed)
-  assert.equal(b.length, 28)
+  assert.equal(b.length, 40)
   const ids = b.map((x) => x.id)
-  for (const id of ['poor', 'poor_b', 'cheap_no_rider', 'odd_eats', 'odd_eats_b', 'odd_eats_c', 'boss_blacklist', 'remark_more_spicy', 'remark_no_scold', 'address_weird', 'default', 'default_b', 'default_c', 'default_d'])
+  for (const id of ['poor', 'poor_b', 'cheap_no_rider', 'odd_eats', 'odd_eats_b', 'odd_eats_c', 'boss_blacklist', 'remark_more_spicy', 'remark_no_scold', 'address_weird', 'default', 'default_b', 'default_c', 'default_d', 'default_h', 'shop_s01_b', 'rider_r001_b'])
     assert.ok(ids.includes(id), `缺 ${id}`)
   assert.ok(b.find((x) => x.id === 'default')?.isFallback === true)
-  assert.ok(b.filter((x) => x.isFallback).length >= 4, '基线变体池应至少 4 个 isFallback')
+  assert.ok(b.filter((x) => x.isFallback).length >= 8, '基线变体池应至少 8 个 isFallback')
 })
 
 test('L2 占位符无泄漏：SEED 全部台词无残留 {xxx}', () => {
@@ -34,9 +34,9 @@ test('L3 结构非法：非数组 / 缺 id / 缺 chain 均拒绝', () => {
   assert.throws(() => parseBranches([{ id: 'x', trigger: { condition: 'x' }, chain: [] }]))
 })
 
-test('L4 loadSeedBranches 端到端返回 28 分支且已校验', () => {
+test('L4 loadSeedBranches 端到端返回 40 分支且已校验', () => {
   const b = loadSeed()
-  assert.equal(b.length, 28)
+  assert.equal(b.length, 40)
 })
 
 test('L5 占位符规范：SEED 不使用原型遗留的 {price}/{fee}（Route B 按设计消解原型 config）', () => {
