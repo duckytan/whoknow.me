@@ -1,0 +1,2 @@
+tester_id,session_id,order_seq,shop_id,branch_id,funny_score,repeat_feel,note
+ALICE,S1,1,s01,default,4,0,"示例行：提交前请删掉我。funny_score 1-5(5=最搞笑)；repeat_feel 0/1(是否觉得又是这套);note 勿用裸逗号，含逗号请用双引号包裹"
