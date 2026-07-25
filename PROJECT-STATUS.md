@@ -18,7 +18,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` **38/38** 绿（含 P0 死分支可达性 T10/T11/T12）；三司会审 P0 两刀已修（本地 commit 9c798d6，push 暂受阻）|
+| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` **38/38** 绿（含 P0 死分支可达性 T10/T11/T12）；三司会审 P0 两刀已修并上线（commit 3d83744，已 push + Vercel 部署）；仓库结构已合并为单一文件夹 `whoknow-waimai/`（删根 `waimai/`，构建产物收进 `whoknow-waimai/dist/`，vercel `/waimai` → `whoknow-waimai/dist`）|
 | 6 打磨 | ⬜ | — |
 | 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
 
@@ -66,3 +66,5 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | **首页样式修复 + styleguide 恢复**：Vercel dashboard 残留 buildCommand 导致部署回退，改为静态部署 + 覆盖 buildCommand 为 `echo done`；`whoknow.me` 样式与 `/waimai` app 均正常；从 `archive/root-obsolete` 恢复 `docs/styleguide.html` |
 | 2026-07-25 | **Route B 整合 + 部署（commit a6a1e35, push 到 main）**：原型浅色皮套 M1 内核；新增 8 组件 + 6 视图 + shops/achievements 数据层 + 成就/历史接入 memory；测试 27→35 绿；移除未用 public/config 死配置(含旧 {price}/{fee})；`waimai/` 预构建提交，Vercel 静态部署，live 验证 /waimai 返回新构建(HTTP 200, 无 {price}/{fee}) |
 | 2026-07-25 | **三司会审 P0 两刀（commit 9c798d6，本地 ahead 1，push 暂受阻）**：① P0-1 死分支修复 —— odd_eats 触发由自锁 flag 改为 `remarkTag=odd \| flag(odd_eats_{shopId})` 经备注首次可达(`dark_chef` 成就可解锁)；新增 `boss_blacklist` 分支(备注拉黑/差评)播种 `blacklisted_{shopId}`，使 `blacklist_reunion` 后续可触发(`reconciled` 成就可解锁)；`orderInput` 备注分类加 odd/blacklist；测试 35→38(T10/T11/T12)。② P0-2 品牌落地(BRAND.md) —— 引入品牌锚色 `--brand-green/orange/purple`+字体令牌(ZCOOL KuaiLe 手写梗/Ma Shan Zheng/Bungee 等)；导航选中态改品牌橙红；段子卡 NPC 金句手写体+品牌绿高亮底(截图价值)；成就✓改品牌绿+解锁绿光晕；Story 水印 badge 改品牌橙；表单聚焦改品牌橙；全局 whoknow 绿底白「?」角标(PhoneFrame)。`npm run build` 0 报错(67 模块)。**push 因沙箱 git 写鉴权被拦截(HTTP 401 Basic realm，环境仅有 Bearer/API 令牌，proxy 仅放行读)暂未上 GitHub，Vercel 未重部署；代码已本地提交、waimai/ 已重建待上线** |
+| 2026-07-25 | **P0 两刀 push + 部署上线（commit 3d83744）**：本地 `git pull --rebase` 远端 1633bab(whoknow-mart 文档，零重叠) 后 `git push` 成功；live 验证 `/waimai` 切到新构建 `index-OPWjNubD.js`，含 `boss_blacklist`/`blacklisted_`/`odd_eats`/`dark_chef`/`reconciled`，无 `{price}`/`{fee}`。|
+| 2026-07-25 | **仓库结构合并为单一文件夹（commit de60c78 + 78bbabf）**：删根目录 `waimai/`，构建产物收进 `whoknow-waimai/dist/`；`.gitignore` 例外放行 `whoknow-waimai/dist/`；`vercel.json` 的 `/waimai` 路由改指 `whoknow-waimai/dist`（assets 直投 + SPA 兜底 + 末尾斜杠规则）。一个项目只占根目录一个位置，与 `whoknow-mart/` 一致。live 验证 `/waimai/`、`/waimai/orders`、`/waimai/shop/s01`、资产均 HTTP 200 |
