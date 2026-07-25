@@ -7,6 +7,8 @@ import { loadSeedBranches, type Branch } from '../config/loader'
 import { memory } from '../store/memoryStore'
 import { runForbiddenCheck, type TabooList } from '../core/forbiddenCheck'
 import { getShop, getRider, pickRider } from '../data/shops'
+import { getDish } from '../data/dishes'
+import { getItems, dishCount, cartTotal, clearShop } from '../store/cart'
 import { getAchievement } from '../data/achievements'
 import seedRaw from '../../docs/specs/DRAMA-SEED-v1-2026-07-24.json'
 import tabooRaw from '../../tests/taboo-list.json'
@@ -24,17 +26,19 @@ const shop = getShop(shopId)
 const assignedRiderId = pickRider()
 const rider = getRider(assignedRiderId)
 
-const form = ref<OrderForm>({
-  shopId,
-  riderId: assignedRiderId,
-  orderTotal: 32,
-  avgDishPrice: 16,
-  dishCount: 2,
-  deliveryFee: shop?.deliveryFee ?? 3,
-  remark: '',
-  address: '',
-})
+// 从购物车推导 orderInput（不再手填参数）
+const cartItems = computed(() => getItems(shopId))
+const dishCountVal = computed(() => dishCount(shopId))
+const orderTotalVal = computed(() => cartTotal(shopId))
+const avgDishPriceVal = computed(() =>
+  dishCountVal.value > 0 ? Math.round(orderTotalVal.value / dishCountVal.value) : 0
+)
+const selectedDishes = computed(() =>
+  Object.entries(cartItems.value).map(([id, q]) => ({ dish: getDish(shopId, id), q }))
+)
 
+const remark = ref('')
+const address = ref('')
 const result = ref<RunResult | null>(null)
 const gate = ref<{ pass: boolean; redLightCount: number }>({ pass: true, redLightCount: 0 })
 
@@ -42,12 +46,22 @@ const branchMeta = computed<Branch | undefined>(() =>
   branches.find((b) => b.id === result.value?.selectedBranchId)
 )
 const shopVisitCount = computed(() =>
-  result.value ? memory.getShopMemory(form.value.shopId ?? 's01').visitCount : 0
+  result.value ? memory.getShopMemory(shopId ?? 's01').visitCount : 0
 )
 const orderAch = computed(() => branchMeta.value?.achievements ?? [])
 
 function submit() {
-  const oi = buildOrderInput(form.value)
+  if (dishCountVal.value === 0) return
+  const oi = buildOrderInput({
+    shopId,
+    riderId: assignedRiderId,
+    orderTotal: orderTotalVal.value,
+    avgDishPrice: avgDishPriceVal.value,
+    dishCount: dishCountVal.value,
+    deliveryFee: shop?.deliveryFee ?? 3,
+    remark: remark.value,
+    address: address.value,
+  } as OrderForm)
   const sid = oi.shopId ?? 's01'
   const hist = memory.getHistoryParams(sid)
   hist.shopVisitCount = (hist.shopVisitCount ?? 0) + 1 // 含本次，驱动同店递进分支(第3/5单)
@@ -71,13 +85,16 @@ function submit() {
       total: oi.orderTotal,
       achievements: orderAch.value,
     })
+    clearShop(sid) // 结算后清空该车
   }
 }
 function reset() {
   result.value = null
+  remark.value = ''
+  address.value = ''
 }
 function back() {
-  router.push('/shops')
+  router.push(`/shop/${shopId}`)
 }
 </script>
 
@@ -87,21 +104,37 @@ function back() {
     <div class="mt-nav">
       <div class="mt-nav__top">
         <div class="mt-nav__back" @click="back">‹</div>
-        <div class="mt-nav__title">下单 · 看老板演戏</div>
+        <div class="mt-nav__title">确认订单 · 看老板演戏</div>
       </div>
     </div>
-    <div class="form">
+
+    <div v-if="dishCountVal === 0" class="empty-cart">
+      🛒 购物车是空的，先去点几道菜
+      <button class="submit-btn" @click="back">去菜单</button>
+    </div>
+
+    <div v-else class="form">
       <div class="shop-line">
         {{ shop?.emoji }} {{ shop?.name }}
         <PersonaBadge v-if="shop" :personality="shop.personality" />
       </div>
-      <label>订单金额 ¥<input v-model.number="form.orderTotal" type="number" /></label>
-      <label>客单价 ¥<input v-model.number="form.avgDishPrice" type="number" /></label>
-      <label>菜品数<input v-model.number="form.dishCount" type="number" /></label>
-      <label>配送费 ¥<input v-model.number="form.deliveryFee" type="number" /></label>
-      <label>备注<input v-model="form.remark" placeholder="私房菜 / 拉黑 / 多放辣 / 别骂了" /></label>
-      <label>地址<input v-model="form.address" placeholder="奇葩地址会触发彩蛋" /></label>
-      <button class="submit-btn" @click="submit">下单 🍜</button>
+
+      <div class="cart-summary">
+        <div class="cs-row" v-for="s in selectedDishes" :key="s.dish?.id">
+          <span class="cs-emoji">{{ s.dish?.emoji }}</span>
+          <span class="cs-name">{{ s.dish?.name }}</span>
+          <span class="cs-q">×{{ s.q }}</span>
+          <span class="cs-price">¥{{ (s.dish?.price ?? 0) * s.q }}</span>
+        </div>
+        <div class="cs-total">
+          <span>共 {{ dishCountVal }} 件</span>
+          <span class="big">¥{{ orderTotalVal }}</span>
+        </div>
+      </div>
+
+      <label>备注<input v-model="remark" placeholder="私房菜 / 拉黑 / 多放辣 / 别骂了" /></label>
+      <label>地址<input v-model="address" placeholder="奇葩地址会触发彩蛋" /></label>
+      <button class="submit-btn" @click="submit">下单 🍜（¥{{ orderTotalVal }}）</button>
     </div>
   </div>
 
@@ -158,7 +191,7 @@ function back() {
     <div class="page-pad">
       <button class="submit-btn" @click="reset">再来一单 🔁</button>
       <div class="muted" style="text-align: center; margin-top: 12px">
-        <a @click="back" style="color: var(--mt-text-2)">‹ 回选店</a>
+        <a @click="back" style="color: var(--mt-text-2)">‹ 回菜单</a>
       </div>
     </div>
   </div>
