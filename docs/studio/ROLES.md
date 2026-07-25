@@ -60,6 +60,14 @@
 
 > 缓存仅为加速；即使不缓存，每次读 `$COMPUTERNAME` + §0 映射表也能正确定位。
 
-## 5. 新实例接入
+## 5. 新实例接入（含"如何确保实例真的读本文件"）
+> ⚠️ **机制局限（必读）**：WorkBuddy 每次会话**自动注入**的只有「用户级 `~/.workbuddy/IDENTITY.md`」与「项目级 `.workbuddy/memory/MEMORY.md`」，二者**都不随仓库同步**（前者用户级、后者 gitignored）。仓库里会同步的文件（含本文件）**没有任何自动加载机制**，必须主动 Read。因此：**约定写进本仓库 ≠ 各实例会读**；若某台未初始化本地指针，新建对话会遗忘本约定、可能越界协作。
+
+**接入第 0 步（治本，必须做）**：在本机用户级 `~/.workbuddy/IDENTITY.md` 写入身份指针，使 WorkBuddy 每次会话自动注入"去读本文件"的记忆。例（DuckyPC）：
+> 本机计算机名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端。**每次会话开始先读 `docs/studio/ROLES.md`**。详见该文件 §0。
+（`701-PC` 实例等价于靠 workspace memory 自动注入实现同样效果，见 `.workbuddy/memory/MEMORY.md`。）
+
+**接入后续步骤**：
 - 拉取仓库后先读：`ROLES.md`（§0 机器名映射）→ `REPO-STRUCTURE-CONVENTION.md` → 本地身份缓存。
-- 若新增第三台机器，在 §0 映射表 + §1 增列自身行（机器名 → 角色 → 范围），并写入本地身份缓存。
+- 若新增第三台机器：在 §0 映射表 + §1 增列自身行（机器名 → 角色 → 范围），并写入本机身份文件（第 0 步）。
+- 现成执行清单见 `docs/studio/AGENT-WAIMAI-SETUP.md`（DuckyPC 可直接照做，粘贴即生效）。
