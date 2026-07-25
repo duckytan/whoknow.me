@@ -5,6 +5,9 @@
     { "source": "/waimai/assets/:path*", "destination": "/whoknow-waimai/dist/assets/:path*" },
     { "source": "/waimai/:path*", "destination": "/whoknow-waimai/dist/index.html" },
     { "source": "/waimai/", "destination": "/whoknow-waimai/dist/index.html" },
-    { "source": "/waimai", "destination": "/whoknow-waimai/dist/index.html" }
+    { "source": "/waimai", "destination": "/whoknow-waimai/dist/index.html" },
+    { "source": "/mart/:path*", "destination": "/whoknow-mart/dist/:path*" },
+    { "source": "/mart/", "destination": "/whoknow-mart/dist/index.html" },
+    { "source": "/mart", "destination": "/whoknow-mart/dist/index.html" }
   ]
 }

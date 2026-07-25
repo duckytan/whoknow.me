@@ -37,3 +37,6 @@ research-raw/
 
 # ── agent 本地记忆（非项目文件，不推） ──
 .workbuddy/
+
+# ── mart 预构建产物（胡闹导购原型，需提交支持 Vercel 静态部署） ──
+!whoknow-mart/dist/
