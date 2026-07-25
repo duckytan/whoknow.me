@@ -99,7 +99,7 @@
 | 产品 | 状态 | 目录 | GitHub | 描述 |
 |:----:|:----:|:----:|:------:|------|
 | **whoknow-waimai** 🍜 | v2 设计完成·重建中 | `whoknow-waimai/` | `duckytan/whoknow-waimai` | 胡闹外卖 · 段子外卖（DRAMA 引擎） |
-| **whoknow-mart** 🛒 | 概念设计完 | `whoknow-mart/` | — | 胡闹导购 · 反骨导购博弈 |
+| **whoknow-mart** 🛒 | v1 反骨原型已上线 `/mart` | `whoknow-mart/` | — | 胡闹导购 · 反骨导购博弈 |
 | **whoknow-brain** 🧠 | 概念阶段 | `whoknow-brain/` | — | 胡闹控制中心 · AI 大脑总控 |
 
 ### 产品路线图
@@ -183,7 +183,7 @@ whoknow.me/
 ├── archive/                   ← 已归档的废旧方案/代码（v1 等）
 │
 ├── whoknow-waimai/            ← 胡闹外卖 v2（设计完成·重建中）
-├── whoknow-mart/              ← 胡闹导购（概念·冻结）
+├── whoknow-mart/              ← 胡闹导购（v1 原型已上线 /mart）
 └── whoknow-brain/             ← 胡闹控制中心（契约·M0 接入）
 ```
 

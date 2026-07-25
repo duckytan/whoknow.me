@@ -137,7 +137,7 @@ whoknow-brain/
 ├── scripts/                        ← 脚本
 │   └── daily-run.sh                ← 每日运行入口（M1+ 才用 cron）
 │
-└── PROJECT-STATUS.md               ← 项目状态
+└── （项目状态：早期概念稿已归档至 archive/stale/PROJECT-STATUS-brain-2026-07-21.md；现行架构见总纲 §2）
 ```
 
 ---

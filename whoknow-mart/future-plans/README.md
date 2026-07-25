@@ -1,6 +1,6 @@
 # 🗺 whoknow-mart · future-plans（规划占位）
 
-> 本目录规划自 `whoknow-mart/PROJECT-STATUS.md`，用于存放 mart 的中长期规划。
+> 本目录规划自总纲《胡闹宇宙总体设计方案.md》§5 与 `whoknow-mart/docs/`，用于存放 mart 的中长期规划。
 > 当前（2026-07-25）mart 处于**冻结期**（总纲「金克木」），仅做概念深化与文档备料，不铺工。
 
 ## 待解冻后填充

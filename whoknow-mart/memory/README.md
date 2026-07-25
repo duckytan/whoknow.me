@@ -1,6 +1,6 @@
 # 🧠 whoknow-mart · memory（防失忆占位）
 
-> 本目录规划自 `whoknow-mart/PROJECT-STATUS.md`，用于存放 mart 的「防失忆」笔记——跨会话的设计决策、拍板、坑点。
+> 本目录规划自总纲《胡闹宇宙总体设计方案.md》§5 与 `whoknow-mart/docs/`，用于存放 mart 的「防失忆」笔记——跨会话的设计决策、拍板、坑点。
 > 当前（2026-07-25）mart 冻结期，正式 memory 笔记待 M1 解冻后随开发累积。
 
 ## 已沉淀的核心决策（指针，不重复）
