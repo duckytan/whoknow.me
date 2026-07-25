@@ -18,7 +18,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | 🔶 进行中 | 运行时 whoknow-waimai/src/（Vue3+Vite+Vant）；核心循环重建（下单→NPC 反应→四阶段→记忆） |
+| 5 制作 (M1) | ✅ 完成 | 运行时 whoknow-waimai/src/（Vue3+Vite+Vant）；核心循环重建（下单→NPC 反应→四阶段→记忆）→ `npm run build` PASS + `npm test` 27/27 绿；复盘见 `whoknow-waimai/docs/M1-RETRO-2026-07-25.md` |
 | 6 打磨 | ⬜ | — |
 | 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
 
@@ -61,3 +61,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 |---|---|
 | 2026-07-25 | 建根状态锚 `PROJECT-STATUS.md`；Phase 0 诊断完成，确认引擎/平台/评审三参数 |
 | 2026-07-25 | Phase 3 收口推进：ADR-001 出炉 + forbidden_check 真闸门跑通（prototype/ red_light_count=0）+ 修 taboo-list 裸"死"自爆；P0-A 产品面验证 PASS |
+| 2026-07-25 | **M1 完成**：Vue3+Vite+Vant 真构建链核心循环落地（`whoknow-waimai/src/`，27/27 测试绿 + 构建 PASS）；构建配置重构（去 project-reference，TS6310 修复）；门面 index.html 导航页已独立 commit 上线 |

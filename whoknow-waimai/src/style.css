@@ -1,0 +1,64 @@
+:root {
+  /* 锚色（与根 styles/design-tokens.css 对齐） */
+  --wk-bg: #0f0f12;
+  --wk-surface: #1a1a20;
+  --wk-text: #f2f2f5;
+  --wk-dim: #9a9aa5;
+  --wk-accent: #ff5a3c; /* 胡闹橙红 */
+  --wk-accent-2: #ffcf3c; /* 戏精黄 */
+  --wk-boss: #ff8a5c;
+  --wk-rider: #5cc8ff;
+  --wk-system: #b58cff;
+  --wk-radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--wk-bg);
+  color: var(--wk-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* 四阶段阶段色 */
+.phase-accept {
+  border-left: 3px solid var(--wk-accent);
+}
+.phase-cook {
+  border-left: 3px solid var(--wk-accent-2);
+}
+.phase-deliver {
+  border-left: 3px solid var(--wk-rider);
+}
+.phase-complete {
+  border-left: 3px solid var(--wk-system);
+}
+
+.actor-boss {
+  color: var(--wk-boss);
+}
+.actor-rider {
+  color: var(--wk-rider);
+}
+.actor-system {
+  color: var(--wk-system);
+}
+
+/* 无障碍：尊重 reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
