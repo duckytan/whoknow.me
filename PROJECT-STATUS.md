@@ -8,7 +8,7 @@
 
 ## 一句话
 
-Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器原型 + 配置信封 + 门面部署）。**M1 已落地并部署**：运行时 `whoknow-waimai/src/`（Vue3+Vite 真构建链）；**Route B 已执行**（用户选「核心循环优先」）—— 把原型浅色胡闹黄外卖皮套到 M1 内核上，贯通 选店→下单→订单详情(DRAMA 时间线)→历史→成就墙。`prototype/` 仅本地原型，不部署。
+Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器原型 + 配置信封 + 门面部署）。**M1 已落地并部署**：运行时 `whoknow-waimai/src/`（Vue3+Vite 真构建链）；**Route B 已执行**（用户选「核心循环优先」）—— 把原型浅色胡闹黄外卖皮套到 M1 内核上，贯通 选店→下单→订单详情(DRAMA 时间线)→历史→成就墙。`prototype/` 仅本地原型，不部署。**P1 补齐已上线**：DRAMA-SEED 扩至 22 分支（店间 5 + 同店进阶 2 + 骑手 3 + 通用 12，消费 shopVisitCount 实现同店差异）+ 12 成就（regular/vip_fan 补齐）+ 7 个缺失界面（Feed/Service/Privacy/Terms/Profile/Settings/About）全建并入路由/TabBar + 内容铺满；SEED 经 AI 自评（结构合法、全可达、12/12 成就可解锁）；commit `7ef9eeb` 已 push，Vercel 部署新构建 `index-Doh-PDc5.js`。
 
 ## 现在在哪（7 阶段）
 
@@ -17,10 +17,10 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 1 概念孵化 | ✅ 完成 | GDD-v2.2.2、设计支柱 5+1、乐趣假说、核心循环 |
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
-| 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` **38/38** 绿（含 P0 死分支可达性 T10/T11/T12）；三司会审 P0 两刀已修并上线（commit 3d83744，已 push + Vercel 部署）；仓库结构已合并为单一文件夹 `whoknow-waimai/`（删根 `waimai/`，构建产物收进 `whoknow-waimai/dist/`，vercel `/waimai` → `whoknow-waimai/dist`）|
-| 6 打磨 | ⬜ | — |
-| 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
+| 4 预制作 | ✅ 完成 | 用户 lean 跳过 Epic/Story 拆分；补齐 7 个缺失界面(Feed/Service/Privacy/Terms/Profile/Settings/About) + 内容铺满；DRAMA-SEED 扩至 22 分支 + SEED AI 自评（12/12 成就可达）|
+| 5 制作 (M1) | ✅ 完成 | Route B 整合 + P1 扩展：原型浅色皮 + M1 内核 + 店间/同店/骑手差异感。5 店(全人格)+3 骑手(随机派单)+12 成就+订单历史+7 新界面；`npm run build` PASS(vue-tsc 0 error) + `npm test` **41/41** 绿（含店专属 T13 / 同店进阶 T14 / 骑手专属 T15）；commit `7ef9eeb` 已 push + Vercel 部署；仓库为单一文件夹 `whoknow-waimai/`（源码 + dist）|
+| 6 打磨 | ⬜ | P2/P3：变体丰富度 / 概率平衡 / 文案风味 / 无障碍回归（SEED 评审已列项，待调）|
+| 7 发布 | ✅ 完成(lean) | 已部署上线 `index-Doh-PDc5.js`（41/41 单测绿 + 构建 PASS）；**硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）待过**，用户授权先上线，"好笑与否"后续 JSON 微调 |
 
 ## 已确认参数（用户拍板）
 
@@ -68,3 +68,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | **三司会审 P0 两刀（commit 9c798d6，本地 ahead 1，push 暂受阻）**：① P0-1 死分支修复 —— odd_eats 触发由自锁 flag 改为 `remarkTag=odd \| flag(odd_eats_{shopId})` 经备注首次可达(`dark_chef` 成就可解锁)；新增 `boss_blacklist` 分支(备注拉黑/差评)播种 `blacklisted_{shopId}`，使 `blacklist_reunion` 后续可触发(`reconciled` 成就可解锁)；`orderInput` 备注分类加 odd/blacklist；测试 35→38(T10/T11/T12)。② P0-2 品牌落地(BRAND.md) —— 引入品牌锚色 `--brand-green/orange/purple`+字体令牌(ZCOOL KuaiLe 手写梗/Ma Shan Zheng/Bungee 等)；导航选中态改品牌橙红；段子卡 NPC 金句手写体+品牌绿高亮底(截图价值)；成就✓改品牌绿+解锁绿光晕；Story 水印 badge 改品牌橙；表单聚焦改品牌橙；全局 whoknow 绿底白「?」角标(PhoneFrame)。`npm run build` 0 报错(67 模块)。**push 因沙箱 git 写鉴权被拦截(HTTP 401 Basic realm，环境仅有 Bearer/API 令牌，proxy 仅放行读)暂未上 GitHub，Vercel 未重部署；代码已本地提交、waimai/ 已重建待上线** |
 | 2026-07-25 | **P0 两刀 push + 部署上线（commit 3d83744）**：本地 `git pull --rebase` 远端 1633bab(whoknow-mart 文档，零重叠) 后 `git push` 成功；live 验证 `/waimai` 切到新构建 `index-OPWjNubD.js`，含 `boss_blacklist`/`blacklisted_`/`odd_eats`/`dark_chef`/`reconciled`，无 `{price}`/`{fee}`。|
 | 2026-07-25 | **仓库结构合并为单一文件夹（commit de60c78 + 78bbabf）**：删根目录 `waimai/`，构建产物收进 `whoknow-waimai/dist/`；`.gitignore` 例外放行 `whoknow-waimai/dist/`；`vercel.json` 的 `/waimai` 路由改指 `whoknow-waimai/dist`（assets 直投 + SPA 兜底 + 末尾斜杠规则）。一个项目只占根目录一个位置，与 `whoknow-mart/` 一致。live 验证 `/waimai/`、`/waimai/orders`、`/waimai/shop/s01`、资产均 HTTP 200 |
+| 2026-07-25 | **P1 补齐全部缺失环节并上线（commit 7ef9eeb, push origin/main, Vercel 部署 index-Doh-PDc5.js）**：用户指令"全部界面设计完、内容铺满、AI 审一遍"。DRAMA-SEED 12→22 分支（店专属 5 + 同店进阶 2 + 骑手 3 + 通用 12，shopVisitCount 接入引擎与 KNOWN_VARS、下单前自增）、成就 10→12（regular/vip_fan）、随机骑手 pickRider()、新增 7 界面(Feed/Service/Privacy/Terms/Profile/Settings/About)并入路由+TabBar+HomeView+style.css；`npm test` 38→41 绿(T13 店专属/T14 同店进阶/T15 骑手专属)；SEED AI 自评(`docs/SEED-REVIEW-2026-07-25.md`)：结构合法、全可达、12/12 成就可解锁。push 时远端领先（另一个 workbuddy 的 mart 2 提交，只动 whoknow-mart/ + 总纲，零重叠）→ `git pull --rebase` 干净 replay 后 push 成功，互不破坏。mart 边界严守未触碰 |
