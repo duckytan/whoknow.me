@@ -280,3 +280,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue"
 /* 06 图鉴：反骨动机标签 + 双重胜利徽章 */
 .motiv{font-size:11px;color:#E1251B;margin-top:5px;line-height:1.4}
 .winbadge{font-size:11px;color:var(--green);margin-top:5px;line-height:1.4;background:rgba(46,160,67,.08);padding:5px 7px;border-radius:7px}
+
+/* ===== 桌面端增强（>768px）：原型本质是移动 web，仅温和展示优化，不破坏以假乱真 ===== */
+@media (min-width:768px){
+  body{background:linear-gradient(135deg,#dfe3e8,#c9ccd1);padding:40px 0}
+  .phone{width:440px;min-height:920px;box-shadow:0 24px 80px rgba(0,0,0,.32);border-radius:20px}
+  .screen,.overlay,.result-screen{border-radius:20px}
+  .msg .bub,.bubble{font-size:14.5px}
+  .qchip{font-size:13.5px;padding:11px 12px}
+  .move{font-size:15px;padding:15px 12px}
+}
