@@ -209,5 +209,25 @@
       { "phase": "deliver", "actor": "rider", "text": "骑手导航转了三圈，最后靠问路才找到你", "delay": 12000 },
       { "phase": "complete", "actor": "rider", "text": "送到的时候骑手比你还懵：这地方我真没来过", "effect": { "tags": ["rider_lost"] } }
     ]
+  },
+
+  {
+    "id": "default",
+    "name": "日常一单 · 基线反应",
+    "weight": 1,
+    "isFallback": true,
+    "trigger": {
+      "condition": "1 = 1",
+      "probability": 1.0,
+      "cooldownMin": 0,
+      "maxPerUser": 0
+    },
+    "rarity": "common",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "新订单——又是你。这次想整点啥？" },
+      { "phase": "cook", "actor": "boss", "text": "老板看了一眼订单，默默开了火" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手已接单，预计 30 分钟到你手上" },
+      { "phase": "complete", "actor": "boss", "text": "吃吧。常来常新——常来常挨骂", "effect": { "tags": ["ordered"] } }
+    ]
   }
 ]
