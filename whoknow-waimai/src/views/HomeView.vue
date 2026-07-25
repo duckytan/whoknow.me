@@ -1,55 +1,55 @@
-<template>
-  <div class="home">
-    <div class="logo">🍜</div>
-    <h1>胡闹外卖</h1>
-    <p class="tagline">外卖越点越瘦，老板越骂越上头</p>
-    <router-link to="/order" class="cta">开始下单 →</router-link>
-    <p class="back"><router-link to="/">← 回胡闹宇宙</router-link></p>
-  </div>
-</template>
-
 <script setup lang="ts">
-// 首页：入口。
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const cats = [
+  { ico: '🍜', txt: '美食', cls: 'cat-yellow' },
+  { ico: '🛒', txt: '超市', cls: 'cat-green' },
+  { ico: '🍱', txt: '便当', cls: 'cat-orange' },
+  { ico: '🍰', txt: '甜点', cls: 'cat-pink' },
+  { ico: '🥤', txt: '饮品', cls: 'cat-cyan' },
+  { ico: '🍢', txt: '烧烤', cls: 'cat-red' },
+  { ico: '🍲', txt: '火锅', cls: 'cat-red2' },
+  { ico: '🍣', txt: '寿司', cls: 'cat-blue' },
+  { ico: '🥟', txt: '饺子', cls: 'cat-purple' },
+  { ico: '🍳', txt: '早餐', cls: 'cat-amber' },
+]
 </script>
 
-<style scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  gap: 12px;
-  text-align: center;
-  padding: 24px;
-}
-.logo {
-  font-size: 64px;
-}
-h1 {
-  margin: 0;
-  font-size: 28px;
-  letter-spacing: 2px;
-}
-.tagline {
-  color: var(--wk-dim);
-  margin: 0 0 12px;
-}
-.cta {
-  display: inline-block;
-  padding: 12px 28px;
-  background: var(--wk-accent);
-  color: #fff;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
-}
-.back {
-  margin-top: 18px;
-  font-size: 13px;
-}
-.back a {
-  color: var(--wk-dim);
-  text-decoration: none;
-}
-</style>
+<template>
+  <div>
+    <div class="yellow-zone">
+      <div class="mt-nav">
+        <div class="mt-nav__top">
+          <div class="mt-search" style="flex: 1">
+            <span class="s-ico">🔍</span>
+            <input placeholder="搜索 胡闹外卖 店铺" />
+            <span class="s-btn">搜索</span>
+          </div>
+        </div>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-item" v-for="c in cats" :key="c.txt">
+          <div class="ico-wrap" :class="c.cls">{{ c.ico }}</div>
+          <div class="txt">{{ c.txt }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hot-bar" style="margin-top: 14px">
+      <div class="title">附近好店 <span class="badge" style="background: linear-gradient(90deg, #ff7e45, #ff4b10); color: #fff; font-size: 12px; padding: 3px 8px; border-radius: 999px; margin-left: 6px; font-weight: 600">戏精出品</span></div>
+      <router-link to="/shops" class="more" style="font-size: 13px; color: var(--mt-text-2)">全部 ›</router-link>
+    </div>
+
+    <div class="page-pad">
+      <button class="submit-btn" @click="router.push('/shops')">🍜 去胡闹外卖选店</button>
+    </div>
+
+    <div class="story-watermark">
+      <span class="badge">🎭 锡哥精选段子</span>
+      <span>剧本由锡哥手编，非每日 AI 生成</span>
+    </div>
+
+    <div class="page-pad muted">这是「胡闹宇宙」的外卖分区。点单后老板会演戏，骑手会吐槽，系统会补刀。</div>
+  </div>
+</template>

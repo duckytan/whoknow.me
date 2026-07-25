@@ -37,3 +37,9 @@ test('L4 loadSeedBranches 端到端返回 11 分支且已校验', () => {
   const b = loadSeed()
   assert.equal(b.length, 11)
 })
+
+test('L5 占位符规范：SEED 不使用原型遗留的 {price}/{fee}（Route B 按设计消解原型 config）', () => {
+  const text = JSON.stringify(seed)
+  assert.ok(!/\{price\}/.test(text), 'SEED 不应含 {price}')
+  assert.ok(!/\{fee\}/.test(text), 'SEED 不应含 {fee}')
+})

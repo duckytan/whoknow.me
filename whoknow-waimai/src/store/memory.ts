@@ -21,6 +21,17 @@ export interface HistoryParams {
   [k: string]: unknown
 }
 
+export interface OrderHistoryEntry {
+  ts: number
+  shopId: string
+  shopName: string
+  branchId: string | null
+  branchName?: string
+  bossMood: number
+  total?: number
+  achievements: string[]
+}
+
 interface ShopRecord {
   visitCount: number
   flags: string[]
@@ -110,6 +121,44 @@ export class MemoryEngine {
     const s = this.readShop(shopId)
     const g = this.readGlobal()
     return { shopVisitCount: s.visitCount, todayOrderCount: g.todayOrderCount, totalOrders: g.totalOrders }
+  }
+
+  // ---- 成就解锁追踪 ----
+  private achKey() {
+    return 'waimai:achievements'
+  }
+  /** 合并解锁集合，返回最新全集；仅新增时写回。 */
+  unlockAchievements(ids: string[]): string[] {
+    const raw = this.store.getItem(this.achKey())
+    const cur = raw ? (JSON.parse(raw) as string[]) : []
+    let changed = false
+    for (const id of ids) {
+      if (id && !cur.includes(id)) {
+        cur.push(id)
+        changed = true
+      }
+    }
+    if (changed) this.store.setItem(this.achKey(), JSON.stringify(cur))
+    return cur.slice()
+  }
+  getAchievements(): string[] {
+    const raw = this.store.getItem(this.achKey())
+    return raw ? (JSON.parse(raw) as string[]) : []
+  }
+
+  // ---- 订单历史 ----
+  private histKey() {
+    return 'waimai:history'
+  }
+  recordOrderHistory(entry: OrderHistoryEntry): void {
+    const raw = this.store.getItem(this.histKey())
+    const arr = raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
+    arr.unshift(entry)
+    this.store.setItem(this.histKey(), JSON.stringify(arr.slice(0, 100)))
+  }
+  getOrderHistory(): OrderHistoryEntry[] {
+    const raw = this.store.getItem(this.histKey())
+    return raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
   }
 
   /** 测试/重置用：清掉某店或全部。 */
