@@ -63,3 +63,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | Phase 3 收口推进：ADR-001 出炉 + forbidden_check 真闸门跑通（prototype/ red_light_count=0）+ 修 taboo-list 裸"死"自爆；P0-A 产品面验证 PASS |
 | 2026-07-25 | **M1 完成**：Vue3+Vite+Vant 真构建链核心循环落地（`whoknow-waimai/src/`，27/27 测试绿 + 构建 PASS）；构建配置重构（去 project-reference，TS6310 修复）；门面 index.html 导航页已独立 commit 上线 |
 | 2026-07-25 | **M1 app 部署接线已推**（`f832317`）：vercel.json buildCommand 构建 whoknow-waimai 并 cp 到 /waimai（outputDirectory 保持 "."，门面在根）；加 /waimai SPA 回退；.vercelignore 去掉 waimai 源码排除。Vercel 连仓库自动部署，push 后约 1-2 min 上线 `whoknow.me/waimai` |
+| 2026-07-25 | **首页样式修复 + styleguide 恢复**：Vercel dashboard 残留 buildCommand 导致部署回退，改为静态部署 + 覆盖 buildCommand 为 `echo done`；`whoknow.me` 样式与 `/waimai` app 均正常；从 `archive/root-obsolete` 恢复 `docs/styleguide.html` |
