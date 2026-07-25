@@ -19,8 +19,8 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ✅ 完成 | 用户 lean 跳过 Epic/Story 拆分；补齐 7 个缺失界面(Feed/Service/Privacy/Terms/Profile/Settings/About) + 内容铺满；DRAMA-SEED 扩至 22 分支 + SEED AI 自评（12/12 成就可达）|
 | 5 制作 (M1) | ✅ 完成 | Route B 整合 + P1 扩展：原型浅色皮 + M1 内核 + 店间/同店/骑手差异感。5 店(全人格)+3 骑手(随机派单)+12 成就+订单历史+7 新界面；`npm run build` PASS(vue-tsc 0 error) + `npm test` **41/41** 绿（含店专属 T13 / 同店进阶 T14 / 骑手专属 T15）；commit `7ef9eeb` 已 push + Vercel 部署；仓库为单一文件夹 `whoknow-waimai/`（源码 + dist）|
-| 6 打磨 | ⬜ | P2/P3：变体丰富度 / 概率平衡 / 文案风味 / 无障碍回归（SEED 评审已列项，待调）|
-| 7 发布 | ✅ 完成(lean) | 已部署上线 `index-Doh-PDc5.js`（41/41 单测绿 + 构建 PASS）；**硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）待过**，用户授权先上线，"好笑与否"后续 JSON 微调 |
+| 6 打磨 | 🔶 进行中 | P2 第一刀已落：SEED 22→28 分支（基线 default_b/c/d + poor_b + odd_eats_b/c 变体池，权重随机抗撞句），T16/T17 验证覆盖；概率平衡 / 文案风味 / 无障碍回归待 P3 |
+| 7 发布 | ✅ 完成(lean) | 已部署上线 `index-Bnc50CL0.js`（43/43 单测绿 + 构建 PASS）；**硬闸门 = 真机 playtest** 已由 `docs/PLAYTEST-CHECKLIST-2026-07-25.md` 定义口径（笑率/同店第5单/12成就/无障碍），待真人执行；用户授权先上线，"好笑与否"后续 JSON 微调 |
 
 ## 已确认参数（用户拍板）
 
@@ -69,3 +69,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | **P0 两刀 push + 部署上线（commit 3d83744）**：本地 `git pull --rebase` 远端 1633bab(whoknow-mart 文档，零重叠) 后 `git push` 成功；live 验证 `/waimai` 切到新构建 `index-OPWjNubD.js`，含 `boss_blacklist`/`blacklisted_`/`odd_eats`/`dark_chef`/`reconciled`，无 `{price}`/`{fee}`。|
 | 2026-07-25 | **仓库结构合并为单一文件夹（commit de60c78 + 78bbabf）**：删根目录 `waimai/`，构建产物收进 `whoknow-waimai/dist/`；`.gitignore` 例外放行 `whoknow-waimai/dist/`；`vercel.json` 的 `/waimai` 路由改指 `whoknow-waimai/dist`（assets 直投 + SPA 兜底 + 末尾斜杠规则）。一个项目只占根目录一个位置，与 `whoknow-mart/` 一致。live 验证 `/waimai/`、`/waimai/orders`、`/waimai/shop/s01`、资产均 HTTP 200 |
 | 2026-07-25 | **P1 补齐全部缺失环节并上线（commit 7ef9eeb, push origin/main, Vercel 部署 index-Doh-PDc5.js）**：用户指令"全部界面设计完、内容铺满、AI 审一遍"。DRAMA-SEED 12→22 分支（店专属 5 + 同店进阶 2 + 骑手 3 + 通用 12，shopVisitCount 接入引擎与 KNOWN_VARS、下单前自增）、成就 10→12（regular/vip_fan）、随机骑手 pickRider()、新增 7 界面(Feed/Service/Privacy/Terms/Profile/Settings/About)并入路由+TabBar+HomeView+style.css；`npm test` 38→41 绿(T13 店专属/T14 同店进阶/T15 骑手专属)；SEED AI 自评(`docs/SEED-REVIEW-2026-07-25.md`)：结构合法、全可达、12/12 成就可解锁。push 时远端领先（另一个 workbuddy 的 mart 2 提交，只动 whoknow-mart/ + 总纲，零重叠）→ `git pull --rebase` 干净 replay 后 push 成功，互不破坏。mart 边界严守未触碰 |
+| 2026-07-25 | **P2 第一刀·抗重复疲劳 + 发布硬闸门清单（commit a053448, push, Vercel 部署 index-Bnc50CL0.js）**：用户授权技术决策全权委托。SEED 22→28 分支（基线变体 default_b/c/d 各 isFallback 1=1、poor_b、odd_eats_b/c，权重池随机抗撞句）；测试 41→43（T16 基线变体池 400 次抽样全覆盖、T17 穷鬼变体池）；新增 `docs/PLAYTEST-CHECKLIST-2026-07-25.md` 定义 Phase 7 发布硬闸门口径（笑率中位≥3.5 / 同店第5单差异 / 12成就可达 / 无障碍无阻断）。构建 PASS，live 切 index-Bnc50CL0.js |
