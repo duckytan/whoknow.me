@@ -1,18 +1,4 @@
 {
-  "outputDirectory": "prototype",
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" }
-      ]
-    }
-  ],
-  "rewrites": [
-    { "source": "/waimai/config/(.*)", "destination": "/config/$1" },
-    { "source": "/waimai", "destination": "/index.html" },
-    { "source": "/waimai/(.*)", "destination": "/$1" },
-    { "source": "/config/(.*)", "destination": "/config/$1" }
-  ]
+  "outputDirectory": ".",
+  "rewrites": []
 }

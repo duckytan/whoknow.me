@@ -1,0 +1,10 @@
+# 内部目录 / 文档：不进入公开部署面（只暴露门面 + 未来 app 构建产物）
+docs/
+whoknow-waimai/
+archive/
+prototype/
+.workbuddy/
+node_modules/
+
+# 仓库内部说明文档（非站点资源）
+*.md

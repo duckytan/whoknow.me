@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whoknow · 胡闹宇宙</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23fafaf8'/%3E%3Ctext x='50' y='72' font-family='Inter,sans-serif' font-size='70' font-weight='900' fill='%2316140f' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="谁知道这个宇宙里会发生什么？胡闹 × Who knows? × 家人们谁懂啊。" />
+  <meta name="theme-color" content="#fafaf8" />
+  <link rel="stylesheet" href="styles/design-tokens.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
+  <style>
+    :root { --paper: #fafaf8; --ink: #16140f; --ink-soft: #6b6480; --hair: #e4e1da; --accent: var(--brand-green); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); min-height: 100vh; display: flex; justify-content: center; }
+    ::selection { background: var(--brand-green); color: #0a3d18; }
+
+    .wrap { width: 100%; max-width: 720px; padding: var(--sp-6) var(--sp-6) var(--sp-4); display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* 报头 */
+    .masthead { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: var(--sp-4); border-bottom: 1.5px solid var(--ink); }
+    .wordmark { font-family: var(--font-display); font-size: 1.5rem; color: var(--ink); letter-spacing: -.01em; }
+    .wordmark .k { color: var(--accent); }
+    .masthead .issue { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .16em; color: var(--ink-soft); text-transform: uppercase; }
+
+    .hero { padding: clamp(3rem,10vw,6rem) 0 clamp(2rem,6vw,3.5rem); position: relative; }
+    .kicker { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: var(--sp-5); }
+    .statement { font-family: var(--font-body); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.12; letter-spacing: -.01em; color: var(--ink); max-width: 14ch; }
+    .statement .q { color: var(--accent); }
+    .statement .script { font-family: var(--font-brush); font-weight: 400; font-size: 1.1em; color: var(--brand-orange); }
+    #tagline-top { display: inline; transition: opacity .3s ease; }
+    .lede { margin-top: var(--sp-6); font-family: var(--font-body); font-size: 1.05rem; line-height: 1.75; color: var(--ink-soft); max-width: 46ch; }
+    .lede b { color: var(--ink); font-weight: 700; }
+
+    .cta { margin-top: var(--sp-8); display: flex; gap: var(--sp-5); flex-wrap: wrap; align-items: center; }
+    .link { font-family: var(--font-body); font-size: var(--fs-lg); font-weight: 800; text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--ink); padding-bottom: 3px; transition: color var(--t-fast) ease, border-color var(--t-fast) ease; }
+    .link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .link:hover { color: var(--accent); border-color: var(--accent); }
+    .link .arrow { display: inline-block; transition: transform var(--t-fast) ease; }
+    .link:hover .arrow { transform: translateX(4px); }
+    .link.ghost { border-bottom-color: var(--hair); color: var(--ink-soft); }
+    .link.ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    .section { margin-top: var(--sp-12); }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--sp-5); }
+    .section-head h2 { font-family: var(--font-mono); font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+    .section-head .count { font-family: var(--font-mono); font-size: .7rem; color: var(--ink-soft); }
+
+    /* 编辑式"声音"列表：无边框，仅发丝分隔线 */
+    .voices { display: flex; flex-direction: column; }
+    .voice { display: grid; grid-template-columns: auto 1fr; gap: var(--sp-5); padding: var(--sp-5) 0; border-top: 1px solid var(--hair); align-items: start; }
+    .voice:last-child { border-bottom: 1px solid var(--hair); }
+    .voice .no { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); line-height: 1; }
+    .voice.is-coming .no { color: var(--brand-purple); }
+    .voice .body { }
+    .voice .quote { font-size: 1.02rem; font-weight: 600; color: var(--ink); line-height: 1.55; }
+    .voice .meta { margin-top: var(--sp-2); display: flex; align-items: center; gap: var(--sp-3); font-family: var(--font-mono); font-size: .7rem; color: var(--ink-soft); flex-wrap: wrap; }
+    .voice .meta .who { display: flex; align-items: center; gap: .4rem; }
+    .voice .meta .ava { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--hair); display: inline-flex; align-items: center; justify-content: center; font-size: .8rem; }
+    .voice .meta .prod { color: var(--ink); font-weight: 600; }
+    .voice .meta .stars { color: var(--brand-orange); letter-spacing: .08em; }
+    .voice .meta .status { margin-left: auto; }
+    .status.live { color: #0a7a32; font-weight: 600; }
+    .status.soon { color: var(--brand-purple); font-weight: 600; }
+
+    .footer { margin-top: auto; padding: var(--sp-12) 0 var(--sp-6); font-family: var(--font-mono); font-size: .7rem; color: var(--ink-soft); display: flex; justify-content: space-between; border-top: 1.5px solid var(--ink); }
+    .footer .a { color: var(--brand-orange); }
+
+    @media (max-width: 480px){ .wrap{ padding: var(--sp-5) var(--sp-4) var(--sp-4); } .voice{ grid-template-columns: 1fr; gap: var(--sp-2); } .voice .no{ font-size:1.1rem; } }
+    @media (prefers-reduced-motion: reduce){ #tagline-top{transition:none!important} .link:hover .arrow{transform:none!important} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <span class="wordmark" aria-label="whoknow">who<span class="k">k</span>now</span>
+      <span class="issue">Issue 01 — 胡闹宇宙</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="kicker">WHO KNOWS? · 家人们谁懂啊</div>
+        <h1 class="statement">
+          <span class="q">?</span> <span id="tagline-top"></span>
+          <span class="script"> 谁知道呢</span>
+        </h1>
+        <p class="lede">一个<b>披着真实 App 外衣</b>的胡闹宇宙：外卖越点越瘦，导购反手劝你别买，AI 用段子给你推新品。<b>下一个胡闹，由你决定。</b></p>
+        <div class="cta">
+          <a class="link" href="/waimai">🍜 去胡闹外卖 <span class="arrow">→</span></a>
+          <a class="link ghost" href="#voices">看看胡闹宇宙 ↓</a>
+        </div>
+      </section>
+
+      <section class="section" id="voices">
+        <div class="section-head"><h2>// 已经在胡闹 &amp; 即将胡闹</h2><span class="count">03 voices</span></div>
+        <div class="voices">
+          <article class="voice">
+            <div class="no">01</div>
+            <div class="body">
+              <div class="quote">骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣</div>
+              <div class="meta"><span class="who"><span class="ava">🐱</span>家人们谁懂啊</span><span class="prod">🍜 胡闹外卖 /waimai</span><span class="stars">★★★★★</span><span class="status live">🟢 已上线</span></div>
+            </div>
+          </article>
+          <article class="voice is-coming">
+            <div class="no">02</div>
+            <div class="body">
+              <div class="quote">导购员居然劝我别买，说我已经有 7 支口红了 💄</div>
+              <div class="meta"><span class="who"><span class="ava">🐶</span>被劝退的小姐姐</span><span class="prod">🛒 胡闹导购 /mart</span><span class="stars">★★★★★</span><span class="status soon">[设计中]</span></div>
+            </div>
+          </article>
+          <article class="voice is-coming">
+            <div class="no">03</div>
+            <div class="body">
+              <div class="quote">AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖</div>
+              <div class="meta"><span class="who"><span class="ava">🦊</span>单身的码农</span><span class="prod">🧠 胡闹大脑 /brain</span><span class="stars">★★★★★</span><span class="status soon">[规划中]</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><span><span class="a">→</span> 下一个胡闹，由你决定</span><span>// 我们也不知道下一步会怎样</span></footer>
+  </div>
+
+  <script>
+    (function(){
+      var slogans = ['这个宇宙里啥都敢胡来','下一秒会发生啥','AI 用段子给我推新品','外卖越点越瘦','导购反手劝你别买','谁知道接下来会怎样'];
+      var el = document.getElementById('tagline-top');
+      var cur = slogans[Math.floor(Math.random()*slogans.length)];
+      el.textContent = cur;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(!reduce){ setInterval(function(){ var n; do{ n=slogans[Math.floor(Math.random()*slogans.length)]; }while(n===cur&&slogans.length>1); cur=n; el.style.opacity=0; setTimeout(function(){ el.textContent=n; el.style.opacity=1; },300); }, 3600); }
+    })();
+  </script>
+</body>
+</html>

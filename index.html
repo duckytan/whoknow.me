@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>whoknow · 胡闹宇宙</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0612'/%3E%3Ctext x='50' y='72' font-family='Inter,sans-serif' font-size='70' font-weight='900' fill='%236eda78' text-anchor='middle'%3Ek%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="谁知道这个宇宙里会发生什么？胡闹 × Who knows? × 家人们谁懂啊。" />
+  <meta name="theme-color" content="#0a0612" />
+
+  <!-- 品牌设计令牌：BRAND.md §10 / styles/design-tokens.css -->
+  <link rel="stylesheet" href="styles/design-tokens.css" />
+
+  <!-- 品牌字体阵容：BRAND.md §3.1 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       页面级样式——所有色值/间距/圆角/动效一律引用 design-tokens.css 令牌
+       非品牌色（如原 #fde047 黄）已全部替换为品牌锚色 绿/橙/紫
+       ============================================================ */
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* 背景：左上紫晕 + 右下绿晕 + 中橙晕（引用令牌渐变变量 · BRAND §2.2） */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: var(--glow-purple), var(--glow-green), var(--glow-orange);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 点阵网格（引用令牌 · BRAND §2.2） */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: var(--grid-dots);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: var(--container-max);
+      width: 100%;
+      padding: var(--sp-16) var(--sp-4) var(--sp-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ===== Hero ===== */
+    .hero { text-align: center; padding-top: var(--sp-6); width: 100%; }
+
+    /* 顶部小标：mono 字体 · 标签感（BRAND §18 按钮/标签风） */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--fg-mute);
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: transparent;
+    }
+    .eyebrow .dot {
+      width: 6px; height: 6px;
+      background: var(--fg-mute);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    /* 眉标：固定到页面左上角（仅移动这行字；logo/胡闹仍居中于 hero，尺寸不变） */
+    .corner-eyebrow {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 50;
+      padding: var(--sp-4) var(--sp-5);
+      pointer-events: none;   /* 纯展示，绝不挡下方点击 */
+    }
+
+    /* 品牌名已回归 HERO 居中（见下方 .hero），不再使用固定角标 */
+
+    /* 主标：Bungee 字标，黑描边 + 白光晕（立体） */
+    .logo {
+      font-family: var(--font-display);
+      font-size: 6rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-top: var(--sp-12);
+      transform: rotate(-5deg);
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      color: var(--fg);                 /* 字标主体白 */
+      text-shadow:
+        -3px -3px 0 #0a0612, 3px -3px 0 #0a0612,
+        -3px 3px 0 #0a0612, 3px 3px 0 #0a0612,
+        0 10px 0 rgba(0,0,0,.6), 0 14px 20px rgba(0,0,0,.4),
+        -2px -2px 4px rgba(255,255,255,.6),
+        0 0 12px rgba(255,255,255,.45), 0 0 24px rgba(255,255,255,.3),
+        0 0 48px rgba(255,255,255,.15), 0 0 80px rgba(255,255,255,.08);
+      animation: logo-breathe 3s ease-in-out infinite;
+    }
+    @keyframes logo-breathe {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      50% { transform: rotate(-5deg) scale(1.04); }
+    }
+
+    /* 锚色 k：胡闹绿（品牌签名锚点 · BRAND §12.4） */
+    .logo-k {
+      color: var(--brand-green);
+      position: relative;
+      display: inline-block;
+      animation: bounce-k 1.8s ease-in-out infinite;
+      margin: 0 0.05em;
+    }
+    @keyframes bounce-k {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
+    }
+    .logo-k::before {
+      content: '\01F525';
+      position: absolute;
+      top: -0.7em; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.32em;
+      filter: drop-shadow(0 0 5px var(--brand-orange));
+      pointer-events: none;
+      animation: flicker-flame 0.4s ease-in-out infinite alternate;
+    }
+    @keyframes flicker-flame {
+      0% { opacity: 0.85; transform: translateX(-50%) scale(1) translateY(0); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1.15) translateY(-3px) rotate(-4deg); }
+    }
+
+    /* KUSO 脚注：紧贴 K 下方，字母用品牌锚色（去黄 · BRAND §2.1） */
+    .logo-kuso {
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      gap: 0.08em;
+      margin-top: -0.05em;
+      pointer-events: none;
+      z-index: 3;
+      white-space: nowrap;
+    }
+    .k-letter {
+      font-family: var(--font-mono);
+      font-size: 0.14em; font-weight: 400;
+      display: inline-block; opacity: 0.85;
+      letter-spacing: 0.02em;
+      transform-origin: center bottom;
+      animation-delay: var(--d, 0s);
+    }
+    .k-letter-1 { animation: kid-float 1.4s ease-in-out infinite, kid-breathe 2.6s ease-in-out infinite; }
+    .k-letter-2 { animation: kid-jump 0.8s cubic-bezier(.5,0,.5,1) infinite; }
+    .k-letter-3 { animation: kid-spin 2.2s linear infinite; }
+    .k-letter-4 { animation: kid-sway 1.6s ease-in-out infinite; }
+    @keyframes kid-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)} }
+    @keyframes kid-breathe {
+      0%,100%{opacity:.4;filter:brightness(.7);text-shadow:0 0 0 transparent}
+      50%{opacity:1;filter:brightness(1.4);text-shadow:0 0 8px var(--brand-green)}
+    }
+    @keyframes kid-jump { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    @keyframes kid-spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+    @keyframes kid-sway { 0%,100%{transform:translateX(0) rotate(0)} 25%{transform:translateX(-1.5px) rotate(-4deg)} 75%{transform:translateX(1.5px) rotate(4deg)} }
+    .k-letter-1{transform:translateY(-0.5px)} .k-letter-2{transform:translateY(.5px)}
+    .k-letter-3{transform:translateY(-1px – 0)} .k-letter-4{transform:translateY(1px)}
+
+    /* 中文"胡闹"：ZCOOL 黄油体，橙 + 绿锚点（去黄 · BRAND §3.1） */
+    .chinese-brand {
+      font-family: var(--font-title);
+      font-size: 3.5rem; font-weight: 400;
+      letter-spacing: 0.2em; margin-right: -0.2em;
+      margin-top: var(--sp-6);
+      transform: rotate(6deg);
+      display: flex; align-items: center; justify-content: center; gap: 0.3em;
+      position: relative;
+      text-shadow: -2px -2px 0 #0a0612, 2px -2px 0 #0a0612, -2px 2px 0 #0a0612, 2px 2px 0 #0a0612;
+    }
+    .chinese-brand .char { display: inline-block; color: var(--brand-orange); }
+    .chinese-brand .char.accent { color: var(--brand-green); }
+    .chinese-brand::before {
+      content: ''; position: absolute; bottom: -0.15em; left: -0.2em; right: -0.2em;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--brand-green) 5%, var(--brand-green) 95%, transparent);
+      transform: rotate(1deg); border-radius: 2px;
+    }
+    .chinese-brand::after {
+      content: '\2728'; position: absolute; top: 1em; right: -1.2em;
+      font-size: 0.5em; color: var(--brand-green);
+      animation: twinkle 1.5s ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%,100%{opacity:.4;transform:scale(.9) rotate(0)} 50%{opacity:1;transform:scale(1.2) rotate(20deg)} }
+    .chinese-brand .char:first-child { animation: hu-jump .8s cubic-bezier(.5,0,.5,1) infinite; transform-origin: center bottom; }
+    @keyframes hu-jump { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-0.08em)} }
+    .chinese-brand .char.accent { animation: slide-down 3.2s cubic-bezier(.45,.05,.55,.95) infinite; transform-origin: center center; }
+    @keyframes slide-down {
+      0%{opacity:0;transform:translate(-0.1em,-0.05em) rotate(0) scale(.7)}
+      15%{opacity:1;transform:translate(0,-0.05em) rotate(-2deg) scale(.85)}
+      40%{opacity:1;transform:translate(0.6em,0.02em) rotate(3deg) scale(.95)}
+      70%{opacity:1;transform:translate(1.4em,0.12em) rotate(6deg) scale(1)}
+      88%{opacity:.9;transform:translate(2.1em,0.2em) rotate(9deg) scale(1.05)}
+      100%{opacity:0;transform:translate(2.6em,0.26em) rotate(12deg) scale(1.1)}
+    }
+
+    /* Hero 主副标语（由 js/home-render.js 从 JSON 注入 · 截图高光 · BRAND §14.4） */
+    .tagline {
+      margin-top: var(--sp-8);
+      font-family: var(--font-body);
+      font-size: 1.05rem; color: var(--fg);
+      line-height: 1.8; font-weight: 600;
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612;
+    }
+    .tagline .accent { color: var(--brand-green); font-weight: 800; font-style: italic; }
+    .tagline .dim { color: var(--fg-dim); font-weight: 400; }
+    .tagline .sep { color: var(--fg-mute); margin: 0 0.5rem; font-weight: 400; }
+    .tagline .question {
+      display: inline-block; color: var(--brand-green);
+      font-size: 1.4em; font-weight: 900; vertical-align: middle;
+      margin-right: 0.15em; transform: rotate(-8deg);
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612, 0 2px 0 rgba(0,0,0,.4);
+    }
+
+    /* 入场/退场动画（JS 驱动） */
+    #tagline-top { display: inline-block; }
+    #tagline-top.entering { animation: enter-blur 0.5s ease-out forwards; }
+    @keyframes enter-blur { 0%{opacity:0;filter:blur(10px)} 100%{opacity:1;filter:blur(0)} }
+    .char-anim { display: inline-block; }
+    #tagline-top.flying .char-anim { animation: char-fly 0.5s ease-in forwards; }
+    @keyframes char-fly {
+      0%{transform:translate(0,0) rotate(0);opacity:1}
+      100%{transform:translate(var(--dx,30px),var(--dy,-50px)) rotate(var(--rot,90deg));opacity:0}
+    }
+
+    /* 品牌宣言（定位段）：主标语与 CTA 之间的价值主张 · 暗色玻璃卡质感 */
+    .manifesto {
+      margin: var(--sp-8) auto 0;
+      max-width: 640px;
+      font-family: var(--font-body);
+      font-size: 0.98rem; line-height: 1.85; font-weight: 500;
+      color: var(--fg-dim); text-align: center;
+      padding: var(--sp-4) var(--sp-5);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--bg-2);
+      box-shadow: var(--shadow-sm);
+      text-shadow: -1px -1px 0 #0a0612, 1px -1px 0 #0a0612, -1px 1px 0 #0a0612, 1px 1px 0 #0a0612;
+    }
+    .manifesto .accent { color: var(--brand-green); font-weight: 700; }
+
+    /* ===== Hero CTA（BRAND §7.1 / §18 按钮态） ===== */
+    .hero-cta {
+      margin-top: var(--sp-8);
+      display: flex; gap: var(--sp-3); flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4em;
+      min-height: 44px; padding: 0 var(--sp-6);
+      font-family: var(--font-body); font-size: var(--fs-base); font-weight: 600;
+      border: none; border-radius: var(--radius-md);
+      text-decoration: none; cursor: pointer; user-select: none;
+      transition: transform var(--t-fast) var(--ease-smooth), box-shadow var(--t-fast) var(--ease-smooth), background-color var(--t-fast) var(--ease-smooth);
+    }
+    .btn:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+    .btn--primary { background: var(--btn-primary-bg); color: var(--btn-primary-fg); }
+    .btn--primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); background: var(--brand-orange); }
+    .btn--ghost { background: transparent; color: var(--fg-dim); border: 1px solid var(--line-2); }
+    .btn--ghost:hover { color: var(--fg); border-color: var(--brand-green); transform: translateY(-1px); }
+
+    /* ===== Section ===== */
+    .section { margin-top: var(--sp-16); width: 100%; scroll-margin-top: var(--sp-8); }
+    .section-title {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      letter-spacing: 0.2em; text-align: center; margin-bottom: var(--sp-6);
+    }
+
+    /* 戏精评价卡 → 纯展示（顶部已有产品入口 CTA，此处取消一切点击行为 · BRAND §14.4） */
+    .products { display: flex; flex-direction: column; gap: var(--sp-4); width: 100%; }
+    .review-card {
+      display: block;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-4) var(--sp-5);
+      position: relative;
+      color: inherit;
+      transition: border-color var(--t-fast) var(--ease-smooth);
+    }
+    .review-card:hover { border-color: var(--brand-orange); }
+    .review-card.is-coming { opacity: 0.86; }
+    .review-card.is-coming:hover { border-color: var(--brand-green); }
+    .review-card::before {
+      content: '\201C'; position: absolute; top: -10px; left: 10px;
+      font-family: 'Georgia', serif; font-size: 4rem; line-height: 1;
+      color: var(--brand-orange); opacity: 0.5;
+    }
+    .review-text { font-size: 0.95rem; color: var(--fg); line-height: 1.6; margin-bottom: var(--sp-3); padding-top: 0.3rem; }
+    .review-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); font-size: 0.78rem; color: var(--fg-mute); }
+    .review-meta .author { display: flex; align-items: center; gap: 0.4rem; }
+    .review-meta .author .avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--bg); border: 1px solid var(--line-2);
+      display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+    }
+    .review-meta .review-stars { color: var(--brand-orange); letter-spacing: 0.1em; }
+    .review-product {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      letter-spacing: 0.05em; margin-top: 0.4rem; padding-top: 0.5rem;
+      border-top: 1px solid var(--line); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .review-product .tag { background: var(--bg); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid var(--line-2); }
+    .badge-live { margin-left: auto; font-size: 0.7rem; color: var(--brand-green); font-weight: 600; }
+
+    /* ===== Footer ===== */
+    .footer {
+      margin-top: auto; padding: var(--sp-12) 0 var(--sp-6);
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-mute);
+      text-align: center; letter-spacing: 0.05em;
+    }
+    .footer .accent { color: var(--brand-orange); }
+
+    /* ===== 星空层（移植自 index1：满屏纯白星点 + 呼吸闪烁 · 经典"胡闹宇宙"质感） ===== */
+    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .star {
+      position: absolute; border-radius: 50%; background: #fff; opacity: .6;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: .15; transform: scale(.7); }
+      50% { opacity: .9; transform: scale(1.1); }
+    }
+
+    /* Hero 轻微晃动 */
+    .hero { animation: hero-shake 2.5s ease-in-out infinite; }
+    @keyframes hero-shake {
+      0%,100%{transform:translate(0,0) rotate(0)}
+      25%{transform:translate(-0.5px,0.3px) rotate(-0.15deg)}
+      50%{transform:translate(0.4px,-0.2px) }
+      75%{transform:translate(-0.3px,-0.4px) rotate(0.15deg)}
+    }
+
+    /* ===== 响应式：移动优先（BRAND §9） ===== */
+    @media (max-width: 768px) {
+      .container { padding: var(--sp-12) var(--sp-4) var(--sp-4); }
+      .hero { padding-top: var(--sp-4); }
+      .logo { font-size: 3.6rem; margin-top: var(--sp-8); }
+      .chinese-brand { font-size: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .logo { font-size: 2.8rem; }
+      .chinese-brand { font-size: 1.6rem; }
+    }
+
+    /* ===== 无障碍：动效降级（BRAND §8 / §17 · 与 design-tokens.css 互补） ===== */
+    @media (prefers-reduced-motion: reduce) {
+      .hero, .logo, .logo-k, .logo-kuso, .chinese-brand, .chinese-brand .char,
+      .k-letter, .eyebrow .dot, .chinese-brand::after, .star {
+        animation: none !important;
+      }
+      .review-card:hover, .btn:hover { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars" aria-hidden="true"></div>
+
+  <!-- 眉标：固定页面左上角（仅此一行字移入角落，logo 仍在 hero 居中） -->
+  <div class="corner-eyebrow">
+    <span class="eyebrow"><span class="dot" aria-hidden="true"></span><span data-eyebrow></span></span>
+  </div>
+
+  <div class="container">
+
+    <!-- ===== HERO ===== -->
+    <header class="hero">
+      <!-- 主标：h1 + aria-label，装饰内容对读屏隐藏 -->
+      <h1 class="logo" aria-label="whoknow 胡闹宇宙">
+        <span aria-hidden="true">
+          <span class="logo-who">who</span><span class="logo-k">k</span><span class="logo-kuso">
+            <span class="k-letter k-letter-1" style="color:var(--brand-green);--d:0s;">k</span>
+            <span class="k-letter k-letter-2" style="color:var(--brand-orange);--d:0.2s;">u</span>
+            <span class="k-letter k-letter-3" style="color:var(--brand-purple);--d:0.4s;">s</span>
+            <span class="k-letter k-letter-4" style="color:var(--brand-green);--d:0.6s;">o</span>
+          </span><span class="logo-now">now</span>
+        </span>
+      </h1>
+
+      <!-- 中文品牌名 -->
+      <div class="chinese-brand" aria-hidden="true">
+        <span class="char">胡</span><span class="char accent">闹</span>
+      </div>
+
+      <!-- 副标语：上行 JSON 段子随机切换 + 下行品牌 tail（由 js/home-render.js 注入 · BRAND §14.4） -->
+      <p class="tagline" id="tagline">
+        <span id="tagline-top"></span>
+        <br>
+        <span data-tagline-tail></span>
+      </p>
+
+      <!-- 品牌宣言（定位段）：由 js/home-render.js 从 data/home.json 注入 -->
+      <p class="manifesto" data-manifesto></p>
+
+      <!-- Hero CTA（由 js/home-render.js 从 data/home.json 注入 · BRAND §7.1） -->
+      <div class="hero-cta" data-ctas></div>
+    </header>
+
+    <!-- ===== PRODUCTS（评论卡片由 js/home-render.js 从 data/home.json 注入） ===== -->
+    <main>
+      <section class="section" id="products">
+        <div class="section-title" data-section-title></div>
+        <div class="products" data-reviews></div>
+      </section>
+    </main>
+
+    <!-- ===== FOOTER（由 js/home-render.js 从 data/home.json 注入） ===== -->
+    <footer class="footer" data-footer></footer>
+
+  </div>
+
+  <!-- 星空：移植自 index1 的星点生成；reduced-motion 下不生成 -->
+  <script>
+    (function() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var s = document.getElementById('stars');
+      for (var i = 0; i < 46; i++) {
+        var d = document.createElement('div');
+        d.className = 'star';
+        var sz = Math.random() * 2 + 1;
+        d.style.width = sz + 'px';
+        d.style.height = sz + 'px';
+        d.style.left = (Math.random() * 100) + 'vw';
+        d.style.top = (Math.random() * 100) + 'vh';
+        d.style.animationDelay = (Math.random() * 3) + 's';
+        d.style.opacity = (Math.random() * 0.5 + 0.2);
+        s.appendChild(d);
+      }
+    })();
+  </script>
+
+  <!-- 页内兜底数据：仅当以 file:// 直接打开（无服务器）时启用；
+       正式管理与部署请以 data/home.json 为准（两者需保持一致） -->
+  <script type="application/json" id="home-data">
+  {
+    "brand": {
+      "eyebrow": "胡闹宇宙 · WHO KNOWS?",
+      "sectionTitle": "// 已经在胡闹 & 即将胡闹",
+      "footer": "<span class=\"accent\">→</span> 下一个胡闹，由你决定 <span class=\"dim\">// 我们也不知道下一步会怎样</span>"
+    },
+    "manifesto": "一个披着真实 App 外衣的<span class=\"accent\">胡闹宇宙</span>：外卖越点越瘦，导购反手劝你别买，AI 用段子给你推新品。<span class=\"accent\">下一个胡闹，由你决定。</span>",
+    "tagline": {
+      "slogans": [
+        "这个导购员居然阻止我买化妆品",
+        "骑手送外卖时居然跟我聊哲学",
+        "老板推荐菜时给我讲了个段子",
+        "AI 居然用段子给我推新品",
+        "下一秒会发生啥",
+        "这个宇宙里啥都敢胡来"
+      ],
+      "tail": "<span class=\"accent\">— WHO KNOWS?</span> <span class=\"sep\">·</span> 家人们<span class=\"dim\">谁懂</span>"
+    },
+    "ctas": [
+      { "label": "🍜 去胡闹外卖", "href": "/waimai", "type": "primary" },
+      { "label": "看看胡闹宇宙 ↓", "href": "#products", "type": "ghost" }
+    ],
+    "reviews": [
+      {
+        "text": "骑手小哥到了楼下还给我讲了个冷笑话，差点没冻着 🤣",
+        "author": "家人们谁懂啊",
+        "avatar": "🐱",
+        "stars": 5,
+        "product": { "name": "胡闹外卖", "emoji": "🍜", "path": "/waimai" },
+        "status": "live",
+        "statusText": "🟢 已上线"
+      },
+      {
+        "text": "导购员居然劝我别买，说我已经有 7 支口红了 💄",
+        "author": "被劝退的小姐姐",
+        "avatar": "🐶",
+        "stars": 5,
+        "product": { "name": "胡闹导购", "emoji": "🛒", "path": "/mart" },
+        "status": "designing",
+        "statusText": "[设计中]"
+      },
+      {
+        "text": "AI 推荐了我 3 个冷笑话，比我男朋友幽默 🤖",
+        "author": "单身的码农",
+        "avatar": "🦊",
+        "stars": 5,
+        "product": { "name": "胡闹大脑", "emoji": "🧠", "path": "/brain" },
+        "status": "planning",
+        "statusText": "[规划中]"
+      }
+    ]
+  }
+  </script>
+
+  <!-- 首页数据加载器：从 data/home.json 注入 段子 / 评论 / 入口按钮 / 品牌文案 -->
+  <script src="js/home-render.js" defer></script>
+</body>
+</html>

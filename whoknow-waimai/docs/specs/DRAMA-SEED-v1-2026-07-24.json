@@ -34,7 +34,7 @@
     "chain": [
       { "phase": "accept", "actor": "boss", "text": "都是便宜货，做起来没劲" },
       { "phase": "deliver", "actor": "system", "text": "系统广播：该订单无人接单" },
-      { "phase": "deliver", "actor": "system", "text": "系统强行指派——骑手：¥{fee}的配送费？" },
+      { "phase": "deliver", "actor": "system", "text": "系统强行指派——骑手：¥{deliveryFee}的配送费？" },
       { "phase": "complete", "actor": "rider", "text": "骑手全程冷漠脸，台词都懒得多说一句" }
     ]
   },

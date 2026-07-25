@@ -8,7 +8,7 @@
 
 ## 一句话
 
-设计（Phase 1-2）已写满，工程落地还没开始；当前卡在 **Phase 3 技术搭建的 CONCERNS 闸门**。下一步是收口它，再进 M1。**暂不要写 M1。**
+Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器原型 + 配置信封 + 门面部署）。**M1 已启动**，运行时位于 `whoknow-waimai/src/`（Vue3+Vite+Vant 真构建链）；`prototype/` 仅本地原型，不部署。
 
 ## 现在在哪（7 阶段）
 
@@ -16,9 +16,9 @@
 |---|---|---|
 | 1 概念孵化 | ✅ 完成 | GDD-v2.2.2、设计支柱 5+1、乐趣假说、核心循环 |
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
-| 3 技术搭建 | 🔶 **CONCERNS** | 4 项收口已落 2/4：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）；剩 DRAMA 解析器原型 + 静态配置部署验证 |
+| 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | ⬜ 未开始 | v2 核心循环重建（7 页 + 记忆引擎 + DRAMA 四阶段 + 解析器） |
+| 5 制作 (M1) | 🔶 进行中 | 运行时 whoknow-waimai/src/（Vue3+Vite+Vant）；核心循环重建（下单→NPC 反应→四阶段→记忆） |
 | 6 打磨 | ⬜ | — |
 | 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
 
