@@ -12,10 +12,10 @@
     "rarity": "common",
     "achievements": ["poor_meal"],
     "chain": [
-      { "phase": "accept", "speaker": "boss", "text": "¥{price}也好意思点？锅都懒得开", "moodDelta": -30 },
-      { "phase": "cook", "speaker": "boss", "text": "老板在躺椅上玩手机，厨房没动静", "delay": 15000 },
-      { "phase": "deliver", "speaker": "rider", "text": "等了好久才出餐，这单亏了" },
-      { "phase": "complete", "speaker": "boss", "text": "下次低于这个数，我建议你还是好好吃饭", "effect": { "tags": ["boss_complained"] } }
+      { "phase": "accept", "actor": "boss", "text": "¥{orderTotal}也好意思点？锅都懒得开", "moodDelta": -30 },
+      { "phase": "cook", "actor": "boss", "text": "老板在躺椅上玩手机，厨房没动静", "delay": 15000 },
+      { "phase": "deliver", "actor": "rider", "text": "等了好久才出餐，这单亏了" },
+      { "phase": "complete", "actor": "boss", "text": "下次低于这个数，我建议你还是好好吃饭", "effect": { "tags": ["boss_complained"] } }
     ]
   },
 
@@ -32,10 +32,10 @@
     "rarity": "uncommon",
     "achievements": ["cheap_ghost"],
     "chain": [
-      { "phase": "accept", "speaker": "boss", "text": "都是便宜货，做起来没劲" },
-      { "phase": "deliver", "speaker": "system", "text": "系统广播：该订单无人接单" },
-      { "phase": "deliver", "speaker": "system", "text": "系统强行指派——骑手：¥{fee}的配送费？" },
-      { "phase": "complete", "speaker": "rider", "text": "骑手全程冷漠脸，台词都懒得多说一句" }
+      { "phase": "accept", "actor": "boss", "text": "都是便宜货，做起来没劲" },
+      { "phase": "deliver", "actor": "system", "text": "系统广播：该订单无人接单" },
+      { "phase": "deliver", "actor": "system", "text": "系统强行指派——骑手：¥{fee}的配送费？" },
+      { "phase": "complete", "actor": "rider", "text": "骑手全程冷漠脸，台词都懒得多说一句" }
     ]
   },
 
@@ -54,14 +54,14 @@
     "chain": [
       {
         "phase": "complete",
-        "speaker": "system",
+        "actor": "system",
         "text": "系统：这顿饭把你吃破产了，余额瞬间归零",
         "next": ["bk_bro", "bk_crush", "bk_wed"],
         "nextWeights": [6, 3, 1]
       },
-      { "phase": "complete", "speaker": "rider", "id": "bk_bro", "text": "看你可怜，这单我垫了，下次别这么狠", "effect": { "flags": ["bro_{riderId}"] } },
-      { "phase": "complete", "speaker": "rider", "id": "bk_crush", "text": "要不…这顿我请？咱俩也算认识了", "effect": { "flags": ["crush_{riderId}"] } },
-      { "phase": "complete", "speaker": "boss", "id": "bk_wed", "text": "婚礼上那单外卖被摆了 C 位——你们就这么成了", "effect": { "flags": ["married_{riderId}"] } }
+      { "phase": "complete", "actor": "rider", "id": "bk_bro", "text": "看你可怜，这单我垫了，下次别这么狠", "effect": { "flags": ["bro_{riderId}"] } },
+      { "phase": "complete", "actor": "rider", "id": "bk_crush", "text": "要不…这顿我请？咱俩也算认识了", "effect": { "flags": ["crush_{riderId}"] } },
+      { "phase": "complete", "actor": "boss", "id": "bk_wed", "text": "婚礼上那单外卖被摆了 C 位——你们就这么成了", "effect": { "flags": ["married_{riderId}"] } }
     ]
   },
 
@@ -81,22 +81,22 @@
     "chain": [
       {
         "phase": "complete",
-        "speaker": "system",
+        "actor": "system",
         "text": "系统：你今天已经第 {todayOrderCount} 顿外卖了",
         "next": ["oe_ok", "oe_care"],
         "nextWeights": [6, 4]
       },
-      { "phase": "complete", "speaker": "boss", "id": "oe_ok", "text": "还好，年轻，扛得住——不过少油少盐啊" },
-      { "phase": "complete", "speaker": "boss", "id": "oe_care", "text": "你这样不行，我给你加了个溏心蛋，补补", "effect": { "flags": ["boss_cares_{shopId}"] } }
+      { "phase": "complete", "actor": "boss", "id": "oe_ok", "text": "还好，年轻，扛得住——不过少油少盐啊" },
+      { "phase": "complete", "actor": "boss", "id": "oe_care", "text": "你这样不行，我给你加了个溏心蛋，补补", "effect": { "flags": ["boss_cares_{shopId}"] } }
     ]
   },
 
   {
-    "id": "dark_dish",
+    "id": "odd_eats",
     "name": "黑暗料理 · 隐藏私房菜",
     "weight": 10,
     "trigger": {
-      "condition": "hasTag(dark_dish)",
+      "condition": "flag(odd_eats_{shopId})",
       "probability": 1.0,
       "cooldownMin": 0,
       "maxPerUser": 0
@@ -104,10 +104,10 @@
     "rarity": "legendary",
     "achievements": ["dark_chef"],
     "chain": [
-      { "phase": "accept", "speaker": "boss", "text": "你点了「老板私房菜」？那玩意儿我都没敢给员工试吃", "moodDelta": -80 },
-      { "phase": "cook", "speaker": "boss", "text": "厨房传来可疑的咕嘟声，老板脸色越来越白", "delay": 15000 },
-      { "phase": "deliver", "speaker": "rider", "text": "取餐时袋子在动……我有点不敢拿" },
-      { "phase": "complete", "speaker": "boss", "text": "你吃完给了好评：很有创意。老板盯着你看了三秒：你没事吧？", "effect": { "flags": ["dark_dish_{shopId}"] } }
+      { "phase": "accept", "actor": "boss", "text": "你又点「老板私房菜」？上次那顿你还没缓过来吧", "moodDelta": -80 },
+      { "phase": "cook", "actor": "boss", "text": "厨房又传来可疑的咕嘟声，老板脸色越来越白", "delay": 15000 },
+      { "phase": "deliver", "actor": "rider", "text": "取餐时袋子还在动……我有点不敢拿" },
+      { "phase": "complete", "actor": "boss", "text": "你吃完给了好评：很有创意。老板盯着你看了三秒：你没事吧？", "effect": { "flags": ["odd_eats_{shopId}"] } }
     ]
   },
 
@@ -124,10 +124,10 @@
     "rarity": "epic",
     "achievements": ["fate_bound"],
     "chain": [
-      { "phase": "accept", "speaker": "rider", "text": "接单了——他愣住：是您？" },
-      { "phase": "cook", "speaker": "boss", "text": "你对象来接单了，菜我做快点儿", "delay": -5000 },
-      { "phase": "deliver", "speaker": "rider", "text": "好久不见……上次之后我一直想着那顿饭" },
-      { "phase": "complete", "speaker": "rider", "text": "你们在门口聊了半小时，订单显示已送达", "effect": { "flags": ["fate_reunion"] } }
+      { "phase": "accept", "actor": "rider", "text": "接单了——他愣住：是您？" },
+      { "phase": "cook", "actor": "boss", "text": "你对象来接单了，菜我做快点儿", "delay": -5000 },
+      { "phase": "deliver", "actor": "rider", "text": "好久不见……上次之后我一直想着那顿饭" },
+      { "phase": "complete", "actor": "rider", "text": "你们在门口聊了半小时，订单显示已送达", "effect": { "flags": ["fate_reunion"] } }
     ]
   },
 
@@ -144,10 +144,70 @@
     "rarity": "legendary",
     "achievements": ["reconciled"],
     "chain": [
-      { "phase": "accept", "speaker": "boss", "text": "核对订单：你不是被我拉黑了吗？", "moodDelta": -60 },
-      { "phase": "cook", "speaker": "boss", "text": "老板在厨房犹豫要不要给你做，最后还是开了火", "delay": 10000 },
-      { "phase": "deliver", "speaker": "rider", "text": "取餐时老板偷偷往里多塞了双筷子" },
-      { "phase": "complete", "speaker": "boss", "text": "老板终于开门：上次骂我菜咸，这次……算你赢。拉黑解除", "effect": { "flags": ["reconciled_{shopId}"] } }
+      { "phase": "accept", "actor": "boss", "text": "核对订单：你不是被我拉黑了吗？", "moodDelta": -60 },
+      { "phase": "cook", "actor": "boss", "text": "老板在厨房犹豫要不要给你做，最后还是开了火", "delay": 10000 },
+      { "phase": "deliver", "actor": "rider", "text": "取餐时老板偷偷往里多塞了双筷子" },
+      { "phase": "complete", "actor": "boss", "text": "老板终于开门：上次骂我菜咸，这次……算你赢。拉黑解除", "effect": { "flags": ["reconciled_{shopId}"] } }
+    ]
+  },
+
+  {
+    "id": "remark_more_spicy",
+    "name": "备注 · 多放辣",
+    "weight": 4,
+    "trigger": {
+      "condition": "remarkTag = more_spicy",
+      "probability": 1.0,
+      "cooldownMin": 0,
+      "maxPerUser": 0
+    },
+    "rarity": "common",
+    "achievements": ["spicy_soul"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "多放辣？行，辣到你今天少喝两杯水", "moodDelta": -10 },
+      { "phase": "cook", "actor": "boss", "text": "老板手一抖，半瓶辣椒面下去了" },
+      { "phase": "deliver", "actor": "rider", "text": "取餐时袋子直冒热气，骑手：你自求多福" },
+      { "phase": "complete", "actor": "boss", "text": "下次还敢多放辣，我给你颁个辣度勋章", "effect": { "tags": ["remark_spicy"] } }
+    ]
+  },
+
+  {
+    "id": "remark_no_scold",
+    "name": "备注 · 别骂了",
+    "weight": 4,
+    "trigger": {
+      "condition": "remarkTag = no_scold",
+      "probability": 1.0,
+      "cooldownMin": 0,
+      "maxPerUser": 0
+    },
+    "rarity": "common",
+    "achievements": ["peace_please"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "备注写「别骂了」？行，今天我憋着", "moodDelta": 15 },
+      { "phase": "cook", "actor": "boss", "text": "老板今天出奇地安静，连锅铲都没敲" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这单气氛诡异地和谐" },
+      { "phase": "complete", "actor": "boss", "text": "这次没骂你，记得珍惜——下次未必了", "effect": { "tags": ["remark_no_scold"] } }
+    ]
+  },
+
+  {
+    "id": "address_weird",
+    "name": "奇葩地址 · 骑手迷路",
+    "weight": 6,
+    "trigger": {
+      "condition": "addressTag = weird",
+      "probability": 1.0,
+      "cooldownMin": 0,
+      "maxPerUser": 0
+    },
+    "rarity": "uncommon",
+    "achievements": ["lost_rider"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "这地址……你确定不是在地球？", "moodDelta": -30 },
+      { "phase": "cook", "actor": "boss", "text": "老板边做菜边替骑手默哀" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手导航转了三圈，最后靠问路才找到你", "delay": 12000 },
+      { "phase": "complete", "actor": "rider", "text": "送到的时候骑手比你还懵：这地方我真没来过", "effect": { "tags": ["rider_lost"] } }
     ]
   }
 ]

@@ -237,10 +237,10 @@
   "rarity": "common",
   "achievements": ["poor_meal"],
   "chain": [
-    { "phase": "accept",   "text": "¥{price}也好意思点？锅都懒得开", "moodDelta": -30 },
-    { "phase": "cook",     "text": "老板在躺椅上玩手机，厨房没动静", "delay": 15000 },
-    { "phase": "deliver",  "text": "骑手：等了好久才出餐，这单亏了" },
-    { "phase": "complete", "text": "下次低于这个数，我建议你还是好好吃饭", "effect": { "tags": ["boss_complained"] } }
+    { "id": "poor_accept", "phase": "accept",   "actor": "boss",   "text": "¥{price}也好意思点？锅都懒得开", "moodDelta": -30 },
+    { "id": "poor_cook",   "phase": "cook",     "actor": "boss",   "text": "老板在躺椅上玩手机，厨房没动静", "delay": 15000 },
+    { "id": "poor_deliver","phase": "deliver",  "actor": "rider",  "text": "骑手：等了好久才出餐，这单亏了" },
+    { "id": "poor_complete","phase": "complete", "actor": "boss",   "text": "下次低于这个数，我建议你还是好好吃饭", "effect": { "tags": ["boss_complained"] } }
   ]
 }
 ```
@@ -260,7 +260,9 @@
 | `chain` | `DramaEvent[]`（含 `next`） | ✅ | **自包含事件链**，节点用 `next` 串接 |
 
 **`chain` 节点扩展字段**（超出 §3.3 基础 DramaEvent）：
-- `next`：string | null —— 下一节点 ID；省略/null = 本阶段结束。
+- `id?`：string —— 节点自引用 ID，供 `next` 指向（多分支链路必备）。
+- `next`：string | string[] | null —— 下一节点 ID（或 ID 数组，配合 `nextWeights` 做多分支）；省略/null = 本阶段结束。
+- `nextWeights?`：number[] —— 多分支权重，与 `next: string[]` 同序配对（权重池随机选 1）。
 
 > 🔧 **与 DRAMA-ENGINE-V2 的取舍**：原文档用 `firstEvent`（id 引用）+ 独立 `DramaEvent[]` 数组。本规范改为**分支内联 `chain`**（自包含链表），理由：brain 生成单条 JSON 更简单、frontend 解析零间接寻址、降级 fallback 自洽。**DRAMA-ENGINE-V2 §四/§六 的 `firstEvent` 写法即日起作废**，以本规范为准（见该文档顶部注记）。
 
@@ -360,7 +362,7 @@ interface UserStats {
 |-----------|------|---------|:--------:|
 | `married_{riderId}` | 破产救赎→结缘 | 下次同骑手触发「宿世姻缘」 | ✅ 合规（喜剧恋爱） |
 | `boss_fan_{shopId}` | `affinity[shopId] >= 200` | 老板：「我的真爱粉来了」 | ✅ 合规 |
-| `dark_dish_{shopId}` | 黑暗料理分支 | 下次点该店：「这味儿……又是你？」 | ✅ 合规（非投毒） |
+| `odd_eats_{shopId}` | 黑暗料理分支 | 下次点该店：「这味儿……又是你？」 | ✅ 合规（非投毒） |
 | `blacklisted_{shopId}` | 连续差评 ≥3 | 暂不能点这家（喜剧拉黑） | ✅ 合规 |
 | `saved_{riderId}` | 被骑手帮过 | 下次见面：「最近还好吗？」 | ✅ 合规 |
 | `fate_reunion` | 宿世姻缘达成 | 图鉴彩蛋 | ✅ 合规 |
@@ -408,7 +410,7 @@ interface UserStats {
 | `addressTag: icu` | L2 | ICU 红灯 | 并入 `weird` |
 | `addressTag: bermuda` | L2 | 异次元/荒诞易擦边 | 并入 `weird` |
 | `addressTag: toilet` | L2 | 公厕粗鄙 | 并入 `weird` |
-| `flag: food_poison_*` | L3 | 投毒红灯 | `dark_dish_*` |
+| `flag: food_poison_*` | L3 | 投毒红灯 | `odd_eats_*` |
 | `flag: bomb_survivor` | L3 | 炸弹红灯 | 退役（删） |
 | `flag: icu_survivor` | L3 | ICU 红灯 | 退役（删） |
 | `tag: bomb_order` | L2 | 炸弹红灯 | 退役（删） |

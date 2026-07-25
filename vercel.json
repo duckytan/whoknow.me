@@ -1,6 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
+  "outputDirectory": "prototype",
   "headers": [
     {
       "source": "/(.*)",
@@ -11,8 +10,9 @@
     }
   ],
   "rewrites": [
-    { "source": "/waimai/assets/(.*)", "destination": "/waimai/assets/$1" },
-    { "source": "/waimai", "destination": "/waimai/index.html" },
-    { "source": "/waimai/(.*)", "destination": "/waimai/index.html" }
+    { "source": "/waimai/config/(.*)", "destination": "/config/$1" },
+    { "source": "/waimai", "destination": "/index.html" },
+    { "source": "/waimai/(.*)", "destination": "/$1" },
+    { "source": "/config/(.*)", "destination": "/config/$1" }
   ]
 }
