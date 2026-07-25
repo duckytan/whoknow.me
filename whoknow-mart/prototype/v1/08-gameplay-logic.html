@@ -1,0 +1,104 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=414,initial-scale=1"><title>08 核心玩法逻辑图</title>
+<link rel="stylesheet" href="shared.css"></head>
+<body><div class="phone"><div class="screen">
+  <div class="statusbar" style="background:linear-gradient(90deg,#FF5000,#E1251B);color:#fff"><span>9:41</span><span class="icons">●●● 5G ▱🔋</span></div>
+  <div class="navbar" style="background:linear-gradient(90deg,#FF5000,#E1251B);color:#fff;border:0"><span class="back" style="color:#fff">‹</span><span class="title" style="color:#fff;flex:1;text-align:center">核心玩法逻辑图</span><span class="right" style="color:#fff">⠇</span></div>
+  <div class="scroll logic">
+
+    <div class="loghd"><div class="lt">🎮 胡闹导购 · 核心玩法逻辑</div>
+      <div class="ls">一句话：<b>表面是胡淘购物，底层是你↔一个「死活不想卖你东西」的反骨客服的多轮聊天博弈</b>。他第一句就劝你别买，你偏要撬开他——直到试出他的<b style="color:var(--p-du)">隐藏弱点</b>，看他破功。</div>
+    </div>
+
+    <!-- ① 宏循环 -->
+    <div class="lsec">
+      <div class="lh">① 宏循环（完整一局怎么走）<span class="tag">主线</span></div>
+      <div class="flowv">
+        <div class="step"><span class="n">1</span><div class="t">浏览 / 详情 / 购物车</div></div>
+        <div class="arrow">↓</div>
+        <div class="step hot"><span class="n">2</span><div class="t">点「客服」</div><div class="d">真实淘宝路径，零破绽</div></div>
+        <div class="arrow">↓</div>
+        <div class="step hot"><span class="n">3</span><div class="t">进入聊天博弈</div><div class="d">多轮 · 每轮给 4 选项</div></div>
+        <div class="arrow">↓</div>
+        <div class="step hot"><span class="n">4</span><div class="t">撬开隐藏弱点 → 结算</div><div class="d">破防满 100（叹气卖你）/ 归零（反消费胜利）</div></div>
+        <div class="arrow">↓</div>
+        <div class="step"><span class="n">5</span><div class="t">发券 / 劝退 → 图鉴 · 回访</div></div>
+      </div>
+    </div>
+
+    <!-- ② 微循环：每回合 -->
+    <div class="lsec">
+      <div class="lh">② 微循环（每回合怎么转）<span class="tag">循环</span></div>
+      <div class="micro">
+        <div class="mrow">
+          <div class="node">客服<b>发言</b></div><div class="arr">→</div>
+          <div class="node">系统给<b>4 选项</b></div><div class="arr">→</div>
+          <div class="node">你<b>选 1</b></div>
+        </div>
+        <div class="mrow" style="justify-content:center;margin:4px 0">
+          <div class="arr" style="transform:rotate(90deg)">↓</div>
+        </div>
+        <div class="mrow">
+          <div class="node">客服<b>回怼</b></div><div class="arr">←</div>
+          <div class="node">好感<b>± 涨跌</b></div><div class="arr">←</div>
+          <div class="node">试招<b>命中/踩雷</b></div>
+        </div>
+        <div class="loopnote">↺ 循环至多轮，直到好感满 / 归零为止</div>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">
+        ※ 4 选项<b>每轮都给、位置随机</b>防肌肉记忆；选 1 立刻发你的气泡 → 客服回怼 → 好感度动 → 再给 4 选项。</div>
+    </div>
+
+    <!-- ③ 克制矩阵 -->
+    <div class="lsec">
+      <div class="lh">③ 策略核心：5 导购 × 隐藏弱点 × 克制招<span class="tag">胜负关键</span></div>
+      <table class="matrix">
+        <tr><th>导购（性格）</th><th>隐藏弱点</th><th>克制招 +40</th><th>踩雷招 −10</th></tr>
+        <tr class="hot"><td><span class="nm" style="color:var(--p-du)">毒舌·王二麻</span><br><span class="d" style="font-size:10px;color:#999">嘴硬刻薄</span></td><td class="wk">怕硬<br>（比他更横）</td><td class="win">以毒攻毒</td><td class="lose">装可怜</td></tr>
+        <tr><td><span class="nm" style="color:var(--p-li)">理性·李算盘</span><br><span class="d" style="font-size:10px;color:#999">讲理算账</span></td><td class="wk">怕软<br>（示弱破防）</td><td class="win">装可怜</td><td class="lose">比价</td></tr>
+        <tr><td><span class="nm" style="color:var(--p-san)">散漫·赵拖拖</span><br><span class="d" style="font-size:10px;color:#999">懒散拖延</span></td><td class="wk">怕急<br>（逼他做主）</td><td class="win">坚定</td><td class="lose">以毒攻毒</td></tr>
+        <tr><td><span class="nm" style="color:var(--p-tang)">鸡汤·钱满满</span><br><span class="d" style="font-size:10px;color:#999">灌鸡汤画饼</span></td><td class="wk">怕比<br>（用行情打脸）</td><td class="win">比价</td><td class="lose">坚定</td></tr>
+        <tr><td><span class="nm" style="color:var(--p-fu)">腹黑·周暗暗</span><br><span class="d" style="font-size:10px;color:#999">阴阳怪气</span></td><td class="wk">怕比/怕硬</td><td class="win">比价</td><td class="lose">装可怜</td></tr>
+      </table>
+      <div style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">玩法：先乱选几招试探 → 看哪招 +40 浮出（命中弱点）→ 重复该招推满好感。不同导购要换不同招，<b>不能一套通杀</b>。</div>
+    </div>
+
+    <!-- ④ 好感引擎 -->
+    <div class="lsec">
+      <div class="lh">④ 破防度引擎（数值规则 · 反骨版 affinity）<span class="tag">结算依据</span></div>
+      <div class="rules">
+        <div class="rule mid"><b>50*</b><small>初始破防度（反骨建议更低起点，待 playtest）</small></div>
+        <div class="rule win"><b>+40</b><small>命中隐藏弱点（人设崩塌）</small></div>
+        <div class="rule lose"><b>−10</b><small>踩雷（选错招）</small></div>
+        <div class="rule win"><b>≥100</b><small>破防态（叹气卖你 = 胜）</small></div>
+        <div class="rule lose"><b>≤0</b><small>反消费胜利（没买 = 省了钱，也是赢）</small></div>
+        <div class="rule mid"><b>5</b><small>导购性格数</small></div>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">※ 数值为 v1 占位，待真机 playtest 标定（总纲硬闸门：笑率 + 同店第 5 单差异）。</div>
+    </div>
+
+    <!-- ⑤ 4 选项定义 -->
+    <div class="lsec">
+      <div class="lh">⑤ 每轮 4 个选项（选招制）<span class="tag">固定</span></div>
+      <div class="opts">
+        <div class="opt"><div class="on">坚定</div><div class="od">「我就要便宜，你说咋办」——硬刚，逼对方做主</div></div>
+        <div class="opt"><div class="on">比价</div><div class="od">「别家都送券了」——拿行情压，专破画饼</div></div>
+        <div class="opt"><div class="on">装可怜</div><div class="od">「真没钱了求放过」——示弱，破理性防御</div></div>
+        <div class="opt hot"><div class="on">以毒攻毒</div><div class="od">「少废话，券拿来」——比他更横，克毒舌</div></div>
+      </div>
+    </div>
+
+    <!-- ⑥ 双重胜利结构（洞察核心） -->
+    <div class="lsec" style="border-color:var(--p-du)">
+      <div class="lh">⑥ 双重胜利结构（洞察核心 · 两种赢法并列）<span class="tag" style="background:var(--p-du)">必看</span></div>
+      <table class="matrix">
+        <tr><th>胜利态</th><th>触发</th><th>玩家体验</th><th>截图欲</th></tr>
+        <tr class="hot"><td class="wk">破防态（胜）</td><td>破防度 ≥100</td><td>你撬开了一个死活不卖你的人 → 「我赢了、被认可」的掌控爽感</td><td class="win">高</td></tr>
+        <tr><td class="wk">反消费胜利态（也是赢）</td><td>破防度 ≤0</td><td>你没买 = 省了钱 + 反套路赢了消费主义</td><td class="win">高</td></tr>
+      </table>
+      <div style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">⚠️ 归零态<b>不是「你输了」</b>，是「反消费胜利」——他成功劝退你 = 你省了钱还逗乐了他。两种态都值得截图发圈（设计支柱 P2）。</div>
+    </div>
+
+    <div style="text-align:center;font-size:11px;color:#bbb;padding:16px 0 4px">对应原型：04 聊天核心（反骨） · 05 结算（破防态） · 09 结算（反消费胜利） · 06 图鉴</div>
+  </div>
+</div></div></body></html>

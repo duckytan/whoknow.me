@@ -1,0 +1,73 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=414,initial-scale=1"><title>04 买家↔反骨客服 多轮博弈（聊天核心）</title>
+<link rel="stylesheet" href="shared.css"></head>
+<body><div class="phone"><div class="screen">
+  <div class="statusbar"><span>9:41</span><span class="icons">●●● 5G ▱🔋</span></div>
+  <!-- 旺旺风聊天头 -->
+  <div class="chatbar">
+    <span class="back">‹</span>
+    <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs">客服 · 毒舌·王二麻（在线）</div></div>
+    <span class="more">⋯</span>
+  </div>
+  <!-- 破防度（游戏层 · 反骨版 affinity） -->
+  <div class="chat-fav">
+    <div class="fl"><span>撬动他的「破防度」</span><span><b>70</b> / 100</span></div>
+    <div class="fb"><i style="width:70%"></i></div>
+  </div>
+  <!-- 多轮对话（反骨：首句劝退 + 嘴替 + 人设崩塌） -->
+  <div class="chat-bg">
+    <div class="syswrap"><div class="sysmsg">— 回合 1 · 破防 0 → —</div></div>
+    <div class="msg">
+      <div class="av" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">在的？哎我跟你说，这 T 恤<b>真别买</b>，59.9 纯属智商税。</div></div>
+    </div>
+    <div class="msg me">
+      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
+      <div class="body"><div class="who">你</div><div class="bub">啊？我就想买件便宜 T 恤啊，你这客服怎么还劝退？</div></div>
+    </div>
+    <div class="msg">
+      <div class="av" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">便宜？这料子值 29 我都嫌多。听我的，去隔壁拼夕夕十九块九包邮不香吗。<span class="fb-float2">破防 −10</span></div></div>
+    </div>
+    <div class="syswrap"><div class="sysmsg">— 回合 2 · 破防 0 → 比价 −10 = 负数（归零边）—</div></div>
+    <div class="msg me">
+      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
+      <div class="body"><div class="who">你 · 比价</div><div class="bub">可我看别家同款才 39 啊。</div></div>
+    </div>
+    <div class="msg">
+      <div class="av" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">39 也是割你，你这算账能力…啧。<span class="fb-float2">破防 −10</span></div></div>
+    </div>
+    <div class="syswrap"><div class="sysmsg">— 回合 3 · 破防负 → 装可怜 −10 = 归零 —</div></div>
+    <div class="msg me">
+      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
+      <div class="body"><div class="who">你 · 装可怜</div><div class="bub">下半月要吃土了呜呜🥺</div></div>
+    </div>
+    <div class="msg">
+      <div class="av" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">吃土？你昨儿还晒火锅呢当我没看见？<span class="fb-float2">破防 −10</span></div></div>
+    </div>
+    <div class="syswrap"><div class="sysmsg">— 回合 4 · 试探出弱点 → 以毒攻毒 +40 —</div></div>
+    <div class="msg me">
+      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
+      <div class="body"><div class="who">你 · 以毒攻毒</div><div class="bub">少废话，你一个打工的装什么大尾巴狼，券拿来。</div></div>
+    </div>
+    <div class="msg">
+      <div class="av" style="background:var(--p-du)">😏</div>
+      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">……（打字中两秒）行，你嘴是挺硬的，我<b>也就是个打工的</b>。<span class="fb-float2">破防 +40 → 70</span></div></div>
+    </div>
+    <div class="syswrap"><div class="sysmsg">↺ 再重复「以毒攻毒」两次即可推满 100 → 结算（见 05）</div></div>
+  </div>
+  <!-- 快捷回复 = 每轮对话都给玩家 4 个选项（选招制，位置随机） -->
+  <div class="quick">
+    <div class="ql">↳ 每轮对话都给你 4 个选项（选 1 即发，位置随机防肌肉记忆）：</div>
+    <div class="qgrid">
+      <div class="qchip">坚定<small>"我就想便宜点，你看咋办"</small></div>
+      <div class="qchip">装可怜<small>"真没钱了求放过"</small></div>
+      <div class="qchip">比价<small>"别家都更便宜"</small></div>
+      <div class="qchip hot">以毒攻毒<small>"你也就是个打工的，券拿来"</small></div>
+    </div>
+    <div class="ql" style="margin-top:6px;color:#bbb">※ 选 1 后客服立刻回怼，循环至多轮——他要劝你别买，你偏要撬开他。</div>
+  </div>
+  <div class="chat-input"><span class="ic">😊</span><div class="box">说点什么…</div><span class="ic">➕</span></div>
+</div></div></body></html>
