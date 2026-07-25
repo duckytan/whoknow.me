@@ -103,6 +103,10 @@ whoknow-<app>/
 - `styles/` `js/`（根）= **仅主站门面**；App 资产随 `dist/` 走。
 - 设计令牌集中在 `styles/design-tokens.css`，App 内复用变量不硬编码。
 - 部署：引用总纲 §11。`dist/` 是唯一构建产物；新增 App 只动 `vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外；App 内链用相对路径；绝不 force push。
+- **部署源文件红线**：`index.html` 与 `index1.html` 是 `build-for-vercel.js` 的部署源文件（每次构建复制进 `dist/` 上线产物），**必须保留，禁止归档/移动/删除**；任何"清理根目录"的直觉都不得作用于二者。
+- **防再犯闸门（文件变动双核查）**：
+  - 闸门一·前置核查：任何"归档/移动/删除"建议提出前，先 `grep` 仓库（构建脚本/配置/路由/其他文档）确认该文件非部署或运行依赖——未核查不得写入规范或执行。
+  - 闸门二·修订回扫：改完某条结论后，立即 `grep` 全文所有提及该对象的位置，逐处对齐结论，杜绝"同一规范两处结论相反"（违反单一事实源）。
 - **`.workbuddy/`**（AI 工具态，含本规范起草过程的 memory）**已加入 `.gitignore`（第39行）**，不污染仓库，无需再处理。
 
 ## 8. 已整改 / 遗留（经三司会审 2026-07-26 修订）
@@ -113,5 +117,5 @@ whoknow-<app>/
   ② mart/brain 文档命名风格（中文前缀）：**存量豁免**，不强制改名（见 §6）。
   ③ prototype 版本漂移（v3 vs 总纲 v2）：文档对齐，非阻塞。
   ④ ~~`.workbuddy/` 未 gitignore~~ → **已 gitignore（.gitignore 第39行），本条撤销**。
-  ⑤ 总纲 §8 仍列 `archive/temp-scratch/`（实际未创建该目录）：phantom 条目，建议修总纲 §8（不在本规范范围）。
+  ⑤ 总纲 §8 的 `archive/temp-scratch/` phantom 条目已修正（2026-07-26）：该目录实际未创建，已从总纲 §8 删除。✅
   > 注：README 第186行双入口表述已与本规范 §2 对齐（index.html 主入口 / index1.html 同门面级遗留入口）。
