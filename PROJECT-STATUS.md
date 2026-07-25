@@ -18,7 +18,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2 系统设计 | ✅ 完成 | DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2 |
 | 3 技术搭建 | ✅ 完成 | 4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.） |
 | 4 预制作 | ⚠️ 部分 | prototype 12 页 + tests/ 在；缺 Epic/Story 拆分 + 首冲刺计划 + 垂直切片 |
-| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` 35/35 绿；已部署 `whoknow.me/waimai`（commit a6a1e35）|
+| 5 制作 (M1) | ✅ 完成 | Route B 整合：原型浅色皮 + M1 内核。5 店(全人格)+3 骑手+成就墙+订单历史；`npm run build` PASS(vue-tsc 0 error) + `npm test` **38/38** 绿（含 P0 死分支可达性 T10/T11/T12）；三司会审 P0 两刀已修（本地 commit 9c798d6，push 暂受阻）|
 | 6 打磨 | ⬜ | — |
 | 7 发布 | ⬜ | **硬闸门 = 真机 playtest（笑率 + 同店第 5 单差异）** |
 
@@ -52,8 +52,8 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 ## 开放项（历史 P0 未动）
 
 - **P0-C**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地，见上）
-- **P0-D**：SEED 7 分支未消费 `remarkTag` / `addressTag`（核心乐趣缺口，P1 假说未兑现）
-- **P0-E（已缓解）**：视觉前品牌 —— Route B 已把 prototype 浅色胡闹黄皮套到 M1（`src/style.css` 重写 + 金刚区分类配色）；`styles/design-tokens.css` 锚色仍独立未 import；无障碍回归待 M2
+- **P0-D（部分缓解）**：`remarkTag` 现已被 odd/blacklist/more_spicy/no_scold 消费（odd_eats、boss_blacklist 经备注可达）；`shopVisitCount` 仍未被任何分支消费（店间/同店差异感待 P1 设计）
+- **P0-E（已解决）**：视觉前品牌 —— P0-2 已将 BRAND.md 锚色(`--brand-green/orange/purple`)+字体令牌(ZCOOL KuaiLe 手写梗等)引入 `src/style.css`；导航选中态改品牌橙红、段子卡手写体+品牌绿高亮底(截图价值)、成就✓改品牌绿、全局 whoknow 绿底白「?」角标；无障碍回归待 M2
 
 ## 变更记录
 
@@ -65,3 +65,4 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 | 2026-07-25 | **M1 app 部署接线已推**（`f832317`）：vercel.json buildCommand 构建 whoknow-waimai 并 cp 到 /waimai（outputDirectory 保持 "."，门面在根）；加 /waimai SPA 回退；.vercelignore 去掉 waimai 源码排除。Vercel 连仓库自动部署，push 后约 1-2 min 上线 `whoknow.me/waimai` |
 | 2026-07-25 | **首页样式修复 + styleguide 恢复**：Vercel dashboard 残留 buildCommand 导致部署回退，改为静态部署 + 覆盖 buildCommand 为 `echo done`；`whoknow.me` 样式与 `/waimai` app 均正常；从 `archive/root-obsolete` 恢复 `docs/styleguide.html` |
 | 2026-07-25 | **Route B 整合 + 部署（commit a6a1e35, push 到 main）**：原型浅色皮套 M1 内核；新增 8 组件 + 6 视图 + shops/achievements 数据层 + 成就/历史接入 memory；测试 27→35 绿；移除未用 public/config 死配置(含旧 {price}/{fee})；`waimai/` 预构建提交，Vercel 静态部署，live 验证 /waimai 返回新构建(HTTP 200, 无 {price}/{fee}) |
+| 2026-07-25 | **三司会审 P0 两刀（commit 9c798d6，本地 ahead 1，push 暂受阻）**：① P0-1 死分支修复 —— odd_eats 触发由自锁 flag 改为 `remarkTag=odd \| flag(odd_eats_{shopId})` 经备注首次可达(`dark_chef` 成就可解锁)；新增 `boss_blacklist` 分支(备注拉黑/差评)播种 `blacklisted_{shopId}`，使 `blacklist_reunion` 后续可触发(`reconciled` 成就可解锁)；`orderInput` 备注分类加 odd/blacklist；测试 35→38(T10/T11/T12)。② P0-2 品牌落地(BRAND.md) —— 引入品牌锚色 `--brand-green/orange/purple`+字体令牌(ZCOOL KuaiLe 手写梗/Ma Shan Zheng/Bungee 等)；导航选中态改品牌橙红；段子卡 NPC 金句手写体+品牌绿高亮底(截图价值)；成就✓改品牌绿+解锁绿光晕；Story 水印 badge 改品牌橙；表单聚焦改品牌橙；全局 whoknow 绿底白「?」角标(PhoneFrame)。`npm run build` 0 报错(67 模块)。**push 因沙箱 git 写鉴权被拦截(HTTP 401 Basic realm，环境仅有 Bearer/API 令牌，proxy 仅放行读)暂未上 GitHub，Vercel 未重部署；代码已本地提交、waimai/ 已重建待上线** |
