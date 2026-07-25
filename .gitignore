@@ -6,8 +6,8 @@ node_modules/
 # ── 构建产物 ──
 dist/
 build/
-waimai/
 *.tsbuildinfo
+# 注意：waimai/ 是胡闹外卖 app 的预构建产物，需要提交以支持 Vercel 静态部署
 
 # ── 环境变量 ──
 .env

@@ -1,5 +1,4 @@
 {
-  "buildCommand": "cd whoknow-waimai && npm install && npm run build && cp -r dist/. ../waimai/",
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/waimai/:path*", "destination": "/waimai/index.html" }
