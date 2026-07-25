@@ -183,7 +183,8 @@ whoknow.me/
 ├── vercel.json                    ← 多 App 部署红线（总纲 §11）
 ├── .gitignore / .vercelignore     ← 忽略配置
 ├── build-for-vercel.js            ← 部署辅助脚本
-├── index.html                     ← 主站门面入口（全仓唯一）
+├── index.html                    ← 主站门面主入口
+├── index1.html                   ← 同门面级遗留入口（build-for-vercel.js 部署源文件，随主站一并上线）
 ├── data/                          ← 主站全局数据（home.json）
 ├── styles/                        ← 主站样式（design-tokens.css）
 ├── js/                            ← 主站脚本（home-render.js）

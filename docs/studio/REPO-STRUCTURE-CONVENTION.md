@@ -109,9 +109,9 @@ whoknow-<app>/
 - ✅ 已整改（本规范创建时）：总纲 §8 把 `prototype/` 从"保留"移入"归档"；README 目录结构段更新为当前结构；根 `CURRENT-STATE.md`/`PROJECT-STATUS.md` 移入 `docs/studio/`；`docs/studio/STUDIO-PROGRESS.md` 的 prototype 路径修正。
 - ✅ 已修订（三司会审后）：权威锚点降为"总纲实施细则"、三铁律降为"约定"、命名改"新文档约定+存量豁免"、`.workbuddy/` 标注为已 gitignore、brain 补单点缓解、归档子目录收敛。
 - ⬜ 遗留待办（事实类，需后续处理）：
-  ① 根双 HTML 入口：`index.html` 为主入口，`index1.html` 为同门面级遗留入口（本规范已明确"不强制唯一"）；建议归档 `index1.html` 至 `archive/root-obsolete/`，待用户拍板。
+  ① 根双 HTML 入口：`index.html` 为主入口，`index1.html` 为同门面级遗留入口（本规范已明确"不强制唯一"）；**保留**——`build-for-vercel.js` 将其复制进 `dist/` 上线产物，属部署源文件，不可删。
   ② mart/brain 文档命名风格（中文前缀）：**存量豁免**，不强制改名（见 §6）。
   ③ prototype 版本漂移（v3 vs 总纲 v2）：文档对齐，非阻塞。
   ④ ~~`.workbuddy/` 未 gitignore~~ → **已 gitignore（.gitignore 第39行），本条撤销**。
   ⑤ 总纲 §8 仍列 `archive/temp-scratch/`（实际未创建该目录）：phantom 条目，建议修总纲 §8（不在本规范范围）。
-  > 注：README 第186行仍写"全仓唯一"，与本规范 §2 不一致——README 属仓库门面文档，其修订需单独处理，本规范仅在此标注。
+  > 注：README 第186行双入口表述已与本规范 §2 对齐（index.html 主入口 / index1.html 同门面级遗留入口）。
