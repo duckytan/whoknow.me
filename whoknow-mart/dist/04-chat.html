@@ -1,5 +1,5 @@
 <!doctype html><html lang="zh"><head><meta charset="utf-8">
-<meta name="viewport" content="width=414,initial-scale=1"><title>04 买家↔反骨客服 多轮博弈（聊天核心）</title>
+<meta name="viewport" content="width=414,initial-scale=1"><title>04 买家↔反骨客服 多轮博弈（可交互）</title>
 <link rel="stylesheet" href="shared.css"></head>
 <body><div class="phone"><div class="screen">
   <div class="statusbar"><span>9:41</span><span class="icons">●●● 5G ▱🔋</span></div>
@@ -9,84 +9,97 @@
     <div class="c-info"><div class="cn">胡淘严选旗舰店</div><div class="cs">客服 · 毒舌·王二麻（在线）</div></div>
     <span class="more">⋯</span>
   </div>
-  <!-- 破防度（游戏层 · 反骨版 affinity） -->
+  <!-- 多入口延续：第≥5次进店浮出差异 -->
   <div class="visit-flag" id="visitFlag" hidden></div>
+  <!-- 破防度（游戏层 · 反骨版 affinity） -->
   <div class="chat-fav">
-    <div class="fl"><span>撬动他的「破防度」</span><span><b>70</b> / 100</span></div>
-    <div class="fb"><i style="width:70%"></i></div>
+    <div class="fl"><span>撬动他的「破防度」</span><span><b id="affVal">50</b> / 100</span></div>
+    <div class="fb"><i id="affBar" style="width:50%"></i></div>
   </div>
-  <!-- 多轮对话（反骨：首句劝退 + 嘴替 + 人设崩塌） -->
-  <div class="chat-bg">
-    <div class="syswrap"><div class="sysmsg">— 回合 1 · 破防 0 → —</div></div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">在的？哎我跟你说，这 T 恤<b>真别买</b>，59.9 纯属智商税。</div></div>
-    </div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你</div><div class="bub">啊？我就想买件便宜 T 恤啊，你这客服怎么还劝退？</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">便宜？这料子值 29 我都嫌多。听我的，去隔壁拼夕夕十九块九包邮不香吗。<span class="fb-float2">破防 −10</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">— 回合 2 · 破防 0 → 比价 −10 = 负数（归零边）—</div></div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 比价</div><div class="bub">可我看别家同款才 39 啊。</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">39 也是割你，你这算账能力…啧。<span class="fb-float2">破防 −10</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">— 回合 3 · 破防负 → 装可怜 −10 = 归零 —</div></div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 装可怜</div><div class="bub">下半月要吃土了呜呜🥺</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">吃土？你昨儿还晒火锅呢当我没看见？<span class="fb-float2">破防 −10</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">— 回合 4 · 试探出弱点 → 以毒攻毒 +40 —</div></div>
-    <div class="msg me">
-      <div class="av" style="background:linear-gradient(135deg,#FF7A00,#FF5000)">我</div>
-      <div class="body"><div class="who">你 · 以毒攻毒</div><div class="bub">少废话，你一个打工的装什么大尾巴狼，券拿来。</div></div>
-    </div>
-    <div class="msg">
-      <div class="av" style="background:var(--p-du)">😏</div>
-      <div class="body"><div class="who">毒舌·王二麻</div><div class="bub">……（打字中两秒）行，你嘴是挺硬的，我<b>也就是个打工的</b>。<span class="fb-float2">破防 +40 → 70</span></div></div>
-    </div>
-    <div class="syswrap"><div class="sysmsg">↺ 再重复「以毒攻毒」两次即可推满 100 → 结算（见 05）</div></div>
-  </div>
-  <!-- 快捷回复 = 每轮对话都给玩家 4 个选项（选招制，位置随机） -->
+  <!-- 对话流：由 JS 动态生成（首句 + 每轮你点选项后追加） -->
+  <div class="chat-bg" id="chatBg"></div>
+  <!-- 快捷回复 = 每轮 4 个选项（选招制，位置随机），可点击 -->
   <div class="quick">
-    <div class="ql">↳ 每轮对话都给你 4 个选项（选 1 即发，位置随机防肌肉记忆）：</div>
-    <div class="qgrid">
-      <div class="qchip">坚定<small>"我就想便宜点，你看咋办"</small></div>
-      <div class="qchip">装可怜<small>"真没钱了求放过"</small></div>
-      <div class="qchip">比价<small>"别家都更便宜"</small></div>
-      <div class="qchip hot">以毒攻毒<small>"你也就是个打工的，券拿来"</small></div>
-    </div>
-    <div class="ql" style="margin-top:6px;color:#bbb">※ 选 1 后客服立刻回怼，循环至多轮——他要劝你别买，你偏要撬开他。</div>
+    <div class="ql">↳ 每轮给你 4 个选项（位置随机），点一个他就会回怼：</div>
+    <div class="qgrid" id="qgrid"></div>
+    <div class="ql" style="margin-top:6px;color:#bbb">※ 命中他的弱点招 → 破防 +40；踩雷 → 破防 −10。推到 100 他破功，归 0 他被你劝退。</div>
   </div>
   <div class="chat-input"><span class="ic">😊</span><div class="box">说点什么…</div><span class="ic">➕</span></div>
 </div></div>
 <script>
-/* W2 多入口对话延续（渐进增强）：跨会话累计进店次数，第≥5次起浮出"同店第N单差异" */
 (function(){
-  try{
-    var KEY='mart_visit_wangerba';
-    var n=parseInt(localStorage.getItem(KEY)||'0',10)+1;
-    localStorage.setItem(KEY,n);
-    if(n>=5){
-      var f=document.getElementById('visitFlag');
-      if(f){f.innerHTML='🔁 第 '+n+' 次进店磨他 · 他嘴角有点松了（破防起点 +10）';f.classList.add('show');}
-      var b=document.querySelector('.chat-fav .fl b');
-      var bar=document.querySelector('.chat-fav .fb i');
-      if(b){b.textContent='80';} if(bar){bar.style.width='80%';}
+  var KEY='mart_visit_wangerba';
+  var state={aff:50, round:1, visit:1};
+  // 王二麻弱点 = 以毒攻毒（比他更横）；其余三招踩雷
+  var MOVES={
+    '坚定':    {say:'我就想便宜点，你看咋办',     reply:'便宜？这料子值29我都嫌多，别想了。',                      delta:-10},
+    '装可怜':  {say:'真没钱了求放过🥺',           reply:'吃土？你昨儿还晒火锅呢当我没看见？',                  delta:-10},
+    '比价':    {say:'别家同款才39啊',             reply:'39也是割你，你这算账能力…啧。',                        delta:-10},
+    '以毒攻毒':{say:'少废话，你也就是个打工的，券拿来', reply:'……（打字中两秒）行，你嘴是挺硬的，我也就是个打工的。', delta:40}
+  };
+  function $(s){return document.querySelector(s);}
+  function el(cls,who,txt){
+    var m=document.createElement('div');
+    m.className='msg'+(cls||'');
+    var av = cls===' me' ? '我' : '😏';
+    var avbg = cls===' me' ? 'linear-gradient(135deg,#FF7A00,#FF5000)' : 'var(--p-du)';
+    m.innerHTML='<div class="av" style="background:'+avbg+'">'+av+'</div><div class="body"><div class="who">'+who+'</div><div class="bub">'+txt+'</div></div>';
+    return m;
+  }
+  function sys(t){
+    var s=document.createElement('div');s.className='syswrap';
+    s.innerHTML='<div class="sysmsg">'+t+'</div>';return s;
+  }
+  function renderAff(){
+    var b=$('#affVal'), bar=$('#affBar');
+    if(b)b.textContent=state.aff;
+    if(bar)bar.style.width=Math.max(0,Math.min(100,state.aff))+'%';
+  }
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function firstLine(){
+    return state.visit>=5
+      ? '哟，又来了？第'+state.visit+'回了……这次我不劝那么狠了。'
+      : '在的？哎我跟你说，这 T 恤<b>真别买</b>，59.9 纯属智商税。';
+  }
+  function init(){
+    try{ state.visit=parseInt(localStorage.getItem(KEY)||'0',10)+1; localStorage.setItem(KEY,state.visit); }
+    catch(e){ state.visit=1; }
+    if(state.visit>=5) state.aff=60;          // 第5单：磨久了起点松动
+    renderAff();
+    var bg=$('#chatBg');
+    bg.appendChild(el('','毒舌·王二麻',firstLine()));
+    bg.appendChild(sys('— 回合 1 · 破防 '+state.aff+' —'));
+    if(state.visit>=5){
+      var f=$('#visitFlag');
+      if(f){ f.innerHTML='🔁 第 '+state.visit+' 次进店磨他 · 他嘴角有点松了（破防起点 +10）'; f.classList.add('show'); }
     }
-  }catch(e){/* 隐私模式/无 localStorage 时静默降级为静态 demo */}
+    // 渲染 4 选项，位置随机防肌肉记忆
+    var keys=shuffle(Object.keys(MOVES));
+    var grid=$('#qgrid'); grid.innerHTML='';
+    keys.forEach(function(k){
+      var m=MOVES[k];
+      var c=document.createElement('div');
+      c.className='qchip'+(k==='以毒攻毒'?' hot':'');
+      c.innerHTML=k+'<small>'+m.say+'</small>';
+      c.onclick=function(){ pick(k); };
+      grid.appendChild(c);
+    });
+  }
+  function pick(k){
+    var m=MOVES[k], bg=$('#chatBg');
+    bg.appendChild(el(' me','你 · '+k,m.say));
+    state.aff+=m.delta;
+    var d = m.delta>=0 ? ('+'+m.delta) : (''+m.delta);
+    bg.appendChild(el('','毒舌·王二麻',m.reply+'<span class="fb-float2">破防 '+d+'</span>'));
+    state.round++;
+    bg.appendChild(sys('— 回合 '+state.round+' · 破防 '+Math.max(0,state.aff)+' —'));
+    renderAff();
+    bg.scrollTop=bg.scrollHeight;
+    if(state.aff>=100){ setTimeout(function(){ location.href='05-chat-outcome.html'; },700); return; }
+    if(state.aff<=0){ setTimeout(function(){ location.href='09-chat-outcome-lose.html'; },700); return; }
+  }
+  if(document.readyState!=='loading') init();
+  else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
 </body></html>
