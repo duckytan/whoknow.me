@@ -49,7 +49,7 @@
 - **外卖 M1**：七阶段（概念→系统设计→技术搭建→预制作→制作→打磨→发布）全 ✅，已上线 `/waimai`；测试 45/45 绿，构建 0 类型错误。
 - **导购**：概念阶段，复用契约对齐中（`whoknow-mart/docs/`）。
 - **brain**：手动信封（锡哥生成），P0-C 自动化**暂停**（见 §8）。
-- **开放项**：P0-C 暂停（待 brain 分工明确）；playtest 硬闸门口径（A 轻量 / B 自然回收 / C 全量）未拍板；brain 实际负责方（DuckyPC vs 701-PC）待定；P0-D `shopVisitCount` 未被消费（待 P1）；小程序 target 冻结至 M2；无障碍 3 项回归待 M2。
+- **开放项**：P0-C 暂停（后台 agent 已终止，待重启）；playtest 硬闸门口径（A 轻量 / B 自然回收 / C 全量）未拍板；brain 负责方已定：`701-PC` / Agent-商城（胡叨叨），见 §8；P0-D `shopVisitCount` 未被消费（待 P1）；小程序 target 冻结至 M2；无障碍 3 项回归待 M2。
 
 📄 详情：[`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md)
 
@@ -66,6 +66,7 @@
 | 在制登记 | 当前 WIP / 阻塞项 | [`docs/studio/WIP.md`](docs/studio/WIP.md) |
 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
 | 跨设备共享记忆 | 项目级记忆入口（替代本机日志跨设备同步） | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
+| 新机器身份初始化（兜底） | 无 IDENTITY.md 时粘贴即用清单，根治「不读 ROLES」 | [`docs/studio/AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) |
 
 ⚠️ **任何文件/目录/文档操作前，必先读结构规范并遵守 §7 双闸门**（前置核查 + 修订回扫）。
 
@@ -106,10 +107,11 @@
 
 ### 全新机器冷启动闭环（P0 · 流动开发常态）
 你经常在不同电脑装 workbuddy 继续开发，**全新机器首次启动 = 身份文件为空是常态，不是异常**。闭环：
-1. **装 workbuddy 后**：平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。填完后本机角色即生效。
-2. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求你确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
-3. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
-4. **回写**：角色确认后，若 §8 分工表未覆盖你的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
+1. **装 workbuddy 后**：多数机器平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按 [`AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) 粘贴即用清单补建。
+2. **（接入第 0 步 · 硬规则）**：无论平台是否引导，每台机器都必须在本机 `IDENTITY.md` 写入「每次会话开始先读 [`docs/studio/ROLES.md`](docs/studio/ROLES.md) 定位本机角色与范围」这一自动注入指针。否则新建对话会遗忘协作约定——本仓库所有 agent 强制，详见 `ROLES.md` §5。
+3. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求你确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
+4. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
+5. **回写**：角色确认后，若 §8 分工表未覆盖你的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
 
 ---
 
@@ -133,9 +135,9 @@
 | 机器 | 计算机名 | 负责 app | 主理人 | 备注 |
 |---|---|---|---|---|
 | 本机（你） | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
-| 另一台 | `701-PC` | `whoknow-mart` + `whoknow-brain` | 锡哥/錡哥侧 | brain 信封待自动化（P0-C） |
+| 另一台 | `701-PC` | `whoknow-mart` + `whoknow-brain` | 产出：锡哥；执行：胡叨叨（Agent-商城）| brain 信封待自动化（P0-C）；⚠️ brain 为共享契约中枢，单点归商城侧，存在单点耦合风险 |
 
-**跨边界任务归属原则**：按"生产方"定。信封（brain 产出）→ 归 `701-PC`；若消费方（waimai）机器已具备样本且合理，可协商在消费方做。当前 **P0-C（brain 信封自动化）暂停**：后台 agent 已终止(killed)，且 brain 实际负责方未定；**待分工明确后由对应负责机器的 agent 执行，不在 DuckyPC 跨做**。信封样例 `latest-config.json` / `fallback.json` 已抢救进 `whoknow-waimai/public/config/`。
+**跨边界任务归属原则**：按"生产方"定。信封（brain 产出）→ 归 `701-PC`；若消费方（waimai）机器已具备样本且合理，可协商在消费方做。当前 **P0-C（brain 信封自动化）暂停**：后台 agent 已终止(killed)，但 **brain 负责方已定：`701-PC` / Agent-商城（胡叨叨）**，**由 701-PC 侧的 agent 执行，不在 DuckyPC 跨做**。信封样例 `latest-config.json` / `fallback.json` 已抢救进 `whoknow-waimai/public/config/`。
 
 共同：共享同一 GitHub 仓库，靠 git 同步 + 结构规范 + 本分工表避免冲突。
 
@@ -194,7 +196,7 @@
 
 ## 12. 文档导航与权威链
 
-权威：总纲 ＞ 结构规范 ＞ 各 app 文档。
+权威：总纲 ＞ 结构规范 ＞ 各 app 文档；**多机协作角色 / 红线以 [`ROLES.md`](docs/studio/ROLES.md) 为准**（INDEX 仅作导航摘要，细则以该文件为准，避免双文档漂移）。
 
 | 你想查 | 去这里 |
 |---|---|
@@ -203,6 +205,7 @@
 | 文件归位 / 移动删除 | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
 | 当前进度 / 开放项 | [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) |
 | 多机协作 / 权限 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| 新机器身份初始化（兜底） | [`docs/studio/AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) |
 | 品牌视觉 | [`BRAND.md`](BRAND.md) |
 | brain 信封契约 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
 | 跨设备记忆 | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
