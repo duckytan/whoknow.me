@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 1340" font-family="Inter, 'Noto Sans SC', sans-serif">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+    .label{font:600 13px Inter,'Noto Sans SC',sans-serif;fill:#666}
+    .sub{font:400 12px Inter,'Noto Sans SC',sans-serif;fill:#999}
+    .title{font:900 22px 'ZCOOL QingKe HuangYou',sans-serif;fill:#222}
+    .sec{font:800 15px Inter,'Noto Sans SC',sans-serif;fill:#ff7849}
+    .hex{font:600 11px 'JetBrains Mono',monospace;fill:#444}
+    .script{font:700 18px 'ZCOOL KuaiLe',cursive;fill:#222}
+    .brush{font:700 20px 'Ma Shan Zheng',cursive;fill:#8b5cf6}
+    .display{font:400 22px Bungee,sans-serif;fill:#6eda78}
+    .mono{font:600 12px 'JetBrains Mono',monospace;fill:#6eda78}
+  </style>
+
+  <rect width="920" height="1340" fill="#f7f7f8"/>
+  <rect x="0" y="0" width="920" height="64" fill="#0a0612"/>
+  <text x="32" y="30" class="display">whoknow</text>
+  <text x="180" y="30" font="400 22px Bungee" fill="#8b5cf6" font-family="Bungee" font-size="22" font-weight="400">?</text>
+  <text x="640" y="30" class="sub" fill="#a094b8">mart · moodboard v0.1</text>
+  <text x="32" y="54" class="sub" fill="#a094b8">美术圣经 §6 可视化锚点 · art-director 林绘澄</text>
+
+  <!-- 1. 品牌锚色 -->
+  <text x="32" y="104" class="sec">① 品牌锚色（BRAND.md §2.1 · 不可替换）</text>
+  <g transform="translate(32,120)">
+    <rect width="170" height="70" rx="12" fill="#6eda78"/><text x="14" y="30" fill="#0a0612" font-weight="800" font-size="15">胡闹绿</text><text x="14" y="52" class="hex" fill="#0a0612">#6eda78</text>
+    <rect x="190" width="170" height="70" rx="12" fill="#ff7849"/><text x="204" y="30" fill="#fff" font-weight="800" font-size="15">橙红</text><text x="204" y="52" class="hex" fill="#fff">#ff7849</text>
+    <rect x="380" width="170" height="70" rx="12" fill="#8b5cf6"/><text x="394" y="30" fill="#fff" font-weight="800" font-size="15">宇宙紫</text><text x="394" y="52" class="hex" fill="#fff">#8b5cf6</text>
+    <rect x="570" width="300" height="70" rx="12" fill="#ffffff" stroke="#dcdce0"/><text x="584" y="28" class="label">用途：点缀 / whoknow角标 / 戏精弹层 / 成就光晕</text><text x="584" y="50" class="sub">不取代宿主主色，禁承载小号正文</text>
+  </g>
+
+  <!-- 2. mart 宿主橙红皮 -->
+  <text x="32" y="226" class="sec">② mart 宿主皮（淘宝/天猫橙红系 · 与 waimai 黄皮同构）</text>
+  <g transform="translate(32,242)">
+    <rect width="150" height="64" rx="10" fill="#FF5000"/><text x="12" y="28" fill="#fff" font-weight="800" font-size="14">宿主主色</text><text x="12" y="48" class="hex" fill="#fff">#FF5000</text>
+    <rect x="166" width="150" height="64" rx="10" fill="#E64600"/><text x="178" y="28" fill="#fff" font-weight="800" font-size="14">深态</text><text x="178" y="48" class="hex" fill="#fff">#E64600</text>
+    <rect x="332" width="150" height="64" rx="10" fill="#FFEDE6"/><text x="344" y="28" fill="#FF5000" font-weight="800" font-size="14">浅底</text><text x="344" y="48" class="hex">#FFEDE6</text>
+    <rect x="498" width="150" height="64" rx="10" fill="#FF0036"/><text x="510" y="28" fill="#fff" font-weight="800" font-size="14">价格红</text><text x="510" y="48" class="hex" fill="#fff">#FF0036</text>
+    <rect x="664" width="206" height="64" rx="10" fill="#ffffff" stroke="#dcdce0"/><text x="676" y="26" class="label">宿主皮仅用于 L1 伪装层</text><text x="676" y="46" class="sub">戏精层用锚色，不混用</text>
+  </g>
+
+  <!-- 3. 导购角色色 -->
+  <text x="32" y="346" class="sec">③ 导购角色色（复用 waimai --role-* 令牌 · 值一致）</text>
+  <g transform="translate(32,362)">
+    <rect width="160" height="56" rx="28" fill="#FF4B10"/><text x="20" y="34" fill="#fff" font-weight="800" font-size="14">🔥 毒舌 #FF4B10</text>
+    <rect x="176" width="160" height="56" rx="28" fill="#2BB14A"/><text x="196" y="34" fill="#fff" font-weight="800" font-size="14">🤓 理性 #2BB14A</text>
+    <rect x="352" width="160" height="56" rx="28" fill="#3A7BFF"/><text x="372" y="34" fill="#fff" font-weight="800" font-size="14">😴 散漫 #3A7BFF</text>
+    <rect x="528" width="160" height="56" rx="28" fill="#1FB6A6"/><text x="548" y="34" fill="#fff" font-weight="800" font-size="14">🧘 鸡汤 #1FB6A6</text>
+    <rect x="704" width="160" height="56" rx="28" fill="#8B5CF6"/><text x="724" y="34" fill="#fff" font-weight="800" font-size="14">😈 腹黑 #8B5CF6</text>
+  </g>
+
+  <!-- 4. 字体样品 -->
+  <text x="32" y="466" class="sec">④ 字体阵容（BRAND.md §3.1 · 令牌对齐）</text>
+  <g transform="translate(32,482)">
+    <text x="0" y="24" class="display">Bungee · whoknow 字标 / 角标</text>
+    <text x="0" y="58" class="title">ZCOOL QingKe HuangYou · 中文标题 / 结局卡</text>
+    <text x="0" y="90" class="script">ZCOOL KuaiLe · 导购金句 / 选招台词 / 段子卡</text>
+    <text x="0" y="122" class="brush">Ma Shan Zheng · 印章 / 强戏精台词</text>
+    <text x="0" y="150" font="400 15px Inter" font-family="Inter" font-size="15" fill="#222">Inter + Noto Sans SC · 所有界面正文与 UI 文本</text>
+    <text x="0" y="176" class="mono">JetBrains Mono · 破防度 72 / HOT / mono 徽章</text>
+  </g>
+
+  <!-- 5. 五型导购头像 + 标签 -->
+  <text x="32" y="630" class="sec">⑤ 五型导购视觉模板（头像 + 戏精标签 + 动机化名角标）</text>
+  <g transform="translate(32,648)">
+    <!-- card 1 -->
+    <rect x="0" y="0" width="170" height="120" rx="16" fill="#fff" stroke="#ededed"/>
+    <circle cx="40" cy="40" r="26" fill="#FF4B10"/><text x="40" y="50" text-anchor="middle" font-size="24">🔥</text>
+    <text x="76" y="34" font="800 14px" font-family="Inter" font-weight="800" font-size="14" fill="#222">毒舌·王二麻</text>
+    <rect x="76" y="44" width="64" height="22" rx="11" fill="#FFE4D6"/><text x="108" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#FF4B10">毒舌</text>
+    <text x="14" y="92" class="script" font-size="14" fill="#222">「这你也下单？」</text>
+    <text x="14" y="112" font-size="11" fill="#999">角标：嘴替</text>
+    <!-- card 2 -->
+    <rect x="186" y="0" width="170" height="120" rx="16" fill="#fff" stroke="#ededed"/>
+    <circle cx="40" cy="40" r="26" fill="#2BB14A"/><text x="40" y="50" text-anchor="middle" font-size="24">🤓</text>
+    <text x="76" y="34" font-family="Inter" font-weight="800" font-size="14" fill="#222">理性·李算盘</text>
+    <rect x="76" y="44" width="64" height="22" rx="11" fill="#DFF5E1"/><text x="108" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#2BB14A">理性</text>
+    <text x="14" y="92" class="script" font-size="14" fill="#222">「隔壁便宜50」</text>
+    <text x="14" y="112" font-size="11" fill="#999">角标：算账</text>
+    <!-- card 3 -->
+    <rect x="372" y="0" width="170" height="120" rx="16" fill="#fff" stroke="#ededed"/>
+    <circle cx="40" cy="40" r="26" fill="#3A7BFF"/><text x="40" y="50" text-anchor="middle" font-size="24">😴</text>
+    <text x="76" y="34" font-family="Inter" font-weight="800" font-size="14" fill="#222">散漫·赵拖拖</text>
+    <rect x="76" y="44" width="64" height="22" rx="11" fill="#DCE7FF"/><text x="108" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#3A7BFF">散漫</text>
+    <text x="14" y="92" class="script" font-size="14" fill="#222">「啊？又要发？」</text>
+    <text x="14" y="112" font-size="11" fill="#999">角标：想下班</text>
+    <!-- card 4 -->
+    <rect x="558" y="0" width="170" height="120" rx="16" fill="#fff" stroke="#ededed"/>
+    <circle cx="40" cy="40" r="26" fill="#1FB6A6"/><text x="40" y="50" text-anchor="middle" font-size="24">🧘</text>
+    <text x="76" y="34" font-family="Inter" font-weight="800" font-size="14" fill="#222">鸡汤·钱满满</text>
+    <rect x="76" y="44" width="64" height="22" rx="11" fill="#D9F2F0"/><text x="108" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#1FB6A6">鸡汤</text>
+    <text x="14" y="92" class="script" font-size="14" fill="#222">「你需要的修行」</text>
+    <text x="14" y="112" font-size="11" fill="#999">角标：为你好</text>
+    <!-- card 5 -->
+    <rect x="744" y="0" width="170" height="120" rx="16" fill="#fff" stroke="#ededed"/>
+    <circle cx="40" cy="40" r="26" fill="#8B5CF6"/><text x="40" y="50" text-anchor="middle" font-size="24">😈</text>
+    <text x="76" y="34" font-family="Inter" font-weight="800" font-size="14" fill="#222">腹黑·周暗暗</text>
+    <rect x="76" y="44" width="64" height="22" rx="11" fill="#EDE4FF"/><text x="108" y="59" text-anchor="middle" font-size="11" font-weight="700" fill="#8B5CF6">腹黑</text>
+    <text x="14" y="92" class="script" font-size="14" fill="#222">「买吧买吧」</text>
+    <text x="14" y="112" font-size="11" fill="#999">角标：KPI怪</text>
+  </g>
+
+  <!-- 6. 截图卡 mockup -->
+  <text x="32" y="820" class="sec">⑥ 可截图卡（截图安全区 · 无脑水印 · 绿高亮梗框）</text>
+  <g transform="translate(32,836)">
+    <!-- 破防态 -->
+    <rect x="0" y="0" width="400" height="180" rx="24" fill="#fff" stroke="#ededed"/>
+    <rect x="0" y="0" width="400" height="180" rx="24" fill="none" stroke="#6eda78" stroke-width="3" opacity="0.5"/>
+    <circle cx="60" cy="60" r="34" fill="#8B5CF6"/><text x="60" y="74" text-anchor="middle" font-size="32">😈</text>
+    <text x="110" y="48" class="title" font-size="22" fill="#222">服了，下单吧</text>
+    <text x="110" y="72" class="sub">腹黑·周暗暗 · 破防态胜利</text>
+    <rect x="24" y="100" width="352" height="14" rx="7" fill="#f0f0f2"/><rect x="24" y="100" width="352" height="14" rx="7" fill="#6eda78"/>
+    <text x="24" y="140" class="mono">破防 100 · 命中弱点 +40 · 人设崩塌</text>
+    <text x="24" y="166" class="script" font-size="15" fill="#222">「行吧，算你赢。」</text>
+    <!-- 反消费胜利态 -->
+    <rect x="450" y="0" width="400" height="180" rx="24" fill="#fff" stroke="#ededed"/>
+    <rect x="450" y="0" width="400" height="180" rx="24" fill="none" stroke="#6eda78" stroke-width="3" opacity="0.5"/>
+    <circle cx="510" cy="60" r="34" fill="#FF4B10"/><text x="510" y="74" text-anchor="middle" font-size="32">🔥</text>
+    <text x="560" y="48" class="title" font-size="22" fill="#222">省钱了，下次别来</text>
+    <text x="560" y="72" class="sub">毒舌·王二麻 · 反消费胜利</text>
+    <rect x="474" y="100" width="352" height="14" rx="7" fill="#f0f0f2"/><rect x="474" y="100" width="0" height="14" rx="7" fill="#6eda78"/>
+    <text x="474" y="140" class="mono">破防 0 · 反套路赢 · 非失败态</text>
+    <text x="474" y="166" class="brush" font-size="18" fill="#8b5cf6">省了钱，还逗乐他</text>
+  </g>
+
+  <!-- 7. 禁忌条 -->
+  <text x="32" y="1066" class="sec">⑦ 视觉红线（§9 · 0 容忍）</text>
+  <g transform="translate(32,1082)">
+    <rect x="0" width="280" height="40" rx="8" fill="#FFECE6"/><text x="14" y="26" font-size="13" font-weight="700" fill="#ef4444">✕ 禁真实品牌 logo / 价格 / 明星</text>
+    <rect x="296" width="280" height="40" rx="8" fill="#FFECE6"/><text x="310" y="26" font-size="13" font-weight="700" fill="#ef4444">✕ 禁焦虑 / FOMO / 红叉失败态</text>
+    <rect x="592" width="280" height="40" rx="8" fill="#FFECE6"/><text x="606" y="26" font-size="13" font-weight="700" fill="#ef4444">✕ 禁人身攻击 / 资产暗示</text>
+  </g>
+  <text x="32" y="1160" class="sub">化名规则：某宝/某猫 · 某明星 · 京城 · 老王不卖铺 · ¥?? 离谱价</text>
+  <text x="32" y="1190" class="sub">一致性：锚色/字体/角色色/焦点环/44px/TabBar/成就光晕 与 whoknow-waimai/src/style.css 完全一致（§8）</text>
+  <text x="32" y="1220" class="sub">截图安全区：戏精弹层/气泡/结局卡 不覆水印（api-spec v2.2 D3）</text>
+
+  <rect x="0" y="1292" width="920" height="48" fill="#0a0612"/>
+  <text x="32" y="1322" class="display" font-size="16">whoknow</text>
+  <text x="600" y="1322" class="sub" fill="#a094b8">mart 美术圣经 v0.1 · 冻结期备料（非实现）</text>
+</svg>
