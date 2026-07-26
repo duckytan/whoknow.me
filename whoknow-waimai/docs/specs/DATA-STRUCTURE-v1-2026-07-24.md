@@ -190,7 +190,7 @@
 | 字段 | 类型 | 必填 | 说明 |
 |------|------|:----:|------|
 | `phase` | enum | ✅ | `accept\|cook\|deliver\|complete` |
-| `actor` | enum | ✅ | `boss\|kitchen\|rider\|system` |
+| `actor` | enum | ✅ | `boss\|kitchen\|rider\|system\|guide` |
 | `text` | string | ✅ | 台词（变量 `{price}`/`{hot}`/`{shop}` 由引擎替换） |
 | `moodDelta` | number | ❌ | 对 `bossMood` 的增量 |
 | `delay` | number(ms) | ❌ | 本事件耗时，可负（加速） |

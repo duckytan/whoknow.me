@@ -8,3 +8,4 @@
 |---|---|---|---|---|---|
 | （示例）DuckyPC | Agent-外卖 | whoknow-waimai/src/... | 外卖 M2 对战流 | 2026-07-26 | 进行中 |
 | （示例）701-PC | Agent-商城 | whoknow-mart/docs/... | 商城 MVP 概念细化 | 2026-07-26 | 进行中 |
+| DuckyPC | Agent-外卖 | whoknow-waimai/docs/specs/DATA-STRUCTURE-v1-2026-07-24.md §3.3 | EVOL-1: DramaEvent.actor 枚举新增 `guide`（胡闹导购）| 2026-07-26 | 已落地（未推送，commit 见对话）|
