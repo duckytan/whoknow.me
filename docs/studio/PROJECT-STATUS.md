@@ -51,7 +51,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 
 ## 开放项（历史 P0 未动）
 
-- **P0-C**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地，见上）
+- **P0-C（⏸ 2026-07-26 暂停）**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地，见上）。**暂停原因**：后台工程 agent 已终止(killed)，且 brain(胡闹大脑)实际负责方（DuckyPC vs 701-PC）未定；**处置**：等分工明确后由对应负责机器的 agent 执行，不在本机跨做。信封样例 `latest-config.json`/`fallback.json` 已抢救进 `whoknow-waimai/public/config/`（见 2026-07-26 提交）。
 - **P0-D（部分缓解）**：`remarkTag` 现已被 odd/blacklist/more_spicy/no_scold 消费（odd_eats、boss_blacklist 经备注可达）；`shopVisitCount` 仍未被任何分支消费（店间/同店差异感待 P1 设计）
 - **P0-E（已解决）**：视觉前品牌 —— P0-2 已将 BRAND.md 锚色(`--brand-green/orange/purple`)+字体令牌(ZCOOL KuaiLe 手写梗等)引入 `src/style.css`；导航选中态改品牌橙红、段子卡手写体+品牌绿高亮底(截图价值)、成就✓改品牌绿、全局 whoknow 绿底白「?」角标；无障碍回归待 M2
 

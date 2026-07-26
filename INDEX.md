@@ -1,0 +1,213 @@
+# 项目总入口 · INDEX.md
+
+> 🦆 **新 agent onboarding 第一站**：你刚 clone / 拉取完项目，没有任何上下文记忆。动手前先把本文件读完。本文件是导航，细节点链接进对应详文档。所有 agent（含主理人编排时 spawn 的成员）拉取项目后应先读此处。
+
+> 📣 **读取引导声明（谁负责让你看到本文件）**：如果你是**被主理人编排唤醒**的 agent，本文件路径已由编排 prompt 强制喂入你的上下文——你已经在读了。如果你是**裸 clone 后直接打开**本文件，请主动先读完此处再动手。本项目不靠「agent 自发翻目录」保证入口生效，而靠「主理人编排层 + 平台注入层」双保险把本文件喂给新 agent。
+
+> 🚀 **TL;DR · 3 步必做（没耐心版）**：① 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) 与 [`CONSTITUTION.md`](CONSTITUTION.md) ② `hostname` 确认本机角色，对照 §8 分工表 ③ 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。读完即可接任务；细节按需再翻本文件各节。
+
+---
+
+## 0. 30 秒速览
+
+- **项目**：whoknow（胡闹宇宙）——娱乐化、梗向、截图传播驱动的虚拟生活服务产品矩阵。
+- **产品矩阵**：`whoknow-waimai`（胡闹外卖·已上线 M1）/ `whoknow-mart`（胡闹导购·概念）/ `whoknow-brain`（胡闹控制中心·导演角色，手动生成）。
+- **部署**：单 Vercel 仓库托管多 app，根 `vercel.json` 纯静态 + `/短名` 路由分发。
+- **当前里程碑**：外卖 M1 已上线；导购概念；brain 手动信封。
+- **你这台机器负责什么**：见 §6 身份确认 + §8 分工表。
+
+---
+
+## 1. 项目概况
+
+胡闹宇宙是一个"胡闹 + Who knows? + 家人们谁懂啊"调性的娱乐化产品矩阵，人格化、梗向、靠截图传播驱动。四大痛点滤网（无聊 / 想笑 / 没钱也想消费 / 管不住手）是任何功能的第一关；用户思维铁律（能用吗？会爽吗？会传播吗？）是任何决策的前置三问。
+
+- 产品矩阵一句话：外卖 = 披美团外衣的虚拟外卖；导购 = 披淘宝外衣的反骨导购博弈（选招制）；brain = 共用 AI 后台（导演，不上台）。
+- 技术栈：外卖为 Vue3 + Vite + Vant + Pinia + vue-router + SCSS；单仓多 app，纯广告模式，里程碑制（M1–M4）无固定工期。
+- 品牌视觉：双主题（宇宙暗色主站 + 产品浅色子 App）+ 锚色（绿 `#6eda78` / 橙 `#ff7849` / 紫 `#8b5cf6` 不可替换）。
+
+📄 详情（最高权威）：[`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md)
+
+---
+
+## 2. 项目铁律（不可妥协）
+
+完整三层分类见 [`CONSTITUTION.md`](CONSTITUTION.md)。**L1 真铁律（仅 5 条，违反即事故）**：
+
+1. **禁忌词红线 0 容忍**：所有话术过禁忌词审核（`forbidden_check` 闸门，`red_light_count===0` 且 `passed===true` 才落盘，否则整包丢弃回退）。
+2. **配置与状态分离**：brain 只产内容配置（L1），永远不写玩家数据；玩家数据只在浏览器 localStorage，brain 碰不到（隐私 + 单机 0 成本基石）。
+3. **不害人 / 不违法 / 不互相踩 / 人格统一**：内容不制造焦虑、不人身攻击、不碰真实明星物价品牌（黄灯须化名）；多 app 人格一致。
+4. **字段命名权威**：mart 必须复用 waimai 命名（`actor` / `moodDelta` / `next`+`nextWeights` / `id`），严禁抢先另起；须等 waimai `DATA-STRUCTURE-v1` 落定后一次性对齐。
+5. **多 app 共存红线**：新增 app 只动两处（`vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外）；绝不删改其他 app 的路由/目录；绝不 `force push`。
+
+其余为 **L2 强约定**（部署§11、相对路径、Git 代理、brain 信封契约、视觉规范、发布闸门、MVP 兼容、⛔不要做）与 **L3 当前纪律**（三铁律、痛点为王、用户思维、截图价值、痛点滤网、锡哥审核、零负担、编排者纪律，每条带退出条件）——见 `CONSTITUTION.md`。
+
+---
+
+## 3. 开发进度
+
+- **外卖 M1**：七阶段（概念→系统设计→技术搭建→预制作→制作→打磨→发布）全 ✅，已上线 `/waimai`；测试 45/45 绿，构建 0 类型错误。
+- **导购**：概念阶段，复用契约对齐中（`whoknow-mart/docs/`）。
+- **brain**：手动信封（锡哥生成），P0-C 自动化**暂停**（见 §8）。
+- **开放项**：P0-C 暂停（待 brain 分工明确）；playtest 硬闸门口径（A 轻量 / B 自然回收 / C 全量）未拍板；brain 实际负责方（DuckyPC vs 701-PC）待定；P0-D `shopVisitCount` 未被消费（待 P1）；小程序 target 冻结至 M2；无障碍 3 项回归待 M2。
+
+📄 详情：[`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md)
+
+---
+
+## 4. 规范性指引（动手前先读对应文档）
+
+| 规范 | 作用 | 路径 |
+|---|---|---|
+| 结构规范（含 §7 防再犯双闸门） | 文件/目录/文档归位；**移动/删除/归档前必 grep 全仓核查依赖** | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
+| 品牌视觉 | 锚色 / 字体 / WCAG AA 无障碍 | [`BRAND.md`](BRAND.md) |
+| 铁律宪法 | 三层重分类 + 度量/商业/演进三维 | [`CONSTITUTION.md`](CONSTITUTION.md) |
+| 多实例协作章程 | 角色 / 权限 / 冲突处理 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) |
+| 在制登记 | 当前 WIP / 阻塞项 | [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
+| 跨设备共享记忆 | 项目级记忆入口（替代本机日志跨设备同步） | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
+
+⚠️ **任何文件/目录/文档操作前，必先读结构规范并遵守 §7 双闸门**（前置核查 + 修订回扫）。
+
+---
+
+## 5. 项目文件结构
+
+**根白名单**（详见结构规范 §2，本文件 `INDEX.md` 与 `CONSTITUTION.md` 已列入）：
+`README.md` / 总纲 / `BRAND.md` / `CONSTITUTION.md` / `INDEX.md` / `vercel.json` / `index.html` / `index1.html` / `data/` / `styles/` / `js/` / `docs/` / `whoknow-*/` / `archive/`。
+
+| 路径 | 内容 |
+|---|---|
+| `whoknow-waimai/` | 外卖 app：`src/`（引擎/视图/store）、`docs/`（GDD/规格）、`public/config/`（brain 信封样例） |
+| `whoknow-mart/` | 导购 app（概念） |
+| `whoknow-brain/` | 控制中心：`docs/api-spec.md`（信封契约） |
+| `docs/studio/` | 宇宙级文档：结构规范 / 状态 / 协作章程 / `memory/` |
+| `docs/studio/memory/` | 跨设备共享记忆（进 git） |
+| `.workbuddy/memory/` | 本机工作台日志（**不进 git**，留本地） |
+| `archive/` | 废旧资产归档 |
+
+⚠️ **`index.html` 与 `index1.html` 是 `build-for-vercel.js` 的部署源文件，复制进 `dist/` 上线——禁止归档/删除**（曾有事故）。
+
+---
+
+## 6. agent 身份确认方式
+
+本机身份在 `C:\Users\<你>\.workbuddy\` 的 `SOUL.md` / `IDENTITY.md` / `USER.md` —— **不在项目仓库，每台机器各自维护，不跨设备覆盖**。
+
+确认三步：
+1. **我是谁**：读 `SOUL.md`（AI 人格）+ `IDENTITY.md`（名字/角色）。
+2. **我在哪台机器**：`hostname` → 计算机名定位本机角色（见下）。
+3. **我负责哪些 app**：对照 §8 分工表。
+
+计算机名 → 角色锚点：
+- `DuckyPC` → 负责 `whoknow-waimai`（你 / Ducky）
+- `701-PC` → 负责 `whoknow-mart` + `whoknow-brain`
+- **其他计算机名 / 新机器**：见下方「冷启动闭环」——先确认本机归属哪类 app，再写入身份文件。
+
+### 全新机器冷启动闭环（P0 · 流动开发常态）
+你经常在不同电脑装 workbuddy 继续开发，**全新机器首次启动 = 身份文件为空是常态，不是异常**。闭环：
+1. **装 workbuddy 后**：平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。填完后本机角色即生效。
+2. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求你确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
+3. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
+4. **回写**：角色确认后，若 §8 分工表未覆盖你的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
+
+---
+
+## 7. 多 agent 协同开发规范协议
+
+多台机器并行改同一 GitHub 仓库。铁律级规则：
+
+- **Git 代理**：本机开发机 fetch / pull / push 走 `127.0.0.1:12000`；其他网络按 §6 冷启动·网络自适应调整（可直连），不卡死。
+- **推送被拒**：先 `git stash push` 本地改动 → `git pull --rebase origin main` → `git push` → `git stash pop`。
+- **禁 `force push`**；冲突先 `fetch → pull --rebase`。
+- **内部链接一律相对路径**：禁写绝对 `/...`，否则在 `/短名/` 路由下 404。
+- **新增 app 只动两处**：`vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外；绝不删改其他 app 的路由/目录/`.gitignore`。
+- **文档权威链**：总纲 ＞ 结构规范 ＞ 各 app 文档；冲突以总纲为准。
+
+📄 详情：[`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md)
+
+---
+
+## 8. agent 分工表
+
+| 机器 | 计算机名 | 负责 app | 主理人 | 备注 |
+|---|---|---|---|---|
+| 本机（你） | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
+| 另一台 | `701-PC` | `whoknow-mart` + `whoknow-brain` | 锡哥/錡哥侧 | brain 信封待自动化（P0-C） |
+
+**跨边界任务归属原则**：按"生产方"定。信封（brain 产出）→ 归 `701-PC`；若消费方（waimai）机器已具备样本且合理，可协商在消费方做。当前 **P0-C（brain 信封自动化）暂停**：后台 agent 已终止(killed)，且 brain 实际负责方未定；**待分工明确后由对应负责机器的 agent 执行，不在 DuckyPC 跨做**。信封样例 `latest-config.json` / `fallback.json` 已抢救进 `whoknow-waimai/public/config/`。
+
+共同：共享同一 GitHub 仓库，靠 git 同步 + 结构规范 + 本分工表避免冲突。
+
+---
+
+## 9. 全新 agent onboarding 步骤（照做）
+
+1. `git clone` 仓库，按本机网络配置 git 代理（见 §6 冷启动·网络自适应）。
+2. **读本文件 `INDEX.md`**（你正在做）。
+3. 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md)（总纲）+ [`CONSTITUTION.md`](CONSTITUTION.md)（铁律）。
+4. `hostname` 确认本机角色，核对 §6 / §8 分工。
+5. 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。
+6. 接具体任务前，读对应规范（结构 / 品牌 / `api-spec`）。
+7. 记忆同步：读 [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md)（跨设备共享记忆入口）。
+
+### 动手最小指令（P1 · 接到任务后怎么真跑起来）
+| 动作 | 命令 | 备注 |
+|---|---|---|
+| 拉取最新 | `git pull --rebase` | 推送被拒先 stash → pull --rebase → push → stash pop；禁 force push |
+| 外卖本地起服务 | `cd whoknow-waimai && npm install && npm run dev` | 仅 waimai 有完整构建链；mart/brain 为概念/手动，暂无 build |
+| 外卖跑测试 | `cd whoknow-waimai && npm test` | 45/45 绿为健康基线 |
+| 外卖构建 | `cd whoknow-waimai && npm run build` | 产物 `dist/`（唯一上线物）|
+| 提交流程 | 分支 → 改 → `git add` → `git commit` → `git pull --rebase` → `git push` | 走代理；commit message 中文简述 |
+
+> 非 waimai 任务（mart/brain）目前以文档/配置为主，无统一构建；按对应 `docs/` 指引操作。
+
+### 维护机制（P1 · 谁让 INDEX 不腐化）
+- **责任人**：主理人（游承峰）统筹；具体回写由对应阶段负责 agent 在产出时顺手更新。
+- **触发时机**：每次**里程碑切换 / 发布**（Phase 7）时，`release-ops-lead` 把关把「回写 INDEX §3 进度 + §8 分工」列入发布清单必做项。
+- **铁律**：进度/分工有变 → 先改 `PROJECT-STATUS.md`（权威） → 再回写本文件对应节；保持单一事实源。
+
+---
+
+## 10. 避坑清单（血泪）
+
+- ❌ **删 `index.html` / `index1.html`**：部署源文件，删了构建坏（真实事故）。
+- ❌ **改 `.gitignore` 用 `!` 重新包含被忽略目录**：git 不支持（对被排除目录/条目无效），改用 `git add -f` 或换位置。
+- ❌ **绝对路径 `/...` 内部链接**：`/短名/` 路由下 404，一律相对路径。
+- ❌ **`force push`**：多机器协作致命。
+- ⚠️ **Windows CRLF 假差异**：本地 build 产生 CRLF，与云端 LF 的"差异"内容一致、不影响部署，可 `git checkout` 还原。
+- ⚠️ **stash 未跟踪文件在 `stash@{n}^3`**：普通 `git checkout stash@{n}` 取不到，用 `git checkout "stash@{n}^3" -- <path>`。
+- ⚠️ **名词歧义**：`README` 的"痛点为王 ≥3 痛点"是产品级要求；`BRAND` 的"痛点滤网任一即可"是视觉/界面决策级——层级不同，非矛盾。
+
+---
+
+## 11. 术语表
+
+- **SEED / 信封**：brain 产出的内容配置 JSON（老板台词 / 骑手台词等），waimai / mart 运行时消费。
+- **DRAMA 引擎**：waimai 的剧情分支引擎（`whoknow-waimai/src/engine/`）。
+- **forbidden_check**：禁忌词校验闸门（`red_light_count===0` 才落盘）。
+- **锡哥 / 錡哥**：品牌创始人侧；锡哥手动生成 brain 信封，"AI 更新"水印是戏称非真定时 AI。
+- **M1–M4**：里程碑。
+- **三司会审**：明辨诀（朱熹）/ 破妄诀（慧能）/ 五行诀（老子）审计编排层，见 `whoknow-brain/docs/sanshi-hui-shen-package/`。
+
+---
+
+## 12. 文档导航与权威链
+
+权威：总纲 ＞ 结构规范 ＞ 各 app 文档。
+
+| 你想查 | 去这里 |
+|---|---|
+| 项目全貌 / 决策 | [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) |
+| 铁律 / 约定 | [`CONSTITUTION.md`](CONSTITUTION.md) |
+| 文件归位 / 移动删除 | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
+| 当前进度 / 开放项 | [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) |
+| 多机协作 / 权限 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| 品牌视觉 | [`BRAND.md`](BRAND.md) |
+| brain 信封契约 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
+| 跨设备记忆 | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
+| 三司会审能力 | [`whoknow-brain/docs/sanshi-hui-shen-package/`](whoknow-brain/docs/sanshi-hui-shen-package/) |
+
+---
+
+_本文件是项目总入口。任何 agent 拉取项目后应**先读此处**再动手。内容随里程碑更新，旧信息以对应详文档为准；若发现本文件与详文档冲突，以详文档 + 权威链为准，并提 PR 回扫本文件。_
