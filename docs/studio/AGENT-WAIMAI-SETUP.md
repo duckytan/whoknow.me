@@ -14,6 +14,8 @@ WorkBuddy 每次会话**自动注入**的只有两类本地文件，且都**不�
 
 ## 一步到位：复制执行
 
+> ⚠️ **只放指针，不放角色权威**：下面模板写入 IDENTITY 的角色 / 范围，仅为指针与兜底。**角色与范围唯一权威在 `docs/studio/ROLES.md`**（单一事实源）。若 IDENTITY 内容与 ROLES 冲突，以 ROLES 为准，避免双文档漂移。
+
 在 DuckyPC 本机，把以下内容写入
 `C:\Users\<你的用户名>\.workbuddy\IDENTITY.md`（文件不存在就新建）：
 
