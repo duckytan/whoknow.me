@@ -29,7 +29,7 @@ WorkBuddy 每次会话**自动注入**的只有两类本地文件，且都**不�
 - 本机计算机名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）。
 - **每次会话开始先读 `docs/studio/ROLES.md`**（§0 机器名映射 + §2 协作红线 + §7 双闸门）。
 - 共享文件（`README.md` / `BRAND.md` / 总纲 / `docs/studio/` 除 ROLES/WIP）改前先与 701-PC（Agent-商城）协商。
-- 用户统一称呼 **「鸭子」**（= duckytan）。
+- 用户统一称呼 **「Ducky」**（= duckytan）。
 - 详见 `docs/studio/ROLES.md`。
 ```
 
@@ -39,7 +39,7 @@ WorkBuddy 每次会话**自动注入**的只有两类本地文件，且都**不�
 # USER.md - About Your Human
 
 - **Name:** duckytan
-- **What to call them:** 鸭子
+- **What to call them:** Ducky
 - **Notes:** 胡闹宇宙双 App 静态站（whoknow-waimai / whoknow-mart），双 WorkBuddy 实例并行协作。
 ```
 
