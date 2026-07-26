@@ -1,8 +1,8 @@
 # 项目总入口 · INDEX.md
 
-> 🦆 **新 agent onboarding 第一站**：你刚 clone / 拉取完项目，没有任何上下文记忆。动手前先把本文件读完。本文件是导航，细节点链接进对应详文档。所有 agent（含主理人编排时 spawn 的成员）拉取项目后应先读此处。
+> 🦆 **新 agent onboarding 第一站**：新 agent 拉取项目后无任何上下文记忆。动手前须先读完本文件。本文件是导航，细节点链接进对应详文档。所有 agent（含主理人编排时 spawn 的成员）拉取项目后应先读此处。
 
-> 📣 **读取引导声明（谁负责让你看到本文件）**：如果你是**被主理人编排唤醒**的 agent，本文件路径已由编排 prompt 强制喂入你的上下文——你已经在读了。如果你是**裸 clone 后直接打开**本文件，请主动先读完此处再动手。本项目不靠「agent 自发翻目录」保证入口生效，而靠「主理人编排层 + 平台注入层」双保险把本文件喂给新 agent。
+> 📣 **读取引导声明（谁负责让 agent 看到本文件）**：若某 agent 由主理人编排层唤醒，本文件路径已由编排 prompt 强制注入该 agent 上下文——该 agent 已在读。若某 agent 为裸 clone 后直接打开本文件，该 agent 须主动先读完此处再动手。本项目不靠「agent 自发翻目录」保证入口生效，而靠「主理人编排层 + 平台注入层」双保险把本文件喂给新 agent。
 
 > 🚀 **TL;DR · 3 步必做（没耐心版）**：① 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) 与 [`CONSTITUTION.md`](CONSTITUTION.md) ② `hostname` 确认本机角色，对照 §8 分工表 ③ 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。读完即可接任务；细节按需再翻本文件各节。
 
@@ -13,7 +13,7 @@
 - **项目**：whoknow（胡闹宇宙）——娱乐化、梗向、截图传播驱动的虚拟生活服务产品矩阵。
 - **产品矩阵**：`whoknow-waimai`（胡闹外卖·已上线 M1）/ `whoknow-mart`（胡闹导购·概念）/ `whoknow-brain`（胡闹控制中心·导演角色，手动生成）。
 - **部署**：单 Vercel 仓库托管多 app，根 `vercel.json` 纯静态 + `/短名` 路由分发。
-- **当前里程碑**：外卖 M1 已上线；导购概念；brain 手动信封。
+- **当前里程碑（详见 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md)，含最后更新日期）**：外卖 M1 已上线；导购概念；brain 手动信封。
 - **本实例所在机器负责什么**：见 §6 身份确认 + §8 分工表。
 
 ---
@@ -93,7 +93,7 @@
 
 ## 6. agent 身份确认方式
 
-本机身份在 `C:\Users\<你>\.workbuddy\` 的 `SOUL.md` / `IDENTITY.md` / `USER.md` —— **不在项目仓库，每台机器各自维护，不跨设备覆盖**。
+本机身份在 `C:\Users\<用户名>\.workbuddy\` 的 `SOUL.md` / `IDENTITY.md` / `USER.md` —— **不在项目仓库，每台机器各自维护，不跨设备覆盖**。
 
 确认三步：
 1. **本实例身份**：读 `SOUL.md`（AI 人格）+ `IDENTITY.md`（名字/角色）。
@@ -101,17 +101,17 @@
 3. **本实例负责哪些 app**：对照 §8 分工表。
 
 计算机名 → 角色锚点：
-- `DuckyPC` → 负责 `whoknow-waimai`（你 / Ducky）
+- `DuckyPC` → 负责 `whoknow-waimai`（主理人 Ducky / duckytan）
 - `701-PC` → 负责 `whoknow-mart` + `whoknow-brain`
 - **其他计算机名 / 新机器**：见下方「冷启动闭环」——先确认本机归属哪类 app，再写入身份文件。
 
 ### 全新机器冷启动闭环（P0 · 流动开发常态）
-你经常在不同电脑装 workbuddy 继续开发，**全新机器首次启动 = 身份文件为空是常态，不是异常**。闭环：
-1. **装 workbuddy 后**：多数机器平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按本节下方「DuckyPC 接入操作清单（内联 · 粘贴即用）」粘贴即用清单补建。
+多机流动开发常态下，全新机器首次启动即身份文件为空，非异常。闭环：
+1. **装 workbuddy 后**：多数机器平台会引导填写 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<用户名>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按本节下方「DuckyPC 接入操作清单（内联 · 粘贴即用）」粘贴即用清单补建。
 2. **（接入第 0 步 · 硬规则）**：无论平台是否引导，每台机器都必须在本机 `IDENTITY.md` 写入「每次会话开始先读 [`docs/studio/ROLES.md`](docs/studio/ROLES.md) 定位本机角色与范围」这一自动注入指针。否则新建对话会遗忘协作约定——本仓库所有 agent 强制，详见 `ROLES.md` §5。
-3. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求你确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
+3. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求该 agent 确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
 4. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
-5. **回写**：角色确认后，若 §8 分工表未覆盖你的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
+5. **回写**：角色确认后，若 §8 分工表未覆盖该 agent 的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
 
 ### DuckyPC 接入操作清单（内联 · 粘贴即用）
 
@@ -174,7 +174,7 @@
 
 | 机器 | 计算机名 | 负责 app | 主理人 | 备注 |
 |---|---|---|---|---|
-| `DuckyPC`（你） | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
+| `DuckyPC` | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
 | 另一台 | `701-PC` | `whoknow-mart` + `whoknow-brain` | 产出：锡哥；执行：胡叨叨（Agent-商城）| brain 信封待自动化（P0-C）；⚠️ brain 为共享契约中枢，单点归商城侧，存在单点耦合风险 |
 
 **跨边界任务归属原则**：按"生产方"定。信封（brain 产出）→ 归 `701-PC`；若消费方（waimai）机器已具备样本且合理，可协商在消费方做。当前 **P0-C（brain 信封自动化）暂停**：后台 agent 已终止(killed)，但 **brain 负责方已定：`701-PC` / Agent-商城（胡叨叨）**，**由 701-PC 侧的 agent 执行，不在 DuckyPC 跨做**。信封样例 `latest-config.json` / `fallback.json` 已抢救进 `whoknow-waimai/public/config/`。
@@ -186,7 +186,7 @@
 ## 9. 全新 agent onboarding 步骤（照做）
 
 1. `git clone` 仓库，按本机网络配置 git 代理（见 §6 冷启动·网络自适应）。
-2. **读本文件 `INDEX.md`**（你正在做）。
+2. **读本文件 `INDEX.md`**（新 agent 拉取后即读此处）。
 3. 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md)（总纲）+ [`CONSTITUTION.md`](CONSTITUTION.md)（铁律）。
 4. `hostname` 确认本机角色，核对 §6 / §8 分工。
 5. 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。
@@ -238,7 +238,7 @@
 
 权威：总纲 ＞ 结构规范 ＞ 各 app 文档；**多机协作角色 / 红线以 [`ROLES.md`](docs/studio/ROLES.md) 为准**（INDEX 仅作导航摘要，细则以该文件为准，避免双文档漂移）。
 
-| 你想查 | 去这里 |
+| 查询目标 | 去这里 |
 |---|---|
 | 项目全貌 / 决策 | [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) |
 | 铁律 / 约定 | [`CONSTITUTION.md`](CONSTITUTION.md) |
