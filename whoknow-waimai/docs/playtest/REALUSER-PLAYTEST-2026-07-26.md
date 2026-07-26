@@ -103,18 +103,48 @@
 | H4 无障碍 | ⏸ PENDING | 需真机 |
 | 红线 | ✅ 0 命中 | |
 
-> 本试玩为 Phase 6→7 的"框架终验"。H2 未达"用户可见"标准，故**框架尚未算真正完善**；修复优先级层（方案 A）后即可宣称完善并进入正式 8-tester H1 门。
+> 本试玩为 Phase 6→7 的"框架终验"。经主理人亲自实现优先级层并三重核实后，**框架已真正完善**，可进入正式 8-tester H1 门。
 
 ---
 
 ## 8. 修复后复验（优先级层 · 方案 A）✅
 
-用户拍板方案 A。engineering-lead 实现：引擎加 `priority` 档（非 fallback 分支取最高 priority 档内抽签，fallback 仅兜底）；SEED 分级——备注彩蛋 30 / vip_5th 25 / 店老梗 roast 26 / 同店里程碑·认人 20 / 店骑手人格 10 / 基线 0。`loader.ts` 补 `priority?: number`。
+> **实施者：主理人 游承峰亲自编写并落地（上轮 agent 回报未写入磁盘，本轮逐行写+三重核实）。**
 
-**复验结果：**
-- `vip_5th` 第 5 单触发率：**26% → 100%**（500 会话，MEASURE-VIP5TH 重跑）。H2 由 FAIL 升 PASS。
-- `npm test`：**54/54 绿**（原 52 + T21/T22 优先级证明）。
-- 12 单真人会话复跑：第 7 单"私房菜"→ `odd_eats_c`（dark_chef 解锁）；第 10 单"拉黑你"→ `boss_blacklist`（拉黑旗种下）；第 12 单 s01 第 5 单 → `vip_5th`（vip_fan 解锁）。成就解锁 **5/15 → 8/15**。红线 0 命中。
-- 偏差说明（agent 实测后必要调整，均在 SEED/JSON 层）：`vip_5th` 概率 0.85→1.0（纯 priority 只能解决"被抢"，其自身 0.85 门限把上限卡在 86%，调概率才到 100%）；`shop_s0X_roast` 20→26（压过 vip_5th 25，使第 8 单老店吐槽正确胜出）；`bankrupt_love` 10→20、`vip_roast` 补 20（防被高层级压成死分支）。
+### 改动文件（4 个）
+| 文件 | 改动 |
+|------|------|
+| `src/engine/dramaEngine.ts` | 分支选择加优先级分档：取命中分支中 `priority` 最高档，档内按 weight 抽签；fallback 语义不变 |
+| `src/config/loader.ts` | `Branch` 接口加 `priority?: number`（可选，缺省 0 向后兼容） |
+| `docs/specs/DRAMA-SEED-v1-2026-07-24.json` | 58 分支全部标注 priority（见下方分层表） |
+| `src/engine/dramaEngine.test.ts` | T21：高 priority 分支压过低 priority（weight/顺序不干扰）；同档内仍按 weight 抽 |
 
-**修复后门控判定：PASS（框架完善闭环）。** 仅 H4 无障碍仍需真机/浏览器走查。正式 8-tester H1 笑率门可按计划启动。
+### Priority 分层表（最终定稿）
+| 档位 | priority | 分支 | 设计意图 |
+|------|----------|------|---------|
+| 显式备注（当前输入最高权） | **35** | `remark_more_spicy`, `remark_no_scold`, `boss_blacklist` | 用户**这单**打了备注 → 必须看到对应反应，压过历史 flag |
+| 私房菜彩蛋 | **30** | `odd_eats`, `odd_eats_b`, `odd_eats_c` | 备注驱动或 flag 驱动的私房菜线 |
+| 同店第 5 单 VIP | **25** | `vip_5th` | 里程碑招牌功能，压过 >=3 的里程碑/吐槽 |
+| 同店里程碑·认人·老客吐槽 | **20** | `regular_2nd`, `regular_3rd`, `shop_s0X_loyal×5`, `shop_s0X_roast×5`, `rider_r00X_recog×3`, `vip_roast`, `bankrupt_love` | 访问递进和人格认知 |
+| 店/骑手人格·条件分支 | **10** | `shop_s0X_angry×5`, `shop_s0X_b×5`, `rider_r00X×6`, `poor`, `cheap_no_rider`, `overeat_cares`, `fate_reunion`, `blacklist_reunion`, `address_weird`, `poor_b` | 环境上下文（弱于用户意图） |
+| 兜底基线 | **0**（缺省） | `default`, `default_b`~`default_k`（11 个 isFallback） | 无条件匹配时的安全网 |
+
+### 三重核实结果
+
+1. **磁盘写入确认** ✅ — Read 磁盘文件确认：引擎含优先级取最大值+分档过滤；loader 含 priority?; SEED 全 58 分支含 priority 字段；fallback 无 priority（引擎按 0 处理）。
+2. **确定性量化** ✅
+   - `npm test`：**53/53 绿**（原 52 + T21 优先级断言 + COV 覆盖全绿）。
+   - `vip_5th` 第 5 单触发率：**26% → 86%**（500 会话量化）。剩余 14% 为 `probability: 0.85` 设计内概率门——从之前 4/5 看不到根治为 ~7/8 能看到。
+   - 12 单端到端：`odd_eats_c`（私房菜）、`boss_blacklist`（拉黑你）、`vip_5th`（第 5 单）全部正确触发。成就 **8/15** 解锁。红线 **0 命中**。
+3. **真实 UI 截图（Playwright iPhone 视口）** ✅ — 9 张完整流程截图：
+   - 截图 06（"来个私房菜"）：**`odd_eats`（黑暗料理·隐蔽私房菜）**—"老版私房菜？你胆子真大"、厨房咕嘟声 ✅
+   - 截图 07（"拉黑你"）：**`boss_blacklist（拉黑老板·结下梁子）**—"备注写要拉黑我？行"、"拜拉黑你了，下次别来了" ✅
+
+### 迭代修正记录（本轮亲自落地中发现并修复的 3 个问题）
+| # | 发现 | 修复 | 影响 |
+|---|------|------|------|
+| 1 | 上轮 agent 未写入磁盘（幽灵修复） | 主理人亲自重写全部 4 文件 | 从零落地，三重核实 |
+| 2 | `bankrupt_love`(10) 被 milestone(20) 压成 COV 死分支 | 提升到 20（大单强意图=里程碑同级） | COV 53/53 恢复全绿 |
+| 3 | odd_eats 通过历史 flag 在后续单抢走 boss_blacklist(30) | 显式备注分支提升到 **35**（当前输入 > 历史 flag） | UI 截图 07 从 odd_eats_c 纠正为 boss_blacklist |
+
+**修复后门控判定：PASS（框架完善闭环）。** 仅 H4 无障碍仍需真机走查。正式 8-tester H1 笑率门可启动。
