@@ -91,7 +91,7 @@
 |------|------------------|---------|
 | `first`（首触） | 该店 `shopVisitCount === 1` | L3 |
 | `regular`（回头客） | `shopVisitCount >= 3` | L3 |
-| `vip`（真爱粉） | `shopVisitCount >= 10` 或 `affinity[shopId] >= 200` | L3 |
+| `vip`（真爱粉） | `shopVisitCount >= 5` 或 `affinity[shopId] >= 200` | L3 |
 
 `BossLines` 实际结构扩展为：
 ```json

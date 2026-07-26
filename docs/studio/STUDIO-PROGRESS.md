@@ -59,7 +59,7 @@
 
 ### 历史遗留 P0（来自 v2 清场审计）
 - **P0-C（⏸ 2026-07-26 暂停）**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地）。暂停原因：后台工程 agent 已终止（killed），brain 实际负责方归 701-PC；处置：由 701-PC 上的 agent 执行，DuckyPC 不跨机器修改。信封样例已抢救进 `whoknow-waimai/public/config/`
-- **P0-D（部分缓解）**：`remarkTag` 现已被 odd/blacklist/more_spicy/no_scold 消费；`shopVisitCount` 仍未被任何分支消费（店间/同店差异感待 P1 设计）
+- **P0-D（已解决 · 2026-07-26 B 档深化）**：`remarkTag` 已消费；`shopVisitCount` 现被 `regular_2nd`/`shop_s0X_loyal`/`vip_roast`/`shop_s0X_roast` 消费（同店差异感成立）；新增 `riderVisitCount` 驱动骑手认人。SEED 40→58 分支 + 3 新成就，测试全绿。
 - **P0-E（已解决）**：BRAND.md 锚色 + 字体令牌已引入 `src/style.css`；无障碍回归待 M2
 
 ### 真机 playtest（发布硬闸门填表）

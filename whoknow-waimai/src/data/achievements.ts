@@ -24,6 +24,9 @@ export const ACHIEVEMENTS: AchievementMeta[] = [
   { id: 'lost_rider', name: '迷路骑手', icon: '🧭', persona: 'lazy', desc: '奇葩地址，骑手靠问路才找到。', reward: '导航神券' },
   { id: 'regular', name: '老主顾', icon: '🤝', persona: 'philo', desc: '同店连下 3 单，老板记住了你。', reward: '常客徽章' },
   { id: 'vip_fan', name: '铁粉 VIP', icon: '👑', persona: 'philo', desc: '同店连下 5 单，隐藏菜单向你敞开。', reward: 'VIP 勋章' },
+  { id: 'local_regular', name: '本店老主顾', icon: '🏠', persona: 'philo', desc: '同一家店连下 3 单，老板记住了你。', reward: '熟客徽章' },
+  { id: 'old_shop_roast', name: '老店吐槽王', icon: '🔥', persona: 'angry', desc: '老店熟客，被老板反吐槽了。', reward: '吐槽勋章' },
+  { id: 'rider_buddy', name: '骑手老友', icon: '🛵', persona: 'rider', desc: '同一骑手送你第 2 单，认出你了。', reward: '默契券' },
 ]
 
 export function getAchievement(id: string): AchievementMeta | undefined {

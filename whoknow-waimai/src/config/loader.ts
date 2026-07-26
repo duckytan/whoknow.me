@@ -51,7 +51,7 @@ export function parseBranches(raw: unknown): Branch[] {
 const KNOWN_VARS = new Set([
   'orderTotal', 'deliveryFee', 'todayOrderCount', 'shopId', 'riderId',
   'avgDishPrice', 'dishCount', 'remarkTag', 'addressTag', 'hot_today', 'weather',
-  'shopVisitCount',
+  'shopVisitCount', 'riderVisitCount',
 ])
 
 /** 校验红线：任何台词文本不得残留「非白名单」占位符（如旧名 {price}/{fee}）。 */

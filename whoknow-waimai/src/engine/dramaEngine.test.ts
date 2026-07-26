@@ -167,3 +167,20 @@ test('T17 变体池：穷鬼单抽样，poor 与 poor_b 均可能命中', () => 
   assert.ok(seen.has('poor'), 'poor 未出现')
   assert.ok(seen.has('poor_b'), 'poor_b 变体未出现')
 })
+
+// 18) 框架深化 B 档：同店二访（shopVisitCount=2，不传 shopId 隔离店间）→ 命中 regular_2nd（不与 regular_3rd 的 >=3 重叠）
+test('T18 同店二访·第2单：shopVisitCount=2（不传 shopId）命中 regular_2nd', () => {
+  const r = run({ orderTotal: 50, avgDishPrice: 99 }, { history: { shopVisitCount: 2 } })
+  assert.equal(r.selectedBranchId, 'regular_2nd')
+  assert.ok(r.events.some((e) => e.text.includes('第')))
+})
+
+// 19) 框架深化 B 档：骑手认人（riderId=r001 & riderVisitCount=2）→ 命中 rider_r001_recog
+test('T19 骑手认人·同骑手第2单：riderId=r001 & riderVisitCount=2 命中 rider_r001_recog', () => {
+  const r = run(
+    { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 },
+    { random: () => 0.6, history: { riderVisitCount: 2 } }
+  )
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
+  assert.ok(r.events.some((e) => e.text.includes('雷速飞')))
+})

@@ -1666,5 +1666,284 @@
         "text": "张迷路：到了！这次没绕远"
       }
     ]
+  },
+  {
+    "id": "regular_2nd",
+    "name": "老主顾 · 第2单",
+    "weight": 6,
+    "trigger": { "condition": "shopVisitCount = 2", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "前天不是刚来过？你这回头速度比外卖还快", "moodDelta": 8 },
+      { "phase": "cook", "actor": "boss", "text": "老板默默给你多舀了一勺，老熟客了" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店认你，出餐优先" },
+      { "phase": "complete", "actor": "boss", "text": "第 {shopVisitCount} 单了，记住你这张脸了" }
+    ]
+  },
+  {
+    "id": "shop_s01_loyal",
+    "name": "老王烧烤 · 老熟客梗",
+    "weight": 6,
+    "trigger": { "condition": "shopId = s01 & shopVisitCount >= 3", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["local_regular"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又来？这周第几回了，我都懒得数", "moodDelta": 10 },
+      { "phase": "cook", "actor": "boss", "text": "老板按你口味偷偷加辣，熟客待遇" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店认你，优先出餐" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，吃完了记得来挨骂", "next": ["s1l_a", "s1l_b", "s1l_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s1l_a", "text": "（火气梗）辣椒面我替你多撒了，别矫情" },
+      { "phase": "complete", "actor": "boss", "id": "s1l_b", "text": "（熟客梗）你那桌我留着呢，坐" },
+      { "phase": "complete", "actor": "boss", "id": "s1l_c", "text": "（吐槽梗）再这么吃，你这月外卖超标了" }
+    ]
+  },
+  {
+    "id": "shop_s02_loyal",
+    "name": "孔子饺子馆 · 老熟客梗",
+    "weight": 6,
+    "trigger": { "condition": "shopId = s02 & shopVisitCount >= 3", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["local_regular"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又来？食不厌精，你倒是精上了", "moodDelta": 10 },
+      { "phase": "cook", "actor": "boss", "text": "老板引经据典地给你包，闭眼都匀称" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这单有文化，老顾客了" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，吃完再聊", "next": ["s2l_a", "s2l_b", "s2l_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s2l_a", "text": "（哲学梗）你这食量，够写篇论文了" },
+      { "phase": "complete", "actor": "boss", "id": "s2l_b", "text": "（熟客梗）你坐那桌，我都留了" },
+      { "phase": "complete", "actor": "boss", "id": "s2l_c", "text": "（吐槽梗）减肥的话你说了三回，一回没算数" }
+    ]
+  },
+  {
+    "id": "shop_s03_loyal",
+    "name": "佛系粥铺 · 老熟客梗",
+    "weight": 6,
+    "trigger": { "condition": "shopId = s03 & shopVisitCount >= 3", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["local_regular"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又点？随缘随缘，你倒是常来", "moodDelta": 5 },
+      { "phase": "cook", "actor": "boss", "text": "老板慢悠悠熬，闭眼都稠" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，安静如鸡" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，粥温着呢", "next": ["s3l_a", "s3l_b", "s3l_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s3l_a", "text": "（佛系梗）你这频率，我都不催你自煮了" },
+      { "phase": "complete", "actor": "boss", "id": "s3l_b", "text": "（熟客梗）你那碗，我多放了两颗枣" },
+      { "phase": "complete", "actor": "boss", "id": "s3l_c", "text": "（吐槽梗）减肥的话，你说了三回" }
+    ]
+  },
+  {
+    "id": "shop_s04_loyal",
+    "name": "怪味研究所 · 老熟客梗",
+    "weight": 6,
+    "trigger": { "condition": "shopId = s04 & shopVisitCount >= 3", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["local_regular"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又点？你点的东西我都不敢问了", "moodDelta": -5 },
+      { "phase": "cook", "actor": "boss", "text": "厨房咕嘟声都熟了，闭眼都知道颜色" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，紫烟都见怪不怪" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，实验体……哦不，老主顾", "next": ["s4l_a", "s4l_b", "s4l_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s4l_a", "text": "（怪味梗）你点的配方，我都能背了" },
+      { "phase": "complete", "actor": "boss", "id": "s4l_b", "text": "（熟客梗）你那袋，我闭眼都认得" },
+      { "phase": "complete", "actor": "boss", "id": "s4l_c", "text": "（吐槽梗）再这么点，我得给你发实验员证" }
+    ]
+  },
+  {
+    "id": "shop_s05_loyal",
+    "name": "懒人便当 · 老熟客梗",
+    "weight": 6,
+    "trigger": { "condition": "shopId = s05 & shopVisitCount >= 3", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["local_regular"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又点？能不动手就不动手，你也是", "moodDelta": 0 },
+      { "phase": "cook", "actor": "boss", "text": "老板微波炉一扔，躺平等叮，闭眼都准" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，温的" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，吃了啊", "next": ["s5l_a", "s5l_b", "s5l_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s5l_a", "text": "（懒梗）你点的，我闭眼都塞得对" },
+      { "phase": "complete", "actor": "boss", "id": "s5l_b", "text": "（熟客梗）你那便当，我多懒了一下" },
+      { "phase": "complete", "actor": "boss", "id": "s5l_c", "text": "（吐槽梗）减肥的话你说了三回，我也懒得记" }
+    ]
+  },
+  {
+    "id": "vip_roast",
+    "name": "老店熟客 · 吐槽老梗",
+    "weight": 8,
+    "trigger": { "condition": "shopVisitCount >= 8 | flag(vip_{shopId})", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "achievements": ["old_shop_roast"],
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "你又来了——这店招牌都被你坐包浆了", "moodDelta": 10 },
+      { "phase": "cook", "actor": "boss", "text": "老板按老规矩给你做，闭眼都能来" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店认你，出餐快" },
+      { "phase": "complete", "actor": "boss", "text": "老规矩，这次换我吐槽你", "next": ["vr_a", "vr_b", "vr_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "vr_a", "text": "（吐槽梗）你点的还是那三样，我都能背了" },
+      { "phase": "complete", "actor": "boss", "id": "vr_b", "text": "（吐槽梗）上回你说减肥，这单又加倍了" },
+      { "phase": "complete", "actor": "boss", "id": "vr_c", "text": "（吐槽梗）你跟这店，比我跟我家那口子还熟" }
+    ]
+  },
+  {
+    "id": "rider_r001_recog",
+    "name": "雷速飞 · 认出老主顾",
+    "weight": 6,
+    "trigger": { "condition": "riderId = r001 & riderVisitCount >= 2", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["rider_buddy"],
+    "chain": [
+      { "phase": "accept", "actor": "rider", "text": "雷速飞接单——又是你？这单我闭眼都能送到", "moodDelta": 8 },
+      { "phase": "cook", "actor": "boss", "text": "老板：他来了，老规矩快出" },
+      { "phase": "deliver", "actor": "rider", "text": "12 分钟送达，骑手：老位置，轻车熟路" },
+      { "phase": "complete", "actor": "rider", "text": "雷速飞：认得你，下次还找我，图个快" }
+    ]
+  },
+  {
+    "id": "rider_r002_recog",
+    "name": "李慢慢 · 认出老主顾",
+    "weight": 6,
+    "trigger": { "condition": "riderId = r002 & riderVisitCount >= 2", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["rider_buddy"],
+    "chain": [
+      { "phase": "accept", "actor": "rider", "text": "李慢慢接单——又是你，慢工出细活嘛", "moodDelta": 5 },
+      { "phase": "cook", "actor": "boss", "text": "老板陪他一起慢，没人催" },
+      { "phase": "deliver", "actor": "rider", "text": "送达时摆盘更精致了，骑手：老顾客了" },
+      { "phase": "complete", "actor": "rider", "text": "李慢慢：你这单我闭着眼都摆得齐" }
+    ]
+  },
+  {
+    "id": "rider_r003_recog",
+    "name": "张迷路 · 认出老主顾",
+    "weight": 6,
+    "trigger": { "condition": "riderId = r003 & riderVisitCount >= 2", "probability": 0.8, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "rare",
+    "achievements": ["rider_buddy"],
+    "chain": [
+      { "phase": "accept", "actor": "rider", "text": "张迷路接单——又是你？这次我记牢地址了", "moodDelta": 5 },
+      { "phase": "cook", "actor": "boss", "text": "老板：他又能准时到？我赌五毛" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手这次没绕路，直接到门口" },
+      { "phase": "complete", "actor": "rider", "text": "张迷路：认得你这门，闭着眼都能摸来" }
+    ]
+  },
+  {
+    "id": "shop_s01_roast",
+    "name": "老王烧烤 · 老店吐槽",
+    "weight": 7,
+    "trigger": { "condition": "shopId = s01 & shopVisitCount >= 8", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "第八回了吧？你跟这炭火炉子都混熟了", "moodDelta": 12 },
+      { "phase": "cook", "actor": "boss", "text": "老板火候都不用看，闭眼给你烤" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你跟见亲戚似的" },
+      { "phase": "complete", "actor": "boss", "text": "老店吐槽时间——你自己说说，第几回了", "next": ["s1r_a", "s1r_b", "s1r_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s1r_a", "text": "（火气梗）辣椒面我手抖都抖你那份上" },
+      { "phase": "complete", "actor": "boss", "id": "s1r_b", "text": "（熟客梗）你那桌椅子都让你坐包浆了" },
+      { "phase": "complete", "actor": "boss", "id": "s1r_c", "text": "（吐槽梗）再这么吃，我得给你办会员了" }
+    ]
+  },
+  {
+    "id": "shop_s02_roast",
+    "name": "孔子饺子馆 · 老店吐槽",
+    "weight": 7,
+    "trigger": { "condition": "shopId = s02 & shopVisitCount >= 8", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "第八回？食不厌精，你倒是精上了", "moodDelta": 12 },
+      { "phase": "cook", "actor": "boss", "text": "老板引经据典地给你包，闭眼都匀称" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这单有文化，老顾客了" },
+      { "phase": "complete", "actor": "boss", "text": "老店吐槽——孔夫子说，温故而知新，你光温故", "next": ["s2r_a", "s2r_b", "s2r_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s2r_a", "text": "（哲学梗）你这食量，够写篇论文了" },
+      { "phase": "complete", "actor": "boss", "id": "s2r_b", "text": "（熟客梗）你坐那桌，我都留了" },
+      { "phase": "complete", "actor": "boss", "id": "s2r_c", "text": "（吐槽梗）减肥的话你说了八回，一回没算数" }
+    ]
+  },
+  {
+    "id": "shop_s03_roast",
+    "name": "佛系粥铺 · 老店吐槽",
+    "weight": 7,
+    "trigger": { "condition": "shopId = s03 & shopVisitCount >= 8", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "第八回啦？随缘随缘，你倒是常来", "moodDelta": 6 },
+      { "phase": "cook", "actor": "boss", "text": "老板慢悠悠熬，闭眼都稠" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，安静如鸡" },
+      { "phase": "complete", "actor": "boss", "text": "老店吐槽——粥都熬出感情了", "next": ["s3r_a", "s3r_b", "s3r_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s3r_a", "text": "（佛系梗）你这频率，我都不催你自煮了" },
+      { "phase": "complete", "actor": "boss", "id": "s3r_b", "text": "（熟客梗）你那碗，我多放了两颗枣" },
+      { "phase": "complete", "actor": "boss", "id": "s3r_c", "text": "（吐槽梗）减肥的话，你说了八回" }
+    ]
+  },
+  {
+    "id": "shop_s04_roast",
+    "name": "怪味研究所 · 老店吐槽",
+    "weight": 7,
+    "trigger": { "condition": "shopId = s04 & shopVisitCount >= 8", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "第八回？你点的东西我都不敢问了", "moodDelta": 0 },
+      { "phase": "cook", "actor": "boss", "text": "厨房咕嘟声都熟了，闭眼都知道颜色" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，紫烟都见怪不怪" },
+      { "phase": "complete", "actor": "boss", "text": "老店吐槽——实验体……哦不，老主顾", "next": ["s4r_a", "s4r_b", "s4r_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s4r_a", "text": "（怪味梗）你点的配方，我都能背了" },
+      { "phase": "complete", "actor": "boss", "id": "s4r_b", "text": "（熟客梗）你那袋，我闭眼都认得" },
+      { "phase": "complete", "actor": "boss", "id": "s4r_c", "text": "（吐槽梗）再这么点，我得给你发实验员证" }
+    ]
+  },
+  {
+    "id": "shop_s05_roast",
+    "name": "懒人便当 · 老店吐槽",
+    "weight": 7,
+    "trigger": { "condition": "shopId = s05 & shopVisitCount >= 8", "probability": 0.85, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "epic",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "第八回？能不动手就不动手，你也是", "moodDelta": 4 },
+      { "phase": "cook", "actor": "boss", "text": "老板微波炉一扔，躺平等叮，闭眼都准" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这店见你，温的" },
+      { "phase": "complete", "actor": "boss", "text": "老店吐槽——你这单我都懒得催了", "next": ["s5r_a", "s5r_b", "s5r_c"], "nextWeights": [5, 3, 2] },
+      { "phase": "complete", "actor": "boss", "id": "s5r_a", "text": "（懒梗）你点的，我闭眼都塞得对" },
+      { "phase": "complete", "actor": "boss", "id": "s5r_b", "text": "（熟客梗）你那便当，我多懒了一下" },
+      { "phase": "complete", "actor": "boss", "id": "s5r_c", "text": "（吐槽梗）减肥的话你说了八回，我也懒得记" }
+    ]
+  },
+  {
+    "id": "default_i",
+    "name": "日常一单 · 钱包默哀",
+    "weight": 3,
+    "isFallback": true,
+    "trigger": { "condition": "1 = 1", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "common",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "又点？这单我替你默哀三秒钱包" },
+      { "phase": "cook", "actor": "boss", "text": "老板看你这熟客，手都麻利了" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：这单我顺路，老位置" },
+      { "phase": "complete", "actor": "boss", "text": "吃吧，反正你也不缺这一顿", "effect": { "tags": ["ordered"] } }
+    ]
+  },
+  {
+    "id": "default_j",
+    "name": "日常一单 · 备注花活",
+    "weight": 3,
+    "isFallback": true,
+    "trigger": { "condition": "1 = 1", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "common",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "备注写了一堆，老板看完沉默了" },
+      { "phase": "cook", "actor": "boss", "text": "老板按你备注整了点花活" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：你这备注，我都能背" },
+      { "phase": "complete", "actor": "boss", "text": "吃吧，备注我都替你记着了", "effect": { "tags": ["ordered"] } }
+    ]
+  },
+  {
+    "id": "default_k",
+    "name": "日常一单 · 深夜互卷",
+    "weight": 3,
+    "isFallback": true,
+    "trigger": { "condition": "1 = 1", "probability": 0.6, "cooldownMin": 0, "maxPerUser": 0 },
+    "rarity": "common",
+    "chain": [
+      { "phase": "accept", "actor": "boss", "text": "这个点还点？你是要跟夜班老板互卷" },
+      { "phase": "cook", "actor": "boss", "text": "老板陪你熬，闭眼都熟" },
+      { "phase": "deliver", "actor": "rider", "text": "骑手：深夜单，我懂" },
+      { "phase": "complete", "actor": "boss", "text": "吃吧，明天减肥的话我记着了", "effect": { "tags": ["ordered"] } }
+    ]
   }
 ]

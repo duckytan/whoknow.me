@@ -76,3 +76,17 @@ test('M7 订单历史：recordOrderHistory 后 getOrderHistory 可取回（最�
   assert.equal(h[0].shopId, 's02') // 最新在前
   assert.equal(h[1].branchId, 'poor')
 })
+
+test('M8 riderVisitCount 契约：memory HistoryParams 核心三字段不变，注入 riderVisitCount 可驱动引擎骑手认人', () => {
+  const eng = new MemoryEngine(new MemStore())
+  eng.recordOrder('s01')
+  const history = eng.getHistoryParams('s01')
+  assert.equal(history.shopVisitCount, 1)
+  assert.equal(history.todayOrderCount, 1)
+  assert.equal(history.totalOrders, 1)
+  // 派生命名参数（与 shopVisitCount 平行）可由 L3 注入后驱动 engine 的 rider_r001_recog
+  const r = runDrama(branches, { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 } as any, {
+    random: () => 0.6, history: { ...history, riderVisitCount: 2 } as any, flags: [],
+  })
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
+})

@@ -29,6 +29,7 @@ export interface HistoryParams {
   shopVisitCount?: number
   todayOrderCount?: number
   totalOrders?: number
+  riderVisitCount?: number
   [k: string]: unknown
 }
 

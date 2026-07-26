@@ -2,7 +2,7 @@
 // 蒙特卡洛模拟「典型用户会话」，量化：
 //   H1 重复疲劳：12 单会话内撞同一完整台词链的概率
 //   H2 基线多样性：4 条 isFallback 基线分支的命中分布
-//   H3 覆盖：所有 28 分支是否可达（防死分支回归）
+//   H3 覆盖：所有 58 分支是否可达（防死分支回归）
 //   P3 概率平衡：各分支命中率，标记饥饿分支
 // 运行: node --experimental-strip-types scripts/playtest-sim.ts
 
@@ -49,6 +49,7 @@ function genOrderTotal(): number {
 interface SimState {
   flags: string[]
   shopVisit: Record<string, number>
+  riderVisit: Record<string, number>
   today: number
   total: number
 }
@@ -63,6 +64,7 @@ function runSession(state: SimState) {
     const shopId = pick(SHOPS)
     state.shopVisit[shopId] = (state.shopVisit[shopId] ?? 0) + 1
     const riderId = pick(RIDERS)
+    state.riderVisit[riderId] = (state.riderVisit[riderId] ?? 0) + 1
     const orderTotal = genOrderTotal()
     const avgDishPrice = 5 + rnd() * 40
     const dishCount = 1 + Math.floor(rnd() * 4)
@@ -71,6 +73,7 @@ function runSession(state: SimState) {
     const deliveryFee = 2 + rnd() * 6
     const todayOrderCount = state.today + 1
     const shopVisitCount = state.shopVisit[shopId]
+    const riderVisitCount = state.riderVisit[riderId]
     const extraFlags: string[] = []
     if (rnd() < 0.05) extraFlags.push(`married_${riderId}`)
     if (rnd() < 0.05) extraFlags.push(`blacklisted_${shopId}`)
@@ -82,7 +85,7 @@ function runSession(state: SimState) {
     }
     const res: any = runDrama(branches, input, {
       random: rnd,
-      history: { shopVisitCount, todayOrderCount },
+      history: { shopVisitCount, todayOrderCount, riderVisitCount },
       flags,
     })
     if (res.selectedBranchId) {
@@ -112,7 +115,7 @@ let repeat3 = 0
 let globalChains = new Set<string>()
 
 for (let s = 0; s < SESSIONS; s++) {
-  const st: SimState = { flags: [], shopVisit: {}, today: 0, total: 0 }
+  const st: SimState = { flags: [], shopVisit: {}, riderVisit: {}, today: 0, total: 0 }
   const r = runSession(st)
   for (const id of r.hit) hitCount[id]++
   if (r.dupCount > 0) sessionsWithDup++
@@ -145,6 +148,33 @@ for (let i = 0; i < BASE_N; i++) {
   }
 }
 
+// ===== 2.5) 覆盖保障：深忠诚会话（单一店铺连点 12 单）=====
+// 主模拟随机选店，单店难累积到 8 单；此 pass 强制遍历 svc 1..12，
+// 保证 shop_s0X_roast / vip_roast 的 >=8 阈值分支及骑手认人分支被覆盖
+for (const shop of SHOPS) {
+  const st: SimState = { flags: [], shopVisit: {}, riderVisit: {}, today: 0, total: 0 }
+  for (let i = 0; i < 12; i++) {
+    const riderId = pick(RIDERS)
+    st.riderVisit[riderId] = (st.riderVisit[riderId] ?? 0) + 1
+    const shopId = shop
+    st.shopVisit[shopId] = (st.shopVisit[shopId] ?? 0) + 1
+    const toc = st.today + 1
+    const svc = st.shopVisit[shopId]
+    const input: any = {
+      orderTotal: 50, avgDishPrice: 99, shopId, riderId, deliveryFee: 3,
+      todayOrderCount: toc,
+    }
+    const res: any = runDrama(branches, input, {
+      random: rnd,
+      history: { shopVisitCount: svc, todayOrderCount: toc, riderVisitCount: st.riderVisit[riderId] },
+      flags: st.flags,
+    })
+    if (res.selectedBranchId) hitCount[res.selectedBranchId] = (hitCount[res.selectedBranchId] ?? 0) + 1
+    for (const f of res.newFlags) if (!st.flags.includes(f)) st.flags.push(f)
+    st.today = toc
+  }
+}
+
 // ===== 3) 覆盖校验 =====
 const covered = new Set<string>()
 for (const id of ALL_IDS) if (hitCount[id] > 0) covered.add(id)
@@ -168,7 +198,7 @@ md += '| 分支 | 命中 | 占比 |\n|---|---|---|\n'
 for (const id of baselineIds) {
   md += `| ${id} | ${baselineHit[id]} | ${(baselineHit[id] / BASE_N * 100).toFixed(1)}% |\n`
 }
-md += `- 4 条基线全部出现 = 抗撞句生效；期望接近权重比 1:3:3:3\n\n`
+md += `- 11 条基线（含 default_i/j/k）全部出现 = 抗撞句生效；期望接近权重比 1:3:3:3\n\n`
 
 md += '## H3 分支覆盖（防死分支）\n'
 md += `- 可达分支：${covered.size}/${ALL_IDS.length}\n`
