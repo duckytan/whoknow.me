@@ -4,7 +4,7 @@
 ## 项目
 - 本仓库 = 「胡闹宇宙」纯静态站，Vercel `https://whoknow.me`。双 App：`whoknow-waimai`(/waimai，M1已上线) + `whoknow-mart`(/mart，v1反骨原型已上线)，共用 `whoknow-brain`。
 - 分工：waimai 由另一 workbuddy 开发；mart 由主理人(游承峰)主责。
-- ⚠️ git：push 前必须 `git fetch` + `git pull --rebase origin main`（另一 workbuddy 常推 waimai）。
+- ⚠️ git：禁止在 `main` 上直接提交 / 强推。701-PC 工作线为 `agent-mart`，push 前 `git fetch && git rebase origin/main` 后 `git push --force-with-lease origin agent-mart`；合入 `main` 经 PR + CI（详见 `docs/studio/GIT-WORKFLOW.md`，2026-07-26 落地）。
 
 ## 当前卡点
 1. **waimai 真机 playtest 闸门（行动项C）未过**：CHECKLIST 要求"≥8真人×12单+填scorecard.csv"，用户 07-26 质疑不现实，主理人给 A轻量/B自然回收/C全量 三选项**未拍板**。该门现为上线后跟踪门（非阻塞）。

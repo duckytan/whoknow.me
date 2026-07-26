@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# .githooks/commit-msg
+# 强制 Conventional Commits 规范（与 docs/studio/GIT-WORKFLOW.md §5 对应）。
+# 仅在首行不符合 <type>(<scope>)?!?: <subject> 时拦截。
+set -uo pipefail
+
+MSG_FILE="${1:-}"
+[ -z "$MSG_FILE" ] && exit 0
+
+# 取首行（去掉注释行与前后空白）
+FIRST=$(grep -vE '^#' "$MSG_FILE" | head -1 | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+[ -z "$FIRST" ] && exit 0
+
+PATTERN='^(feat|fix|docs|chore|refactor|test|style|perf|build|ci|revert)(\([a-z0-9._-]+\))?!?: .+'
+
+if ! printf '%s' "$FIRST" | grep -qE "$PATTERN"; then
+  echo "⛔ commit-msg 钩子拦截：提交信息不符合 Conventional Commits 规范。"
+  echo "   格式：<type>(<scope>)?!?: <subject>"
+  echo "   允许 type：feat fix docs chore refactor test style perf build ci revert"
+  echo "   禁止：recover: / 裸 Merge branch / 无 type"
+  echo "   示例：feat(mart): 新增选招制"
+  echo "   当前首行：$FIRST"
+  exit 1
+fi
+exit 0

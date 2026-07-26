@@ -1,0 +1,18 @@
+# 统一换行（跨 Windows 机器一致性，避免误报 diff）
+* text=auto eol=lf
+
+# 二进制资源保持原样
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.mp4 binary
+*.zip binary
+
+# SVG 视为文本（需 diff/审查）
+*.svg text
