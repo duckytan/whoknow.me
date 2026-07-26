@@ -1,7 +1,7 @@
 # 项目状态 · whoknow 胡闹宇宙
 
 > **任何 agent / 协作者请先读此文件** —— 它是根状态锚，看完即可拿到项目最新状态。
-> 最后更新：2026-07-25 · 主理人 游承峰（Yoan Summit）
+> 最后更新：2026-07-26 · 主理人 游承峰（Yoan Summit）
 > 详细进度见 `docs/studio/STUDIO-PROGRESS.md`（工作室进度快照）
 
 ---
@@ -26,7 +26,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 
 - **引擎**：Vue3 + Vite + Vant（沿用现状，不重做）
 - **平台**：PWA 优先（Vercel 现栈加 manifest + service worker）；小程序为独立 target，lean 模式下冻结至 M2
-- **评审强度**：lean 轻量（设计评审 + 冒烟测试；保留 playtest 真机硬闸门）
+- **评审强度**：**full**（2026-07-26 起锁定；M1 执行期曾用 lean，见 whoknow-waimai M1 复盘）。每个阶段切换走正式质量门（设计/架构/烟雾/发布评审，给 PASS/CONCERNS/FAIL）；保留真机 playtest 硬闸门。
 
 ## 关键文档（按优先级读）
 
