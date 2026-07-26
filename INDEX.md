@@ -14,7 +14,7 @@
 - **产品矩阵**：`whoknow-waimai`（胡闹外卖·已上线 M1）/ `whoknow-mart`（胡闹导购·概念）/ `whoknow-brain`（胡闹控制中心·导演角色，手动生成）。
 - **部署**：单 Vercel 仓库托管多 app，根 `vercel.json` 纯静态 + `/短名` 路由分发。
 - **当前里程碑**：外卖 M1 已上线；导购概念；brain 手动信封。
-- **你这台机器负责什么**：见 §6 身份确认 + §8 分工表。
+- **本实例所在机器负责什么**：见 §6 身份确认 + §8 分工表。
 
 ---
 
@@ -96,9 +96,9 @@
 本机身份在 `C:\Users\<你>\.workbuddy\` 的 `SOUL.md` / `IDENTITY.md` / `USER.md` —— **不在项目仓库，每台机器各自维护，不跨设备覆盖**。
 
 确认三步：
-1. **我是谁**：读 `SOUL.md`（AI 人格）+ `IDENTITY.md`（名字/角色）。
-2. **我在哪台机器**：`hostname` → 计算机名定位本机角色（见下）。
-3. **我负责哪些 app**：对照 §8 分工表。
+1. **本实例身份**：读 `SOUL.md`（AI 人格）+ `IDENTITY.md`（名字/角色）。
+2. **本实例所在机器**：用 `hostname` 获取计算机名，对照 §8 分工表定位本实例角色（见下）。
+3. **本实例负责哪些 app**：对照 §8 分工表。
 
 计算机名 → 角色锚点：
 - `DuckyPC` → 负责 `whoknow-waimai`（你 / Ducky）
@@ -134,7 +134,7 @@
 
 | 机器 | 计算机名 | 负责 app | 主理人 | 备注 |
 |---|---|---|---|---|
-| 本机（你） | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
+| `DuckyPC`（你） | `DuckyPC` | `whoknow-waimai` | Ducky | 外卖 M1 迭代、结构治理、跨设备记忆 |
 | 另一台 | `701-PC` | `whoknow-mart` + `whoknow-brain` | 产出：锡哥；执行：胡叨叨（Agent-商城）| brain 信封待自动化（P0-C）；⚠️ brain 为共享契约中枢，单点归商城侧，存在单点耦合风险 |
 
 **跨边界任务归属原则**：按"生产方"定。信封（brain 产出）→ 归 `701-PC`；若消费方（waimai）机器已具备样本且合理，可协商在消费方做。当前 **P0-C（brain 信封自动化）暂停**：后台 agent 已终止(killed)，但 **brain 负责方已定：`701-PC` / Agent-商城（胡叨叨）**，**由 701-PC 侧的 agent 执行，不在 DuckyPC 跨做**。信封样例 `latest-config.json` / `fallback.json` 已抢救进 `whoknow-waimai/public/config/`。

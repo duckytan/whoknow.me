@@ -2,7 +2,7 @@
 
 > 目的：本仓库由**多个 WorkBuddy 实例并行协作、共享同一 GitHub 仓库**。本文件界定各实例的身份、独占范围与协作红线，避免重复劳动与互相覆盖（git 冲突 / 改动互毁）。
 > 配套必读：`docs/studio/REPO-STRUCTURE-CONVENTION.md`（文件结构规范，所有实例必须遵守，尤其 §7 防再犯双闸门）。
-> 本文件是"**地图**"；每个实例"我是谁"由本机计算机名 + 本文件 §0 映射**自动定位**（结论缓存于本地，见 §4）。
+> 本文件是"**地图**"；每个实例"本实例身份"由本机计算机名 + 本文件 §0 映射**自动定位**（结论缓存于本地，见 §4）。
 
 ## 0. 身份识别（计算机名驱动）
 本仓库由两台物理机器上的 WorkBuddy 实例并行协作。身份通过**计算机名（`$COMPUTERNAME`）**自动识别，无需人工逐一分配台词。
@@ -13,22 +13,22 @@
 
   | 计算机名 | 角色 | AI 自称 | 负责范围 |
   |---|---|---|---|
-  | `701-PC`（本机）| **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/` + `whoknow-brain/`（契约中枢）|
+  | `701-PC` | **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/` + `whoknow-brain/`（契约中枢）|
   | `DuckyPC` | **Agent-外卖** | （待该实例自定后回填本表）| `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）|
 
-- **仓库只放"地图"，不放"角色定位结论"**：映射表（本文件）入库共享；"我是谁 / 我负责啥"的**定位结论**缓存到本机 gitignored 的 `.workbuddy/memory/`，不与另一台冲突。但**对协作可见的称呼约定**（见下）必须入库共享，否则双实例无法对齐"对方叫什么、用户叫什么"。
+- **仓库只放"地图"，不放"角色定位结论"**：映射表（本文件）入库共享；"本实例身份 / 本实例负责范围"的**定位结论**缓存到本机 gitignored 的 `.workbuddy/memory/`，不与另一台冲突。但**对协作可见的称呼约定**（见下）必须入库共享，否则双实例无法对齐"对方叫什么、用户叫什么"。
 
 ### 统一称呼约定（双实例对齐用，入库共享）
 - **用户（你）**：`duckytan`，统一称呼 **「Ducky」**。两实例均以此称呼用户，与其本地 `USER.md` 是否存在无关。
-- **本机 AI 自称**：`701-PC` 实例自称 **胡叨叨 🦆**（已于本机 `IDENTITY.md` 固定）。
-- **DuckyPC AI 自称**：该实例尚未初始化本地身份文件（`USER.md` / `IDENTITY.md` 均不存在），自称**待其在本地 `IDENTITY.md` 自定后回填上表**。在回填前，本机以 **Agent-外卖** 指代之。
+- **机器 `701-PC`（Agent-商城）上的实例自称**：**胡叨叨 🦆**（已于该机器 `IDENTITY.md` 固定）。
+- **DuckyPC 实例自称**：该实例尚未初始化本地身份文件（`USER.md` / `IDENTITY.md` 均不存在），自称**待其在本地 `IDENTITY.md` 自定后回填上表**。在回填前，本文件（ROLES.md）以 **Agent-外卖** 指代 DuckyPC 实例。
 - 若需两实例自称风格统一，由各自在本地完成初始化，并把最终自称回填本表"AI 自称"列（单一事实源原则，§2.6）。
 
 ## 1. 实例与范围（Identity × Scope）
 | 实例标识 | 所在机器 | 负责范围（独占） | 说明 |
 |---|---|---|---|
 | **Agent-外卖** | `DuckyPC` | `whoknow-waimai/`、`data/`、`styles/`、`js/`、`index.html`、`index1.html` | 外卖 App 全栈 + 主站门面前端 |
-| **Agent-商城** | `701-PC`（本机）| `whoknow-mart/`、`whoknow-brain/`（契约中枢）| 商城 App + 宇宙级契约中枢 |
+| **Agent-商城** | `701-PC` | `whoknow-mart/`、`whoknow-brain/`（契约中枢）| 商城 App + 宇宙级契约中枢 |
 | **共享 / 协调（须协商）**| — | `胡闹宇宙总体设计方案.md`、`README.md`、`BRAND.md`、`vercel.json`、`archive/`、`docs/studio/`（除本文件与 WIP.md 外）| 跨切面文件，改动须通知另一实例并经人工确认 |
 
 > 范围划分是**建议值**，可按实际工作流调整；调整后须双方一致并回写本表与 §0 映射。
@@ -43,6 +43,7 @@
    - 硬隔离：各自在本地分支（如 `agent-waimai` / `agent-mart`）开发，以 PR 合入 `main`。
 6. **单一事实源**：跨实例的约定只在本章程 + 结构规范中定义，不各写各的。
 7. **会话自检（技术锁）**：每个实例每次新会话须先自报本机身份与"已读 ROLES"（§6.1），用主动健康检查替代纯文档依赖的君子协定。漏检被发现时，对方应提醒其回读（§2.2）。
+8. **客观表述（防歧义）**：本仓库为**多实例共享**文档，所有协作规范须以客观事实表述——用机器名（`701-PC` / `DuckyPC`）、角色名（Agent-商城 / Agent-外卖）、文件路径、仓库名（whoknow.me）指代；**禁止**用第一/二人称相对代词（我 / 我们 / 你 / 你们）与模糊指代（这里 / 那边 / 这台 / 那台）特指某台机器或某个人。凡"本机"用于泛指"读此文件的实例所在机器"时须自洽（每台实例读到的都是自己机器）；凡特指某台机器必须写机器名。新增 / 修订文档前按此条全文回扫。
 
 ## 3. 在制（WIP）通报
 - 长任务开工前，在 `docs/studio/WIP.md` 记一行：`[机器名/角色] 任务简述 @ 文件`，结束划掉。
@@ -50,14 +51,14 @@
 - `WIP.md` 属共享文件，按 §2.2 协商规则维护。
 
 ## 4. 身份识别与本地缓存（计算机名驱动）
-> 为何"我是谁"放本地而非入库：仓库文件对两实例可见，无法自我标识读者；身份结论须放本地（gitignored 的 `.workbuddy/memory/`），与另一台互不覆盖。
+> 为何"本实例身份"放本地而非入库：仓库文件对两实例可见，无法自我标识读者；身份结论须放本地（gitignored 的 `.workbuddy/memory/`），与另一台互不覆盖。
 
 **自动定位流程**（每个实例启动时）：
 1. 读本机 `$COMPUTERNAME`（Windows PowerShell：`$env:COMPUTERNAME`）。
 2. 对照 §0 映射表：`701-PC` → Agent-商城，`DuckyPC` → Agent-外卖。
-3. 把结论缓存到本机项目级 `D:\AI-Project\whoknow.me\.workbuddy\memory\MEMORY.md`，例如本机（701-PC）写：
-   > 本机计算机名 `701-PC` → **Agent-商城**，负责 `whoknow-mart/` + `whoknow-brain/`。只动我的范围；共享文件改前先协商；遵守 §7 双闸门。详见 `docs/studio/ROLES.md`。
-4. DuckyPC 实例缓存对应：本机 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端。
+3. 把结论缓存到本机项目级 `D:\AI-Project\whoknow.me\.workbuddy\memory\MEMORY.md`，例如 701-PC 机器上的实例写入：
+   > 机器名 `701-PC` → **Agent-商城**，负责 `whoknow-mart/` + `whoknow-brain/`。只动 Agent-商城 负责的范围；共享文件改前先协商；遵守 §7 双闸门。详见 `docs/studio/ROLES.md`。
+4. DuckyPC 实例缓存对应：机器 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端。
 
 > 缓存仅为加速；即使不缓存，每次读 `$COMPUTERNAME` + §0 映射表也能正确定位。
 
@@ -65,7 +66,7 @@
 > ⚠️ **机制局限（必读）**：WorkBuddy 每次会话**自动注入**的只有「用户级 `~/.workbuddy/IDENTITY.md`」与「项目级 `.workbuddy/memory/MEMORY.md`」，二者**都不随仓库同步**（前者用户级、后者 gitignored）。仓库里会同步的文件（含本文件）**没有任何自动加载机制**，必须主动 Read。因此：**约定写进本仓库 ≠ 各实例会读**；若某台未初始化本地指针，新建对话会遗忘本约定、可能越界协作。
 
 **接入第 0 步（治本，必须做）**：在本机用户级 `~/.workbuddy/IDENTITY.md` 写入身份指针，使 WorkBuddy 每次会话自动注入"去读本文件"的记忆。例（DuckyPC）：
-> 本机计算机名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端。**每次会话开始先读 `docs/studio/ROLES.md`**。详见该文件 §0。
+> 机器名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端。**每次会话开始先读 `docs/studio/ROLES.md`**。详见该文件 §0。
 （`701-PC` 实例等价于靠 workspace memory 自动注入实现同样效果，见 `.workbuddy/memory/MEMORY.md`。）
 
 **接入后续步骤**：
