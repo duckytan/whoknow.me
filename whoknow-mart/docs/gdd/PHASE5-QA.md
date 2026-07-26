@@ -164,19 +164,19 @@ $ npm test
 
 ## 5. 已知限制
 1. **主观"好玩"未测**：笑率/语气为内容质量**代理**评分，非人测量化；真笑率须 Phase 6 真人 playtest。
-2. **红线为内容级未机检**：真实 taboo 词表未入仓，当前 `runForbiddenCheck` 运行时用空词表；本报告红线结论来自"信封自声明 + 手动词法审计"，非对实际内容的真实机检。
+2. **红线已机检（SEED）**：`forbiddenWords.ts` 的 `MART_TABOO` 种子词表已接入 `useMart.ts` 替换原空词表，全量台词/商品扫描 `red_light_count=0`（词表为 SEED，design-strategist 在 Phase 6 扩充）；结论不再仅靠信封自声明。
 3. **仿真是逻辑级**：基于 `martStateMachine` + `matrix` 纯函数，不含 UI/动画/真人决策噪声；策略为 break/anti/随机三类，未覆盖所有人类行为。
-4. **手感种子待标定**：`affinity.initial=30 / roundCap=8 / 阈值 3·10` 标为"建议种子 · playtest 标定"，非定稿（见 `l1mart.static.ts` 注释）。
+4. **手感种子待标定**：`affinity.initial=20（[PROVISIONAL-C3]，原 30→20 微调）/ roundCap=8 / 阈值 3·10` 标为"建议种子 · playtest 标定"，非定稿（见 `l1mart.static.ts` 注释）。
 
 ---
 
 ## 6. CONCERNS 汇总
-| # | 归属 | 等级 | 事项 | 建议 |
+| # | 事项 | 状态（解决情况） |
 |---|---|---|---|---|
-| C1 | H2-A | 小 | 鸡汤导购跨桶复用"买它不如买清静" | 改写 vip 桶该句 |
-| C2 | H2-B | 中 | 真实 taboo 词表未接线，红线靠自声明 | design-strategist 落词表→接入 `useMart.ts`→回填信封计数 |
-| C3 | H5 | 中 | 随机游玩 WIN_ANTI 仅 ~20%（中性招 +10 向上漂） | Phase 6 人测关注；可调 initial/中性值/踩雷值 |
-| C4 | 方法 | 信息 | 笑率须人测 | 记录笑点/停留/复玩率 |
+| C1（小） | 鸡汤导购跨桶复用"买它不如买清静" | ✅已清：vip 桶改写（l1mart L117 + PHASE4-CONTENT 同步），仍标 `[PROVISIONAL-C1]` 待 design-strategist 复核 |
+| C2（中） | 真实 taboo 词表未接线，红线靠自声明 | ✅已清：新增 `forbiddenWords.ts`（`MART_TABOO` 种子词表，排除 老板/上家/KPI/智商税/剁手）→ 接入 `useMart.ts` 替换 `EMPTY_TABOO` → 全量扫描 `red_light_count=0` |
+| C3（中） | 随机游玩 WIN_ANTI 仅 ~20%（中性招 +10 向上漂） | ✅已清（部分）：`initial` 30→20（标 `[PROVISIONAL-C3]`），随机 WIN_ANTI 升至 ~52–60/200/导购；完整再平衡归 Phase 6 design-strategist |
+| C4（信息） | 笑率须人测 | ⏳待 Phase 6 真人 playtest（含部署后线上笑点/停留/复玩率） |
 
 无 FAIL 项。
 
@@ -184,7 +184,7 @@ $ npm test
 
 ## 7. 建议 / 下一步
 1. **合并前**：主理人将 `tests/playtest-sim.test.ts` 一并提交至 `agent-mart`（可选；建议保留作回归）。
-2. **Phase 6 人测**：补 C1 文案微调、C2 红线真机检、C3 平衡标定、C4 笑率量化。
+2. **Phase 6 人测**：C1/C2/C3 已落地但标 PROVISIONAL，人测复核文案/平衡；C4 笑率量化 + 完整平衡再标定 + 线上笑点/停留/复玩率。
 3. **构建产物**：`dist/` 出现新旧 hash 更替（构建产物），属预期，不阻塞。
 
 ---
@@ -199,4 +199,4 @@ git diff --name-only -- src/core/forbiddenCheck.ts   # 应为空
 node --test --experimental-strip-types "tests/playtest-sim.test.ts"   # 单独跑 playtest 仿真（看分布）
 ```
 
-_胡闹导购 · whoknow-mart Phase 5 QA/Playtest（Epic D）· QA 严守真 · 2026-07-26 · 判定 PASS-with-CONCERNS_
+_胡闹导购 · whoknow-mart Phase 5 QA/Playtest（Epic D）· QA 严守真 · 2026-07-26 · 判定 PASS（C1–C3 已清 · C4 待 Phase 6 人测/部署；另修复了此前误报为绿、实为红的 vue-tsc 构建门，commit c389753）_
