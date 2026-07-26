@@ -106,4 +106,6 @@
 |---|---|---|---|
 | 2026-07-25 | 主理人（建清单） | — | 清单立，待真人 playtest；自动化基线已绿，上线 `index-Doh-PDc5.js` |
 | 2026-07-25 | 主理人（P3 扩池） | PASS(代码级) | SEED 28→40 分支（基线 4→8、店/骑手各 +1 变体）；`playtest-sim.ts` 代理达标（不同链 10.2/12、单分支≥3重复 28%、40/40 可达）；部署 `index-Bnc50CL0.js` 后续已含 |
+| 2026-07-26 | 主理人（真人模拟试玩 stand-in） | CONCERNS | 真实运行时 12 单无崩溃、红线 0 命中；H1 代评中位 4.0 / ≥4 占 66.7%；**H2 同店第5单 vip_5th 实测仅 26% 触发（500 会话量化）**，被 regular_3rd/shop_s01_*/骑手分支抢走；H3 运行时仅 5/15 解锁（vip_fan/dark_chef/reconciled 被抢）。根因=引擎等权抽奖无优先级。建议加 priority 层（方案 A）。报告 `docs/playtest/REALUSER-PLAYTEST-2026-07-26.md` |
+| 2026-07-26 | 主理人 + engineering-lead（方案 A 修复后复验） | PASS | 引擎加 priority 档（非 fallback 取最高档抽签）+ SEED 分级（备注30/vip25/roast26/里程碑20/人格10/基线0）。vip_5th 第5单触发率 **26%→100%**（500会话）；npm test **54/54**；12单复跑 odd_eats/boss_blacklist/vip_5th 均正确触发，成就 5/15→8/15，红线0。H2 升 PASS、H3 运行时可达性修复。H4 无障碍仍待真机。框架完善闭环。报告见 REALUSER-PLAYTEST-2026-07-26.md §8 |
 | | | | |

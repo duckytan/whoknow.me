@@ -268,4 +268,27 @@
 
 ---
 
+---
+
+## 13. 大脑方案讨论 · 进行中（WIP · 2026-07-26 夜 · 待续）
+
+> 🦆 **下次开机从哪接**：直接读本节 + 下面的两份文档，从 **Q0.0 拓扑立场对齐** 继续拍板。讨论闭合前**不动任何代码**。
+
+**缘起**：大脑（whoknow-brain）是胡闹宇宙核心中枢，开发须"先设计后构建、前期讨论透彻"，对其设 **design-lock gate**（严于 full 评审）。为让讨论有结构，建了方案讨论计划并做三司会审。
+
+**已落盘产物（续接用）**：
+- [`whoknow-brain/docs/DISCUSSION-PLAN.md`](whoknow-brain/docs/DISCUSSION-PLAN.md) — 大脑底层架构方案讨论计划：7 章 28 题，每题含 前因后果 + 多方案 + 优劣评比表 + 最终推荐(带理由) + 举一反三。
+- [`whoknow-brain/docs/DISCUSSION-PLAN-AUDIT.md`](whoknow-brain/docs/DISCUSSION-PLAN-AUDIT.md) — 三司会审报告（2026-07-26）。结论 = **条件性通过（不通过作 Phase 3 依据）**；两大 P0：① 拓扑双重真相（地基裂缝）② 锁闸是愿望不是闸门。
+
+**🔴 当前卡点（必须先决）· Q0.0 拓扑立场对齐**：
+- **矛盾**：DISCUSSION-PLAN 默认 **拓扑 A（构建期静态内容管道）**；但 `whoknow-brain/docs/api-spec.md`（**v2.1**，被 `CONSTITUTION` L2-C4 指为契约权威）实为 **拓扑 B（运行时中枢）**——含 `collector`（玩家反馈/服务器心跳）、REST `/api/v1`、cron 03:00、服务端审核、HMAC、"锡哥放手时 brain 接管运营"。两份互斥。
+- **已展开选项**（详见 DISCUSSION-PLAN-AUDIT / 主理人 Q0.0 提案）：方案1 推翻 api-spec 改投 A ／ 方案2 保留 B 并调和铁律 ／ **方案3 混合（A 静态基座 + B 能力推迟路线图，主理人推荐）**。
+- **下一步**：Ducky 拍板 Q0.0 选 1/2/3 → 回写 DISCUSSION-PLAN（加 Q0.0 + 校准事实：api-spec 实 v2.1 非 v2.2 + 在 `.githooks/pre-commit` 落钩子把锁闸变真闸门）→ 进 D1 定位边界。
+
+**待补（讨论闭合前）**：design-lock gate 尚未 codify 进 `CONSTITUTION`（缺 design-lock 条款）；锁闸空闸门需在 pre-commit 加 `whoknow-brain/**` 未 CLOSED/缺 ADR 拦截。
+
+**已知过程异常（已隔离，未决）**：三司会审窗口内 `whoknow-waimai` 引擎被改出 `priority` 优先级层（正是 19:13 真人试玩 bug 的修复选项 A，当时标"待拍板未动代码"）。已 `git stash` 隔离（来源存疑，待 Ducky 确认归属）。本回合未动它。
+
+---
+
 _本文件是项目总入口。任何 agent 拉取项目后应**先读此处**再动手。内容随里程碑更新，旧信息以对应详文档为准；若发现本文件与详文档冲突，以详文档 + 权威链为准，并提 PR 回扫本文件。_
