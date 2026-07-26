@@ -114,7 +114,7 @@ export const L1MART: L1Mart = {
           '购物车是欲望的镜子，照照。',
         ],
         vip: [
-          '咱们这种交情，我得点醒你——买它不如买清静。',
+          '咱们这种交情，我得点醒你——有些东西不买，心里才真清净。',
           '真朋友不让你乱花钱。',
           '省下的，都是给未来的你。',
         ],
@@ -166,7 +166,7 @@ export const L1MART: L1Mart = {
     dark: { move_firm: 40, move_compare: 10, move_pity: -10, move_poison: 10 },
   },
   affinity: {
-    initial: 30,
+    initial: 20,
     min: 0,
     max: 100,
     roundCap: 8,

@@ -10,9 +10,8 @@ import { reactive, computed } from 'vue'
 import { MART_STATIC_ENVELOPE } from '../config/l1mart.static.ts'
 import { loadMartConfig, type LoadStatus } from '../config/loader.ts'
 import { runForbiddenCheck, type TabooList, type ForbiddenResult } from '../core/forbiddenCheck.ts'
+import { MART_TABOO } from '../config/forbiddenWords.ts'
 import type { L1Mart } from '../types/contract.ts'
-
-const EMPTY_TABOO: TabooList = { red_light: [], yellow_light: [] }
 
 const state = reactive({
   load: loadMartConfig(MART_STATIC_ENVELOPE),
@@ -25,7 +24,7 @@ export function useMartGate() {
 
   /** 运行时红线扫描（否决#3 同款管线；UI 层实时演示）。 */
   function scanTexts(texts: string[]): ForbiddenResult {
-    return runForbiddenCheck(texts, EMPTY_TABOO)
+    return runForbiddenCheck(texts, MART_TABOO)
   }
 
   return { status, config, ok, scanTexts }

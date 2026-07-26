@@ -29,15 +29,16 @@ import {
   type MartRoundState,
   type RoundOutcome,
 } from '../src/engine/martStateMachine.ts'
+import type { MoveId } from '../src/types/contract.ts'
 
 type Strategy = 'break' | 'anti' | 'random'
 
-function weaknessMove(arch: (typeof ARCHETYPES)[number]): string {
+function weaknessMove(arch: (typeof ARCHETYPES)[number]): MoveId {
   const m = MOVES.find((x) => lookup(L1MART.matrix, arch, x) === DELTA.WEAKNESS)
   if (!m) throw new Error(`${arch} 无弱点招`)
   return m
 }
-function mineMove(arch: (typeof ARCHETYPES)[number]): string {
+function mineMove(arch: (typeof ARCHETYPES)[number]): MoveId {
   const m = MOVES.find((x) => lookup(L1MART.matrix, arch, x) === DELTA.MINE)
   if (!m) throw new Error(`${arch} 无踩雷招`)
   return m
@@ -60,11 +61,14 @@ function chooseMove(
   arch: (typeof ARCHETYPES)[number],
   state: MartRoundState,
   rng: () => number,
-): string {
+): MoveId {
   if (strategy === 'break') return weaknessMove(arch)
   if (strategy === 'anti') return mineMove(arch)
   const opts = state.optionsThisRound.length ? state.optionsThisRound : MOVES
-  return opts[Math.floor(rng() * opts.length)]
+  const idx = Math.floor(rng() * opts.length)
+  // opts 恒非空（optionsThisRound 经 shuffleMoves 恒 4 项；回退 MOVES 亦 4 项）；
+  // 取兜底 MOVES[0] 以在任意 noUncheckedIndexedAccess 设定下都保证返回 MoveId。
+  return opts[idx] ?? MOVES[0]
 }
 
 interface RunResult {

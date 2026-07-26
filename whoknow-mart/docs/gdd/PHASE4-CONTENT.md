@@ -119,7 +119,7 @@
   - `"上次的教训这么快忘了？"`
   - `"购物车是欲望的镜子，照照。"`
 - **vip（真爱粉·交情点醒）**
-  - `"咱们这种交情，我得点醒你——买它不如买清静。"`
+  - `"咱们这种交情，我得点醒你——有些东西不买，心里才真清净。"` // [PROVISIONAL-C1] orchestrator pick, pending design-strategist bless
   - `"真朋友不让你乱花钱。"`
   - `"省下的，都是给未来的你。"`
 
@@ -219,7 +219,7 @@
 
 | 项 | 建议种子 · playtest 标定 | 标定方法 | 否决边界 |
 |---|---|---|---|
-| 破防度初始值 `affinity.initial` | **30**（建议种子 · playtest 标定；概念草案 50*，反骨建议 30~40） | H2 笑率 + 胜任感 | `00-CONCEPT.md` §10 |
+| 破防度初始值 `affinity.initial` | **20**（建议种子 · playtest 标定；概念草案 50*，反骨建议 30~40） | H2 笑率 + 胜任感 | `00-CONCEPT.md` §10 // [PROVISIONAL-C3] orchestrator nudge to make WIN_ANTI slightly more reachable under random play; design-strategist to do full rebalance in Phase 6 |
 | 单轮 delta | +40 / −10 / +10（设计常量，非调参） | 矩阵手感（H5 分布） | §6.4 否决#2（不全同值） |
 | `round_cap` | **8**（建议种子 · playtest 标定） | 单局 5–15min | §6.4 防死循环 |
 | 保底轮次 N | **5**（建议种子 · playtest 标定） | 防被耍感 | §5.2 |
