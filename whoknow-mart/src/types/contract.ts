@@ -51,9 +51,22 @@ export interface AffinityConfig {
 export interface ProductDef {
   id: string
   name: string
+  /** 占位价格哨兵（真实价格禁数字，红线 #2）；展示用 pricePlaceholder 字符串。 */
   price: number
   guideBinding: string
   rarity: Rarity
+  /** 商品大图 emoji（色盲三重标识之一）。 */
+  emoji?: string
+  /** 价格红标占位字符串（离谱价 / ¥?? / 智商税价 / 看缘分价，禁数字）。 */
+  pricePlaceholder?: string
+  /** 化名店名（某宝/某团/京城…）。 */
+  shopName?: string
+  /** 商品分类（家居/数码/美妆/宠物/个护…）。 */
+  category?: string
+  /** 离谱品=true / 正常品=false（决定笑率分布）。 */
+  absurdity?: boolean
+  /** 比价素材（move_compare 触发，相对描述无绝对数字）。 */
+  compareMaterial?: string
 }
 
 /** mart 自建 L1 子集（信封 mart 键下）。 */

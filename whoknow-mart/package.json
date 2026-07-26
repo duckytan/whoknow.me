@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
     "test": "node --test --experimental-strip-types \"tests/*.test.ts\"",
+    "contrast": "node scripts/contrast-check.mjs",
     "ci": "node scripts/ci-check.mjs"
   },
   "dependencies": {

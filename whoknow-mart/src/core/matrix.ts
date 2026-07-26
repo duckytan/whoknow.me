@@ -1,7 +1,7 @@
 // matrix.ts — 克制矩阵查表 + 1+1+2 锁校验（03-matrix · M1）
 //
 // 数值 +40/-10/+10 为 REVIEW §6 D2 规范锁（非手感值，不可在 playtest 前硬编码手感）；
-// 具体「某型弱点=某招」映射为 [待测试] 占位（见 config/l1mart.static.ts）。
+// 具体「某型弱点=某招」映射已由 config/l1mart.static.ts 转录自 PHASE4-CONTENT.md v1.1（1+1+2 锁死）。
 
 import { DELTA } from '../types/contract.ts'
 import type { Archetype, MoveId, MartMatrix } from '../types/contract.ts'

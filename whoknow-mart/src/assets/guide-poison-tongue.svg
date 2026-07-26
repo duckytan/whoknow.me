@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="毒舌型导购 王二麻">
+  <defs>
+    <radialGradient id="pt-grad" cx="50%" cy="36%" r="72%">
+      <stop offset="0%" stop-color="#FF7A47"/>
+      <stop offset="100%" stop-color="#FF4B10"/>
+    </radialGradient>
+  </defs>
+  <!-- 头像：角色色圆底 + 白边（ART-BIBLE §4.1 / ASSET-SPECS §1.1） -->
+  <circle cx="60" cy="60" r="56" fill="url(#pt-grad)" stroke="#ffffff" stroke-width="4"/>
+  <!-- emoji 标识（三重色盲 ID 之一） -->
+  <text x="60" y="60" text-anchor="middle" dominant-baseline="central" font-size="58"
+        font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">🔥</text>
+  <!-- 戏精标签 chip：白底 + 角色色左边 accent + #222 文本（C3，三重 ID 之三） -->
+  <rect x="22" y="124" width="76" height="26" rx="13" fill="#ffffff" stroke="#ededed" stroke-width="1"/>
+  <rect x="24" y="129" width="5" height="16" rx="2.5" fill="#FF4B10"/>
+  <text x="63" y="137" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600"
+        fill="#222222" font-family="'Inter','Noto Sans SC',sans-serif">毒舌</text>
+</svg>

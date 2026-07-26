@@ -16,7 +16,7 @@ const STATS_KEY = `${KEY_PREFIX}stats`
 const SCHEMA_VERSION = 1
 
 /**
- * [待测试] 复用 DATA-STRUCTURE-v1 §2.3 记忆分级阈值（first=1 / regular>=3 / vip>=10）。
+ * 复用 DATA-STRUCTURE-v1 §2.3 记忆分级阈值（first=1 / regular>=3 / vip>=10）。
  * 注：CONTROL-CHECKLIST §B.1 示例代码写「5 次→vip」与 DATA-STRUCTURE 源权威阈值(10)不一致，
  * 此处以 DATA-STRUCTURE §2.3 单一事实来源为准（vip>=10）；阈值待 playtest 标定。
  */

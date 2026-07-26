@@ -1,8 +1,8 @@
 # 🎯 胡闹导购（whoknow-mart）· 资产规格（ASSET-SPECS.md）
 
-> **版本**：v0.1 · 2026-07-26
+> **版本**：v0.2 · 2026-07-26（Phase 5 资产落地）
 > **主责**：林绘澄（art-director，胡闹宇宙工作室）
-> **状态**：🟡 Phase 4 预制作 · 资产规格（冻结期备料，非实现）
+> **状态**：🟢 Phase 5 资产落地 · 部分资产已落 `src/assets/`（规格 + 真实 SVG）
 > **评审强度**：full
 > **上游权威**：`docs/art/ART-BIBLE.md`(v0.1) · `docs/art/ACCESSIBILITY.md`(v0.1) · `docs/gdd/REVIEW.md` §5.1（五导购锚表）· `docs/gdd/02-selection-statemachine.md` · `docs/gdd/03-break-defense-engine.md` · `docs/gdd/06-drama-dialog-ui.md` · `docs/gdd/08-screenshot-share.md` · `BRAND.md` §2/§3/§7/§17
 > **纪律**：不碰 `whoknow-mart/src/` 代码；表述遵循 L2-C9（机器名/角色名/令牌名/路径指代）。
@@ -197,14 +197,125 @@
 | C3 | 角色色 chip 文本 | 色值 | `--fg`#222 + 角色色边框 | `--font-body` | — | 14:1 | MVP（补§2.5） |
 | C4 | 水印文字 | 色值 | `--watermark-fg`#595959 | `--font-body` | — | 6.4:1 | MVP（补§2.2） |
 
+### 5.1 Phase 5 落地资产清单（已落 `src/assets/`）
+
+> 下列资产为 Phase 5 实际落盘的真实文件，eng-lead 可按路径直接 `import`。首轮 UI 仍用 emoji+CSS（避免与脚手架 race），SVG 为第二轮增强资产，路径约定清晰。
+
+| 文件 | 资产 | 用途 | 三重色盲 ID / 备注 |
+|------|------|------|-------------|
+| `src/assets/guide-poison-tongue.svg` | 毒舌型头像 | 对话气泡/结局卡/时间线 | 🔥 + `--role-angry`#FF4B10 + 芯片「毒舌」 |
+| `src/assets/guide-rational.svg` | 理性型头像 | 同上 | 🤓 + `--role-gentle`#2BB14A + 芯片「理性」 |
+| `src/assets/guide-lazy.svg` | 散漫型头像 | 同上 | 😴 + `--role-lazy`#3A7BFF + 芯片「散漫」 |
+| `src/assets/guide-philosopher.svg` | 鸡汤型头像 | 同上 | 🧘 + `--role-philo`#1FB6A6 + 芯片「鸡汤」 |
+| `src/assets/guide-dark.svg` | 腹黑型头像 | 同上 | 😈 + `--role-weird`#8B5CF6 + 芯片「腹黑」 |
+| `src/assets/wk-mark.svg` | whoknow 角标 | 右上角绝对定位，`pointer-events:none` | 绿圆(`--brand-green`#6eda78) + 白「?」 |
+| `src/assets/icon-move-firm.svg` | 招式图标 `move_firm`💪 | 4 选项卡 icon（`stroke="currentColor"` 可重着色） | 杠铃图标 + 文字「我需要！」 |
+| `src/assets/icon-move-compare.svg` | 招式图标 `move_compare`📊 | 同上 | 柱状图 + 文字「我比过价了」 |
+| `src/assets/icon-move-pity.svg` | 招式图标 `move_pity`🥺 | 同上 | 祈求脸+泪 + 文字「求求了」 |
+| `src/assets/icon-move-poison.svg` | 招式图标 `move_poison`🤬 | 同上 | 愤怒脸 + 文字「爱卖不卖」 |
+
+- 头像 SVG 自带三重 ID（emoji + 角色色圆底 + 芯片文字），即使 emoji 渲染失败，芯片文字 + 角色色仍提供色盲可辨识。
+- 招式图标 `stroke="currentColor"`，eng-lead 可在 CSS 设 `color` 着色；首轮若用 emoji，图标 SVG 作等效可访问降级。
+- 原 §5 主清单 A1–A5 / B2（图标）/ B6 行对应资产现已物理落盘。
+
 ---
 
 ## 6. 备注
 
-- 本文件为 Phase 4 预制作备料（非实现），**未修改 `whoknow-mart/src/` 任何代码**，未修改 waimai 或其他 app 文件。
+- 本文件 Phase 4 为预制作备料（非实现），Phase 5 **已落盘真实资产至 `whoknow-mart/src/assets/`**（见 §5.1）：5 导购头像 + whoknow 角标 + 4 招式图标，共 10 个 SVG。
+- **未修改** `whoknow-mart/src/` 任何组件代码、未修改 waimai 或其他 app 文件；仅新增 `src/assets/` 静态 SVG（资产落地，非逻辑改动）。
 - 表述遵循 L2-C9 客观指代；规格与 `ART-BIBLE.md` / `ACCESSIBILITY.md` / `REVIEW.md` §5.1 / `BRAND.md` / `02`–`08` GDD 全链条对齐。
 - 禁忌红线（真实 logo/价格/明星、红叉失败态、焦虑制造）贯穿全资产，运行时 `forbidden_check` `red_light_count>0` 整包拒绝（对齐 `07`）。
+- ⚠️ **待 eng-lead 修正**：`src/style.css` 当前 `--brand-orange:#ff5000` 须改为 `#ff7849`（§7.1 分区红线）；并补齐 `--role-*` / `--brand-green` / `--mart-price` / `--bg-2` 等令牌（§7.2）以对齐 ART-BIBLE §8.1 一致性铁律。
+- ✅ **待主理人補 ART-BIBLE**：§2.2 宿主文字改暗字 `--mart-host-fg`#1a1a1a（C1）、新增 `--watermark-fg`#595959（C4）；§2.5 角色色 chip 文本改 `--fg`#222 + 角色色 accent（C3）；§2.4 价格 `#FF0036` 须 ≥19px bold（C2）。本文件 §7 为定稿依据。
 
 ---
 
-_胡闹宇宙 · whoknow-mart 资产规格 v0.1 · art-director 林绘澄 · 2026-07-26 · Phase 4 备料（非实现）_
+## 7. 最终 token 值（落地口径 · MVP = Standard）
+
+> 本节为 eng-lead 落地 `style.css` / Vant 主题的最终依据，吸收 `ACCESSIBILITY.md` §6 四处修正并定稿。**本节即为主理人補 `ART-BIBLE.md` §2.2 / §2.5 的定稿依据**。
+
+### 7.1 宿主 / 品牌分区（铁律，禁止混用同组件）
+
+| 令牌 | 最终 HEX | 用途分区 | 备注 |
+|------|----------|----------|------|
+| `--mart-host` | `#FF5000` | **宿主伪装皮**（顶栏/搜索/分类/价格标/加购 CTA） | 与 waimai `--mt-yellow` 同级互补 |
+| `--brand-orange` | `#ff7849` | **胡闹/戏精动作**（戏精弹层强调、TabBar 选中、焦点环、4 选项焦点环） | ⚠️ 当前 `src/style.css` 误设为 `#ff5000`，须修正为 `#ff7849` |
+| `--mart-host-fg` | `#1a1a1a` | 宿主色上的文字（CTA/标签） | C1 达标 5.5:1（暗字非白字） |
+| `--mart-host-soft` | `#FFEDE6` | 宿主浅底（提示条/虚线框） | — |
+| `--mart-price` | `#FF0036` | 价格红（须 ≥19px bold） | C2 |
+| `--mart-price-deep` | `#D1002C` | 价格按压态 | — |
+
+> ⚠️ **分区红线**：`--mart-host`(#FF5000) 与 `--brand-orange`(#ff7849) 同为暖橙但**分区使用**——宿主皮用 host，胡闹动作/戏精用 brand-orange，**二者不进同一组件**。当前 `src/style.css` 把 `--brand-orange` 写成 `#ff5000`，会令焦点环/TabBar 选中态变成宿主色，破坏分区且偏离 ART-BIBLE §2.2 / §8.1。eng-lead 须改回 `#ff7849`。
+
+### 7.2 中性 / 角色 / 语义令牌（与 waimai 逐字一致）
+
+| 分组 | 令牌 | HEX |
+|------|------|-----|
+| 中性 | `--bg` / `--bg-2` / `--bg-3` | `#f7f7f8` / `#ffffff` / `#f0f0f2` |
+| 中性 | `--line` / `--line-2` | `#ededed` / `#dcdce0` |
+| 文字 | `--fg` / `--fg-dim` / `--fg-mute` | `#222222` / `#666666` / `#999999` |
+| 角色 | `--role-angry` / `--role-gentle` / `--role-lazy` / `--role-philo` / `--role-weird` | `#FF4B10` / `#2BB14A` / `#3A7BFF` / `#1FB6A6` / `#8B5CF6` |
+| 品牌锚 | `--brand-green` / `--brand-orange` / `--brand-purple` | `#6eda78` / `#ff7849` / `#8b5cf6` |
+| 语义 | `--c-success` / `--c-warning` / `--c-error` / `--c-info` | `#10b981` / `#f59e0b` / `#ef4444` / `#3b82f6` |
+| 水印 | `--watermark-fg` | `#595959`（C4） |
+
+### 7.3 四处对比度定稿（C1–C4，WCAG 2.1 AA）
+
+| # | 落地组合 | 对比度 | 令牌/约束 |
+|---|----------|--------|-----------|
+| **C1** | `--mart-host`#FF5000 + 暗字 `#1a1a1a` | 5.5:1 ✅ | `--mart-host-fg:#1a1a1a`；宿主 CTA/标签文字用此，禁白字 |
+| **C2** | `--mart-price`#FF0036 文本 ≥19px bold | ≥3:1 ✅(大文本) | 价格 `--fs-xl`(20)/`--fs-lg`(18) + weight 800；禁小号常规字 |
+| **C3** | chip 文本 `--fg`#222 + 角色色左边 accent | 14:1 ✅ | chip 文本 `--fg`#222；角色色仅 3px 左边框/圆点，不承载小号正文 |
+| **C4** | 水印 `--watermark-fg`#595959 on `#f7f7f8` | 6.4:1 ✅ | `--watermark-fg:#595959`；水印只进页脚 |
+
+---
+
+## 8. 视觉细节终稿（双胜利卡 / 归零态 / 4 选项随机）
+
+> 对齐 `ART-BIBLE.md` §2.4（双胜利 success）/ §5.4（可截图卡模板）/ §9.1#5（禁红叉失败态）。本节把 §2.3/§2.4 规格落成**可执行终稿**，供 eng-lead 实现与 QA。
+
+### 8.1 双胜利结算卡（B3 破防态 / B4 反消费胜利态）
+
+| 项 | 破防态 B3（`affinity>=100`） | 反消费胜利态 B4（`affinity<=0`） |
+|----|------------------------------|----------------------------------|
+| 大标题 | 「服了，下单吧」 | 「省钱了，下次别来」 |
+| 标题字体 | `--font-title` 24px(`--fs-2xl`) / `--fg`#222 | 同左 + 副印 `--font-brush`(Ma Shan Zheng) |
+| 卡底 | 白卡 `--bg-2`#fff + `--radius-xl`(24) + `--shadow-lg` | 同左 |
+| 梗框 | 品牌绿 `#6eda78` 描边/底高亮 | 同左（**success 绿框，非红叉**） |
+| 导购表情 | 破功/服气表情（头像绿光晕 `--shadow-glow-green`） | 得意/瘫软表情 |
+| 印章 | — | 「反套路赢」印章 `--font-brush` Ma Shan Zheng，盖下动效（§3.3） |
+| 破防度槽 | 满槽绿光（success 语义） | 见 §8.2 归零态（非失败） |
+| 语义 | **success（赢法一）** | **success（赢法二）** |
+| 水印 | 禁侵入（截图安全区 §5.3） | 禁侵入 |
+
+- 二者**皆 success 绿框**，差异仅在文案/表情/印章；**绝不**出现红叉 / 「你输了」/ 失败态（红线 §9.1#5）。
+- 尺寸基准移动端 `375×N`；截屏社交压缩后正文 `--fg`#222 on `--bg-2`#fff ≥4.5:1（§7.2 mart 专属增强）。
+
+### 8.2 归零态 / 踩雷反馈（B4 终端 + 轮内瞬时）
+
+| 场景 | 渲染 | 是否失败态 |
+|------|------|-----------|
+| **终端 `affinity==0`**（反消费胜利态） | 见 §8.1 B4：success 绿框 + 「反套路赢」印章 + 中性偏正文案（「省了钱还逗乐他」） | ❌ 否（是赢法二） |
+| **轮内踩雷 `-10`**（非终端） | 选项按钮/气泡**轻微红边** `--c-error`#ef4444 1px 闪烁一次 ≤200ms + 浮动「−10」(`--font-mono`+`--c-error`) | ❌ 否（瞬时游戏反馈，非失败屏） |
+| **轮内中性 `+10`** | 轻微上移/光晕 + 浮动「+10」(`--font-mono`+`--fg-dim`#666) | ❌ 否 |
+
+- **红线**：mart **无「输/失败」态**。`affinity<=0` 一律渲染为反消费胜利态（success），**禁用红叉 / 失败屏 / 「你输了」文案**（ART-BIBLE §9.1#5 / `08` §4）。
+- 轮内红边仅为瞬时游戏反馈（≤200ms），**不制造焦虑**（无倒计时/FOMO/资产暗示，§9.1#5/#6）。
+
+### 8.3 4 选项卡随机（B2 · 位置随机）
+
+| 项 | 终稿 |
+|----|------|
+| 招式（固定语义，位置随机） | `move_firm`「我需要！」💪 / `move_compare`「我比过价了」📊 / `move_pity`「求求了」🥺 / `move_poison`「爱卖不卖」🤬（REVIEW §5.2） |
+| 位置随机 | 每轮 4 招**全出现、shuffle 位置**（seed 真随机），防肌肉记忆（`02` §1） |
+| 双标识 | 每选项 **icon + 文字**（icon 可用 emoji 或 `src/assets/icon-move-*.svg`），色盲/低视不依赖图标（ACCESSIBILITY §5） |
+| 按钮 | 白底 `--bg-2` + `--fg`#222 文字 + `--radius-md` + 轻阴影；hover `translateY(-1px)`+阴影；press `scale(.97)` |
+| 焦点环 | `outline:3px solid var(--brand-orange); outline-offset:2px`（**用 `#ff7849`，非 host**） |
+| 触控 | 每选项 `min-height:44px`（`>=44×44`） |
+| C3 分区 | 选项为戏精层，焦点环用 `--brand-orange`；`--mart-host` 不进入选项按钮 |
+| 入场动效 | 4 选项按 shuffle 顺序淡入 stagger ≤80ms/项、总 ≤300ms；`prefers-reduced-motion` 下瞬时（§3.1） |
+
+---
+
+_胡闹宇宙 · whoknow-mart 资产规格 v0.2 · art-director 林绘澄 · 2026-07-26 · Phase 5 资产落地（部分资产已落 src/assets/）_
