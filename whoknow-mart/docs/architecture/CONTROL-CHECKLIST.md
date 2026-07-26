@@ -61,16 +61,16 @@
 
 ### B.1 否决#1 记忆失效（04 记忆分级 · `store/memory.test.ts`）
 
-**坏长什么样**：同导购第 ≥5 次博弈，台词/弱点无差异（P1 破裂）→ 否决。
+**坏长什么样**：同导购博弈累计达 vip 阈值（≥10 次）时，台词/弱点仍与首触无异（P1 破裂）→ 否决。
 **机检落点**：`store/memory.test.ts` + `engine/martStateMachine.test.ts` 联调。
 
 ```typescript
 // store/memory.test.ts
 import { MemoryEngine, MemStore } from './memory'
 
-test('同导购第≥5次 → memoryTier 切换为 vip（派生缓存）', () => {
+test('同导购第≥10次 → memoryTier 切换为 vip（派生缓存）', () => {
   const eng = new MemoryEngine(new MemStore())
-  for (let i = 0; i < 5; i++) eng.recordOrder('guide_wanger_ma')
+  for (let i = 0; i < 10; i++) eng.recordOrder('guide_wanger_ma')
   const tier = eng.getMemoryTier('guide_wanger_ma')   // 依赖 guideVisit≥阈值
   expect(tier).toBe('vip')              // 首=first / ≥3=regular / ≥10或affinity≥阈=vip
 })

@@ -43,4 +43,19 @@ const appOut = path.join(outDir, 'waimai');
 fs.cpSync(appDist, appOut, { recursive: true });
 console.log('[build] copied whoknow-waimai/dist -> dist/waimai');
 
+// 4. 构建胡闹导购 app（不破坏 waimai 产物，L1-T5 精神延伸：mart 不劫持 waimai 构建）
+const martDir = path.join(root, 'whoknow-mart');
+if (fs.existsSync(martDir)) {
+  console.log('[build] installing whoknow-mart dependencies...');
+  execSync('npm install', { cwd: martDir, stdio: 'inherit' });
+  console.log('[build] building whoknow-mart...');
+  execSync('npm run build', { cwd: martDir, stdio: 'inherit' });
+  const martDist = path.join(martDir, 'dist');
+  const martOut = path.join(outDir, 'mart');
+  fs.cpSync(martDist, martOut, { recursive: true });
+  console.log('[build] copied whoknow-mart/dist -> dist/mart');
+} else {
+  console.warn('[build] skip whoknow-mart: 目录不存在');
+}
+
 console.log('[build] done. output:', outDir);

@@ -4,7 +4,7 @@
 > **版本**：v1.0 · 2026-07-26
 > **主责**：design-strategist（文策渊）
 > **上游权威**：`00-CONCEPT.md`（Phase 1 概念 v1.0）· `ART-BIBLE.md`（美术圣经 v0.1）· `whoknow-waimai/docs/specs/DATA-STRUCTURE-v1` · `BRAND.md`
-> **下游**：本索引列出的 8 个逐系统 GDD（01–08）· `REVIEW.md`（跨 GDD 一致性评审）
+> **下游**：本索引列出的 8 个逐系统 GDD（01–08）· `REVIEW.md`（跨 GDD 一致性评审）· Phase 4 预制作三文档（`UX-SPEC.md` / `PHASE4-CONTENT.md` / `ASSET-SPECS.md`）· 质量门 `PHASE4-GATE.md` · 冲刺计划 `production/sprint-1.md`
 
 ---
 
@@ -81,6 +81,22 @@ UI 渲染（06 戏精弹层 · 08 截图分享）── 消费 02 状态 + 03 �
 | EVOL-1 `actor` 增 `guide` | 共享契约硬演进 | waimai 主责人（DuckyPC）落地，mart 仅消费 | 🟡 待协调（见 `docs/contract/EVOL-1-guide-enum-request.md`） |
 | L1 draft §1 用中文 `archetype` | 与概念 doc 英文 id 冲突 | mart 主责人修正为 `poison_tongue` 等 | 🟡 待修正（见 `REVIEW.md` §6） |
 | L1 draft §1 矩阵 2+2（无 neutral） | 与概念 doc 1+1+2 漂移 | mart 主责人确认矩阵模式 | 🟡 待确认（见 `REVIEW.md` §6） |
+
+---
+
+## 5. Phase 4 预制作交付索引（2026-07-26 收口）
+
+> 质量门判定见 `PHASE4-GATE.md`：**PASS-with-CONCERNS**。本阶段产出自包含，进入 Phase 5 制作前须消除 6 项 CONCERNS（见门控文档 §4）。
+
+| 文档 | 主责 | 内容 |
+|------|------|------|
+| `docs/ux/UX-SPEC.md` | design-strategist | S1–S6 屏幕流、4 输入点、MartRoundState↔UX 映射、双胜利+归零态中性反馈、9 项验收 |
+| `docs/gdd/PHASE4-CONTENT.md` | design-strategist | 5 导购台词池（×first/regular/vip）、20 格矩阵 1+1+2、商品池 6 个、禁忌词自检、契约对齐（EVOL-1~6） |
+| `docs/art/ASSET-SPECS.md` | art-director | 5 导购视觉三重色盲标识、UI 组件、动效、对比度达标（C1–C4）、资产清单 A/B/M/C |
+| `docs/gdd/PHASE4-GATE.md` | 主理人（游承峰） | Phase 4 质量门：P4-1~P4-6 全 PASS 证据表 + 6 CONCERNS + 下阶段入口 |
+| `production/sprint-1.md` | 主理人（游承峰） | Sprint 1 目标 / DoD / Phase 5 Backlog（Epic A–D）/ 排除项 / 验收 |
+
+**未决项（承接 §4）**：EVOL-1（`actor` 增 `guide`）仍待 DuckyPC 在 waimai 落地，v2 前不清；C2 对比度终检待 eng-lead 工具复核后补 `ART-BIBLE.md` §2.2/§2.5。
 
 ---
 

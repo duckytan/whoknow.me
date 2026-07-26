@@ -1,0 +1,45 @@
+/* style.css — 全局令牌（对齐 waimai :root 精神 + ART-BIBLE §8.1 一致性铁律） */
+:root {
+  --brand-orange: #ff5000;
+  --brand-orange-soft: #ffede3;
+  --bg: #f7f7f7;
+  --surface: #ffffff;
+  --text: #1a1a1a;
+  --text-sub: #8a8a8a;
+  --border: #ececec;
+  /* mart 自建令牌（ART-BIBLE §8.1 一致性，追加而非覆盖 waimai 令牌） */
+  --mart-host: #ff5000;
+  --mart-host-soft: #ffede3;
+  --radius: 12px;
+  --tabbar-h: 56px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.app-main {
+  flex: 1;
+  padding: 16px;
+  padding-bottom: calc(var(--tabbar-h) + 16px);
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
