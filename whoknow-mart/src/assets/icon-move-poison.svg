@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor"
+     stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="爱卖不卖">
+  <!-- 以毒攻毒：愤怒脸（move_poison 🤬） -->
+  <circle cx="24" cy="24" r="16"/>
+  <line x1="15" y1="17" x2="22" y2="21"/>
+  <line x1="33" y1="17" x2="26" y2="21"/>
+  <path d="M18 31 L24 28 L30 31"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor"
+     stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="求求了">
+  <!-- 装可怜：祈求脸 + 泪滴（move_pity 🥺） -->
+  <circle cx="24" cy="24" r="16"/>
+  <circle cx="18" cy="21" r="2" fill="currentColor" stroke="none"/>
+  <circle cx="30" cy="21" r="2" fill="currentColor" stroke="none"/>
+  <circle cx="15.5" cy="28" r="1.6" fill="currentColor" stroke="none"/>
+  <path d="M19 32 Q24 29 29 32"/>
+</svg>

@@ -23,10 +23,10 @@ guides: [
   {
     "id": "guide_wanger_ma",        // 待对齐外卖 id 命名权威
     "name": "毒舌·王二麻",
-    "archetype": "毒舌型",          // 5 型之一（见 §4 枚举）
+    "archetype": "poison_tongue",     // 规范英文 id（见 REVIEW.md §5.1 C2 表：poison_tongue/rational/lazy/philosopher/dark）；禁用中文型名
     "motive": "B",                  // 动机 A-E（反骨双主打 B+C），见《反骨定义与动机设定》§七
-    "hiddenWeakness": ["比价", "以毒攻毒"],  // 命中 +40
-    "thunderMine": ["坚定", "装可怜"],      // 踩雷 -10
+    "hiddenWeakness": ["比价"],            // 命中 +40（1 弱点，余 2 招为中性 +10）
+    "thunderMine": ["装可怜"],            // 踩雷 -10（1 踩雷，余 2 招为中性 +10）
     "lineBuckets": {                // 复用 waimai L3 记忆分级桶
       "first":   [ "…首触台词…" ],  // 待填（禁提前赋值）
       "regular": [ "…回头客…" ],
@@ -36,7 +36,7 @@ guides: [
     "rarity": "R?",                 // 复用 Rarity 枚举
     "avatar": "?"                   // v2 立绘资产
   },
-  // …其余 4 型（理性·李算盘 / 散漫·赵拖拖 / 鸡汤·钱满满 / 腹黑·周暗暗）
+  // …其余 4 型：rational·李算盘 / lazy·赵拖拖 / philosopher·钱满满 / dark·周暗暗（archetype 一律用规范英文 id，见 REVIEW.md §5.1）
 ]
 ```
 
@@ -59,7 +59,7 @@ moves: [
 ## 3. 克制矩阵（L1.mart.matrix）
 
 ```jsonc
-matrix[archetype][move] = delta   // +40 / -10 / +10
+matrix[archetype][move] = delta   // 每导购：1 弱点 +40 / 1 踩雷 −10 / 2 中性 +10（规范 1+1+2，见 REVIEW.md §6 D2）
 // 5 型 × 4 招 = 20 格，v1 草案见概念设计 §3.3，值待 playtest 标定
 ```
 > ⚠️ 矩阵是 `[PLACEHOLDER]`：禁止在 playtest 前硬编码手感值（见 playtest 计划 §5 / §6）。

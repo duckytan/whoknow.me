@@ -1,0 +1,321 @@
+/* style.css — 全局令牌（对齐 waimai :root 精神 + ART-BIBLE §8.1 一致性铁律）
+ *
+ * 本文件为 mart 自有 :root（不修改任何 waimai 文件，L1-T5 红线）。
+ * - 复制 waimai 令牌值（中性 / 角色色 / 品牌锚色 / 字体 / 阴影）+ 追加 mart 宿主皮（--mart-*）
+ * - 修正 Phase 4 的令牌错配：--brand-orange 必须为 #ff7849（胡闹动作色），宿主皮用 --mart-host #FF5000
+ * - 追加 C1/C4 修正令牌（ASSET-SPECS §4.3，待补 ART-BIBLE §2.2）
+ * - 逐字移植 waimai H4 回归区块（焦点环 / 44px / reduced-motion）
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;600&family=Bungee&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
+:root {
+  /* ── 宿主皮（淘宝橙红系，mart 自有，与 waimai --mt-* 同级互补）── */
+  --mart-host: #FF5000;
+  --mart-host-deep: #E64600;
+  --mart-host-soft: #FFEDE6;
+  --mart-price: #FF0036;
+  --mart-price-deep: #D1002C;
+
+  /* ── 品牌锚色（BRAND.md §2.1，值不可替换；与 waimai 一致）── */
+  --brand-orange: #ff7849; /* 胡闹动作 / 戏精（非宿主皮！宿主皮用 --mart-host） */
+  --brand-green: #6eda78;
+  --brand-purple: #8b5cf6;
+
+  /* ── 浅色中性（BRAND.md §2.3，与 waimai 完全一致）── */
+  --bg: #f7f7f8;
+  --bg-2: #ffffff;
+  --bg-3: #f0f0f2;
+  --line: #ededed;
+  --line-2: #dcdce0;
+  --fg: #222222;
+  --fg-dim: #666666;
+  --fg-mute: #999999;
+
+  /* ── 导购角色色（复制 waimai --role-*，值逐字一致）── */
+  --role-angry: #FF4B10;
+  --role-gentle: #2BB14A;
+  --role-lazy: #3A7BFF;
+  --role-philo: #1FB6A6;
+  --role-weird: #8B5CF6;
+
+  /* ── 语义色（BRAND.md §2.4，双胜利归 success）── */
+  --c-success: #10b981;
+  --c-warning: #f59e0b;
+  --c-error: #ef4444;
+  --c-info: #3b82f6;
+
+  /* ── 字体阵容（BRAND.md §3.1，与 waimai 同 URL 同令牌）── */
+  --font-display: 'Bungee', 'ZCOOL QingKe HuangYou', sans-serif;
+  --font-title: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+  --font-script: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+  --font-brush: 'Ma Shan Zheng', cursive;
+  --font-body: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ── 字号阶梯（BRAND.md §3.2，1.25 比例·4px 对齐）── */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 30px;
+  --fs-4xl: 36px;
+
+  /* ── 圆角 ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* ── 阴影 ── */
+  --shadow-sm: 0 1px 6px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 6px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow-green: 0 0 0 3px rgba(110, 218, 120, 0.28);
+
+  /* ── 缓动 ── */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── C1 / C4 修正令牌（ASSET-SPECS §4.3，待补 ART-BIBLE §2.2）── */
+  --mart-host-fg: #1a1a1a; /* 宿主 CTA/标签暗字（非白字） */
+  --watermark-fg: #595959; /* 水印文字（只进页脚） */
+
+  /* ── 布局 ── */
+  --tabbar-h: 56px;
+  --maxw: 414px;
+
+  /* 兼容别名（旧组件遗留，保持可用） */
+  --surface: var(--bg-2);
+  --text: var(--fg);
+  --text-sub: var(--fg-dim);
+  --border: var(--line);
+  --radius: var(--radius-md);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── 通用容器 ── */
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  background: var(--bg);
+}
+.app-main {
+  padding: 16px;
+  padding-bottom: calc(var(--tabbar-h) + 24px);
+}
+.page-pad {
+  padding: 16px;
+}
+.muted {
+  color: var(--fg-mute);
+  font-size: var(--fs-sm);
+}
+
+/* ── 宿主伪装层：橙红顶栏（淘宝皮，L1）── */
+.host-nav {
+  background: var(--mart-host);
+  color: var(--mart-host-fg);
+  padding: 14px 16px 12px;
+}
+.host-nav .h-title {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--mart-host-fg);
+}
+.host-nav .h-sub {
+  font-size: var(--fs-sm);
+  color: rgba(26, 26, 26, 0.7);
+  margin-top: 2px;
+}
+.host-search {
+  margin-top: 10px;
+  background: #fff;
+  border-radius: var(--radius-pill);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px 0 14px;
+  color: var(--fg);
+}
+.host-search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  font-size: var(--fs-sm);
+  background: transparent;
+  color: var(--fg);
+}
+.host-search .s-btn {
+  background: var(--mart-host);
+  color: var(--mart-host-fg);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  margin-left: 8px;
+}
+
+/* ── 宿主 CTA（暗字，C1）── */
+.host-cta {
+  background: var(--mart-host);
+  color: var(--mart-host-fg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
+  font-weight: 800;
+  width: 100%;
+  padding: 14px;
+}
+
+/* ── 价格（宿主红 #FF0036，≥19px bold → 大文本 3:1 阈值达标，C2）── */
+.price {
+  color: var(--mart-price);
+  font-weight: 800;
+  font-size: var(--fs-xl); /* 20px ≥19px bold */
+}
+.price.big {
+  font-size: var(--fs-2xl); /* 24px bold */
+}
+
+/* ── 段子 / 金句卡（手写体 + 品牌绿高亮底，截图层）── */
+.joke-card {
+  background: rgba(110, 218, 120, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+}
+.joke-card .who {
+  color: var(--brand-orange);
+  font-weight: 800;
+  font-size: var(--fs-sm);
+}
+.joke-card .txt {
+  font-family: var(--font-script);
+  font-size: var(--fs-base);
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+/* ── 通用卡片 ── */
+.card {
+  background: var(--bg-2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+}
+
+/* ── 戏精弹层（弹簧入场 + 绿高亮梗框）── */
+.drama-pop {
+  background: var(--bg-2);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--brand-green);
+}
+
+/* ── whoknow 角标（绿圆白「?」，对齐 waimai .wk-mark）── */
+.wk-mark {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 50;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--brand-green);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+/* ── 红线门控 ── */
+.gate {
+  margin: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.gate.ok {
+  background: rgba(43, 177, 74, 0.12);
+  color: var(--c-success);
+}
+.gate.fail {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--c-error);
+}
+
+/* ============ 无障碍：reduced-motion 全局瞬时（对齐 waimai H4） ============ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============ 无障碍：键盘焦点环（H4 回归，逐字对齐 waimai） ============ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.tab-bar button:focus-visible,
+.cat-item:focus-visible,
+.opt-card:focus-visible,
+.more-links span:focus-visible {
+  outline: 3px solid var(--brand-orange);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ============ 无障碍：最小点击热区 44×44（H4 回归） ============ */
+.more-links span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.tab-bar button {
+  min-height: 44px;
+}
+.opt-card {
+  min-height: 44px;
+}

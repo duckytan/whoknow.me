@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="腹黑型导购 周暗暗">
+  <defs>
+    <radialGradient id="dk-grad" cx="50%" cy="36%" r="72%">
+      <stop offset="0%" stop-color="#A987FA"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="56" fill="url(#dk-grad)" stroke="#ffffff" stroke-width="4"/>
+  <text x="60" y="60" text-anchor="middle" dominant-baseline="central" font-size="58"
+        font-family="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif">😈</text>
+  <rect x="22" y="124" width="76" height="26" rx="13" fill="#ffffff" stroke="#ededed" stroke-width="1"/>
+  <rect x="24" y="129" width="5" height="16" rx="2.5" fill="#8B5CF6"/>
+  <text x="63" y="137" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600"
+        fill="#222222" font-family="'Inter','Noto Sans SC',sans-serif">腹黑</text>
+</svg>
