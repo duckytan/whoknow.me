@@ -64,6 +64,7 @@
 | 铁律宪法 | 三层重分类 + 度量/商业/演进三维 | [`CONSTITUTION.md`](CONSTITUTION.md) |
 | 多实例协作章程 | 角色 / 权限 / 冲突处理 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) |
 | 在制登记 | 当前 WIP / 阻塞项 | [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| Git 工作流（分支 / 提交 / 合入） | 受保护 main + agent 工作线 + PR/CI 闸门 | [`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md) |
 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
 | 跨设备共享记忆 | 项目级记忆入口（替代本机日志跨设备同步） | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
 | 新机器身份初始化（兜底） | 无 IDENTITY.md 时粘贴即用清单，根治「不读 ROLES」 | 见 §6「DuckyPC 接入操作清单（内联 · 粘贴即用）」 |
@@ -160,13 +161,13 @@
 多台机器并行改同一 GitHub 仓库。铁律级规则：
 
 - **Git 代理**：本机 `fetch / pull / push` 代理端口随机器而异，按 `CONSTITUTION.md` L2-C3 实测两候选端口取通者写入本机 `git config`；`701-PC` 实测 `7890` 通 / `12000` 不通（2026-07-26），`DuckyPC` 待实测。无代理环境走直连（见 §6 冷启动·网络自适应），不卡死。
-- **推送被拒**：先 `git stash push` 本地改动 → `git pull --rebase origin main` → `git push` → `git stash pop`。
-- **禁 `force push`**；冲突先 `fetch → pull --rebase`。
+- **分支模型**：`main` 受保护、始终可部署；各实例在各自 agent 工作线（`agent-mart` / `agent-waimai`）开发，经 squash + PR + CI 合入 `main`。完整流程见 [`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md)。
+- **同步 / 推送被拒**：在所属 agent 工作线 `git fetch && git rebase origin/main` 追平，再 `git push --force-with-lease origin agent-mart`（或 `agent-waimai`）；**禁在 `main` 上 rebase 或强推**。
 - **内部链接一律相对路径**：禁写绝对 `/...`，否则在 `/短名/` 路由下 404。
 - **新增 app 只动两处**：`vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外；绝不删改其他 app 的路由/目录/`.gitignore`。
 - **文档权威链**：总纲 ＞ 结构规范 ＞ 各 app 文档；冲突以总纲为准。
 
-📄 详情：[`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md)
+📄 详情：[`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md)（Git 流程）· [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md)
 
 ---
 
@@ -196,11 +197,11 @@
 ### 动手最小指令（P1 · 接到任务后怎么真跑起来）
 | 动作 | 命令 | 备注 |
 |---|---|---|
-| 拉取最新 | `git pull --rebase` | 推送被拒先 stash → pull --rebase → push → stash pop；禁 force push |
+| 拉取最新 | 在 agent 工作线 `git fetch && git rebase origin/main` | 追平后 `git push --force-with-lease origin agent-mart`（或 `agent-waimai`）；详见 GIT-WORKFLOW.md §3 |
 | 外卖本地起服务 | `cd whoknow-waimai && npm install && npm run dev` | 仅 waimai 有完整构建链；mart/brain 为概念/手动，暂无 build |
 | 外卖跑测试 | `cd whoknow-waimai && npm test` | 45/45 绿为健康基线 |
 | 外卖构建 | `cd whoknow-waimai && npm run build` | 产物 `dist/`（唯一上线物）|
-| 提交流程 | 分支 → 改 → `git add` → `git commit` → `git pull --rebase` → `git push` | 走代理；commit message 中文简述 |
+| 提交流程 | 在 agent 工作线：改 → `git add` → `git commit`（Conventional）→ `git push --force-with-lease` → 开 PR 合入 `main` | 提交信息须 Conventional Commits，见 GIT-WORKFLOW.md §5 |
 
 > 非 waimai 任务（mart/brain）目前以文档/配置为主，无统一构建；按对应 `docs/` 指引操作。
 
@@ -216,7 +217,7 @@
 - ❌ **删 `index.html` / `index1.html`**：部署源文件，删了构建坏（真实事故）。
 - ❌ **改 `.gitignore` 用 `!` 重新包含被忽略目录**：git 不支持（对被排除目录/条目无效），改用 `git add -f` 或换位置。
 - ❌ **绝对路径 `/...` 内部链接**：`/短名/` 路由下 404，一律相对路径。
-- ❌ **`force push`**：多机器协作致命。
+- ❌ **对 `main` / 共享分支 `force push`**：多机器协作致命；agent 工作线仅可用 `--force-with-lease`。
 - ⚠️ **Windows CRLF 假差异**：本地 build 产生 CRLF，与云端 LF 的"差异"内容一致、不影响部署，可 `git checkout` 还原。
 - ⚠️ **stash 未跟踪文件在 `stash@{n}^3`**：普通 `git checkout stash@{n}` 取不到，用 `git checkout "stash@{n}^3" -- <path>`。
 - ⚠️ **名词歧义**：`README` 的"痛点为王 ≥3 痛点"是产品级要求；`BRAND` 的"痛点滤网任一即可"是视觉/界面决策级——层级不同，非矛盾。
@@ -245,6 +246,7 @@
 | 文件归位 / 移动删除 | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
 | 当前进度 / 开放项 | [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) |
 | 多机协作 / 权限 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| Git 工作流 / 分支策略 | [`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md) |
 | 新机器身份初始化（兜底） | 见 §6「DuckyPC 接入操作清单（内联 · 粘贴即用）」 |
 | 品牌视觉 | [`BRAND.md`](BRAND.md) |
 | brain 信封契约 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
