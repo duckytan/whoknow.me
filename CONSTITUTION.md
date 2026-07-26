@@ -61,7 +61,7 @@
 |---|---|---|---|---|
 | L2-C1 | 统一部署规范 §11 | 单 Vercel 整仓托管多 app；根 vercel.json 纯静态（`buildCommand:"echo done"`、`outputDirectory:"."`）；每 app `/短名` → `whoknow-<app>/dist`；.gitignore 追加 `!whoknow-<app>/dist/` 例外 | `总体设计方案.md` L216–253 | ✅ |
 | L2-C2 | 内部链接相对路径 | 各 app 内禁写绝对路径 `/...`，否则 `/短名/` 路由下 404 | `总体设计方案.md` L261（§11.5-6） | ✅ |
-| L2-C3 | Git 代理约定 | fetch/拉取/推送须走 `127.0.0.1:12000` 代理 | `.workbuddy/memory/MEMORY.md` | ✅ |
+| L2-C3 | Git 代理约定 | 访问 GitHub 须走本机本地 HTTP 代理，**端口随机器而异**：已知候选 `127.0.0.1:12000` 与 `127.0.0.1:7890`；新机到手先 `git -c http.proxy=http://127.0.0.1:<端口> ls-remote https://github.com/octocat/Hello-World.git HEAD` 实测两端口哪个能连通，取通者写入本机 `git config http.proxy`（及 `https.proxy`）；本机实测结论（如 `701-PC → 7890`）记入该机 `IDENTITY.md`「本机运行环境」小节 | `.workbuddy/memory/MEMORY.md`；701-PC 实测 7890 通 / 12000 不通（2026-07-26） | ✅ |
 | L2-C4 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核落盘 | `whoknow-brain/docs/api-spec.md` | 🔶 部分（自动化待 M3） |
 | L2-C5 | 品牌视觉规范（含硬约束） | 双主题 + 锚色（绿`#6eda78`/橙`#ff7849`/紫`#8b5cf6` 不可替换）+ design-tokens.css + WCAG AA（44px 触控、4.5:1 对比度、reduced-motion 降级）+ 字体阵容（Bungee/ZCOOL/JetBrains Mono，**禁用柳建毛草草书**） | `BRAND.md` 全文 | ✅ |
 | L2-C6 | 发布硬闸门 | 红线 0 漏出 + 同店第 5 单 ≠ 第 1 单 + 断网/L4 降级有水印不崩 | GDD §9–§11；`docs/studio/STUDIO-PROGRESS.md` | ✅ |
