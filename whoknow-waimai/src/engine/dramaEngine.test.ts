@@ -210,3 +210,20 @@ test('T20 骑手认人·端到端：memory 真实派生 → engine 命中 rider_
   assert.ok(unlocked.includes('rider_buddy'))
   assert.ok(eng.getAchievements().includes('rider_buddy'))
 })
+
+// 21) Phase 6 优先级层：命中分支中 priority 最高档胜出（不被 weight/顺序干扰）
+test('T21 优先级层：高 priority 命中分支压过低 priority 命中分支', () => {
+  const custom = [
+    { id: 'low', weight: 100, priority: 5, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'boss', text: '低' }] },
+    { id: 'high', weight: 1, priority: 30, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'boss', text: '高' }] },
+  ]
+  const r = runDrama(custom as any, {}, { random: () => 0 } as any)
+  assert.equal(r.selectedBranchId, 'high') // 高 priority 胜出，尽管 weight 小且排在后
+  // 同档内仍按 weight 抽签：两分支同 priority 时，random=0 取首个累计命中的
+  const tie = [
+    { id: 'a', weight: 5, priority: 10, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'b', text: 'A' }] },
+    { id: 'b', weight: 5, priority: 10, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'b', text: 'B' }] },
+  ]
+  const rt = runDrama(tie as any, {}, { random: () => 0 } as any)
+  assert.equal(rt.selectedBranchId, 'a') // 同档按 weight 顺序抽，random=0 取首个
+})

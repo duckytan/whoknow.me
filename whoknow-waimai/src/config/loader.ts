@@ -6,6 +6,7 @@ export interface Branch {
   id: string
   name?: string
   weight?: number
+  priority?: number // Phase 6 优先级层：越高越优先（缺省 0，向后兼容）。引擎先取命中分支中 priority 最高档再抽签。
   isFallback?: boolean
   trigger: {
     condition: string
