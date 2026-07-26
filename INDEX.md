@@ -110,12 +110,12 @@
 1. **装 workbuddy 后**：多数机器平台会引导填写 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<用户名>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按本节下方「DuckyPC 接入操作清单（内联 · 粘贴即用）」粘贴即用清单补建。
 2. **（接入第 0 步 · 硬规则）**：无论平台是否引导，每台机器都必须在本机 `IDENTITY.md` 写入「每次会话开始先读 [`docs/studio/ROLES.md`](docs/studio/ROLES.md) 定位本机角色与范围」这一自动注入指针。否则新建对话会遗忘协作约定——本仓库所有 agent 强制，详见 `ROLES.md` §5。
 3. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求该 agent 确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
-4. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
+4. **网络自适应**：Git 代理端口随机器而异，按 `CONSTITUTION.md` L2-C3 实测两候选端口（`127.0.0.1:12000` / `127.0.0.1:7890`）取通者写入本机 `git config`；`701-PC` 实测 `7890` 通 / `12000` 不通（2026-07-26），`DuckyPC` 待实测回填。若两端口均不通 / 无代理环境，`git config --global --unset http.proxy https.proxy` 走直连，不要卡死在固定端口。
 5. **回写**：角色确认后，若 §8 分工表未覆盖该 agent 的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
 
 ### DuckyPC 接入操作清单（内联 · 粘贴即用）
 
-> 目的：让 `DuckyPC` 机器上的 WorkBuddy 实例每次会话自动记住自己是 Agent-外卖、并去读 `docs/studio/ROLES.md`。不做这一步，仓库协作约定对该实例形同虚设——WorkBuddy 不会自动加载仓库文件，新建对话会遗忘双实例分工。
+> 目的：让 `DuckyPC` 机器上的 WorkBuddy 实例每次会话自动记住其角色为 Agent-外卖、并去读 `docs/studio/ROLES.md`。不做这一步，仓库协作约定对该实例形同虚设——WorkBuddy 不会自动加载仓库文件，新建对话会遗忘双实例分工。
 
 **为什么必须做**：WorkBuddy 每会话自动注入的只有两类本地文件（用户级 `~/.workbuddy/IDENTITY.md`、项目级 `.workbuddy/memory/MEMORY.md`），二者均不随仓库同步；仓库里会同步的文件（`ROLES.md` 等）无自动加载机制，必须主动 Read。因此必须在 `DuckyPC` 机器上建一个"自动注入的指针"才稳。
 
@@ -159,7 +159,7 @@
 
 多台机器并行改同一 GitHub 仓库。铁律级规则：
 
-- **Git 代理**：本机开发机 fetch / pull / push 走 `127.0.0.1:12000`；其他网络按 §6 冷启动·网络自适应调整（可直连），不卡死。
+- **Git 代理**：本机 `fetch / pull / push` 代理端口随机器而异，按 `CONSTITUTION.md` L2-C3 实测两候选端口取通者写入本机 `git config`；`701-PC` 实测 `7890` 通 / `12000` 不通（2026-07-26），`DuckyPC` 待实测。无代理环境走直连（见 §6 冷启动·网络自适应），不卡死。
 - **推送被拒**：先 `git stash push` 本地改动 → `git pull --rebase origin main` → `git push` → `git stash pop`。
 - **禁 `force push`**；冲突先 `fetch → pull --rebase`。
 - **内部链接一律相对路径**：禁写绝对 `/...`，否则在 `/短名/` 路由下 404。
@@ -238,7 +238,7 @@
 
 权威：总纲 ＞ 结构规范 ＞ 各 app 文档；**多机协作角色 / 红线以 [`ROLES.md`](docs/studio/ROLES.md) 为准**（INDEX 仅作导航摘要，细则以该文件为准，避免双文档漂移）。
 
-| 查询目标 | 去这里 |
+| 查询目标 | 查阅文档 |
 |---|---|
 | 项目全貌 / 决策 | [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) |
 | 铁律 / 约定 | [`CONSTITUTION.md`](CONSTITUTION.md) |

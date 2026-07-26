@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit
+# 拦截协作约定文档中新增的"读者相对"主观表述（CONSTITUTION.md L2-C9 客观表述红线）。
+# 设计要点：
+#   - 仅检查增量（git diff 新增行），不误杀已存在的红线枚举/样例；
+#   - 跳过代码围栏（``` 包裹块），避免误杀 L2-C9 细则里的禁止集枚举本身；
+#   - 作用域：宪法、项目入口索引、docs/studio 下所有协作约定文档。
+set -uo pipefail
+
+BANNED='我|我们|你|你们|咱|咱们|自己|这里|那边|这台|那台'
+
+# 作用域文件清单（仅这些文档纳入检查）
+mapfile -t FILES < <(git diff --cached --name-only --diff-filter=ACMR -- \
+  'CONSTITUTION.md' 'INDEX.md' 'docs/studio/*.md' 2>/dev/null)
+
+[ "${#FILES[@]}" -eq 0 ] && exit 0
+
+VIOLATIONS=$(git diff --cached -U0 -- "${FILES[@]}" | awk -v banned="$BANNED" '
+  /^diff --git/ { next }
+  /^\+\+\+ / { sub(/^\+\+\+ b\//, "", $0); file=$0; next }
+  /^@@ / {
+    s=$0; sub(/.*\+/, "", s); sub(/,.*/, "", s); newln=s+0; next
+  }
+  /^--- / { next }
+  /^ / { newln++; next }
+  /^-/ { next }
+  /^\+/ {
+    if ($0 ~ /^\+\+\+/) next
+    content=substr($0, 2)
+    if (content ~ /^```/) { infence=!infence; newln++; next }
+    if (infence) { newln++; next }
+    if (content ~ banned) {
+      print file ":" newln "  ->  " content
+    }
+    newln++
+  }
+')
+
+if [ -n "$VIOLATIONS" ]; then
+  echo "⛔ 预提交钩子拦截：检测到违反 L2-C9 客观表述红线的新增主观表述（读者相对代词 / 模糊指代）。"
+  echo "$VIOLATIONS"
+  echo "请改为客观事实指代（机器名 / 角色名 / 文件路径 / 仓库名），或给时间敏感状态词加日期锚。"
+  echo "详见 CONSTITUTION.md L2-C9 与「L2-C9 细则」。"
+  exit 1
+fi
+exit 0
