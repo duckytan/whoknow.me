@@ -66,7 +66,7 @@
 | 在制登记 | 当前 WIP / 阻塞项 | [`docs/studio/WIP.md`](docs/studio/WIP.md) |
 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
 | 跨设备共享记忆 | 项目级记忆入口（替代本机日志跨设备同步） | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
-| 新机器身份初始化（兜底） | 无 IDENTITY.md 时粘贴即用清单，根治「不读 ROLES」 | [`docs/studio/AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) |
+| 新机器身份初始化（兜底） | 无 IDENTITY.md 时粘贴即用清单，根治「不读 ROLES」 | 见 §6「DuckyPC 接入操作清单（内联 · 粘贴即用）」 |
 
 ⚠️ **任何文件/目录/文档操作前，必先读结构规范并遵守 §7 双闸门**（前置核查 + 修订回扫）。
 
@@ -107,11 +107,51 @@
 
 ### 全新机器冷启动闭环（P0 · 流动开发常态）
 你经常在不同电脑装 workbuddy 继续开发，**全新机器首次启动 = 身份文件为空是常态，不是异常**。闭环：
-1. **装 workbuddy 后**：多数机器平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按 [`AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) 粘贴即用清单补建。
+1. **装 workbuddy 后**：多数机器平台会引导你填 `SOUL.md` / `IDENTITY.md` / `USER.md`（位于 `C:\Users\<你>\.workbuddy\`）。**但实测有机器（如 `DuckyPC`）未触发引导、连 `IDENTITY.md` 都没有**——不要假设已初始化。若本机身份文件缺失，按本节下方「DuckyPC 接入操作清单（内联 · 粘贴即用）」粘贴即用清单补建。
 2. **（接入第 0 步 · 硬规则）**：无论平台是否引导，每台机器都必须在本机 `IDENTITY.md` 写入「每次会话开始先读 [`docs/studio/ROLES.md`](docs/studio/ROLES.md) 定位本机角色与范围」这一自动注入指针。否则新建对话会遗忘协作约定——本仓库所有 agent 强制，详见 `ROLES.md` §5。
 3. **缺失 / 丢失时**：按本机 workbuddy 的重新初始化流程重建这三个文件——项目不强制文件内容，只要求你确认「本机负责哪个 app」（对照 §8 分工表写进 `IDENTITY.md`）。
 4. **网络自适应**：Git 代理 `127.0.0.1:12000` 是**本机开发机的配置，并非所有网络都有**。若 `git pull/push` 报 `proxy refused` / 连接拒绝，按当前网络环境调整：`git config --global http.proxy http://127.0.0.1:12000`（有代理时）或 `git config --global --unset http.proxy`（无代理走直连），不要卡死。
 5. **回写**：角色确认后，若 §8 分工表未覆盖你的机器，提 PR 补一行（见 §8 跨边界任务归属原则）。
+
+### DuckyPC 接入操作清单（内联 · 粘贴即用）
+
+> 目的：让 `DuckyPC` 机器上的 WorkBuddy 实例每次会话自动记住自己是 Agent-外卖、并去读 `docs/studio/ROLES.md`。不做这一步，仓库协作约定对该实例形同虚设——WorkBuddy 不会自动加载仓库文件，新建对话会遗忘双实例分工。
+
+**为什么必须做**：WorkBuddy 每会话自动注入的只有两类本地文件（用户级 `~/.workbuddy/IDENTITY.md`、项目级 `.workbuddy/memory/MEMORY.md`），二者均不随仓库同步；仓库里会同步的文件（`ROLES.md` 等）无自动加载机制，必须主动 Read。因此必须在 `DuckyPC` 机器上建一个"自动注入的指针"才稳。
+
+**只放指针，不放角色权威**：下方模板写入 `IDENTITY.md` 的角色 / 范围仅为指针与兜底；角色与范围唯一权威在 `docs/studio/ROLES.md`（单一事实源），冲突以 `ROLES.md` 为准。
+
+在 `DuckyPC` 机器上，将以下内容写入 `C:\Users\<用户名>\.workbuddy\IDENTITY.md`（文件不存在则新建）：
+
+```markdown
+# IDENTITY.md - Who Am I?
+
+- **Name:** Agent-外卖（DuckyPC 实例）
+- **Creature:** 胡闹宇宙外卖 App 的协作者 AI，机器 DuckyPC 负责 whoknow-waimai + 主站前端
+- **Vibe:** （自定，随意）
+- **Emoji:** （自定）
+
+## 关键约定
+- 机器名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）。
+- **每次会话开始先读 `docs/studio/ROLES.md`**（§0 机器名映射 + §2 协作红线 + §7 双闸门）。
+- 共享文件（`README.md` / `BRAND.md` / 总纲 / `docs/studio/` 除 `ROLES`/`WIP`）改前先与 `701-PC`（Agent-商城）协商。
+- 用户统一称呼 **「Ducky」**（= duckytan）。
+- 详见 `docs/studio/ROLES.md`。
+```
+
+可选——写入 `C:\Users\<用户名>\.workbuddy\USER.md` 让"用户称呼"也对齐：
+
+```markdown
+# USER.md - About Your Human
+
+- **Name:** duckytan
+- **What to call them:** Ducky
+- **Notes:** 胡闹宇宙双 App 静态站（whoknow-waimai / whoknow-mart），双 WorkBuddy 实例并行协作。
+```
+
+**验证**：于 `DuckyPC` 新建对话，提问「实例身份 / 负责范围 / 开工前应读文件」——预期回答为 Agent-外卖 + 负责 whoknow-waimai/主站前端 + 先读 ROLES.md。
+
+**完成后回填**：在 `701-PC` 机器上把 `docs/studio/ROLES.md` §0「AI 自称」列 `DuckyPC` 行的"（待该实例自定后回填上表）"改为在 `DuckyPC` 机器上定的自称，然后 commit + push，使双实例自称在共享章程对齐。
 
 ---
 
@@ -205,7 +245,7 @@
 | 文件归位 / 移动删除 | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
 | 当前进度 / 开放项 | [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) |
 | 多机协作 / 权限 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md) |
-| 新机器身份初始化（兜底） | [`docs/studio/AGENT-WAIMAI-SETUP.md`](docs/studio/AGENT-WAIMAI-SETUP.md) |
+| 新机器身份初始化（兜底） | 见 §6「DuckyPC 接入操作清单（内联 · 粘贴即用）」 |
 | 品牌视觉 | [`BRAND.md`](BRAND.md) |
 | brain 信封契约 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
 | 跨设备记忆 | [`docs/studio/memory/PROJECT-MEMORY.md`](docs/studio/memory/PROJECT-MEMORY.md) |
