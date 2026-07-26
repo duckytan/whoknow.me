@@ -90,3 +90,20 @@ test('M8 riderVisitCount 契约：memory HistoryParams 核心三字段不变，�
   })
   assert.equal(r.selectedBranchId, 'rider_r001_recog')
 })
+
+test('M9 骑手计数真实派生（跨实例从 KV 存储读取，非注入）', () => {
+  const store = new MemStore()
+  const eng1 = new MemoryEngine(store)
+  // 第1单落库：riderVisitCount 存储 0 → 1
+  assert.equal(eng1.recordRider('r001'), 1)
+  // 新引擎实例复用同一存储：证明计数来自持久化 KV，而非手动注入到 history 对象
+  const eng2 = new MemoryEngine(store)
+  // 第2单读取：含本次 +1 => 2（命中 rider_r001_recog 阈值 >=2）
+  assert.equal(eng2.getHistoryParams('s01', 'r001').riderVisitCount, 2)
+  // 第2单落库：存储 1 → 2
+  assert.equal(eng2.recordRider('r001'), 2)
+  // 第3单读取：含本次 +1 => 3
+  assert.equal(eng2.getHistoryParams('s01', 'r001').riderVisitCount, 3)
+  // 不传 riderId：向后兼容，不含该字段
+  assert.equal(eng2.getHistoryParams('s01').riderVisitCount, undefined)
+})

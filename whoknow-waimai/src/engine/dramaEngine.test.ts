@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { runDrama, type RunResult } from './dramaEngine.ts'
+import { MemoryEngine, MemStore } from '../store/memory.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const seed = JSON.parse(
@@ -183,4 +184,29 @@ test('T19 骑手认人·同骑手第2单：riderId=r001 & riderVisitCount=2 命�
   )
   assert.equal(r.selectedBranchId, 'rider_r001_recog')
   assert.ok(r.events.some((e) => e.text.includes('雷速飞')))
+})
+
+// 20) 框架深化 B 档·骑手认人端到端：真实记忆层派生 riderVisitCount → engine（非手动注入）
+//     经 MemoryEngine.recordRider 落库两单，getHistoryParams 真实派生 riderVisitCount=2，
+//     喂给 runDrama 命中 rider_r001_recog，并经 unlockAchievements 解锁 rider_buddy。
+//     隔离店间维度（不传 shopId / shopVisitCount），同 T18/T19 手法，使骑手认人断言确定性。
+test('T20 骑手认人·端到端：memory 真实派生 → engine 命中 rider_r001_recog 且解锁 rider_buddy', () => {
+  const eng = new MemoryEngine(new MemStore())
+  const oi = { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 }
+  // 第1单：真实落库骑手计数（存储 0 → 1），riderVisitCount 含本次 = 1（尚未认人）
+  let hist = eng.getHistoryParams('s01', 'r001')
+  runDrama(branches, oi as any, { random: () => 0.6, history: { riderVisitCount: hist.riderVisitCount } as any, flags: [] })
+  eng.recordOrder('s01')
+  eng.recordRider('r001')
+  // 第2单：getHistoryParams 真实派生 riderVisitCount = 存储(1) + 1 = 2（含本次）→ 命中认人阈值 >=2
+  hist = eng.getHistoryParams('s01', 'r001')
+  assert.equal(hist.riderVisitCount, 2) // 关键：值来自真实存储派生，非手写注入 {riderVisitCount:2}
+  const r = runDrama(branches, oi as any, { random: () => 0.6, history: { riderVisitCount: hist.riderVisitCount } as any, flags: [] })
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
+  assert.ok(r.events.some((e: any) => e.text.includes('雷速飞')))
+  // 解锁成就：与 OrderView 同路径（branchMeta.achievements → unlockAchievements）
+  const branch = (branches as any[]).find((b) => b.id === r.selectedBranchId)
+  const unlocked = eng.unlockAchievements(branch.achievements ?? [])
+  assert.ok(unlocked.includes('rider_buddy'))
+  assert.ok(eng.getAchievements().includes('rider_buddy'))
 })

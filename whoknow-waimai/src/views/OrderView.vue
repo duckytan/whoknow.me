@@ -63,7 +63,7 @@ function submit() {
     address: address.value,
   } as OrderForm)
   const sid = oi.shopId ?? 's01'
-  const hist = memory.getHistoryParams(sid)
+  const hist = memory.getHistoryParams(sid, assignedRiderId) // 含骑手维度（riderVisitCount 内部已含本次 +1）
   hist.shopVisitCount = (hist.shopVisitCount ?? 0) + 1 // 含本次，驱动同店递进分支(第3/5单)
   const mem = memory.getShopMemory(sid)
   const r = runDrama(branches, oi, { random: Math.random, history: hist, flags: mem.flags })
@@ -74,6 +74,7 @@ function submit() {
 
   if (r.selectedBranchId) {
     memory.recordOrder(sid, { flags: r.newFlags, tags: r.finalState.tags })
+    if (assignedRiderId) memory.recordRider(assignedRiderId) // 落库骑手计数（镜像 recordOrder 落库 shop 计数）
     memory.unlockAchievements(orderAch.value)
     memory.recordOrderHistory({
       ts: Date.now(),

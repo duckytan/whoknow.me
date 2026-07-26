@@ -39,6 +39,10 @@ interface ShopRecord {
   tags: string[]
 }
 
+interface RiderRecord {
+  visitCount: number
+}
+
 interface GlobalRecord {
   totalOrders: number
   todayOrderCount: number
@@ -58,6 +62,9 @@ export class MemoryEngine {
   private shopKey(shopId: string) {
     return `waimai:memory:${shopId}`
   }
+  private riderKey(riderId: string) {
+    return `waimai:rider:${riderId}`
+  }
   private globalKey() {
     return 'waimai:global'
   }
@@ -73,6 +80,18 @@ export class MemoryEngine {
   }
   private writeShop(shopId: string, rec: ShopRecord) {
     this.store.setItem(this.shopKey(shopId), JSON.stringify(rec))
+  }
+  private readRider(riderId: string): RiderRecord {
+    const raw = this.store.getItem(this.riderKey(riderId))
+    if (!raw) return { visitCount: 0 }
+    try {
+      return JSON.parse(raw) as RiderRecord
+    } catch {
+      return { visitCount: 0 }
+    }
+  }
+  private writeRider(riderId: string, rec: RiderRecord) {
+    this.store.setItem(this.riderKey(riderId), JSON.stringify(rec))
   }
   private readGlobal(): GlobalRecord {
     const raw = this.store.getItem(this.globalKey())
@@ -118,10 +137,25 @@ export class MemoryEngine {
     return { shopId, visitCount: s.visitCount, flags: s.flags.slice(), tags: s.tags.slice() }
   }
 
-  getHistoryParams(shopId: string): HistoryParams {
+  /** 记录骑手送达一单，返回递增后的骑手访问计数（与 recordOrder 对 shop 的写法平行）。 */
+  recordRider(riderId: string): number {
+    const r = this.readRider(riderId)
+    r.visitCount += 1
+    this.writeRider(riderId, r)
+    return r.visitCount
+  }
+
+  getHistoryParams(shopId: string, riderId?: string): HistoryParams {
     const s = this.readShop(shopId)
     const g = this.readGlobal()
-    return { shopVisitCount: s.visitCount, todayOrderCount: g.todayOrderCount, totalOrders: g.totalOrders }
+    const out: HistoryParams = {
+      shopVisitCount: s.visitCount,
+      todayOrderCount: g.todayOrderCount,
+      totalOrders: g.totalOrders,
+    }
+    // 骑手维度：含本次 +1，与 OrderView 对 shop 的本地 +1 语义一致；未传 riderId 时不含该字段（向后兼容）
+    if (riderId) out.riderVisitCount = this.readRider(riderId).visitCount + 1
+    return out
   }
 
   // ---- 成就解锁追踪 ----
