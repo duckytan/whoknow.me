@@ -40,3 +40,6 @@ research-raw/
 
 # ── mart 预构建产物（胡闹导购原型，需提交支持 Vercel 静态部署） ──
 !whoknow-mart/dist/
+
+# ── QA 临时验证产物（boundary/qa-validate/reverify-rider 等，非源码） ──
+whoknow-waimai/.qa-tmp/
