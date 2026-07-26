@@ -61,13 +61,24 @@
 |---|---|---|---|---|
 | L2-C1 | 统一部署规范 §11 | 单 Vercel 整仓托管多 app；根 vercel.json 纯静态（`buildCommand:"echo done"`、`outputDirectory:"."`）；每 app `/短名` → `whoknow-<app>/dist`；.gitignore 追加 `!whoknow-<app>/dist/` 例外 | `总体设计方案.md` L216–253 | ✅ |
 | L2-C2 | 内部链接相对路径 | 各 app 内禁写绝对路径 `/...`，否则 `/短名/` 路由下 404 | `总体设计方案.md` L261（§11.5-6） | ✅ |
-| L2-C3 | Git 代理约定 | 访问 GitHub 须走本机本地 HTTP 代理，**端口随机器而异**：已知候选 `127.0.0.1:12000` 与 `127.0.0.1:7890`；新机到手先 `git -c http.proxy=http://127.0.0.1:<端口> ls-remote https://github.com/octocat/Hello-World.git HEAD` 实测两端口哪个能连通，取通者写入本机 `git config http.proxy`（及 `https.proxy`）；本机实测结论（如 `701-PC → 7890`）记入该机 `IDENTITY.md`「本机运行环境」小节 | `.workbuddy/memory/MEMORY.md`；701-PC 实测 7890 通 / 12000 不通（2026-07-26） | ✅ |
+| L2-C3 | Git 代理约定 | 访问 GitHub 须走本机本地 HTTP 代理，**端口随机器而异**：已知候选 `127.0.0.1:12000` 与 `127.0.0.1:7890`；新机到手先 `git -c http.proxy=http://127.0.0.1:<端口> ls-remote https://github.com/octocat/Hello-World.git HEAD` 实测两端口哪个能连通，取通者写入本机 `git config http.proxy`（及 `https.proxy`）；本机实测结论（如 `701-PC → 7890`）记入该机 `IDENTITY.md`「本机运行环境」小节。**失败回退**：若两端口均不通 / 本机无代理环境，则 `git config --global --unset http.proxy https.proxy`（或留空）走直连，并标注"本机无代理可达 GitHub"，不要卡死在固定端口 | `.workbuddy/memory/MEMORY.md`；701-PC 实测 7890 通 / 12000 不通（2026-07-26） | ✅ |
 | L2-C4 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核落盘 | `whoknow-brain/docs/api-spec.md` | 🔶 部分（自动化待 M3） |
 | L2-C5 | 品牌视觉规范（含硬约束） | 双主题 + 锚色（绿`#6eda78`/橙`#ff7849`/紫`#8b5cf6` 不可替换）+ design-tokens.css + WCAG AA（44px 触控、4.5:1 对比度、reduced-motion 降级）+ 字体阵容（Bungee/ZCOOL/JetBrains Mono，**禁用柳建毛草草书**） | `BRAND.md` 全文 | ✅ |
 | L2-C6 | 发布硬闸门 | 红线 0 漏出 + 同店第 5 单 ≠ 第 1 单 + 断网/L4 降级有水印不崩 | GDD §9–§11；`docs/studio/STUDIO-PROGRESS.md` | ✅ |
 | L2-C7 | MVP 兼容约定 | waimai v2 前端 `branches` 为空时用内置 seed，brain 上线后无缝替换 | `api-spec.md` L746 | ✅ |
 | L2-C8 | ⛔ 不要做清单 | 不要直接写 M1/DRAMA 解释器（字段二义）；不要假设 brain 已自动化（锡哥手动生成，水印是戏称非真 AI） | `PROJECT-STATUS.md` L47–50；`总体设计方案.md` L62 | ✅ |
-| L2-C9 | 客观表述红线（多实例文档） | 编写仓库文档须从客观事实描述：用机器名（701-PC/DuckyPC）、角色名（Agent-商城/Agent-外卖）、文件路径、仓库名（whoknow.me）指代；禁用读者相对代词（我/我们/你/你们/自己）与模糊指代（这里/那边/这台/那台）；多实例共享文档尤须遵守，修订前全文回扫 | `ROLES.md` §2.8 | 🔶 新增 |
+| L2-C9 | 客观表述红线（多实例文档） | 编写仓库文档须从客观事实描述（机器名/角色名/文件路径/仓库名指代）；禁用读者相对代词与模糊指代（禁止集与豁免见下方「L2-C9 细则」）；含"当前/已定/最新"等时间敏感状态词须带日期锚防 stale；多实例共享文档尤须遵守，新增/修订文档前按本条约全文回扫 | `ROLES.md` §2.8（本文件为权威枚举，§2.8 改为指针） | 🔶 新增（预提交钩子见 `.githooks/pre-commit`） |
+
+---
+
+### L2-C9 细则 · 客观表述禁止集与豁免
+- **禁止集（读者相对代词 + 模糊指代）**：
+```
+我 我们 你 你们 咱 咱们 自己 | 这里 那边 这台 那台
+```
+- **本机豁免**：凡"本机"用于泛指"读此文件的实例所在机器"时须自洽（每台实例读到的都是自身机器）；凡特指某台机器必须写机器名。
+- **时间锚**：含"当前 / 已定 / 最新"等随时间变化的状态词须带日期锚（如"当前里程碑（截至 2026-07-26）"），避免 stale 误导。
+- **回扫**：新增 / 修订文档前按本条约全文回扫（预提交钩子见 `.githooks/pre-commit`）。
 
 ---
 
@@ -148,6 +159,7 @@
 |---|---|---|
 | v1.0 草案 | 2026-07-26 | 三司会审 `sanshi-20260726-001` 驱动，首版三层重分类 + 三维补强 |
 | v1.0.1 | 2026-07-26 | 新增 L2-C9 客观表述红线（强约定），与 `ROLES.md` §2.8 闭环 |
+| v1.0.2 | 2026-07-26 | 三司会审 `sanshi-20260726-003` 整改：L2-C9 升为权威枚举（ROLES §2.8 改指针防漂移）+ 补「本机豁免 / 时间锚」细则；L2-C3 加失败回退；INDEX 代理端口硬编码修正；新增预提交钩子 `.githooks/pre-commit` 拦截主观表述 |
 
 ---
 
