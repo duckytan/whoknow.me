@@ -1,6 +1,7 @@
 // sliceDrama.ts — 人生模拟器·垂直切片 确定性迷你推演（whoknow-waimai/src/engine）
 //
 // 设计锁定：docs/designs/waimai-life-sim-slice-2026-07-27.md（文策渊 / 用户拍板）
+// 一致性契约：docs/designs/waimai-drama-consistency-spec.md（文策渊 / 2026-07-28）
 //
 // 与 dramaEngine.ts 的关系（见设计文档 B1）：
 //   本模块是「选择驱动·确定性」底盘 —— 同一组选择每次结果完全一致，无随机。
@@ -13,6 +14,13 @@
 //
 // 红线：不出现真实医疗机构名 / 死亡 / 暴力 / 竞品名；「ICU」用「ICU 病房」中性表述、
 //   语气温柔小心；「公厕」用化粪池/公共厕所调侃但不脏话。
+//
+// 文案架构（一致性契约 §2）：带驱动 × 情境(ADDRESS_BAND_TEXT) × 节拍(REMARK_BEAT) 查表拼接。
+//   - bossMood 由 50 + 地址偏移 + 备注偏移 唯一确定 → band（hostile/neutral/warm）。
+//   - addressTemp 把地址归到 cold(toilet/company) / warm(icu/home) 两档，用于 gentle 备注消歧。
+//   - accept/cook/complete = ADDRESS_BAND_TEXT[addr][band] + REMARK_BEAT[remark](temp) 拼接。
+//   - deliver = RIDER_LINE[cookSlow?'slow':'fast'][addr]（骑手承接地址情境，不接备注回声）。
+//   全部逐字对齐 §3 表格（authoritative），数值模型零改动。
 
 import type { DramaState, DramaEventOut } from './dramaEngine'
 
@@ -42,6 +50,11 @@ export interface SliceResult {
   events: DramaEventOut[]
 }
 
+// 情绪带（一致性契约 §1.1）
+type Band = 'hostile' | 'neutral' | 'warm'
+// 地址温度（一致性契约 §2.3 消歧用）
+type Temp = 'cold' | 'warm'
+
 // ---------------------------------------------------------------------------
 // 常量（mini-SEED · 与 DRAMA-SEED-v1 平行）
 // ---------------------------------------------------------------------------
@@ -70,123 +83,160 @@ export const REMARK_OFFSETS: Record<RemarkTag, number> = {
   boss_thx: 20,
 }
 
-interface AddressDef {
-  id: AddressTag
-  acceptPrefix: string
-  acceptNoRemark: string
-  cookBase: string
-  cookNoRemark: string
-  deliverSlow: string
-  deliverFast: string
-  completeBase: string
-}
-
-// 4 个地址（切片初始严格 4 个；school/bermuda/hometown/rooftop 留扩展位）
-const ADDRESSES: Record<AddressTag, AddressDef> = {
-  toilet: {
-    id: 'toilet',
-    acceptPrefix: '公厕？？你住化粪池啊……',
-    acceptNoRemark: '这地址可真会挑。',
-    cookBase: '（啧，公厕的单我故意慢慢做，锅都不想洗）',
-    cookNoRemark: '您先闻着味儿等着。',
-    deliverSlow: '这老板又摆烂，我急疯了狂飙……公厕我找了半天。',
-    deliverFast: '公厕这单老板居然利索，我一路畅通送到了，奇了。',
-    completeBase: '拿好，公厕……趁热吃（别真趁热）。下次点正常地址行不行。',
-  },
-  icu: {
-    id: 'icu',
-    acceptPrefix: 'ICU 病房？',
-    acceptNoRemark: '我轻着点做，您安心养着。',
-    cookBase: '（小声）您这单我得快手快脚又轻手轻脚地做，汤别洒了。',
-    cookNoRemark: '火候我替您盯着。',
-    deliverSlow: 'ICU 这单我开得稳稳的，电梯都帮您按好了。',
-    deliverFast: 'ICU 这单我开得稳稳的，您别急，门帮您留着。',
-    completeBase: '趁热趁软乎……您慢用，好好休息。',
-  },
-  home: {
-    id: 'home',
-    acceptPrefix: '家庭单？',
-    acceptNoRemark: '跟给自己家做一样，随便坐。',
-    cookBase: '（哼着歌）家的味道，火候我拿捏得准。',
-    cookNoRemark: '多等会儿也香。',
-    deliverSlow: '你家这栋我熟，溜达着就到了，门把手给您留着。',
-    deliverFast: '你家这栋我熟，溜达着就到了，门把手给您留着。',
-    completeBase: '拿好，趁热吃，家里人等你呢。',
-  },
-  company: {
-    id: 'company',
-    acceptPrefix: '公司单？',
-    acceptNoRemark: '行，你们打工人互相折磨呗。',
-    cookBase: '（叹气）公司单我也就应付下，别指望多用心。',
-    cookNoRemark: '凑合能吃。',
-    deliverSlow: '公司楼我天天跑，电梯挤死，但准时给您放前台了。',
-    deliverFast: '公司楼我天天跑，电梯挤死，但准时给您放前台了。',
-    completeBase: '拿好，回工位趁热扒两口，别被老板抓包。',
-  },
-}
-
-interface RemarkDef {
-  id: RemarkTag
+// 备注数值属性（gentle = 出餐阶段 moodDelta 转正；cookDelayBonus = 换装等叠加 delay）
+//   纯数值，保持不变；文案已迁到 REMARK_BEAT。
+interface RemarkNum {
   /** gentle：第2阶段（出餐）老板被戳中收敛，moodDelta 转正（复合可解释·符号变化） */
   gentle?: boolean
   gentleMood?: number
   /** 出餐额外 delay（如表演才艺去换装），叠加在 cookSlow 的 45s 之上 */
   cookDelayBonus?: number
-  acceptSuffix: string
-  cookEcho?: string
-  deliverEcho?: string
-  completeEcho?: string
+}
+const REMARK_NUM: Record<RemarkTag, RemarkNum> = {
+  more_spicy: {},
+  less_spicy: {},
+  no_cilantro: {},
+  no_scold: { gentle: true, gentleMood: 5 },
+  perform: { cookDelayBonus: 20_000 },
+  boss_thx: { gentle: true, gentleMood: 10 },
 }
 
-// 6 个备注（全带回 v1）
-const REMARKS: Record<RemarkTag, RemarkDef> = {
+// ---------------------------------------------------------------------------
+// 文案层：带驱动 × 情境 × 节拍（逐字对齐一致性契约 §3）
+// ---------------------------------------------------------------------------
+
+// 地址情境文本：按带分层（每地址仅填充其可达的带，以 §3 实际出现为准）
+interface AddressBandText {
+  accept: string
+  cook: string
+  complete: string
+}
+const ADDRESS_BAND_TEXT: Record<AddressTag, Partial<Record<Band, AddressBandText>>> = {
+  // toilet（cold）：可达 hostile(≤30) / neutral(31–59)
+  toilet: {
+    hostile: {
+      accept: '公厕？？你住化粪池啊……',
+      cook: '（啧，公厕的单我故意慢慢做，锅都不想洗）',
+      complete: '拿好，公厕……趁热吃（别真趁热）。下次点正常地址行不行。',
+    },
+    neutral: {
+      accept: '公厕是吧……行，你这地址我接了。',
+      cook: '公厕这单我正常做。',
+      complete: '拿好，公厕……趁热吃（别真趁热）。你刚那句，我记下了。',
+    },
+  },
+  // icu（warm）：仅可达 warm（≥60）
+  icu: {
+    warm: {
+      accept: 'ICU 病房？我轻着点做，您安心养着。',
+      cook: '（小声）您这单我得快手快脚又轻手轻脚地做，汤别洒了。',
+      complete: '趁热趁软乎……您慢用，好好休息。',
+    },
+  },
+  // home（warm 温度）：可达 neutral(55) / warm(60+)；Q3 不拆双版，共用 cozy 文本
+  home: {
+    neutral: {
+      accept: '家庭单？跟给自己家做一样，随便坐。',
+      cook: '（哼着歌）家的味道，火候我拿捏得准。',
+      complete: '拿好，趁热吃，家里人等你呢。',
+    },
+    warm: {
+      accept: '家庭单？跟给自己家做一样，随便坐。',
+      cook: '（哼着歌）家的味道，火候我拿捏得准。',
+      complete: '拿好，趁热吃，家里人等你呢。',
+    },
+  },
+  // company（cold）：可达 neutral(45/50/55) / warm(60/65)
+  company: {
+    neutral: {
+      accept: '公司单？行，你们打工人互相折磨呗。',
+      cook: '（叹气）公司单我也就应付下，别指望多用心。',
+      complete: '拿好，回工位趁热扒两口，别被老板抓包。',
+    },
+    warm: {
+      accept: '公司单？……得，被你这单整得我也有点想好好干。',
+      cook: '公司单我也认真做，给你们打工人争口气。',
+      complete: '拿好，回工位趁热吃，今天这单我用心了。',
+    },
+  },
+}
+
+// 备注节拍：accept/cook/complete 三拍；对需消歧的 gentle 备注按 addressTemp 取冷/暖变体
+//   （仅 no_scold / boss_thx 需两路；其余 4 个备注单变体，语气中性兼容三带，见 §2.4）
+interface RemarkBeat {
+  accept: (temp: Temp) => string
+  cook: (temp: Temp) => string
+  complete: (temp: Temp) => string
+}
+const REMARK_BEAT: Record<RemarkTag, RemarkBeat> = {
   more_spicy: {
-    id: 'more_spicy',
-    acceptSuffix: '行，多放辣是吧，辣得你忘了在哪儿吃的。',
-    cookEcho: '辣子现舂，等着。',
-    deliverEcho: '',
-    completeEcho: '',
+    accept: () => '行，多放辣是吧，辣得你忘了在哪儿吃的。',
+    cook: () => '辣子现舂，等着。',
+    complete: () => '辣到位了，喝口水缓缓。',
   },
   less_spicy: {
-    id: 'less_spicy',
-    acceptSuffix: '少放辣？行，清淡点。',
-    cookEcho: '辣子我手抖少抓了一把。',
-    deliverEcho: '',
-    completeEcho: '清清淡淡，养胃。',
+    accept: () => '少放辣？行，清淡点。',
+    cook: () => '辣子我手抖少抓了一把。',
+    complete: () => '清清淡淡，养胃。',
   },
   no_cilantro: {
-    id: 'no_cilantro',
-    acceptSuffix: '不要香菜？又是你。',
-    cookEcho: '香菜我一根没放，您放心。',
-    deliverEcho: '',
-    completeEcho: '（确定没香菜，我检查三遍了）',
+    accept: () => '不要香菜？又是你。',
+    cook: () => '香菜我一根没放，您放心。',
+    complete: () => '（确定没香菜，我检查三遍了）',
   },
+  // no_scold（别骂了）：冷地址老板本要炸→被劝住收敛；暖地址本就 nice→改用「被体贴戳中」，不出现「别骂了」
   no_scold: {
-    id: 'no_scold',
-    gentle: true,
-    gentleMood: 5,
-    acceptSuffix: '别骂了……行，我收敛点。',
-    cookEcho: '（被你这句话戳中，火气下去了）我好好做。',
-    deliverEcho: '',
-    completeEcho: '刚才脾气不好，见谅啊。',
+    accept: (t) => (t === 'cold' ? '别骂了……行，我收敛点。' : '你倒会替我着想……那我更得好好做。'),
+    cook: (t) =>
+      t === 'cold'
+        ? '（被你那句「别骂了」戳中）我好好做。'
+        : '（被你这句话暖到，手上更仔细了）我好好做。',
+    complete: (t) => (t === 'cold' ? '刚才脾气不好，见谅啊。' : '你这么体贴，这单我记心里了。'),
   },
   perform: {
-    id: 'perform',
-    cookDelayBonus: 20_000,
-    acceptSuffix: '表演才艺？成，今儿给你来一段。',
-    cookEcho: '（先去换身行头）您稍等，演出级出餐。',
-    deliverEcho: '',
-    completeEcho: '谢幕鞠躬，下次点个「encore」呗。',
+    accept: () => '表演才艺？成，今儿给你来一段。',
+    cook: () => '先去换身行头，您稍等，演出级出餐。',
+    complete: () => '谢幕鞠躬，下次点个「encore」呗。',
   },
+  // boss_thx（老板辛苦了）：冷地址骂完被客气整不会了；暖地址本就 nice 被夸更暖
   boss_thx: {
-    id: 'boss_thx',
-    gentle: true,
-    gentleMood: 10,
-    acceptSuffix: '老板辛苦了？嗐，被你这么一说眼眶热了。',
-    cookEcho: '（心里一暖）您这句话我记下了，多放份量。',
-    deliverEcho: '',
-    completeEcho: '（辛苦啥，您爱吃就行）',
+    accept: (t) =>
+      t === 'cold'
+        ? '老板辛苦了？嗐，被你这么客气整不会了……'
+        : '老板辛苦了？嘿，被你这么一夸，更得好好伺候了。',
+    cook: () => '（心里一暖）您这句话我记下了，多放份量。',
+    complete: () => '（辛苦啥，您爱吃就行）',
   },
+}
+
+// 骑手台词：承接地址情境 + cook 状态（slow→急 / fast→稳）；不接备注回声（R4）
+//   toilet 慢单(slow)/快单(fast) 两版；icu/home/company 无慢单，仅 fast 一版。
+const RIDER_LINE: Record<'slow' | 'fast', Record<AddressTag, string>> = {
+  slow: {
+    toilet: '这老板又摆烂，我急疯了狂飙……公厕我找了半天。',
+    // 以下三档不可达（icu/home/company 无慢单），占位保持类型安全，文本等同 fast。
+    icu: 'ICU 这单我开得稳稳的，您别急，门帮您留着。',
+    home: '你家这栋我熟，溜达着就到了，门把手给您留着。',
+    company: '公司楼我天天跑，电梯挤死，但准时给您放前台了。',
+  },
+  fast: {
+    toilet: '公厕这单老板居然利索，我一路畅通送到了，奇了。',
+    icu: 'ICU 这单我开得稳稳的，您别急，门帮您留着。',
+    home: '你家这栋我熟，溜达着就到了，门把手给您留着。',
+    company: '公司楼我天天跑，电梯挤死，但准时给您放前台了。',
+  },
+}
+
+// bossMood → 情绪带（≤30 hostile / 31–59 neutral / ≥60 warm）
+function bandOf(mood: number): Band {
+  if (mood <= COOK_SLOW_THRESHOLD) return 'hostile'
+  if (mood < 60) return 'neutral'
+  return 'warm'
+}
+
+// 地址 → 温度（cold = toilet|company，warm = icu|home）
+function addressTemp(addr: AddressTag): Temp {
+  return addr === 'toilet' || addr === 'company' ? 'cold' : 'warm'
 }
 
 // ---------------------------------------------------------------------------
@@ -194,8 +244,7 @@ const REMARKS: Record<RemarkTag, RemarkDef> = {
 // ---------------------------------------------------------------------------
 
 export function sliceDrama(input: SliceInput): SliceResult {
-  const addr = ADDRESSES[input.addressTag]
-  const remark = REMARKS[input.remarkTag]
+  const remark = REMARK_NUM[input.remarkTag]
 
   // 阶段1 接单：bossMood = 50 + 地址偏移 + 备注偏移（情绪带，决定出餐快慢）
   const addrOffset = ADDRESS_OFFSETS[input.addressTag]
@@ -226,30 +275,46 @@ export function sliceDrama(input: SliceInput): SliceResult {
     tags: [input.addressTag, input.remarkTag],
   }
 
+  // 文案拼接：带驱动 × 情境 × 节拍（逐字对齐 §3）
+  const band = bandOf(bossMood)
+  const temp = addressTemp(input.addressTag)
+  const addrText = ADDRESS_BAND_TEXT[input.addressTag][band]
+  if (!addrText) {
+    // 数值模型保证每个 (addr, bossMood) 的组合落在 ADDRESS_BAND_TEXT 已填充的带内，
+    // 此处仅作防御性断言，正常永远不可达。
+    throw new Error(`sliceDrama: 未配置文案带 ${input.addressTag}/${band}`)
+  }
+  const beat = REMARK_BEAT[input.remarkTag]
+
+  const acceptText = addrText.accept + beat.accept(temp)
+  const cookText = addrText.cook + beat.cook(temp)
+  const completeText = addrText.complete + beat.complete(temp)
+  const deliverText = RIDER_LINE[cookSlow ? 'slow' : 'fast'][input.addressTag]
+
   const events: DramaEventOut[] = [
     {
       phase: 'accept',
       actor: 'boss',
-      text: addr.acceptPrefix + (remark.acceptSuffix || addr.acceptNoRemark),
+      text: acceptText,
       moodDelta: acceptDelta,
     },
     {
       phase: 'cook',
       actor: 'boss',
-      text: addr.cookBase + (remark.cookEcho || addr.cookNoRemark),
+      text: cookText,
       moodDelta: cookMoodDelta,
       delay: cookDelay,
     },
     {
       phase: 'deliver',
       actor: 'rider',
-      text: (cookSlow ? addr.deliverSlow : addr.deliverFast) + (remark.deliverEcho || ''),
+      text: deliverText,
       delay: deliverDelay,
     },
     {
       phase: 'complete',
       actor: 'boss',
-      text: addr.completeBase + (remark.completeEcho || ''),
+      text: completeText,
       moodDelta: COMPLETE_REBOUND,
     },
   ]
