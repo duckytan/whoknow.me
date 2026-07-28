@@ -1,22 +1,26 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { buildOrderInput, type OrderForm } from '../core/orderInput'
-import { runDrama, type RunResult } from '../engine/dramaEngine'
-import { loadSeedBranches, type Branch } from '../config/loader'
-import { memory } from '../store/memoryStore'
+import {
+  sliceDrama,
+  type SliceResult,
+  type AddressTag,
+  type RemarkTag,
+  ADDRESS_OFFSETS,
+  REMARK_OFFSETS,
+} from '../engine/sliceDrama'
 import { runForbiddenCheck, type TabooList } from '../core/forbiddenCheck'
 import { getShop, getRider, pickRider } from '../data/shops'
 import { getDish } from '../data/dishes'
 import { getItems, dishCount, cartTotal, clearShop } from '../store/cart'
-import { getAchievement } from '../data/achievements'
-import seedRaw from '../../docs/specs/DRAMA-SEED-v1-2026-07-24.json'
 import tabooRaw from '../../tests/taboo-list.json'
-import DramaTimeline from '../components/DramaTimeline.vue'
+import MapTrack from '../components/MapTrack.vue'
+import DramaChat from '../components/DramaChat.vue'
+import PushNotifier from '../components/PushNotifier.vue'
+import { provideDramaProgress } from '../composables/useDramaProgress'
 import RiderCard from '../components/RiderCard.vue'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
-const branches = loadSeedBranches(seedRaw as unknown)
 const taboo = tabooRaw as unknown as TabooList
 const route = useRoute()
 const router = useRouter()
@@ -26,73 +30,66 @@ const shop = getShop(shopId)
 const assignedRiderId = pickRider()
 const rider = getRider(assignedRiderId)
 
-// 从购物车推导 orderInput（不再手填参数）
+// 从购物车推导展示（菜品在切片为装饰性，不进因果）
 const cartItems = computed(() => getItems(shopId))
 const dishCountVal = computed(() => dishCount(shopId))
 const orderTotalVal = computed(() => cartTotal(shopId))
-const avgDishPriceVal = computed(() =>
-  dishCountVal.value > 0 ? Math.round(orderTotalVal.value / dishCountVal.value) : 0
-)
 const selectedDishes = computed(() =>
   Object.entries(cartItems.value).map(([id, q]) => ({ dish: getDish(shopId, id), q }))
 )
 
-const remark = ref('')
-const address = ref('')
-const result = ref<RunResult | null>(null)
+// 地址 chip（严格 4 个）+ 备注 chip（6 个）；纯点击、零自由文本（宇宙级原则）
+const addressChips: { id: AddressTag; label: string; emoji: string }[] = [
+  { id: 'toilet', label: '公厕', emoji: '🚽' },
+  { id: 'icu', label: 'ICU 病房', emoji: '🏥' },
+  { id: 'home', label: '家庭', emoji: '🏠' },
+  { id: 'company', label: '公司', emoji: '🏢' },
+]
+const remarkChips: { id: RemarkTag; label: string; emoji: string }[] = [
+  { id: 'more_spicy', label: '多放辣', emoji: '🌶️' },
+  { id: 'less_spicy', label: '少放辣', emoji: '🥱' },
+  { id: 'no_cilantro', label: '不要香菜', emoji: '🌿' },
+  { id: 'no_scold', label: '别骂了', emoji: '🤐' },
+  { id: 'perform', label: '表演才艺', emoji: '🎤' },
+  { id: 'boss_thx', label: '老板辛苦了', emoji: '🙏' },
+]
+
+function fmtOffset(n: number): { text: string; cls: string } {
+  if (n === 0) return { text: '0', cls: 'zero' }
+  return n > 0 ? { text: `+${n}`, cls: 'up' } : { text: `${n}`, cls: 'down' }
+}
+
+const addressTag = ref<AddressTag | ''>('')
+const remarkTag = ref<RemarkTag | ''>('')
+const result = ref<SliceResult | null>(null)
+// 统一 reveal 时钟：结果态 events 共享给 MapTrack / DramaChat / PushNotifier（唯一事实时钟）
+provideDramaProgress(() => result.value?.events ?? [])
 const gate = ref<{ pass: boolean; redLightCount: number }>({ pass: true, redLightCount: 0 })
 
-const branchMeta = computed<Branch | undefined>(() =>
-  branches.find((b) => b.id === result.value?.selectedBranchId)
-)
-const shopVisitCount = computed(() =>
-  result.value ? memory.getShopMemory(shopId ?? 's01').visitCount : 0
-)
-const orderAch = computed(() => branchMeta.value?.achievements ?? [])
+// 红线门控：prod 隐藏，仅 dev 显示（用户拍板·决策3）
+const isDev = import.meta.env.DEV
 
 function submit() {
   if (dishCountVal.value === 0) return
-  const oi = buildOrderInput({
-    shopId,
-    riderId: assignedRiderId,
-    orderTotal: orderTotalVal.value,
-    avgDishPrice: avgDishPriceVal.value,
+  if (!addressTag.value || !remarkTag.value) return
+  const r = sliceDrama({
+    addressTag: addressTag.value,
+    remarkTag: remarkTag.value,
     dishCount: dishCountVal.value,
-    deliveryFee: shop?.deliveryFee ?? 3,
-    remark: remark.value,
-    address: address.value,
-  } as OrderForm)
-  const sid = oi.shopId ?? 's01'
-  const hist = memory.getHistoryParams(sid, assignedRiderId) // 含骑手维度（riderVisitCount 内部已含本次 +1）
-  hist.shopVisitCount = (hist.shopVisitCount ?? 0) + 1 // 含本次，驱动同店递进分支(第3/5单)
-  const mem = memory.getShopMemory(sid)
-  const r = runDrama(branches, oi, { random: Math.random, history: hist, flags: mem.flags })
+    totalPrice: orderTotalVal.value,
+  })
   result.value = r
 
+  // 红线门控（可保留调用，非切片重点）
   const fg = runForbiddenCheck(r.events.map((e) => e.text), taboo)
   gate.value = { pass: fg.pass, redLightCount: fg.redLightCount }
 
-  if (r.selectedBranchId) {
-    memory.recordOrder(sid, { flags: r.newFlags, tags: r.finalState.tags })
-    if (assignedRiderId) memory.recordRider(assignedRiderId) // 落库骑手计数（镜像 recordOrder 落库 shop 计数）
-    memory.unlockAchievements(orderAch.value)
-    memory.recordOrderHistory({
-      ts: Date.now(),
-      shopId: sid,
-      shopName: getShop(sid)?.name ?? sid,
-      branchId: r.selectedBranchId,
-      branchName: branchMeta.value?.name,
-      bossMood: r.finalState.bossMood,
-      total: oi.orderTotal,
-      achievements: orderAch.value,
-    })
-    clearShop(sid) // 结算后清空该车
-  }
+  clearShop(shopId) // 结算后清空该车
 }
 function reset() {
   result.value = null
-  remark.value = ''
-  address.value = ''
+  addressTag.value = ''
+  remarkTag.value = ''
 }
 function back() {
   router.push(`/shop/${shopId}`)
@@ -133,67 +130,144 @@ function back() {
         </div>
       </div>
 
-      <label>备注<input v-model="remark" placeholder="私房菜 / 拉黑 / 多放辣 / 别骂了" /></label>
-      <label>地址<input v-model="address" placeholder="奇葩地址会触发彩蛋" /></label>
-      <button class="submit-btn" @click="submit">下单 🍜（¥{{ orderTotalVal }}）</button>
+      <!-- 纯点击 chip：地址 4 + 备注 6，零自由文本 -->
+      <div class="chip-block">
+        <div class="chip-label">送到哪 <span class="hint">（点一下，别打字）</span></div>
+        <div class="chips">
+          <button
+            v-for="a in addressChips"
+            :key="a.id"
+            type="button"
+            class="chip"
+            :class="{ on: addressTag === a.id }"
+            @click="addressTag = a.id"
+          >
+            <span class="ce">{{ a.emoji }}</span>
+            <span class="cl">{{ a.label }}</span>
+            <span class="cs" :class="fmtOffset(ADDRESS_OFFSETS[a.id]).cls">{{ fmtOffset(ADDRESS_OFFSETS[a.id]).text }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="chip-block">
+        <div class="chip-label">给老板捎句话</div>
+        <div class="chips">
+          <button
+            v-for="r in remarkChips"
+            :key="r.id"
+            type="button"
+            class="chip"
+            :class="{ on: remarkTag === r.id }"
+            @click="remarkTag = r.id"
+          >
+            <span class="ce">{{ r.emoji }}</span>
+            <span class="cl">{{ r.label }}</span>
+            <span class="cs" :class="fmtOffset(REMARK_OFFSETS[r.id]).cls">{{ fmtOffset(REMARK_OFFSETS[r.id]).text }}</span>
+          </button>
+        </div>
+      </div>
+
+      <button class="submit-btn" @click="submit">确认下单，让 NPC 演戏 · ¥{{ orderTotalVal }}</button>
     </div>
   </div>
 
   <!-- 结果态 = 订单详情 -->
   <div v-else class="order-detail">
     <div class="map">
-      <div class="road"></div>
-      <div class="from"></div>
-      <div class="to"></div>
-      <div class="route"></div>
-      <div class="rider-dot">🛵</div>
-      <div class="topbar">
+      <MapTrack :address-tag="addressTag" />
+      <div class="topbar" style="z-index: 5">
         <span class="back" @click="reset">‹</span>
         <span class="ttl">订单详情</span>
         <span class="ic">📞</span>
       </div>
     </div>
 
-    <div class="eta-bar">
-      <div class="big">本店第 <b>{{ shopVisitCount }}</b> 单 · 老板心情 <b>{{ result.finalState.bossMood }}</b></div>
-      <div class="bubble" v-if="rider">
-        <div class="av">⚡</div>
-        <div class="t">
-          <b>{{ rider.name }}</b>：这单我骑出了感情
-          <span class="sig">— {{ rider.name }} / {{ rider.sub }}</span>
-        </div>
-      </div>
-    </div>
-
     <RiderCard v-if="rider" :rider="rider" />
 
-    <div style="padding: 10px 14px 0; font-size: 13px; color: var(--mt-text-2)">
-      命中：<b style="color: var(--mt-text)">{{ result.selectedBranchId }}</b>
-      <span v-if="branchMeta?.name">（{{ branchMeta.name }}）</span>
-    </div>
+    <DramaChat
+      :events="result.events"
+      :address-chip="addressChips.find((c) => c.id === addressTag) || null"
+      :remark-chip="remarkChips.find((c) => c.id === remarkTag) || null"
+    />
 
-    <DramaTimeline :events="result.events" />
-
-    <div class="story-watermark">
-      <span class="badge">🎭 锡哥精选段子</span>
-      <span>本单剧本由锡哥手编</span>
-    </div>
-
-    <div class="page-pad" style="padding-top: 0" v-if="orderAch.length">
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px">🏆 本单解锁成就</div>
-      <div v-for="id in orderAch" :key="id" class="muted">· {{ (getAchievement(id)?.name) || id }}</div>
-    </div>
-
-    <div class="gate" :class="gate.pass ? 'ok' : 'fail'">
-      <template v-if="gate.pass">✅ 红线门控通过（red_light_count = 0）</template>
-      <template v-else>⛔ 红线命中 {{ gate.redLightCount }} 处，已拦截</template>
-    </div>
+    <PushNotifier :address-tag="addressTag" :shop-name="shop?.name" />
 
     <div class="page-pad">
       <button class="submit-btn" @click="reset">再来一单 🔁</button>
+
+      <div class="story-watermark">
+        <span class="badge">🎭 锡哥精选段子</span>
+        <span>本单剧本由锡哥手编 · 仅供娱乐</span>
+      </div>
+
+      <div class="gate" v-if="isDev" :class="gate.pass ? 'ok' : 'fail'">
+        <template v-if="gate.pass">✅ 红线门控通过（red_light_count = 0）</template>
+        <template v-else>⛔ 红线命中 {{ gate.redLightCount }} 处，已拦截</template>
+      </div>
+
       <div class="muted" style="text-align: center; margin-top: 12px">
         <a @click="back" style="color: var(--mt-text-2)">‹ 回菜单</a>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.chip-block { margin: 14px 0 4px; }
+.chip-label { font-size: 14px; font-weight: 700; color: var(--mt-text); margin-bottom: 8px; }
+.chip-label .hint { font-size: 11px; font-weight: 400; color: var(--mt-text-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid var(--mt-line);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--mt-text);
+  font-family: inherit;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+.chip:active { transform: scale(0.96); }
+.chip:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 2px; }
+.chip .ce { font-size: 16px; }
+.chip .cs { font-size: 11px; font-weight: 700; }
+.chip .cs.up { color: var(--role-gentle); }
+.chip .cs.down { color: var(--mt-price); }
+.chip .cs.zero { color: var(--mt-text-3); }
+.chip.on {
+  background: var(--mt-yellow);
+  border-color: var(--mt-yellow-deep);
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(255, 193, 0, 0.35);
+}
+.chip.on .cs.up,
+.chip.on .cs.down,
+.chip.on .cs.zero { color: #1a1a1a; }
+
+/* 水印（锡哥手编）落位环境页脚：fine-print 化（对齐规格 §4.5 / GDD §9.5） */
+.story-watermark {
+  margin: 14px auto 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--mt-text-3);
+  text-align: center;
+}
+.story-watermark .badge {
+  background: transparent;
+  color: var(--mt-text-3);
+  font-size: 11px;
+  padding: 0;
+  font-weight: 700;
+}
+</style>
