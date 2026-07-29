@@ -31,6 +31,8 @@ export interface OrderHistoryEntry {
   bossMood: number
   total?: number
   achievements: string[]
+  /** 本单真实菜品快照（扩展可选字段，不改变既有字段语义）。用于订单页真实缩略图/件数/菜名。 */
+  items?: { dishId: string; name: string; emoji: string; qty: number; price: number }[]
 }
 
 interface ShopRecord {

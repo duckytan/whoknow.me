@@ -107,3 +107,32 @@ test('M9 骑手计数真实派生（跨实例从 KV 存储读取，非注入）'
   // 不传 riderId：向后兼容，不含该字段
   assert.equal(eng2.getHistoryParams('s01').riderVisitCount, undefined)
 })
+
+test('M10 订单历史带 items：recordOrderHistory 后 items 原样保留，Σqty 可算；recordOrder 后 visitCount +1', () => {
+  const eng = new MemoryEngine(new MemStore())
+  const items = [
+    { dishId: 's01_d1', name: '羊肉串', emoji: '🍢', qty: 2, price: 6 },
+    { dishId: 's01_d2', name: '烤茄子', emoji: '🍆', qty: 1, price: 12 },
+  ]
+  eng.recordOrderHistory({
+    ts: 100,
+    shopId: 's01',
+    shopName: '老王烧烤',
+    branchId: null,
+    bossMood: 30,
+    total: 24,
+    achievements: ['poor_meal'],
+    items,
+  })
+  const h = eng.getOrderHistory()
+  assert.equal(h.length, 1)
+  assert.ok(h[0].items, 'items 字段应被保留')
+  assert.deepEqual(h[0].items, items, 'items 应原样保留')
+  assert.equal(h[0].items!.reduce((a, b) => a + b.qty, 0), 3, 'Σqty 应为 3')
+
+  // recordOrder 后 visitCount +1（跨单记忆，骑手认人 M8 依赖）
+  const before = eng.getShopMemory('s01').visitCount
+  const { memory } = eng.recordOrder('s01')
+  assert.equal(memory.visitCount, before + 1)
+  assert.equal(eng.getShopMemory('s01').visitCount, before + 1)
+})

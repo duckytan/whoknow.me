@@ -13,6 +13,8 @@ import { runForbiddenCheck, type TabooList } from '../core/forbiddenCheck'
 import { getShop, getRider, pickRider } from '../data/shops'
 import { getDish } from '../data/dishes'
 import { getItems, dishCount, cartTotal, clearShop } from '../store/cart'
+import { memory } from '../store/memoryStore'
+import type { OrderHistoryEntry } from '../store/memory'
 import tabooRaw from '../../tests/taboo-list.json'
 import MapTrack from '../components/MapTrack.vue'
 import DramaChat from '../components/DramaChat.vue'
@@ -148,6 +150,27 @@ function submit() {
   result.value = r
   const fg = runForbiddenCheck(r.events.map((e) => e.text), taboo)
   gate.value = { pass: fg.pass, redLightCount: fg.redLightCount }
+
+  // 写入订单历史 + 养跨单记忆（必须在 clearShop 之前：此时 dish 仍在购物车）
+  const entry: OrderHistoryEntry = {
+    ts: Date.now(),
+    shopId,
+    shopName: shop?.name ?? '',
+    branchId: null,
+    bossMood: result.value.dramaState.bossMood,
+    total: orderTotalVal.value,
+    achievements: memory.getAchievements(),
+    items: selectedDishes.value.map((s) => ({
+      dishId: s.dish?.id ?? '',
+      name: s.dish?.name ?? '',
+      emoji: s.dish?.emoji ?? '🍽️',
+      qty: s.q,
+      price: s.dish?.price ?? 0,
+    })),
+  }
+  memory.recordOrder(shopId) // 养跨单记忆（骑手认人 M8 依赖）
+  memory.recordOrderHistory(entry) // 喂订单页
+
   clearShop(shopId)
 }
 function reset() {

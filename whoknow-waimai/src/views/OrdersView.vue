@@ -18,9 +18,15 @@ const filteredHistory = computed(() => {
   return []
 })
 
-// 补充商品信息：若 history 无 items，用 shopId 反查菜单取前2道菜作为缩略图
+// 补充商品信息：若 history 无 items，用 shopId 反查菜单取前2道菜作为缩略图（向后兼容）
 function getShopDishes(shopId: string) {
   return getMenu(shopId).slice(0, 3)
+}
+
+// 真实件数：有 items 时取 Σqty，否则回退到反查菜单的道数（“共 3 件”）
+function itemCount(h: (typeof history)[0]): number {
+  if (h.items?.length) return h.items.reduce((a, b) => a + b.qty, 0)
+  return getShopDishes(h.shopId).length
 }
 
 // Toast 状态
@@ -75,14 +81,20 @@ function goReorder(h: typeof history[0]) {
 
         <!-- 商品缩略图 + 价格 -->
         <div class="ocr-items">
-          <template v-for="d in getShopDishes(h.shopId)" :key="d.id">
-            <div class="ocr-thumb">{{ d.emoji }}</div>
+          <template v-if="h.items?.length">
+            <div class="ocr-thumb" v-for="it in h.items" :key="it.dishId">{{ it.emoji }}</div>
+          </template>
+          <template v-else>
+            <div class="ocr-thumb" v-for="d in getShopDishes(h.shopId)" :key="d.id">{{ d.emoji }}</div>
           </template>
           <div class="ocr-detail">
-            <div class="ocr-names">{{ getShopDishes(h.shopId).map(d => d.name).join(' · ') }}</div>
+            <div class="ocr-names">
+              <template v-if="h.items?.length">{{ h.items.map(it => it.name).join(' · ') }}</template>
+              <template v-else>{{ getShopDishes(h.shopId).map(d => d.name).join(' · ') }}</template>
+            </div>
             <div class="ocr-price-row">
               <span class="ocr-price">¥{{ h.total?.toFixed(2) || '--' }}</span>
-              <span class="ocr-count">共 {{ getShopDishes(h.shopId).length }} 件</span>
+              <span class="ocr-count">共 {{ itemCount(h) }} 件</span>
             </div>
           </div>
         </div>

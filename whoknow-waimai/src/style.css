@@ -459,11 +459,20 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .promo-h { padding: 10px 14px; background: #fff; }
 .promo-h .ph-title { font-size: 15px; font-weight: 800; color: var(--mt-text); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 .ph-title .ph-badge { background: var(--mt-price); color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 999px; font-weight: 700; }
+.ph-title-2 { margin-top: 14px; }
 .promo-h .ph-scroll { overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
 .promo-h .ph-scroll::-webkit-scrollbar { display: none; }
-.ph-card { display: inline-block; width: 160px; border-radius: 8px; background: linear-gradient(135deg,#FF7E45,#FF4B10); color: #fff; padding: 12px; margin-right: 10px; vertical-align: top; }
-.ph-card .ph-t { font-size: 14px; font-weight: 800; }
+.ph-card { position: relative; white-space: normal; display: inline-block; width: 160px; border-radius: 8px; background: linear-gradient(135deg,#FF7E45,#FF4B10); color: #fff; padding: 12px; margin-right: 10px; vertical-align: top; }
+.ph-card .ph-t { font-size: 14px; font-weight: 800; line-height: 1.25; margin-bottom: 2px; }
 .ph-card .ph-d { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+.ph-card .ph-emoji { font-size: 28px; margin-bottom: 4px; }
+.ph-card .ph-price { display: inline-flex; align-items: baseline; gap: 6px; background: #fff; border-radius: 999px; padding: 2px 9px; margin-top: 8px; }
+.ph-card .ph-now { font-size: 15px; font-weight: 800; color: var(--mt-price-deep); }
+.ph-card .ph-old { font-size: 11px; color: var(--mt-text-3); text-decoration: line-through; }
+.ph-card .ph-add { position: absolute; right: 8px; bottom: 8px; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--mt-price); font-size: 18px; font-weight: 700; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.ph-card .ph-add:active { transform: scale(0.9); }
+.ph-empty { display: inline-flex; align-items: center; color: #fff; font-size: 12px; opacity: 0.85; padding: 24px 12px; }
+.ph-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 14px; z-index: 200; pointer-events: none; }
 
 /* ---- P0-4: 下单页顶部 Tab ---- */
 .pay-top { display: flex; align-items: center; gap: 0; padding: 12px 14px; background: #fff; border-bottom: 1px solid var(--mt-line); }

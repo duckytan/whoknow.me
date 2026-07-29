@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getShop } from '../data/shops'
-import { getMenu } from '../data/dishes'
+import { getMenu, type Dish } from '../data/dishes'
 import { cart, addItem, decItem, dishCount, cartTotal } from '../store/cart'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
@@ -38,6 +38,32 @@ const filteredDishes = computed(() =>
 
 function goCheckout() {
   if (shop && count.value > 0) router.push(`/order?shop=${shop.id}`)
+}
+
+// 促销横条真数据（#2 缺口）：从本店 menu 派生两组，替代写死占位卡。
+// 神抢手 = 有折价的菜（按折扣力度降序）；大家都在说好 = 招牌/月售高，不足则补 menu 前若干。
+const flashSale = computed(() =>
+  menu.value
+    .filter((d) => d.originalPrice)
+    .sort((a, b) => b.originalPrice! - b.price - (a.originalPrice! - a.price))
+)
+const popular = computed(() => {
+  const p = menu.value.filter((d) => d.tags?.includes('招牌') || d.tags?.some((t) => t.includes('月售')))
+  if (p.length >= 3) return p
+  const rest = menu.value.filter((d) => !p.includes(d))
+  return [...p, ...rest].slice(0, 4)
+})
+
+// Toast（纯点击反馈）
+const toastMsg = ref('')
+function showToast(msg: string) {
+  toastMsg.value = msg
+  setTimeout(() => { toastMsg.value = '' }, 2000)
+}
+function onPromoAdd(d: Dish) {
+  if (!shop) return
+  addItem(shop.id, d.id)
+  showToast(`已加购：${d.name}`)
 }
 </script>
 
@@ -117,12 +143,36 @@ function goCheckout() {
 
         <!-- 右侧菜品列表 -->
         <div class="dish-list-r">
-          <!-- 横向促销区（神抢手） -->
+          <!-- 横向促销区（神抢手 / 大家都在说好 · 真数据） -->
           <div class="promo-h">
+            <!-- 神抢手：有折价的菜 -->
             <div class="ph-title">神抢手<span class="ph-badge">限时秒杀中</span></div>
             <div class="ph-scroll">
-              <div class="ph-card"><div class="ph-t">特价优惠品质不打折</div><div class="ph-d">点击品尝 ›</div></div>
-              <div class="ph-card"><div class="ph-t">大家都在说好</div><div class="ph-d">口碑推荐 ›</div></div>
+              <div class="ph-card" v-for="d in flashSale" :key="d.id" @click="onPromoAdd(d)">
+                <div class="ph-emoji">{{ d.emoji }}</div>
+                <div class="ph-t">{{ d.name }}</div>
+                <div class="ph-price">
+                  <span class="ph-now">¥{{ d.price }}</span>
+                  <span class="ph-old" v-if="d.originalPrice">¥{{ d.originalPrice }}</span>
+                </div>
+                <div class="ph-add" @click.stop="onPromoAdd(d)">＋</div>
+              </div>
+              <div v-if="!flashSale.length" class="ph-empty">本店暂无特价</div>
+            </div>
+
+            <!-- 大家都在说好：招牌 / 月售高，不足补 menu 前若干 -->
+            <div class="ph-title ph-title-2">大家都在说好<span class="ph-badge">口碑推荐</span></div>
+            <div class="ph-scroll">
+              <div class="ph-card" v-for="d in popular" :key="d.id" @click="onPromoAdd(d)">
+                <div class="ph-emoji">{{ d.emoji }}</div>
+                <div class="ph-t">{{ d.name }}</div>
+                <div class="ph-price">
+                  <span class="ph-now">¥{{ d.price }}</span>
+                  <span class="ph-old" v-if="d.originalPrice">¥{{ d.originalPrice }}</span>
+                </div>
+                <div class="ph-add" @click.stop="onPromoAdd(d)">＋</div>
+              </div>
+              <div v-if="!popular.length" class="ph-empty">本店暂无推荐</div>
             </div>
           </div>
 
@@ -185,6 +235,9 @@ function goCheckout() {
       </div>
       <button class="cart-go" :disabled="count === 0" @click="goCheckout">去结算</button>
     </div>
+
+    <!-- Toast -->
+    <div v-if="toastMsg" class="ph-toast">{{ toastMsg }}</div>
   </div>
   <div v-else class="page-pad">
     店铺不存在。<router-link to="/shops" style="color: var(--mt-price)">返回列表</router-link>
