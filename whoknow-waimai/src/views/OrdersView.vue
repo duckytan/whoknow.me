@@ -58,7 +58,7 @@ function goReorder(h: typeof history[0]) {
     <div class="order-tabs">
       <button class="ot-pill white" :class="{ white: true, yellow: false }" :style="{ background: activeTab === 'all' ? '#fff' : 'rgba(255,255,255,0.7)' }" @click="activeTab = 'all'">全部订单</button>
       <button class="ot-pill" :class="{ yellow: activeTab === 'review', white: activeTab !== 'review' }" :style="{ background: activeTab === 'review' ? '#fff' : 'rgba(255,255,255,0.75)' }" @click="activeTab = 'review'">
-        待评价<span class="ot-dot" v-if="activeTab === 'review'">1</span>
+        待评价<span class="ot-dot" v-if="history.length">1</span>
       </button>
       <button class="ot-pill" :class="{ yellow: activeTab === 'refund', white: activeTab !== 'refund' }" :style="{ background: activeTab === 'refund' ? '#fff' : 'rgba(255,255,255,0.75)' }" @click="activeTab = 'refund'">退款/售后</button>
     </div>

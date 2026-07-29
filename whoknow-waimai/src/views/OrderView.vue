@@ -132,6 +132,18 @@ function fmtOffset(n: number): { text: string; cls: string } {
   return n > 0 ? { text: `+${n}`, cls: 'up' } : { text: `${n}`, cls: 'down' }
 }
 
+// 确定性 ETA：用 shopId 派生稳定起止分钟，去掉 Math.random 跳数（重渲染不再变）。
+function eta(seed: string): [number, number] {
+  const h = [...seed].reduce((a, c) => a + c.charCodeAt(0), 0)
+  const start = (h % 12) + 28
+  const end = start + (h % 8) + 10
+  return [start, end]
+}
+function pad(n: number): string {
+  return String(n).padStart(2, '0')
+}
+const etaRange = eta(shopId)
+
 // 提交
 const result = ref<SliceResult | null>(null)
 provideDramaProgress(() => result.value?.events ?? [])
@@ -218,7 +230,7 @@ function back() {
       <!-- 时间选择 -->
       <div class="time-cells">
         <div class="time-cell on" @click="timeSlot = timeSlot === 'auto' ? 'auto' : 'auto'">
-          <div class="tc-top">商家自配 {{ String(new Date().getHours()).padStart(2,'0') }}:{{ String(Math.floor(Math.random()*30)+18).padStart(2,'0') }}~{{ String(Math.floor(Math.random()*15)+30).padStart(2,'0') }}</div>
+          <div class="tc-top">商家自配 {{ String(new Date().getHours()).padStart(2,'0') }}:{{ pad(etaRange[0]) }}~{{ pad(etaRange[1]) }}</div>
           <div class="tc-time">约 {{ shop?.deliveryTime || '25分钟' }}</div>
         </div>
         <div class="time-cell" @click="timeSlot = timeSlot === 'reserve' ? 'auto' : 'reserve'">
@@ -289,6 +301,14 @@ function back() {
         <div class="pay-item" :class="{ on: payMethod === '支付宝' }" @click="payMethod = '支付宝'">
           <span class="pi-check"></span>
           <span class="pi-name">支付宝</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '工商银行卡' }" @click="payMethod = '工商银行卡'">
+          <span class="pi-check"></span>
+          <span class="pi-name">工商银行卡</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '信用卡' }" @click="payMethod = '信用卡'">
+          <span class="pi-check"></span>
+          <span class="pi-name">信用卡</span>
         </div>
         <div class="pay-item" :class="{ on: payMethod === '找人代付' }" @click="payMethod = '找人代付'">
           <span class="pi-check"></span>

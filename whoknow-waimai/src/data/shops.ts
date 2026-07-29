@@ -21,6 +21,8 @@ export interface Shop {
   greeting: string
   /** 神抢手标记：首页横向滚动区复用 flash:true 的店铺 */
   flash?: boolean
+  /** 金刚区分类（主站 10 类之一）：用于 /shops?cat= 筛选，可选，不改动既有字段语义 */
+  cat?: string
 }
 
 export interface Rider {
@@ -72,6 +74,7 @@ export const SHOPS: Shop[] = [
     badge: '招牌',
     greeting: '大暑天吃烧烤？行，你开心就好。',
     flash: true,
+    cat: '家常菜',
   },
   {
     id: 's02',
@@ -87,6 +90,7 @@ export const SHOPS: Shop[] = [
     promo: '满30减8 | 满60减18',
     badge: '新店',
     greeting: '食不厌精，脍不厌细——你这单，我包了。',
+    cat: '家常菜',
   },
   {
     id: 's03',
@@ -101,6 +105,7 @@ export const SHOPS: Shop[] = [
     distance: '600m',
     promo: '满20减6',
     greeting: '偶尔也自己煮顿热的，别总点外卖。',
+    cat: '美食',
   },
   {
     id: 's04',
@@ -116,6 +121,7 @@ export const SHOPS: Shop[] = [
     promo: '满40减12',
     greeting: '你点的东西，我也不敢问。',
     flash: true,
+    cat: '美食',
   },
   {
     id: 's05',
@@ -130,6 +136,7 @@ export const SHOPS: Shop[] = [
     distance: '700m',
     promo: '满25减10',
     greeting: '能不动手就不动手，这单我躺送。',
+    cat: '家常菜',
   },
 ]
 

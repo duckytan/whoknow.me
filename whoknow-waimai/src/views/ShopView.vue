@@ -65,6 +65,12 @@ function onPromoAdd(d: Dish) {
   addItem(shop.id, d.id)
   showToast(`已加购：${d.name}`)
 }
+
+// 确定性月售：按 dish id 派生稳定值，去掉 Math.random 跳数（重渲染不再变）。
+function monthSales(id: string): number {
+  const h = [...id].reduce((a, c) => a + c.charCodeAt(0), 0)
+  return (h % 200) + 20
+}
 </script>
 
 <template>
@@ -184,7 +190,7 @@ function onPromoAdd(d: Dish) {
               <div class="dc-sub">
                 <span v-if="d.tags?.includes('月售')" class="dc-monthly">{{ d.tags.find(t => t.includes('月售')) }}</span>
                 <span v-if="d.tags?.includes('人觉')" class="dc-review">{{ d.tags.find(t => t.includes('人觉')) }}</span>
-                <span v-if="!d.tags?.length" class="dc-monthly">月售{{ Math.floor(Math.random() * 200 + 20) }}+</span>
+                <span v-if="!d.tags?.length" class="dc-monthly">月售{{ monthSales(d.id) }}+</span>
               </div>
               <div class="dish-tags" v-if="d.tags?.length">
                 <span v-for="t in d.tags" :key="t" class="dt" :class="{ 'dt-hot': t === '招牌', 'dt-safe': t === '买贵必赔', 'dt-promo': !['招牌','买贵必赔'].includes(t) }">{{ t }}</span>
@@ -243,3 +249,17 @@ function onPromoAdd(d: Dish) {
     店铺不存在。<router-link to="/shops" style="color: var(--mt-price)">返回列表</router-link>
   </div>
 </template>
+
+<style scoped>
+/* 店铺大图暗色遮罩：保证白字店名/评分在亮色 emoji 大图上清晰可读（仅视觉增强，不改布局与文案） */
+.shop-top::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.05) 60%, rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+  z-index: 1;
+}
+.shop-top .nav { z-index: 2; }
+.shop-top .title { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); }
+</style>
