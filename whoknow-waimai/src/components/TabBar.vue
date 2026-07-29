@@ -3,12 +3,13 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const items = [
-  { to: '/shops', icon: '🛵', label: '外卖' },
+  { to: '/', icon: '🛵', label: '外卖' },
+  { to: '/achievements', icon: '🎫', label: '神券' },
   { to: '/orders', icon: '📋', label: '订单' },
-  { to: '/achievements', icon: '⭐', label: '成就' },
-  { to: '/profile', icon: '🤡', label: '我的' },
+  { to: '/profile', icon: '👤', label: '我的' },
 ]
-function isActive(to: string) {
+function isActive(to: string): boolean {
+  if (to === '/') return route.path === '/'
   return route.path.startsWith(to)
 }
 </script>

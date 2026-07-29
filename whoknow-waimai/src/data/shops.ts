@@ -19,6 +19,8 @@ export interface Shop {
   promo: string
   badge?: string
   greeting: string
+  /** 神抢手标记：首页横向滚动区复用 flash:true 的店铺 */
+  flash?: boolean
 }
 
 export interface Rider {
@@ -69,6 +71,7 @@ export const SHOPS: Shop[] = [
     promo: '满50减15 | 满100减30',
     badge: '招牌',
     greeting: '大暑天吃烧烤？行，你开心就好。',
+    flash: true,
   },
   {
     id: 's02',
@@ -112,6 +115,7 @@ export const SHOPS: Shop[] = [
     distance: '1.5km',
     promo: '满40减12',
     greeting: '你点的东西，我也不敢问。',
+    flash: true,
   },
   {
     id: 's05',

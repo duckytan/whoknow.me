@@ -13,12 +13,12 @@ const level = Math.max(1, Math.floor(orderCount / 5) + 1)
   <div>
     <div class="achv-hero">
       <div class="nav-row">
-        <router-link to="/shops" class="back">‹</router-link>
-        <div class="ttl">我的成就</div>
+        <router-link to="/" class="back">‹</router-link>
+        <div class="ttl">神券 · 胡闹神券</div>
         <span class="ic">⚙️</span>
       </div>
       <div class="level">胡闹等级 <b>Lv.{{ level }} · 干饭哲学家</b></div>
-      <div class="title">零卡路里大师</div>
+      <div class="title">神券收藏家</div>
       <div class="stats">
         <div class="it"><div class="v">{{ calory }}</div><div class="n">累计卡路里 (kcal)</div></div>
         <div class="it"><div class="v">{{ orderCount }}</div><div class="n">累计订单</div></div>
