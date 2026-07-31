@@ -28,9 +28,13 @@ function go() {
         <span>起送 ¥{{ shop.minOrder }}</span>
         <span>配送 ¥{{ shop.deliveryFee }}</span>
       </div>
-      <div class="promo-bar">
-        <span class="ico">满减</span>
-        <span class="t">{{ shop.promo }}</span>
+      <!-- P1-3: 优惠行 + 右侧黄色 CTA（点击进店，纯点击） -->
+      <div class="promo-line">
+        <div class="promo-bar">
+          <span class="ico">满减</span>
+          <span class="t">{{ shop.promo }}</span>
+        </div>
+        <button class="card-cta" :aria-label="`进入${shop.name}领券`" @click.stop="go">领券</button>
       </div>
     </div>
   </div>

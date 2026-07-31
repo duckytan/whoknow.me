@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
   sliceDrama,
@@ -126,6 +126,13 @@ const shopCoupon = computed(() => shop?.promo.includes('满') ? 3 : 0)
 const itemDiscount = computed(() => Math.round(basePrice.value * 0.05))
 const totalDiscount = computed(() => mtCoupon.value + shopCoupon.value + itemDiscount.value)
 const finalPay = computed(() => basePrice.value + deliveryFeeVal.value + packingFee.value - totalDiscount.value)
+
+// P1-7: 价格跳动。总价（源头是 orderTotalVal）变化时自增 key，
+// 让 .pb-price 重新挂载以重放 CSS price-pop 动画（纯视觉，无额外依赖）。
+const priceBumpKey = ref(0)
+watch(finalPay, () => {
+  priceBumpKey.value++
+})
 
 function fmtOffset(n: number): { text: string; cls: string } {
   if (n === 0) return { text: '0', cls: 'zero' }
@@ -335,7 +342,7 @@ function back() {
     <!-- 粘性结算栏（z-index:11 覆盖 TabBar） -->
     <div class="pay-bar" v-if="dishCountVal > 0">
       <div class="pb-left">
-        <span class="pb-price">¥{{ finalPay.toFixed(1) }}</span>
+        <span class="pb-price" :key="priceBumpKey">¥{{ finalPay.toFixed(1) }}</span>
         <span class="pb-save">共减<b>¥{{ totalDiscount.toFixed(1) }}</b></span>
       </div>
       <button class="pb-btn" @click="submit">极速支付</button>

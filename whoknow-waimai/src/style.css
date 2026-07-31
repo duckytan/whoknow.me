@@ -53,9 +53,14 @@ button { font-family: inherit; cursor: pointer; }
 .phone { width: 100%; max-width: var(--maxw); margin: 0 auto; background: var(--mt-bg); min-height: 100vh; position: relative; display: flex; flex-direction: column; overflow: hidden; padding-bottom: 56px; }
 @media (min-width: 480px) { body { padding: 24px 0; } .phone { min-height: auto; height: 860px; border-radius: 38px; border: 10px solid #1c1c1e; box-shadow: var(--shadow-pop); } }
 
-/* ============ 状态栏 ============ */
-.statusbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px 4px; font-size: 14px; font-weight: 600; color: #1a1a1a; }
-.statusbar .icons { display: flex; gap: 4px; font-size: 12px; }
+/* ============ 状态栏（P1-6 真机化：SVG 信号/WiFi/电池 + 实时时间） ============ */
+.statusbar { display: flex; align-items: center; min-height: 22px; padding: 10px 16px 4px; font-size: 12px; font-weight: 600; color: #1a1a1a; user-select: none; }
+.statusbar .sb-side { display: flex; align-items: center; gap: 5px; flex: 1; min-width: 0; }
+.statusbar .sb-right { justify-content: flex-end; }
+.statusbar .sb-ico { display: block; flex-shrink: 0; }
+.statusbar .sb-carrier { font-size: 11px; font-weight: 500; color: rgba(26,26,26,0.72); white-space: nowrap; }
+.statusbar .sb-time { font-size: 12px; font-weight: 700; letter-spacing: 0.2px; font-variant-numeric: tabular-nums; flex-shrink: 0; padding: 0 6px; }
+.statusbar .sb-batt-num { font-size: 11px; font-weight: 600; color: rgba(26,26,26,0.72); font-variant-numeric: tabular-nums; }
 
 /* ============ 顶部黄色大区 ============ */
 .yellow-zone { background: var(--mt-yellow); padding-bottom: 12px; }
@@ -622,3 +627,50 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 /* ---- fine-print 水印（锡哥精选段子移至底部） ---- */
 .fine-print { margin: 20px 14px 30px; text-align: center; font-size: 10px; color: var(--mt-text-3); line-height: 1.6; }
 .fine-print .fp-badge { font-weight: 700; color: var(--mt-text-3); }
+
+/* =========================================================
+   P1-3 / P1-7 · 商家列表增强 + 结算栏动效
+   ========================================================= */
+
+/* ---- P1-3: 红包优惠横幅（红/橙渐变，纯装饰） ---- */
+.rp-banner { display: flex; align-items: center; gap: 8px; margin: 0; padding: 9px 14px; background: linear-gradient(90deg, #FF4B10, #FF7E45 65%, #FF9A5B); color: #fff; cursor: pointer; user-select: none; }
+.rp-banner:active { filter: brightness(0.94); }
+.rp-banner .rp-ico { font-size: 18px; flex-shrink: 0; line-height: 1; }
+.rp-banner .rp-text { flex: 1; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.25; }
+.rp-banner .rp-sub { display: block; font-style: normal; font-size: 10px; font-weight: 400; opacity: 0.85; margin-top: 1px; }
+.rp-banner .rp-btn { flex-shrink: 0; background: #fff; color: var(--mt-price); font-size: 12px; font-weight: 800; border-radius: 999px; padding: 4px 12px; }
+
+/* ---- P1-3: 横向滚动筛选 chip 行 ---- */
+.filter-chips { display: flex; gap: 8px; padding: 10px 14px; background: #fff; border-bottom: 1px solid var(--mt-line); overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+.filter-chips::-webkit-scrollbar { display: none; }
+.filter-chips .fc-chip { flex-shrink: 0; white-space: nowrap; background: #F5F5F5; border: 1px solid transparent; border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--mt-text-2); font-family: inherit; min-height: 30px; transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease; }
+.filter-chips .fc-chip:active { transform: scale(0.95); }
+.filter-chips .fc-chip.on { background: var(--mt-yellow); border-color: var(--mt-yellow-deep); color: #1a1a1a; font-weight: 800; box-shadow: 0 2px 6px rgba(255,209,0,0.35); }
+.filter-chips .fc-chip:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 2px; }
+
+/* ---- P1-3: 商家卡右侧黄色 CTA ---- */
+.shop-card .promo-line { display: flex; align-items: center; gap: 8px; }
+.shop-card .promo-line .promo-bar { flex: 1; min-width: 0; }
+.shop-card .promo-line .promo-bar .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shop-card .card-cta { flex-shrink: 0; background: var(--mt-yellow); color: #1a1a1a; border: none; border-radius: 999px; padding: 0 16px; min-height: 32px; font-size: 13px; font-weight: 800; font-family: inherit; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(255,209,0,0.4); transition: transform 0.1s ease; }
+.shop-card .card-cta:active { transform: scale(0.94); }
+.shop-card .card-cta:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 2px; }
+
+/* ---- P1-7: 结算栏出现动效（保留 translateX(-50%) 居中，不改 z-index/bottom） ---- */
+.pay-bar { animation: pay-bar-up 0.24s ease-out; }
+@keyframes pay-bar-up {
+  from { transform: translateX(-50%) translateY(100%); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+/* ---- P1-7: 极速支付按钮 press 微反馈 ---- */
+.pay-bar .pb-btn { transition: transform 0.1s ease, opacity 0.1s ease; }
+.pay-bar .pb-btn:active { transform: scale(0.97); opacity: 0.85; }
+
+/* ---- P1-7: 价格数字跳动（:key 变更时重挂载 → 动画重放） ---- */
+.pay-bar .pb-price { display: inline-block; transform-origin: left center; animation: price-pop 0.34s ease-out; }
+@keyframes price-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.16); color: var(--mt-price); }
+  100% { transform: scale(1); }
+}
