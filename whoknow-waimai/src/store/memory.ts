@@ -1,6 +1,13 @@
 // memory.ts — 记忆引擎（M1）
 // 驱动「同店第 N 单差异」：累计到店次数、flags、tags；全局订单计数。
 // storage 注入式：浏览器用 localStorage，测试用内存实现。
+//
+// D7 加固（P1 审计）：所有读取一律走 safeJson。脏 localStorage（用户手改 / 插件写入 /
+// 旧版本残留 / 写入被截断）只会降级成"没有数据"，绝不抛异常白屏订单页与客服页。
+
+// 注意：此处带 .ts 扩展名是刻意的——memory.ts 会被 node:test 直接加载运行，
+// Node 的 ESM 解析器不做扩展名补全；tsconfig 已开 allowImportingTsExtensions，Vite 也照常打包。
+import { safeParse, safeParseArray, isPlainObject, toFiniteNumber } from '../lib/safeJson.ts'
 
 export interface KVStore {
   getItem(key: string): string | null
@@ -72,36 +79,42 @@ export class MemoryEngine {
   }
 
   private readShop(shopId: string): ShopRecord {
-    const raw = this.store.getItem(this.shopKey(shopId))
-    if (!raw) return { visitCount: 0, flags: [], tags: [] }
-    try {
-      return JSON.parse(raw) as ShopRecord
-    } catch {
-      return { visitCount: 0, flags: [], tags: [] }
+    const rec = safeParse<Partial<ShopRecord>>(
+      this.store.getItem(this.shopKey(shopId)),
+      {},
+      isPlainObject,
+    )
+    return {
+      visitCount: toFiniteNumber(rec.visitCount),
+      flags: Array.isArray(rec.flags) ? rec.flags.filter((f) => typeof f === 'string') : [],
+      tags: Array.isArray(rec.tags) ? rec.tags.filter((t) => typeof t === 'string') : [],
     }
   }
   private writeShop(shopId: string, rec: ShopRecord) {
     this.store.setItem(this.shopKey(shopId), JSON.stringify(rec))
   }
   private readRider(riderId: string): RiderRecord {
-    const raw = this.store.getItem(this.riderKey(riderId))
-    if (!raw) return { visitCount: 0 }
-    try {
-      return JSON.parse(raw) as RiderRecord
-    } catch {
-      return { visitCount: 0 }
-    }
+    const rec = safeParse<Partial<RiderRecord>>(
+      this.store.getItem(this.riderKey(riderId)),
+      {},
+      isPlainObject,
+    )
+    return { visitCount: toFiniteNumber(rec.visitCount) }
   }
   private writeRider(riderId: string, rec: RiderRecord) {
     this.store.setItem(this.riderKey(riderId), JSON.stringify(rec))
   }
   private readGlobal(): GlobalRecord {
-    const raw = this.store.getItem(this.globalKey())
     const t = todayStr()
-    if (!raw) return { totalOrders: 0, todayOrderCount: 0, todayDate: t }
-    const g = JSON.parse(raw) as GlobalRecord
-    if (g.todayDate !== t) return { totalOrders: g.totalOrders, todayOrderCount: 0, todayDate: t }
-    return g
+    const g = safeParse<Partial<GlobalRecord>>(
+      this.store.getItem(this.globalKey()),
+      {},
+      isPlainObject,
+    )
+    const totalOrders = toFiniteNumber(g.totalOrders)
+    // 跨天（含 todayDate 缺失/脏值）：保留总单数，当日计数归零
+    if (g.todayDate !== t) return { totalOrders, todayOrderCount: 0, todayDate: t }
+    return { totalOrders, todayOrderCount: toFiniteNumber(g.todayOrderCount), todayDate: t }
   }
   private writeGlobal(g: GlobalRecord) {
     this.store.setItem(this.globalKey(), JSON.stringify(g))
@@ -166,8 +179,7 @@ export class MemoryEngine {
   }
   /** 合并解锁集合，返回最新全集；仅新增时写回。 */
   unlockAchievements(ids: string[]): string[] {
-    const raw = this.store.getItem(this.achKey())
-    const cur = raw ? (JSON.parse(raw) as string[]) : []
+    const cur = safeParseArray<string>(this.store.getItem(this.achKey()), (v) => typeof v === 'string')
     let changed = false
     for (const id of ids) {
       if (id && !cur.includes(id)) {
@@ -179,8 +191,7 @@ export class MemoryEngine {
     return cur.slice()
   }
   getAchievements(): string[] {
-    const raw = this.store.getItem(this.achKey())
-    return raw ? (JSON.parse(raw) as string[]) : []
+    return safeParseArray<string>(this.store.getItem(this.achKey()), (v) => typeof v === 'string')
   }
 
   // ---- 订单历史 ----
@@ -188,14 +199,12 @@ export class MemoryEngine {
     return 'waimai:history'
   }
   recordOrderHistory(entry: OrderHistoryEntry): void {
-    const raw = this.store.getItem(this.histKey())
-    const arr = raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
+    const arr = safeParseArray<OrderHistoryEntry>(this.store.getItem(this.histKey()), isPlainObject)
     arr.unshift(entry)
     this.store.setItem(this.histKey(), JSON.stringify(arr.slice(0, 100)))
   }
   getOrderHistory(): OrderHistoryEntry[] {
-    const raw = this.store.getItem(this.histKey())
-    return raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
+    return safeParseArray<OrderHistoryEntry>(this.store.getItem(this.histKey()), isPlainObject)
   }
 
   /** 测试/重置用：清掉某店或全部。 */

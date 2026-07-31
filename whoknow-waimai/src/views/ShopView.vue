@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getShop } from '../data/shops'
 import { getMenu, type Dish } from '../data/dishes'
 import { cart, addItem, decItem, dishCount, cartTotal } from '../store/cart'
+import { discountLabel, monthlyLabel, reviewLabel } from '../lib/dishLabel'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
 const route = useRoute()
@@ -31,9 +32,23 @@ const categories = computed(() => {
 const activeCat = computed(() => categories.value[0] || '招牌')
 const selectedCategory = ref(activeCat.value)
 
-// 当前分类下的菜品
-const filteredDishes = computed(() =>
-  menu.value.filter(d => (d.category || '招牌') === selectedCategory.value)
+// 当前分类下的菜品 → 一次性派生成视图行（文案全部走 src/lib/dishLabel 纯函数，
+// 模板里零内联逻辑，缺陷才测得到；见 P1-AUDIT §10 风险 R1）。
+const dishRows = computed(() =>
+  menu.value
+    .filter((d) => (d.category || '招牌') === selectedCategory.value)
+    .map((d) => {
+      const monthly = monthlyLabel(d.tags)
+      const review = reviewLabel(d.tags)
+      return {
+        dish: d,
+        monthly,
+        review,
+        // 无月售/好评数据时整行不渲染，避免空 flex 子项撑出 2px 间距（行距不一致 = 塑料感）
+        hasSub: Boolean(monthly || review),
+        discount: discountLabel(d.price, d.originalPrice),
+      }
+    })
 )
 
 function goCheckout() {
@@ -64,12 +79,6 @@ function onPromoAdd(d: Dish) {
   if (!shop) return
   addItem(shop.id, d.id)
   showToast(`已加购：${d.name}`)
-}
-
-// 确定性月售：按 dish id 派生稳定值，去掉 Math.random 跳数（重渲染不再变）。
-function monthSales(id: string): number {
-  const h = [...id].reduce((a, c) => a + c.charCodeAt(0), 0)
-  return (h % 200) + 20
 }
 </script>
 
@@ -105,8 +114,8 @@ function monthSales(id: string): number {
     <!-- 外送 / 自取 分段控件 -->
     <div class="shop-seg">
       <button
-        class="ss-pill on"
-        :class="{ off: deliveryMode !== 'delivery' }"
+        class="ss-pill"
+        :class="{ on: deliveryMode === 'delivery', off: deliveryMode !== 'delivery' }"
         @click="deliveryMode = 'delivery'"
       >外送</button>
       <button
@@ -126,9 +135,9 @@ function monthSales(id: string): number {
 
     <!-- 点菜 / 评价 / 商家 Tab -->
     <div class="shop-tabs">
-      <button class="st on" :class="{ on: menuTab === 'dishes' }" @click="menuTab = 'dishes'">点菜</button>
-      <button class="st" @click="menuTab = 'review'">评价</button>
-      <button class="st" @click="menuTab = 'merchant'">商家</button>
+      <button class="st" :class="{ on: menuTab === 'dishes' }" @click="menuTab = 'dishes'">点菜</button>
+      <button class="st" :class="{ on: menuTab === 'review' }" @click="menuTab = 'review'">评价</button>
+      <button class="st" :class="{ on: menuTab === 'merchant' }" @click="menuTab = 'merchant'">商家</button>
     </div>
 
     <!-- 菜单区：左侧分类 + 右侧菜品 -->
@@ -183,34 +192,33 @@ function monthSales(id: string): number {
           </div>
 
           <!-- 菜品卡片列表 -->
-          <div v-for="d in filteredDishes" :key="d.id" class="dish-card">
-            <div class="dish-thumb">{{ d.emoji }}</div>
+          <div v-for="row in dishRows" :key="row.dish.id" class="dish-card">
+            <div class="dish-thumb">{{ row.dish.emoji }}</div>
             <div class="dish-info-c">
-              <div class="dc-name">{{ d.name }}</div>
-              <div class="dc-sub">
-                <span v-if="d.tags?.includes('月售')" class="dc-monthly">{{ d.tags.find(t => t.includes('月售')) }}</span>
-                <span v-if="d.tags?.includes('人觉')" class="dc-review">{{ d.tags.find(t => t.includes('人觉')) }}</span>
-                <span v-if="!d.tags?.length" class="dc-monthly">月售{{ monthSales(d.id) }}+</span>
+              <div class="dc-name">{{ row.dish.name }}</div>
+              <div class="dc-sub" v-if="row.hasSub">
+                <span v-if="row.monthly" class="dc-monthly">{{ row.monthly }}</span>
+                <span v-if="row.review" class="dc-review">{{ row.review }}</span>
               </div>
-              <div class="dish-tags" v-if="d.tags?.length">
-                <span v-for="t in d.tags" :key="t" class="dt" :class="{ 'dt-hot': t === '招牌', 'dt-safe': t === '买贵必赔', 'dt-promo': !['招牌','买贵必赔'].includes(t) }">{{ t }}</span>
+              <div class="dish-tags" v-if="row.dish.tags?.length">
+                <span v-for="t in row.dish.tags" :key="t" class="dt" :class="{ 'dt-hot': t === '招牌', 'dt-safe': t === '买贵必赔', 'dt-promo': !['招牌','买贵必赔'].includes(t) }">{{ t }}</span>
               </div>
               <div class="dish-price-row">
-                <span class="dc-now">¥{{ d.price }}</span>
-                <span v-if="d.originalPrice" class="dc-old">¥{{ d.originalPrice }}</span>
-                <span v-if="d.originalPrice && d.originalPrice > d.price * 1.3" class="dc-off">低至{{ Math.round(d.price / d.originalPrice * 100) }}折</span>
+                <span class="dc-now">¥{{ row.dish.price }}</span>
+                <span v-if="row.dish.originalPrice" class="dc-old">¥{{ row.dish.originalPrice }}</span>
+                <span v-if="row.discount" class="dc-off">{{ row.discount }}</span>
               </div>
             </div>
             <!-- 加购按钮 / Stepper -->
-            <template v-if="items[d.id]">
+            <template v-if="items[row.dish.id]">
               <div class="stepper" style="margin-top:22px">
-                <button class="st" @click="decItem(shop.id, d.id)">−</button>
-                <span class="q">{{ items[d.id] }}</span>
-                <button class="st add" @click="addItem(shop.id, d.id)">＋</button>
+                <button class="st" @click="decItem(shop.id, row.dish.id)">−</button>
+                <span class="q">{{ items[row.dish.id] }}</span>
+                <button class="st add" @click="addItem(shop.id, row.dish.id)">＋</button>
               </div>
             </template>
             <template v-else>
-              <button class="dish-cta" @click="addItem(shop.id, d.id)">+</button>
+              <button class="dish-cta" @click="addItem(shop.id, row.dish.id)">+</button>
             </template>
           </div>
 

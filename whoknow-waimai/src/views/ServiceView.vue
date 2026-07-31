@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { memory } from '../store/memoryStore'
 import { getShop } from '../data/shops'
+import { showToast } from '../lib/toast'
 
 const history = memory.getOrderHistory()
 // 取最近一次订单作为展示，或用默认
@@ -17,6 +18,8 @@ interface Msg {
   read?: boolean
 }
 let msgId = 0
+// 商家自动回复的延迟定时器句柄：组件卸载时必须清掉，否则长会话里会留下孤儿回调（N3）
+let replyTimer: ReturnType<typeof setTimeout> | null = null
 const now = () => {
   const d = new Date()
   return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`
@@ -37,18 +40,27 @@ const replyMap: Record<string, string> = {
 function sendQuickReply(label: string) {
   // 用户气泡
   messages.value.push({ id: ++msgId, role: 'user', text: label, time: now() })
-  // 商家自动回复（延迟感）
-  setTimeout(() => {
+  // 商家自动回复（延迟感）；同一会话内多次点击只保留最后一个定时器
+  if (replyTimer) clearTimeout(replyTimer)
+  replyTimer = setTimeout(() => {
     const reply = replyMap[label] || '收到您的消息，老板正在思考怎么怼回去……请稍候 😏'
     messages.value.push({ id: ++msgId, role: 'merchant', text: reply, time: now(), read: true })
   }, 600)
 }
 
-// 复制电话
+// 清理未触发的自动回复定时器，避免组件卸载后回调打到已销毁的 ref（N3）
+onUnmounted(() => {
+  if (replyTimer) {
+    clearTimeout(replyTimer)
+    replyTimer = null
+  }
+})
+
+// 复制电话：app 内拟真 toast，不用原生 alert（真美团复制成功也是浮层提示）
 function onCopyPhone() {
   const phone = '400-618-XXXX（胡闹客服热线）'
   navigator.clipboard?.writeText(phone).catch(() => {})
-  alert(`已复制：${phone}`)
+  showToast(`已复制：${phone}`)
 }
 </script>
 

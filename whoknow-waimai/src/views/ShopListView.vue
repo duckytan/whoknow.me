@@ -2,6 +2,7 @@
 import { computed, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { SHOPS, type Shop } from '../data/shops'
+import { FILTERS, chipFilter, emptyHintFor, type FilterId } from '../lib/shopFilter'
 import ShopCard from '../components/ShopCard.vue'
 
 // 金刚区分类筛选：读取 ?cat= 参数，只列该分类店铺（主站 10 类之一）。
@@ -15,52 +16,13 @@ const cat = computed(() => {
 const baseList = computed(() => (cat.value ? SHOPS.filter((s) => s.cat === cat.value) : SHOPS))
 
 // ---- P1-3: 筛选 chip（纯点击，单选） ----
-type FilterId = 'all' | 'promo' | 'freeship' | 'sales' | 'distance' | 'new'
-const FILTERS: { id: FilterId; label: string; empty: string }[] = [
-  { id: 'all', label: '全部', empty: '该分类暂未上架胡闹商家' },
-  { id: 'promo', label: '满减优惠', empty: '这批老板今天不想打折' },
-  { id: 'freeship', label: '免配送费', empty: '暂无免配送费商家 · 老板们都想赚这几块钱' },
-  { id: 'sales', label: '销量优先', empty: '该分类暂未上架胡闹商家' },
-  { id: 'distance', label: '距离最近', empty: '该分类暂未上架胡闹商家' },
-  { id: 'new', label: '新店', empty: '暂无新店 · 老店们还在硬撑' },
-]
+// 筛选/排序判定与空态文案已抽到 src/lib/shopFilter.ts（可被 node:test 覆盖），
+// 此处只留状态与派生，模板零内联逻辑。
 const activeFilter = ref<FilterId>('all')
 
-/** 从「月售 5600+」这类文案里取数字；取不到按 0 处理 */
-function salesOf(s: Shop): number {
-  const n = parseInt(s.monthlySales.replace(/[^\d]/g, ''), 10)
-  return Number.isNaN(n) ? 0 : n
-}
+const list = computed<Shop[]>(() => chipFilter(baseList.value, activeFilter.value))
 
-/** 距离统一折算成米：'1.2km' → 1200，'800m' → 800（混单位下 parseInt 会排错序） */
-function distanceOf(s: Shop): number {
-  const n = parseFloat(s.distance.replace(/[^\d.]/g, ''))
-  if (Number.isNaN(n)) return Number.MAX_SAFE_INTEGER
-  return /km/i.test(s.distance) ? n * 1000 : n
-}
-
-const list = computed<Shop[]>(() => {
-  const src = baseList.value
-  switch (activeFilter.value) {
-    case 'promo':
-      return src.filter((s) => s.promo.includes('减'))
-    case 'freeship':
-      return src.filter((s) => s.deliveryFee === 0)
-    case 'sales':
-      return [...src].sort((a, b) => salesOf(b) - salesOf(a))
-    case 'distance':
-      return [...src].sort((a, b) => distanceOf(a) - distanceOf(b))
-    case 'new':
-      return src.filter((s) => s.badge === '新店' || s.flash === true)
-    case 'all':
-    default:
-      return src
-  }
-})
-
-const emptyHint = computed(
-  () => FILTERS.find((f) => f.id === activeFilter.value)?.empty ?? '该分类暂未上架胡闹商家'
-)
+const emptyHint = computed(() => emptyHintFor(activeFilter.value))
 
 // ---- P1-3: 红包横幅（纯装饰，点击给个 Toast） ----
 const toastMsg = ref('')

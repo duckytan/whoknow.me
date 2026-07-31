@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { SHOPS } from '../data/shops'
 import ShopCard from '../components/ShopCard.vue'
+import { nextHomeSeg } from '../lib/homeSegment'
 
 const router = useRouter()
 
@@ -10,10 +11,14 @@ const router = useRouter()
 const segActive = ref('首页')
 
 function onSegClick(seg: string) {
-  segActive.value = seg
-  if (seg === '自取') {
+  // 自取是占位频道：只提示、不切高亮（状态与内容始终一致，避免"高亮自取/内容外卖"的塑料感）。
+  // 仅在 nextHomeSeg 返回非 null 时才改 segActive——自取返回 null，高亮留在首页。
+  const next = nextHomeSeg(seg)
+  if (next === null) {
     showToast('自取功能暂未开放，继续胡闹外卖')
+    return
   }
+  segActive.value = next
 }
 
 // 定位行点击
@@ -65,7 +70,7 @@ function goSearch() {
       <!-- 三段导航 -->
       <div class="seg-3">
         <span class="seg-3__item">‹ 外卖</span>
-        <span class="seg-3__item on">首页</span>
+        <button class="seg-3__item" :class="{ on: segActive === '首页' }" @click="onSegClick('首页')">首页</button>
         <button class="seg-3__item" :class="{ on: segActive === '自取' }" @click="onSegClick('自取')">自取</button>
       </div>
 

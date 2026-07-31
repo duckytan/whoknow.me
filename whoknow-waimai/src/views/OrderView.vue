@@ -20,6 +20,7 @@ import MapTrack from '../components/MapTrack.vue'
 import DramaChat from '../components/DramaChat.vue'
 import PushNotifier from '../components/PushNotifier.vue'
 import { provideDramaProgress } from '../composables/useDramaProgress'
+import { showToast } from '../lib/toast'
 import RiderCard from '../components/RiderCard.vue'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
@@ -112,9 +113,9 @@ function openUtensilSheet() {
     selectedUtensil.value, pickUtensil)
 }
 
-// 发票（戏精提示）
+// 发票（戏精提示）：走 app 内拟真 toast，不用原生 alert（系统弹窗一出来就出戏）
 function onInvoiceClick() {
-  alert('本单戏票不支持报销 🎭')
+  showToast('本单戏票不支持报销 🎭')
 }
 
 // 价格明细计算
@@ -215,7 +216,7 @@ function back() {
 
     <!-- 顶部 Tab：外卖配送 / 到店自取 -->
     <div class="pay-top">
-      <button class="pt-item on" :class="{ on: orderMode === 'delivery' }" @click="orderMode = 'delivery'">外卖配送</button>
+      <button class="pt-item" :class="{ on: orderMode === 'delivery' }" @click="orderMode = 'delivery'">外卖配送</button>
       <button class="pt-item" :class="{ on: orderMode === 'pickup' }" @click="orderMode = 'pickup'">到店自取<span class="pt-bonus" v-if="orderMode !== 'pickup'">[新客减2]</span></button>
     </div>
 
@@ -236,11 +237,11 @@ function back() {
 
       <!-- 时间选择 -->
       <div class="time-cells">
-        <div class="time-cell on" @click="timeSlot = timeSlot === 'auto' ? 'auto' : 'auto'">
+        <div class="time-cell" :class="{ on: timeSlot === 'auto' }" @click="timeSlot = 'auto'">
           <div class="tc-top">商家自配 {{ String(new Date().getHours()).padStart(2,'0') }}:{{ pad(etaRange[0]) }}~{{ pad(etaRange[1]) }}</div>
           <div class="tc-time">约 {{ shop?.deliveryTime || '25分钟' }}</div>
         </div>
-        <div class="time-cell" @click="timeSlot = timeSlot === 'reserve' ? 'auto' : 'reserve'">
+        <div class="time-cell" :class="{ on: timeSlot === 'reserve' }" @click="timeSlot = 'reserve'">
           <div class="tc-top">预约配送</div>
           <div class="tc-pick">选择时间 ›</div>
         </div>
