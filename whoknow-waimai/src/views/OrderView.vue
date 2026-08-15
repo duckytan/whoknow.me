@@ -21,6 +21,7 @@ import DramaChat from '../components/DramaChat.vue'
 import PushNotifier from '../components/PushNotifier.vue'
 import { provideDramaProgress } from '../composables/useDramaProgress'
 import { showToast } from '../lib/toast'
+import { track } from '../analytics/tracker'
 import RiderCard from '../components/RiderCard.vue'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
@@ -195,11 +196,24 @@ function submit() {
 }
 function reset() {
   result.value = null
+  // 上线后验证钩子：复玩信号（喂重复疲劳代理指标），先抓刚完成的组合再清状态
+  track('replay', { addressTag: addressTag.value || undefined, remarkTag: remarkTag.value || undefined })
   addressTag.value = ''
   remarkTag.value = ''
 }
 function back() {
   router.push(`/shop/${shopId}`)
+}
+
+// 上线后验证钩子：截图分享信号（纯点击，不弹原生输入框）
+function onShare() {
+  track('share_click', { addressTag: addressTag.value || undefined, remarkTag: remarkTag.value || undefined })
+  const text = '胡闹外卖 · 这单剧本由锡哥手编，笑死我了 🤣'
+  if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+    navigator.share({ title: '胡闹外卖', text, url: location.href }).catch(() => {})
+  } else {
+    showToast('截图已就位，去朋友圈发吧 📸')
+  }
 }
 </script>
 
@@ -395,6 +409,7 @@ function back() {
 
     <div class="page-pad">
       <button class="submit-btn" @click="reset">再来一单 🔁</button>
+      <button class="submit-btn" style="background:transparent;color:var(--mt-price);border:1px solid var(--mt-price);margin-top:10px" @click="onShare">📸 截图分享</button>
 
       <div class="story-watermark">
         <span class="badge">🎭 锡哥精选段子</span>

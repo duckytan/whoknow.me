@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { memory } from '../store/memoryStore'
 import { getShop } from '../data/shops'
 import { getMenu } from '../data/dishes'
+import { track } from '../analytics/tracker'
 
 const router = useRouter()
 const history = memory.getOrderHistory()
@@ -38,6 +39,8 @@ function showToast(msg: string) {
 }
 
 function goReorder(h: typeof history[0]) {
+  // 上线后验证钩子：复玩信号（喂重复疲劳代理指标）
+  track('replay')
   router.push(`/order?shop=${h.shopId}`)
 }
 </script>
