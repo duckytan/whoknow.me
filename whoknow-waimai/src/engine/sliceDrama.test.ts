@@ -6,6 +6,7 @@
 //   - 公厕+多放辣 与文档示例逐字一致（确定性）
 //   - 同一输入连跑 2 次深相等（无随机）
 //   - S7 契约锁：遍历全部 24 组合（4 地址 × 6 备注），逐字对齐 §3 表格，防止回归
+//   - P2 第一刀：R4 已破，deliver 现接 RIDER_REMARK_MODIFIER[remark]（骑手对备注回声）
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { sliceDrama, ADDRESS_OFFSETS, REMARK_OFFSETS } from './sliceDrama.ts'
@@ -29,7 +30,7 @@ test('S1 公厕+多放辣：与文档 B2 / §3.1 示例逐字一致（确定性�
   assert.equal(r.events[1].text, '（啧，公厕的单我故意慢慢做，锅都不想洗）辣子现舂，等着。')
   assert.equal(
     r.events[2].text,
-    '这老板又摆烂，我急疯了狂飙……公厕我找了半天。（辣味隔着打包袋直窜我鼻子，你自求多福）'
+    '这老板又摆烂，我急疯了狂飙……公厕我找了半天。（这味儿，导航都给我标了景点）'
   )
   assert.equal(
     r.events[3].text,
@@ -103,7 +104,7 @@ test('S7 契约锁：24 组合逐字对齐 §3 表格（防回归）', () => {
     'boss_thx',
   ]
 
-  // [addr, remark, accept, cook, deliver, complete] —— 逐字来自 §3 + §3.6（P2 内容补强）
+  // [addr, remark, accept, cook, deliver, complete] —— 逐字来自 §3 + §3.6（P2 内容补强：骑手环境旁白，守 R4）
   const EXPECT: Array<[AddressTag, RemarkTag, string, string, string, string]> = [
     // §3.1 公厕 toilet（cold，可达 hostile / neutral）+ 骑手环境旁白[0..5]
     ['toilet', 'more_spicy', '公厕？？你住化粪池啊……行，多放辣是吧，辣得你忘了在哪儿吃的。', '（啧，公厕的单我故意慢慢做，锅都不想洗）辣子现舂，等着。', '这老板又摆烂，我急疯了狂飙……公厕我找了半天。（这味儿，导航都给我标了景点）', '拿好，公厕……趁热吃（别真趁热）。下次点正常地址行不行。辣到位了，喝口水缓缓。'],

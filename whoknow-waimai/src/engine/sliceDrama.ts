@@ -19,7 +19,7 @@
 //   - bossMood 由 50 + 地址偏移 + 备注偏移 唯一确定 → band（hostile/neutral/warm）。
 //   - addressTemp 把地址归到 cold(toilet/company) / warm(icu/home) 两档，用于 gentle 备注消歧。
 //   - accept/cook/complete = ADDRESS_BAND_TEXT[addr][band] + REMARK_BEAT[remark](temp) 拼接。
-//   - deliver = RIDER_LINE[cookSlow?'slow':'fast'][addr] + RIDER_REMARK_MODIFIER[remark]（P2 第一刀破 R4：骑手现接备注回声）。
+//   - deliver = RIDER_LINE[cookSlow?'slow':'fast'][addr] + RIDER_ASIDE[addr][REMARK_INDEX[remark]]（P2 内容补强：骑手环境旁白，纯环境描写、不回声备注，守 R4）。
 //   全部逐字对齐 §3 表格（authoritative），数值模型零改动。
 
 import type { DramaState, DramaEventOut } from './dramaEngine'
@@ -140,7 +140,7 @@ const ADDRESS_BAND_TEXT: Record<AddressTag, Partial<Record<Band, AddressBandText
   home: {
     neutral: {
       accept: '家庭单？跟给自己家做一样，随便坐。',
-      cook: '（家常味儿，火候我随手掂的）',
+      cook: '（哼着歌）家的味道，火候我拿捏得准。',
       complete: '拿好，趁热吃——再不吃咱妈要打电话查岗了。',
     },
     warm: {
@@ -231,16 +231,50 @@ const RIDER_LINE: Record<'slow' | 'fast', Record<AddressTag, string>> = {
   },
 }
 
-// 骑手备注回声（P2 第一刀破 R4）：骑手对用户备注的口语化反应（快递小哥人格），
-// 确定性、零随机。拼接于 RIDER_LINE 基础句之后；空串 '' 表示骑手不接该备注。
-//   6 条均给非空回声，以彻底破除「骑手线 24 组合仅 5 句不同、每句重复 4–6 次」的重复疲劳。
-const RIDER_REMARK_MODIFIER: Record<RemarkTag, string> = {
-  more_spicy: '（辣味隔着打包袋直窜我鼻子，你自求多福）',
-  less_spicy: '（清汤寡水的，老板说你养生我信了）',
-  no_cilantro: '（香菜？我闻着都嫌弃，一根没给你放）',
-  no_scold: '（你倒替老板说话，我都不敢催了）',
-  perform: '（还演出呢？下回给我也整一段）',
-  boss_thx: '（老板被你夸得乐呵，我顺带沾光了）',
+// 骑手环境旁白池（P2 内容补强·治「骑手零变体」）：同地址不同订单确定性轮转，
+// 纯环境描写、**不回声客户备注**（R4 精化——骑手不接备注内容，但复玩同地址需有变化防穿帮）。
+// 选取下标 = REMARK_INDEX[remark]（0–5），保证确定性、零随机。
+export const REMARK_INDEX: Record<RemarkTag, number> = {
+  more_spicy: 0,
+  less_spicy: 1,
+  no_cilantro: 2,
+  no_scold: 3,
+  perform: 4,
+  boss_thx: 5,
+}
+const RIDER_ASIDE: Record<AddressTag, string[]> = {
+  toilet: [
+    '（这味儿，导航都给我标了景点）',
+    '（公厕界米其林，我来守护）',
+    '（您邻居估计闻着味儿饿了）',
+    '（化粪池今儿格外安静，稀奇）',
+    '（这片儿我送餐榜常年第一）',
+    '（风往这边吹，算您走运）',
+  ],
+  icu: [
+    '（电梯今儿不排队，佛了）',
+    '（护士站没人拦我，溜）',
+    '（走廊闻到饭香，饿的是我）',
+    '（这层安静，我踮脚走）',
+    '（探视时间刚过，清净）',
+    '（这单我比查房还上心）',
+  ],
+  home: [
+    '（这栋电梯镜面能照出我帅）',
+    '（邻居狗今儿没骂我）',
+    '（您家香味先飘下来了）',
+    '（门口拖鞋摆得真整齐）',
+    '（这层我送过最多次）',
+    '（娃儿画的我肖像还在门上）',
+  ],
+  company: [
+    '（电梯挤死，但我挤进来了）',
+    '（前台小姐姐认得我了）',
+    '（会议室灯还亮着，惨）',
+    '（打印机比我忙）',
+    '（这层加班狗今儿挺多）',
+    '（饮水机空了，您自求多福）',
+  ],
 }
 
 // bossMood → 情绪带（≤30 hostile / 31–59 neutral / ≥60 warm）
@@ -307,7 +341,7 @@ export function sliceDrama(input: SliceInput): SliceResult {
   const completeText = addrText.complete + beat.complete(temp)
   const deliverText =
     RIDER_LINE[cookSlow ? 'slow' : 'fast'][input.addressTag] +
-    (RIDER_REMARK_MODIFIER[input.remarkTag] ?? '')
+    RIDER_ASIDE[input.addressTag][REMARK_INDEX[input.remarkTag]]
 
   const events: DramaEventOut[] = [
     {
