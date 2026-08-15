@@ -19,7 +19,7 @@
 //   - bossMood 由 50 + 地址偏移 + 备注偏移 唯一确定 → band（hostile/neutral/warm）。
 //   - addressTemp 把地址归到 cold(toilet/company) / warm(icu/home) 两档，用于 gentle 备注消歧。
 //   - accept/cook/complete = ADDRESS_BAND_TEXT[addr][band] + REMARK_BEAT[remark](temp) 拼接。
-//   - deliver = RIDER_LINE[cookSlow?'slow':'fast'][addr]（骑手承接地址情境，不接备注回声）。
+//   - deliver = RIDER_LINE[cookSlow?'slow':'fast'][addr] + RIDER_REMARK_MODIFIER[remark]（P2 第一刀破 R4：骑手现接备注回声）。
 //   全部逐字对齐 §3 表格（authoritative），数值模型零改动。
 
 import type { DramaState, DramaEventOut } from './dramaEngine'
@@ -125,25 +125,28 @@ const ADDRESS_BAND_TEXT: Record<AddressTag, Partial<Record<Band, AddressBandText
       complete: '拿好，公厕……趁热吃（别真趁热）。你刚那句，我记下了。',
     },
   },
-  // icu（warm）：仅可达 warm（≥60）
+  // icu（warm）：仅可达 warm（≥60）；P2 收尾加轻荒诞（守红线·温柔）
   icu: {
     warm: {
       accept: 'ICU 病房？我轻着点做，您安心养着。',
       cook: '（小声）您这单我得快手快脚又轻手轻脚地做，汤别洒了。',
-      complete: '趁热趁软乎……您慢用，好好休息。',
+      complete: '趁热趁软乎……您慢用，好好休息。（这单我比查房还上心）',
     },
   },
-  // home（warm 温度）：可达 neutral(55) / warm(60+)；Q3 不拆双版，共用 cozy 文本
+  // home（warm 温度）：可达 neutral(55) / warm(60+)；P2 第一刀拆双人格——
+  //   neutral（mood 55，less_spicy / no_cilantro）：家常随性、略敷衍
+  //   warm（mood 60+，more_spicy / no_scold / perform / boss_thx）：真当家人、更上心
+  //   （数值偏移量表零改动；more_spicy 偏移 +5 → home+more_spicy=60 落 warm 带，符合既有数值模型）
   home: {
     neutral: {
       accept: '家庭单？跟给自己家做一样，随便坐。',
-      cook: '（哼着歌）家的味道，火候我拿捏得准。',
-      complete: '拿好，趁热吃，家里人等你呢。',
+      cook: '（家常味儿，火候我随手掂的）',
+      complete: '拿好，趁热吃——再不吃咱妈要打电话查岗了。',
     },
     warm: {
-      accept: '家庭单？跟给自己家做一样，随便坐。',
-      cook: '（哼着歌）家的味道，火候我拿捏得准。',
-      complete: '拿好，趁热吃，家里人等你呢。',
+      accept: '家庭单？跟回自己家一样，门都不用敲。',
+      cook: '（哼着歌）家里的味道，闭眼都拿捏得准。',
+      complete: '拿好，趁热吃，家里人惦记你呢。（碗我顺手洗了）',
     },
   },
   // company（cold）：可达 neutral(45/50/55) / warm(60/65)
@@ -209,8 +212,9 @@ const REMARK_BEAT: Record<RemarkTag, RemarkBeat> = {
   },
 }
 
-// 骑手台词：承接地址情境 + cook 状态（slow→急 / fast→稳）；不接备注回声（R4）
+// 骑手台词：承接地址情境 + cook 状态（slow→急 / fast→稳）；P2 第一刀破 R4，叠加备注回声。
 //   toilet 慢单(slow)/快单(fast) 两版；icu/home/company 无慢单，仅 fast 一版。
+//   slow 三档（icu/home/company）不可达，占位保持类型安全，文本等同 fast。
 const RIDER_LINE: Record<'slow' | 'fast', Record<AddressTag, string>> = {
   slow: {
     toilet: '这老板又摆烂，我急疯了狂飙……公厕我找了半天。',
@@ -225,6 +229,18 @@ const RIDER_LINE: Record<'slow' | 'fast', Record<AddressTag, string>> = {
     home: '你家这栋我熟，溜达着就到了，门把手给您留着。',
     company: '公司楼我天天跑，电梯挤死，但准时给您放前台了。',
   },
+}
+
+// 骑手备注回声（P2 第一刀破 R4）：骑手对用户备注的口语化反应（快递小哥人格），
+// 确定性、零随机。拼接于 RIDER_LINE 基础句之后；空串 '' 表示骑手不接该备注。
+//   6 条均给非空回声，以彻底破除「骑手线 24 组合仅 5 句不同、每句重复 4–6 次」的重复疲劳。
+const RIDER_REMARK_MODIFIER: Record<RemarkTag, string> = {
+  more_spicy: '（辣味隔着打包袋直窜我鼻子，你自求多福）',
+  less_spicy: '（清汤寡水的，老板说你养生我信了）',
+  no_cilantro: '（香菜？我闻着都嫌弃，一根没给你放）',
+  no_scold: '（你倒替老板说话，我都不敢催了）',
+  perform: '（还演出呢？下回给我也整一段）',
+  boss_thx: '（老板被你夸得乐呵，我顺带沾光了）',
 }
 
 // bossMood → 情绪带（≤30 hostile / 31–59 neutral / ≥60 warm）
@@ -289,7 +305,9 @@ export function sliceDrama(input: SliceInput): SliceResult {
   const acceptText = addrText.accept + beat.accept(temp)
   const cookText = addrText.cook + beat.cook(temp)
   const completeText = addrText.complete + beat.complete(temp)
-  const deliverText = RIDER_LINE[cookSlow ? 'slow' : 'fast'][input.addressTag]
+  const deliverText =
+    RIDER_LINE[cookSlow ? 'slow' : 'fast'][input.addressTag] +
+    (RIDER_REMARK_MODIFIER[input.remarkTag] ?? '')
 
   const events: DramaEventOut[] = [
     {
