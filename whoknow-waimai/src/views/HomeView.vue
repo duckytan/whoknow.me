@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { SHOPS } from '../data/shops'
 import ShopCard from '../components/ShopCard.vue'
 import { nextHomeSeg } from '../lib/homeSegment'
+import { showToast } from '../lib/toast'
 
 const router = useRouter()
 
@@ -47,17 +48,6 @@ const flashShops = computed(() => SHOPS.filter(s => s.flash))
 const feedTab = ref('nearby')
 const nearbyShops = computed(() => SHOPS)
 const promoShops = computed(() => SHOPS.filter(s => s.promo.includes('满')))
-
-// Toast 状态
-const toastMsg = ref('')
-let toastTimer: ReturnType<typeof setTimeout> | null = null
-
-function showToast(msg: string) {
-  toastMsg.value = msg
-  if (toastTimer) clearTimeout(toastTimer)
-  toastTimer = setTimeout(() => { toastMsg.value = '' }, 2000)
-}
-
 function goSearch() {
   router.push('/shops')
 }
@@ -153,7 +143,5 @@ function goSearch() {
 
     <div class="page-pad muted">这是「胡闹宇宙」的外卖分区。点单后老板会演戏，骑手会吐槽，系统会补刀。</div>
 
-    <!-- Toast -->
-    <div v-if="toastMsg" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 14px; z-index: 200; pointer-events: none;">{{ toastMsg }}</div>
   </div>
 </template>

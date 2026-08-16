@@ -5,6 +5,7 @@ import { memory } from '../store/memoryStore'
 import { getShop } from '../data/shops'
 import { getMenu } from '../data/dishes'
 import { track } from '../analytics/tracker'
+import { showToast } from '../lib/toast'
 
 const router = useRouter()
 const history = memory.getOrderHistory()
@@ -28,14 +29,6 @@ function getShopDishes(shopId: string) {
 function itemCount(h: (typeof history)[0]): number {
   if (h.items?.length) return h.items.reduce((a, b) => a + b.qty, 0)
   return getShopDishes(h.shopId).length
-}
-
-// Toast 状态
-const toastMsg = ref('')
-
-function showToast(msg: string) {
-  toastMsg.value = msg
-  setTimeout(() => { toastMsg.value = '' }, 2000)
 }
 
 function goReorder(h: typeof history[0]) {
@@ -127,7 +120,5 @@ function goReorder(h: typeof history[0]) {
       </div>
     </div>
 
-    <!-- Toast -->
-    <div v-if="toastMsg" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.75);color:#fff;padding:10px 20px;border-radius:8px;font-size:14px;z-index:200;pointer-events:none;">{{ toastMsg }}</div>
-  </div>
-</template>
+    </div>
+  </template>

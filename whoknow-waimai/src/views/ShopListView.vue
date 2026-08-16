@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { SHOPS, type Shop } from '../data/shops'
 import { FILTERS, chipFilter, emptyHintFor, type FilterId } from '../lib/shopFilter'
 import ShopCard from '../components/ShopCard.vue'
+import { showToast } from '../lib/toast'
 
 // 金刚区分类筛选：读取 ?cat= 参数，只列该分类店铺（主站 10 类之一）。
 const route = useRoute()
@@ -24,19 +25,6 @@ const list = computed<Shop[]>(() => chipFilter(baseList.value, activeFilter.valu
 
 const emptyHint = computed(() => emptyHintFor(activeFilter.value))
 
-// ---- P1-3: 红包横幅（纯装饰，点击给个 Toast） ----
-const toastMsg = ref('')
-let toastTimer: ReturnType<typeof setTimeout> | null = null
-function showToast(msg: string) {
-  toastMsg.value = msg
-  if (toastTimer) clearTimeout(toastTimer)
-  toastTimer = setTimeout(() => {
-    toastMsg.value = ''
-  }, 2000)
-}
-onUnmounted(() => {
-  if (toastTimer) clearTimeout(toastTimer)
-})
 </script>
 
 <template>
@@ -85,11 +73,9 @@ onUnmounted(() => {
     <!-- 空态：分类 / 筛选条件下都没店 -->
     <div v-if="!list.length" class="fine-print">{{ emptyHint }}</div>
 
-    <div v-for="s in list" :key="s.id"><ShopCard :shop="s" /></div>
-
-    <div v-if="toastMsg" class="ph-toast">{{ toastMsg }}</div>
-  </div>
-</template>
+      <div v-for="s in list" :key="s.id"><ShopCard :shop="s" /></div>
+    </div>
+  </template>
 
 <style scoped>
 /* 金刚区分类标题：小字灰条，纯展示，不改交互 */

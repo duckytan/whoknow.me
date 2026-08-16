@@ -6,6 +6,7 @@ import { getMenu, type Dish } from '../data/dishes'
 import { cart, addItem, decItem, dishCount, cartTotal } from '../store/cart'
 import { discountLabel, monthlyLabel, reviewLabel } from '../lib/dishLabel'
 import PersonaBadge from '../components/PersonaBadge.vue'
+import { showToast } from '../lib/toast'
 
 const route = useRoute()
 const router = useRouter()
@@ -69,12 +70,6 @@ const popular = computed(() => {
   return [...p, ...rest].slice(0, 4)
 })
 
-// Toast（纯点击反馈）
-const toastMsg = ref('')
-function showToast(msg: string) {
-  toastMsg.value = msg
-  setTimeout(() => { toastMsg.value = '' }, 2000)
-}
 function onPromoAdd(d: Dish) {
   if (!shop) return
   addItem(shop.id, d.id)
@@ -250,8 +245,6 @@ function onPromoAdd(d: Dish) {
       <button class="cart-go" :disabled="count === 0" @click="goCheckout">去结算</button>
     </div>
 
-    <!-- Toast -->
-    <div v-if="toastMsg" class="ph-toast">{{ toastMsg }}</div>
   </div>
   <div v-else class="page-pad">
     店铺不存在。<router-link to="/shops" style="color: var(--mt-price)">返回列表</router-link>
