@@ -13,7 +13,8 @@
     "typecheck": "tsc --noEmit",
     "demo:store": "node --experimental-strip-types src/demo/formula-store-demo.ts",
     "demo:pipeline": "node --experimental-strip-types src/demo/pipeline-demo.ts",
-    "assemble": "node --experimental-strip-types src/cli/run.ts assemble"
+    "assemble": "node --experimental-strip-types src/cli/run.ts assemble",
+    "seed": "node --experimental-strip-types scripts/seed-brain-data.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

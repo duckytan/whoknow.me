@@ -1,0 +1,114 @@
+{
+  "version": "2026-08-16.001",
+  "generated_at": "2026-08-16T08:15:00Z",
+  "effective_until": "2026-08-17T08:15:00Z",
+  "meta": {
+    "weather": "暴雨",
+    "hot_today": "骑手漂移"
+  },
+  "food": {
+    "boss": {
+      "x": [
+        "今天这单算你赢，雨太大我认了"
+      ]
+    },
+    "branches": [
+      {
+        "id": "wz-rain-drift",
+        "name": "暴雨骑手漂移",
+        "weight": 0.9,
+        "trigger": {
+          "condition": "weather=rain",
+          "probability": 0.8
+        },
+        "chain": [
+          {
+            "phase": "greet",
+            "actor": "rider",
+            "text": "老板我漂移来了，浪有点大你扶稳",
+            "moodDelta": 1
+          },
+          {
+            "phase": "mid",
+            "actor": "rider",
+            "text": "这雨下得我像在拍速度与激情之外卖特快",
+            "moodDelta": 2
+          },
+          {
+            "phase": "punch",
+            "actor": "rider",
+            "text": "饭我放门口了，划船太累不上去，你游下来拿一下",
+            "next": "end"
+          }
+        ]
+      },
+      {
+        "id": "wz-boss-dino",
+        "name": "老板恐龙配送",
+        "weight": 0.7,
+        "trigger": {
+          "condition": "random",
+          "probability": 0.5
+        },
+        "chain": [
+          {
+            "phase": "greet",
+            "actor": "boss",
+            "text": "这单我决定了，让恐龙送",
+            "moodDelta": 1
+          },
+          {
+            "phase": "punch",
+            "actor": "boss",
+            "text": "恐龙迷路了？那是它在考察地形，别催",
+            "next": "end"
+          }
+        ]
+      }
+    ]
+  },
+  "ui_meta": {
+    "ai_story_visible": true,
+    "last_brain_run": "2026-08-16T08:15:00Z",
+    "freshness_hours": 24,
+    "watermark": {
+      "level": "L1",
+      "label": "🧠 今日 AI 更新",
+      "placement": "footer"
+    }
+  },
+  "story_assets": {
+    "today_hot_topic": "骑手漂移",
+    "npc_quotes_today": [
+      "这雨下得我像在拍速度与激情之外卖特快"
+    ]
+  },
+  "forbidden_check": {
+    "version": "1.0",
+    "red_light_count": 0,
+    "yellow_light_count": 0,
+    "passed": true
+  },
+  "brain_meta": {
+    "contract": "brain.data-contract/1",
+    "content_checksum": "sha256:a0d72e190d384a3d87f3860bf9559f8aa998b1ab36246d75b6180fcc8d9ba45f",
+    "formula_refs": [
+      "F-weather@1",
+      "F-boss@1"
+    ],
+    "material_refs": [
+      "K-rain@1",
+      "K-drift@1"
+    ],
+    "quality_signals": {
+      "memeability": 0.9,
+      "spreadability": null,
+      "contrast_intensity": 0.8
+    },
+    "audit": {
+      "risk_level": 2,
+      "state": "approved",
+      "approved_at": "2026-08-16T08:10:00Z"
+    }
+  }
+}

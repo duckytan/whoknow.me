@@ -1,0 +1,15 @@
+{
+  "schema": "brain.release.manifest/1",
+  "product": "waimai",
+  "current": "2026-08-16.001",
+  "entries": [
+    {
+      "version": "2026-08-16.001",
+      "checksum": "sha256:a0d72e190d384a3d87f3860bf9559f8aa998b1ab36246d75b6180fcc8d9ba45f",
+      "released_at": "2026-08-16T00:25:01.504Z",
+      "artifact": "releases/waimai/2026-08-16.001.json",
+      "deployment_url": null
+    }
+  ],
+  "revoked": []
+}
