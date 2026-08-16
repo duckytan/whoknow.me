@@ -8,3 +8,4 @@ brain-output/
 
 # ── demo / 测试临时产物 ──
 .tmp-test/
+.tmp-demo/
