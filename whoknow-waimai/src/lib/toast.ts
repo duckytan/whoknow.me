@@ -1,8 +1,8 @@
 // toast.ts — 全局拟真提示总线（P1 审计 D6）
 //
 // 背景：原生 alert() / confirm() 是最强"出戏"信号——系统弹窗一出来，
-// "真美团外壳"当场击穿。改用 app 内 toast，视觉复用 style.css 既有 .ph-toast
-// （店铺页加购提示同款），不新造样式语言。
+// "真美团外壳"当场击穿。改用 app 内 toast，视觉复用 style.css 的 .push-toast
+// （与配送推送 PushNotifier 同一套白卡片语言），全 app 通知只此一张脸。
 //
 // 为什么是"总线 + 单挂载点"而不是每个页面各写一份局部 toast：
 // 设置页清空数据后会 router.push('/shops')，局部 toast 会随页面卸载一起消失，

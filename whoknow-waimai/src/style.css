@@ -477,7 +477,6 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .ph-card .ph-add { position: absolute; right: 8px; bottom: 8px; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--mt-price); font-size: 18px; font-weight: 700; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .ph-card .ph-add:active { transform: scale(0.9); }
 .ph-empty { display: inline-flex; align-items: center; color: #fff; font-size: 12px; opacity: 0.85; padding: 24px 12px; }
-.ph-toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.75); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 14px; z-index: 200; pointer-events: none; }
 
 /* ---- P0-4: 下单页顶部 Tab ---- */
 .pay-top { display: flex; align-items: center; gap: 0; padding: 12px 14px; background: #fff; border-bottom: 1px solid var(--mt-line); }

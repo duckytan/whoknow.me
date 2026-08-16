@@ -212,7 +212,7 @@ const REMARK_BEAT: Record<RemarkTag, RemarkBeat> = {
   },
 }
 
-// 骑手台词：承接地址情境 + cook 状态（slow→急 / fast→稳）；P2 第一刀破 R4，叠加备注回声。
+// 骑手台词：承接地址情境 + cook 状态（slow→急 / fast→稳）；P2 内容补强加 RIDER_ASIDE 纯环境旁白（守 R4，不回声备注）。
 //   toilet 慢单(slow)/快单(fast) 两版；icu/home/company 无慢单，仅 fast 一版。
 //   slow 三档（icu/home/company）不可达，占位保持类型安全，文本等同 fast。
 const RIDER_LINE: Record<'slow' | 'fast', Record<AddressTag, string>> = {
