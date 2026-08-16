@@ -14,7 +14,10 @@
     "demo:store": "node --experimental-strip-types src/demo/formula-store-demo.ts",
     "demo:pipeline": "node --experimental-strip-types src/demo/pipeline-demo.ts",
     "assemble": "node --experimental-strip-types src/cli/run.ts assemble",
-    "seed": "node --experimental-strip-types scripts/seed-brain-data.ts"
+    "seed": "node --experimental-strip-types scripts/seed-brain-data.ts",
+    "config:init": "node --experimental-strip-types src/cli/run.ts config init",
+    "config:show": "node --experimental-strip-types src/cli/run.ts config show",
+    "seed:config": "node --experimental-strip-types scripts/seed-platform-config.ts"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
