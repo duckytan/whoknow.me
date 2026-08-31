@@ -13,8 +13,8 @@
 
   | 计算机名 | 角色 | AI 自称 | 负责范围 |
   |---|---|---|---|
-  | `701-PC` | **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/` + `whoknow-brain/`（契约中枢）|
-  | `DuckyPC` | **Agent-外卖** | （待该实例自定后回填本表）| `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）|
+  | `701-PC` | **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/`（独占）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）|
+  | `DuckyPC` | **Agent-外卖** | （待该实例自定后回填本表）| `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）；`whoknow-brain/`（实测主责 @2026-08-31，含 `src/` 全套实现 + 已出 waimai 版本 `releases/waimai/2026-08-16.001.json`，归属待 Ducky 确认）|
 
 - **仓库只放"地图"，不放"角色定位结论"**：映射表（本文件）入库共享；"本实例身份 / 本实例负责范围"的**定位结论**缓存到本机 gitignored 的 `.workbuddy/memory/`，不与另一台冲突。但**对协作可见的称呼约定**（见下）必须入库共享，否则双实例无法对齐"对方叫什么、用户叫什么"。
 
@@ -27,8 +27,8 @@
 ## 1. 实例与范围（Identity × Scope）
 | 实例标识 | 所在机器 | 负责范围（独占） | 说明 |
 |---|---|---|---|
-| **Agent-外卖** | `DuckyPC` | `whoknow-waimai/`、`data/`、`styles/`、`js/`、`index.html`、`index1.html` | 外卖 App 全栈 + 主站门面前端 |
-| **Agent-商城** | `701-PC` | `whoknow-mart/`、`whoknow-brain/`（契约中枢）| 商城 App + 宇宙级契约中枢 |
+| **Agent-外卖** | `DuckyPC` | `whoknow-waimai/`、`data/`、`styles/`、`js/`、`index.html`、`index1.html`；`whoknow-brain/`（实测主责 @2026-08-31，含 `src/` 全套实现 + 已出 waimai 版本 `releases/waimai/2026-08-16.001.json`，归属待 Ducky 确认）| 外卖 App 全栈 + 主站门面前端 + 宇宙级契约中枢（brain 实现，归属待确认）|
+| **Agent-商城** | `701-PC` | `whoknow-mart/`（独占）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）| 商城 App + 宇宙级契约中枢（名义）|
 | **共享 / 协调（须协商）**| — | `胡闹宇宙总体设计方案.md`、`README.md`、`BRAND.md`、`vercel.json`、`archive/`、`docs/studio/`（除本文件与 WIP.md 外）| 跨切面文件，改动须通知另一实例并经人工确认 |
 
 > 范围划分是**建议值**，可按实际工作流调整；调整后须双方一致并回写本表与 §0 映射。
@@ -99,12 +99,12 @@
 本地 `IDENTITY.md` 模板（见 `INDEX.md` §6 内联清单）写入的角色细节，仅为指针与兜底；**角色与范围权威始终在本文件**，避免双文档漂移。若 IDENTITY 内容与本文件冲突，以本文件为准。
 
 ### 6.5 brain 单点与人单点预案
-brain 归 `701-PC` / Agent-商城（**已定，非开放项**，消除与 INDEX.md 的口径矛盾）。但其单点含 **机器 + 人 + 自动化** 三重耦合：
-- **机器单点**：701-PC 离线 → brain 停滞（契约不更新）；
-- **人单点**：信封（brain 产出）主要由锡哥产出；**锡哥不可用时代谁产出**须预先明确（见下预案）；
+brain 原定归 `701-PC` / Agent-商城（§0↔§1 名义 lane），但**实测 2026-08-31**：`DuckyPC` 在 `origin/main` 的 32 个 commit（2026-07-28 后）已将完整 `whoknow-brain/` 实现提交（`src/` 全套 + 测试 + `scripts/seed-*` + 已出 waimai 版本 `releases/waimai/2026-08-16.001.json`）。即 brain 实际主责已从 701-PC 转移到 `DuckyPC`。**此为跨实例红线事件（§2 协作红线），lane 归属须由 Ducky 拍板确认后回写本表**；确认前本表以"701-PC 名义 lane / DuckyPC 实测主责"并存表述，不武断划属。brain 单点含 **机器 + 人 + 自动化** 三重耦合：
+- **机器单点（已缓解）**：原 701-PC 离线 → brain 停滞；现 `DuckyPC` 已实现并维护 `whoknow-brain/`，机器单点缓解（双机任一在线即可推进）。
+- **人单点**：信封（brain 产出）主要由锡哥产出；**锡哥不可用时代谁产出**须预先明确（见下预案）。
 - **自动化单点**：P0-C（brain 信封自动化）曾后台终止、已暂停，待分工明确后重跑。
 - **人单点预案（待 Ducky 拍板填名）**：锡哥不可用时代产出人 = `____`（**默认回退**：701-PC 执行实例胡叨叨执行 + 人工确认）。建议固化为一行后回填。
-- **缓解**：brain 生成机器无关化（CI / 云端跑而非绑死 701）；信封样例已抢救进 `whoknow-waimai/public/config/`（`fallback.json` / `latest-config.json`）可作离线兜底。
+- **缓解**：brain 生成机器无关化（CI / 云端跑而非绑死单机）；信封样例已抢救进 `whoknow-waimai/public/config/`（`fallback.json` / `latest-config.json`）可作离线兜底。
 
 ### 6.6 Git 代理端口（按机实测 · 共享记录）
 代理端口随机器而异，新机须按 `CONSTITUTION.md` L2-C3 实测。下表为**已实测机器的共享记录**（权威实时值以各机 `IDENTITY.md`「本机运行环境」为准；本地文件丢失时以此表回退）：
