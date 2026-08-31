@@ -408,10 +408,11 @@ async function getFoodConfig() {
   },
 
   "forbidden_check": {
-    "version": "1.0",
+    "version": "1.1",
     "red_light_count": 0,
     "yellow_light_count": 0,
-    "passed": true
+    "passed": true,
+    "fiction_paywall": { "triggered": false, "hits": [] }
   },
 
   "fallback": {
@@ -420,6 +421,9 @@ async function getFoodConfig() {
   }
 }
 ```
+
+> **🆕 `fiction_paywall` 子项（v1.1 · 虚构交易闸门）**：
+> 由 `generator/forbidden.ts` 在**生成/审核阶段**扫描 NPC 戏精台词与戏精文案（含 DRAMA 分支 `text`、系统提示、评价模板）。命中红灯词（真实交易诱导，见 `禁忌词清单-v1.0.md §虚构交易闸门`）且**未命中白名单豁免**即 `triggered=true`、`hits` 记录触发词；此时 `passed` 置 `false`，**整条配置拒绝落盘（或降级到 fallback），绝不进入 waimai/mart 前端**。这是设计宪法"本次消费虚构、绝不真支付"的机器校验层——`fiction_flag` 不再只是策划自填标签。扫描函数代码提案见 `docs/FICTION-PAYWALL-SPEC.md`（该文件当前未落 `engine/`，待 owner 确认未跟踪文件处置方案后合入）。
 
 ---
 
@@ -578,7 +582,7 @@ v2.0 列了 13 个脑内模块，但**没标"M0 必做"vs"M1+ 可选"**。M0 单
 | `collector/server.ts`（服务器心跳）| ✅ | 1h | 必做（锡哥 Q10 后端数据）|
 | `generator/llm.ts`（调 AI）| ✅ | 1h | 必做 |
 | `generator/prompt.ts`（prompt 模板）| ✅ | 30min | 必做 |
-| `generator/forbidden.ts`（禁忌词过滤）| ✅ | 30min | 必做（D1-D6 红绿灯）|
+| `generator/forbidden.ts`（禁忌词过滤）| ✅ | 30min | 必做（D1-D6 红绿灯 + 🆕 v1.1 fiction_paywall 闸门，提案见 `FICTION-PAYWALL-SPEC.md`）|
 | `deployer/file.ts`（写本地 JSON）| ✅ | 20min | 必做 |
 | `deployer/report.ts`（HTML 报告）| ✅ | 30min | 必做（锡哥 Q13 MD/HTML）|
 | `collector/news.ts`（新闻 RSS）| ❌ | M1 | 数据源扩展 |

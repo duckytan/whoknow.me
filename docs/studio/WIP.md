@@ -8,3 +8,4 @@
 |---|---|---|---|---|---|
 | （示例）DuckyPC | Agent-外卖 | whoknow-waimai/src/... | 外卖 M2 对战流 | 2026-07-26 | 进行中 |
 | （示例）701-PC | Agent-商城 | whoknow-mart/docs/... | 商城 MVP 概念细化 | 2026-07-26 | 进行中 |
+| 701-PC | Agent-商城 | 胡闹宇宙总体设计方案.md + APP-MATRIX-ROADMAP.md + whoknow-brain/docs/* | 三司会审收口 A/B/C 落地；遗留 engine/处置·H口径·上生产 挂起待回归 | 2026-07-29 | ✅ 已收口（遗留挂起） |
