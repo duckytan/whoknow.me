@@ -115,6 +115,7 @@ brain 原定归 `701-PC` / Agent-商城（§0↔§1 名义 lane），但**实测
 | `DuckyPC` | `12000` / `7890` | 待该机实测回填 | — |
 
 ### 6.7 多会话同工作目录隔离约定（2026-09-01 新增，待全员确认）
+- **权威细则**：完整操作手册见 `docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md`（如何区分 / 如何存文件 / 如何写作 / 冲突检测 / 反模式）。本协议为其摘要。
 - **根因**：同机可开多个 WorkBuddy 会话指向同一工作目录 `D:\AI-Project\whoknow.me`，共享 `.workbuddy/memory/` 与 `docs/studio/`，裸写导致双向交叉污染（实证：mart 会话与 brain 会话各自按用户 live 指令拿到互斥范围，但都写共享 `2026-09-01.md`，互把对方条目当污染）。
 - **权威锚点**：`CODEBUDDY_SESSION_ID`（env，每会话唯一且稳定）为会话级唯一 ID；本机叠加 `device-id`（701-PC=`1750e8a4...`）区分机器。**Expert ID 非会话级唯一，不能替代会话 ID 做隔离键**（mart 与 brain 会话当前选了同一 Expert `ex_qC4H6Q95jdkw` 即证）。
 - **记忆隔离纪律**：
