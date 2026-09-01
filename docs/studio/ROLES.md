@@ -113,3 +113,13 @@ brain 原定归 `701-PC` / Agent-商城（§0↔§1 名义 lane），但**实测
 |---|---|---|---|
 | `701-PC` | `12000` / `7890` | `7890` 通 / `12000` 不通 | 2026-07-26 |
 | `DuckyPC` | `12000` / `7890` | 待该机实测回填 | — |
+
+### 6.7 多会话同工作目录隔离约定（2026-09-01 新增，待全员确认）
+- **根因**：同机可开多个 WorkBuddy 会话指向同一工作目录 `D:\AI-Project\whoknow.me`，共享 `.workbuddy/memory/` 与 `docs/studio/`，裸写导致双向交叉污染（实证：mart 会话与 brain 会话各自按用户 live 指令拿到互斥范围，但都写共享 `2026-09-01.md`，互把对方条目当污染）。
+- **权威锚点**：`CODEBUDDY_SESSION_ID`（env，每会话唯一且稳定）为会话级唯一 ID；本机叠加 `device-id`（701-PC=`1750e8a4...`）区分机器。**Expert ID 非会话级唯一，不能替代会话 ID 做隔离键**（mart 与 brain 会话当前选了同一 Expert `ex_qC4H6Q95jdkw` 即证）。
+- **记忆隔离纪律**：
+  1. 每日日志禁裸写共享 `YYYY-MM-DD.md`，改写 `memory/sessions/<CODEBUDDY_SESSION_ID>/YYYY-MM-DD.md`，文件头标注 session/device/role/started。
+  2. 读取优先本会话子目录；共享 `MEMORY.md` 仅信标注 `verified`+来源 session 的跨会话事实；遇未标注裸段落以"带本 session 标注"为准。
+  3. 长期 `MEMORY.md` 条目须标注来源 session + 验证状态，只写已验证跨会话事实，不写本会话临时判断。
+  4. 本会话范围以用户 live 指令为准，不被共享日志其他会话条目覆盖。
+- 本约定由 701-PC 在 brain 专责会话（session `f86c7be6...`）落地，待 DuckyPC 侧会话确认遵守。
