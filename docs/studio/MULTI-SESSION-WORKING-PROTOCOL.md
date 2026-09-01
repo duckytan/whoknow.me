@@ -6,6 +6,18 @@
 
 ---
 
+## 📌 新会话启动速做（读到本文件立刻做这 5 步）
+
+1. **取会话 ID**：`echo "$CODEBUDDY_SESSION_ID"` —— 这是本会话唯一隔离键。
+2. **建隔离目录**：`mkdir -p "memory/sessions/$CODEBUDDY_SESSION_ID"`，本会话日志只写 `memory/sessions/<SID>/YYYY-MM-DD.md`，**绝不裸写**共享 `memory/YYYY-MM-DD.md`。
+3. **读权威地图**：`docs/studio/ROLES.md` §0（机器→角色映射）+ §6.7（本协议摘要）+ `WIP.md`（在制通报）。
+4. **确认范围**：本会话范围以**用户 live 指令**为准；对照 `ROLES.md` §0 定 lane，不碰其他 App 文件（L1-T5 多 App 共存红线）。
+5. **登记 WIP**：在 `WIP.md` 写一行 `[机器/角色] 任务 @ 文件`，结束划掉。
+
+> 隔离键**只能**用 `CODEBUDDY_SESSION_ID`。Expert ID / 计算机名 / 分支名都不唯一，不能作隔离键（实证见 §1.4）。完整操作手册即本协议全文。
+
+---
+
 ## 0. 适用范围与核心矛盾
 
 - **场景**：N 个 WorkBuddy 会话指向同一工作目录，读写同一批文件（含 `.workbuddy/memory/`、`docs/studio/`、各 App 源码）。

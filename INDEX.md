@@ -4,7 +4,7 @@
 
 > 📣 **读取引导声明（谁负责让 agent 看到本文件）**：若某 agent 由主理人编排层唤醒，本文件路径已由编排 prompt 强制注入该 agent 上下文——该 agent 已在读。若某 agent 为裸 clone 后直接打开本文件，该 agent 须主动先读完此处再动手。本项目不靠「agent 自发翻目录」保证入口生效，而靠「主理人编排层 + 平台注入层」双保险把本文件喂给新 agent。
 
-> 🚀 **TL;DR · 3 步必做（没耐心版）**：① 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) 与 [`CONSTITUTION.md`](CONSTITUTION.md) ② `hostname` 确认本机角色，对照 §8 分工表 ③ 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。读完即可接任务；细节按需再翻本文件各节。
+> 🚀 **TL;DR · 3 步必做（没耐心版）**：① 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md) 与 [`CONSTITUTION.md`](CONSTITUTION.md) ② `hostname` 确认本机角色，对照 §8 分工表 ③ 读 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) 看进度与开放项。**④ 同机多会话并行时**：取 `CODEBUDDY_SESSION_ID` 并按 [`多会话并行协作区分方案`](docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md) 隔离记忆（每日日志写 `memory/sessions/<SID>/`，禁裸写共享 `YYYY-MM-DD.md`）。读完即可接任务；细节按需再翻本文件各节。
 
 ---
 
@@ -63,6 +63,7 @@
 | 品牌视觉 | 锚色 / 字体 / WCAG AA 无障碍 | [`BRAND.md`](BRAND.md) |
 | 铁律宪法 | 三层重分类 + 度量/商业/演进三维 | [`CONSTITUTION.md`](CONSTITUTION.md) |
 | 多实例协作章程 | 角色 / 权限 / 冲突处理 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) |
+| 多会话并行协作区分方案 | 同目录多会话隔离 / 写作 / 冲突处置 | [`docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md`](docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md) |
 | 在制登记 | 当前 WIP / 阻塞项 | [`docs/studio/WIP.md`](docs/studio/WIP.md) |
 | Git 工作流（分支 / 提交 / 合入） | 受保护 main + agent 工作线 + PR/CI 闸门 | [`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md) |
 | brain 信封契约 | 信封 6 字段 + 4 级降级 + 水印 + 人工审核 | [`whoknow-brain/docs/api-spec.md`](whoknow-brain/docs/api-spec.md) |
@@ -135,6 +136,7 @@
 ## 关键约定
 - 机器名 `DuckyPC` → **Agent-外卖**，负责 `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）。
 - **每次会话开始先读 `docs/studio/ROLES.md`**（§0 机器名映射 + §2 协作红线 + §7 双闸门）。
+- **多会话同目录隔离**：同工作目录开多个会话时取 `CODEBUDDY_SESSION_ID` 并按 `docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md` 隔离记忆（日志写 `memory/sessions/<SID>/`，禁裸写共享 `YYYY-MM-DD.md`）。
 - 共享文件（`README.md` / `BRAND.md` / 总纲 / `docs/studio/` 除 `ROLES`/`WIP`）改前先与 `701-PC`（Agent-商城）协商。
 - 用户统一称呼 **「Ducky」**（= duckytan）。
 - 详见 `docs/studio/ROLES.md`。
@@ -186,6 +188,7 @@
 
 ## 9. 全新 agent onboarding 步骤（照做）
 
+0. **同机多会话并行（关键）**：若本机同时开多个 WorkBuddy 会话指向本目录，先 `echo "$CODEBUDDY_SESSION_ID"` 取本会话 ID，读 [`多会话并行协作区分方案`](docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md) 并按其「新会话启动速做」隔离记忆——本会话日志只写 `memory/sessions/<SID>/YYYY-MM-DD.md`，**禁裸写**共享 `YYYY-MM-DD.md`。
 1. `git clone` 仓库，按本机网络配置 git 代理（见 §6 冷启动·网络自适应）。
 2. **读本文件 `INDEX.md`**（新 agent 拉取后即读此处）。
 3. 读 [`胡闹宇宙总体设计方案.md`](胡闹宇宙总体设计方案.md)（总纲）+ [`CONSTITUTION.md`](CONSTITUTION.md)（铁律）。
@@ -246,6 +249,7 @@
 | 文件归位 / 移动删除 | [`docs/studio/REPO-STRUCTURE-CONVENTION.md`](docs/studio/REPO-STRUCTURE-CONVENTION.md) |
 | 当前进度 / 开放项 | [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md) |
 | 多机协作 / 权限 | [`docs/studio/ROLES.md`](docs/studio/ROLES.md) · [`docs/studio/WIP.md`](docs/studio/WIP.md) |
+| 多会话并行协作区分 | [`docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md`](docs/studio/MULTI-SESSION-WORKING-PROTOCOL.md) |
 | Git 工作流 / 分支策略 | [`docs/studio/GIT-WORKFLOW.md`](docs/studio/GIT-WORKFLOW.md) |
 | 新机器身份初始化（兜底） | 见 §6「DuckyPC 接入操作清单（内联 · 粘贴即用）」 |
 | 品牌视觉 | [`BRAND.md`](BRAND.md) |
