@@ -1,0 +1,1206 @@
+{
+  "schemaVersion": "2026-09-03.001",
+  "generatedAt": "2026-09-03T09:25:33.565Z",
+  "source": {
+    "gitRepo": "whoknow.me",
+    "statusDocs": [
+      "docs/studio/PROJECT-STATUS.md",
+      "docs/studio/STUDIO-PROGRESS.md",
+      "docs/studio/APP-MATRIX-ROADMAP.md"
+    ]
+  },
+  "universe": {
+    "overallProgressPct": 67,
+    "appStatusLights": [
+      {
+        "appKey": "waimai",
+        "appStatus": "live",
+        "milestonePhase": 7,
+        "testPass": 45,
+        "testTotal": 45,
+        "buildStatus": "pass",
+        "gitCommitsTotal": 86,
+        "gitCommitsByDir": {
+          "src": 55,
+          "docs": 38,
+          "dist": 15,
+          "root": 15,
+          "public": 5,
+          "scripts": 4,
+          "tests": 2,
+          "research-raw": 2
+        },
+        "gitAuthorDist": {
+          "unknown": 44,
+          "Ducky Tan": 42
+        },
+        "candidateCount": 16,
+        "candidateCategories": 8,
+        "unlockGateStatus": false,
+        "diskEvidence": {
+          "hasSrc": true,
+          "hasDist": true,
+          "hasDocs": true,
+          "docCount": 20
+        },
+        "progressPct": 100,
+        "ownerInstance": "DuckyPC",
+        "commitTimeseries": [
+          {
+            "week": "2026-W30",
+            "count": 166
+          },
+          {
+            "week": "2026-W31",
+            "count": 12
+          },
+          {
+            "week": "2026-W33",
+            "count": 15
+          },
+          {
+            "week": "2026-W36",
+            "count": 7
+          }
+        ],
+        "ciResult": "pass",
+        "realtimeProgressPct": null,
+        "playtestMetrics": null,
+        "bizMetrics": {
+          "laughRate": null,
+          "retention": null
+        },
+        "dora": {
+          "deployFreq": null,
+          "leadTime": null,
+          "mtbf": null,
+          "mttr": null
+        },
+        "label": "胡闹外卖"
+      },
+      {
+        "appKey": "mart",
+        "appStatus": "designing",
+        "milestonePhase": 5,
+        "testPass": 12,
+        "testTotal": 12,
+        "buildStatus": "pass",
+        "gitCommitsTotal": 18,
+        "gitCommitsByDir": {
+          "docs": 10,
+          "dist": 9,
+          "root": 5,
+          "src": 4,
+          "tests": 4,
+          "scripts": 3,
+          "production": 2,
+          "future-plans": 2,
+          "memory": 2,
+          "prototype": 1
+        },
+        "gitAuthorDist": {
+          "duckytan": 16,
+          "unknown": 1,
+          "Ducky Tan": 1
+        },
+        "candidateCount": 16,
+        "candidateCategories": 8,
+        "unlockGateStatus": false,
+        "diskEvidence": {
+          "hasSrc": true,
+          "hasDist": true,
+          "hasDocs": true,
+          "docCount": 33
+        },
+        "progressPct": 71,
+        "ownerInstance": "701-PC",
+        "commitTimeseries": [
+          {
+            "week": "2026-W30",
+            "count": 166
+          },
+          {
+            "week": "2026-W31",
+            "count": 12
+          },
+          {
+            "week": "2026-W33",
+            "count": 15
+          },
+          {
+            "week": "2026-W36",
+            "count": 7
+          }
+        ],
+        "ciResult": "pass",
+        "realtimeProgressPct": null,
+        "playtestMetrics": null,
+        "bizMetrics": {
+          "laughRate": null,
+          "retention": null
+        },
+        "dora": {
+          "deployFreq": null,
+          "leadTime": null,
+          "mtbf": null,
+          "mttr": null
+        },
+        "label": "胡闹导购"
+      },
+      {
+        "appKey": "brain",
+        "appStatus": "planning",
+        "milestonePhase": 2,
+        "testPass": 0,
+        "testTotal": 0,
+        "buildStatus": "unknown",
+        "gitCommitsTotal": 17,
+        "gitCommitsByDir": {
+          "docs": 13,
+          "root": 6,
+          "src": 3,
+          "scripts": 2,
+          "releases": 1
+        },
+        "gitAuthorDist": {
+          "unknown": 11,
+          "Ducky Tan": 4,
+          "duckytan": 2
+        },
+        "candidateCount": 16,
+        "candidateCategories": 8,
+        "unlockGateStatus": false,
+        "diskEvidence": {
+          "hasSrc": false,
+          "hasDist": false,
+          "hasDocs": true,
+          "docCount": 8
+        },
+        "progressPct": 29,
+        "ownerInstance": "701-PC",
+        "commitTimeseries": [
+          {
+            "week": "2026-W30",
+            "count": 166
+          },
+          {
+            "week": "2026-W31",
+            "count": 12
+          },
+          {
+            "week": "2026-W33",
+            "count": 15
+          },
+          {
+            "week": "2026-W36",
+            "count": 7
+          }
+        ],
+        "ciResult": "unknown",
+        "realtimeProgressPct": null,
+        "playtestMetrics": null,
+        "bizMetrics": {
+          "laughRate": null,
+          "retention": null
+        },
+        "dora": {
+          "deployFreq": null,
+          "leadTime": null,
+          "mtbf": null,
+          "mttr": null
+        },
+        "label": "胡闹大脑"
+      }
+    ],
+    "milestoneGantt": [
+      {
+        "phase": "1 概念孵化",
+        "start": "2026-07-24",
+        "end": "2026-07-25",
+        "status": "live",
+        "done": true,
+        "evidence": "GDD-v2.2.2、设计支柱 5+1、乐趣假说、核心循环"
+      },
+      {
+        "phase": "2 系统设计",
+        "start": "2026-07-25",
+        "end": "2026-07-25",
+        "status": "live",
+        "done": true,
+        "evidence": "DRAMA-ENGINE-V2、DATA-STRUCTURE-v1、brain api-spec v2.2"
+      },
+      {
+        "phase": "3 技术搭建",
+        "start": "2026-07-25",
+        "end": "2026-07-25",
+        "status": "live",
+        "done": true,
+        "evidence": "4 项收口全落：数据形状 ADR ✅ + forbidden_check 真闸门 ✅（prototype/ 扫描 red_light_count=0）+ DRAMA 解析器原型 ✅（8/8 测试）+ 门面部署接线 ✅（vercel outputDirectory=.）"
+      },
+      {
+        "phase": "4 预制作",
+        "start": "2026-07-25",
+        "end": "2026-07-25",
+        "status": "live",
+        "done": true,
+        "evidence": "用户 lean 跳过 Epic/Story 拆分；补齐 7 个缺失界面(Feed/Service/Privacy/Terms/Profile/Settings/About) + 内容铺满；DRAMA-SEED 扩至 22 分支 + SEED AI 自评（12/12 成就可达）"
+      },
+      {
+        "phase": "5 制作 (M1)",
+        "start": "2026-07-25",
+        "end": "2026-07-26",
+        "status": "live",
+        "done": true,
+        "evidence": "Route B 整合 + P1 扩展：原型浅色皮 + M1 内核 + 店间/同店/骑手差异感。5 店(全人格)+3 骑手(随机派单)+12 成就+订单历史+7 新界面；**选项2 美团Lite下单流已落地**：`src/data/dishes.ts`(5店×6菜) + `src/store/cart.ts`(购物车) + `ShopView` 菜单+底部购物"
+      },
+      {
+        "phase": "6 打磨",
+        "start": "2026-07-26",
+        "end": "2026-07-28",
+        "status": "live",
+        "done": true,
+        "evidence": "P3 已落：SEED 28→40 分支（基线变体 4→8 + 5 店各 +1 + 3 骑手各 +1，店/骑手人格成主多样性源）；`scripts/playtest-sim.ts` 出代码级抗疲劳代理（不同链 10.2/12、单分支≥3重复 28%、40/40 可达）；`dramaEngine.coverage.test.ts` 守死分支；`style.css"
+      },
+      {
+        "phase": "7 发布",
+        "start": "2026-07-28",
+        "end": "2026-08-31",
+        "status": "live",
+        "done": true,
+        "evidence": "已部署上线 `index-A0neK9GA.js`（45/45 单测绿 + 构建 PASS）；**硬闸门 = 真机 playtest** 已可执行：口径由 `PLAYTEST-CHECKLIST-2026-07-25.md` 定义（H1 含代码级代理），配套 `docs/playtest/`（scorecard 模板 + RUNBOOK + aggregat"
+      }
+    ],
+    "candidateMatrix": [
+      {
+        "id": "A",
+        "name": "A 出行 Mobility",
+        "members": [
+          {
+            "code": "whoknow-ride",
+            "name": "胡闹打车",
+            "reuseLevel": 5,
+            "categoryId": "A",
+            "shell": "出行/打车",
+            "unlockTier": "M2",
+            "section": "2.1"
+          },
+          {
+            "code": "whoknow-nav",
+            "name": "胡闹导航",
+            "reuseLevel": 2,
+            "categoryId": "A",
+            "shell": "地图导航",
+            "unlockTier": "M4",
+            "section": "2.8"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "移动场景，共享\"司机/导航员\"persona 池｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "B",
+        "name": "B 到家服务 Home Errands",
+        "members": [
+          {
+            "code": "whoknow-home",
+            "name": "胡闹家政",
+            "reuseLevel": 3,
+            "categoryId": "B",
+            "shell": "上门维修/保洁",
+            "unlockTier": "M4",
+            "section": "2.7"
+          },
+          {
+            "code": "whoknow-move",
+            "name": "胡闹搬家",
+            "reuseLevel": 3,
+            "categoryId": "B",
+            "shell": "搬家/货运",
+            "unlockTier": "M4",
+            "section": "2.12"
+          },
+          {
+            "code": "whoknow-express",
+            "name": "胡闹快递",
+            "reuseLevel": 2,
+            "categoryId": "B",
+            "shell": "物流查询",
+            "unlockTier": "M4",
+            "section": "2.14"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "上门/到手服务，共享\"服务者毒舌\"tone｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "C",
+        "name": "C 变美与健康 Glow & Wellness",
+        "members": [
+          {
+            "code": "whoknow-salon",
+            "name": "胡闹美发",
+            "reuseLevel": 3,
+            "categoryId": "C",
+            "shell": "美发预约",
+            "unlockTier": "M4",
+            "section": "2.9"
+          },
+          {
+            "code": "whoknow-spa",
+            "name": "胡闹按摩",
+            "reuseLevel": 2,
+            "categoryId": "C",
+            "shell": "上门养生推拿",
+            "unlockTier": "M4",
+            "section": "2.10"
+          },
+          {
+            "code": "whoknow-cam",
+            "name": "胡闹相机",
+            "reuseLevel": 2,
+            "categoryId": "C",
+            "shell": "美颜相机",
+            "unlockTier": "M4",
+            "section": "2.16"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "形象经营域，共享\"点评顾客\"话术母题｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "D",
+        "name": "D 居住 Dwelling",
+        "members": [
+          {
+            "code": "whoknow-rent",
+            "name": "胡闹租房",
+            "reuseLevel": 3,
+            "categoryId": "D",
+            "shell": "租房/看房",
+            "unlockTier": "M4",
+            "section": "2.13"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "单一但高频痛点，待扩\"装修/物业\"补位｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "E",
+        "name": "E 消费与钱包 Commerce",
+        "members": [
+          {
+            "code": "whoknow-ledger",
+            "name": "胡闹记账",
+            "reuseLevel": 3,
+            "categoryId": "E",
+            "shell": "记账/资产",
+            "unlockTier": "M4",
+            "section": "2.11"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "花钱域，共享\"消费虚构 + 吐槽\"机制｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "F",
+        "name": "F 社交与陪伴 Social",
+        "members": [
+          {
+            "code": "whoknow-pet",
+            "name": "胡闹云养宠",
+            "reuseLevel": 5,
+            "categoryId": "F",
+            "shell": "养宠",
+            "unlockTier": "M4",
+            "section": "2.3"
+          },
+          {
+            "code": "whoknow-love",
+            "name": "胡闹相亲",
+            "reuseLevel": 3,
+            "categoryId": "F",
+            "shell": "交友",
+            "unlockTier": "M4",
+            "section": "2.6"
+          },
+          {
+            "code": "whoknow-bar",
+            "name": "胡闹酒吧",
+            "reuseLevel": 3,
+            "categoryId": "F",
+            "shell": "调酒/点单（虚构）",
+            "unlockTier": "M4",
+            "section": "2.15"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "关系域，共享\"虚构互动 + 情感投射\"｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "G",
+        "name": "G 职场 Hustle",
+        "members": [
+          {
+            "code": "whoknow-work",
+            "name": "胡闹打工",
+            "reuseLevel": 4,
+            "categoryId": "G",
+            "shell": "办公/职场",
+            "unlockTier": "M4",
+            "section": "2.5"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "单一，待扩\"面试/开会\"补位｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "H",
+        "name": "H 玄学日常 Omen Daily",
+        "members": [
+          {
+            "code": "whoknow-fate",
+            "name": "胡闹占卜",
+            "reuseLevel": 4,
+            "categoryId": "H",
+            "shell": "星座/抽签",
+            "unlockTier": "M2",
+            "section": "2.2"
+          },
+          {
+            "code": "whoknow-weather",
+            "name": "胡闹天气",
+            "reuseLevel": 3,
+            "categoryId": "H",
+            "shell": "天气",
+            "unlockTier": "M4",
+            "section": "2.4"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "宜忌/运势域，共享\"离谱卦象\"母题｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      }
+    ],
+    "riskBoard": [
+      {
+        "id": "L1-T1",
+        "title": "禁忌词红线 0 容忍",
+        "status": "on",
+        "evidence": "✅ 已落地（`forbiddenCheck.ts`，45/45 测试覆盖，真闸门）"
+      },
+      {
+        "id": "L1-T2",
+        "title": "配置与状态分离（玩家隐私底线）",
+        "status": "on",
+        "evidence": "✅ 已落地（`memory.ts` localStorage 实现）"
+      },
+      {
+        "id": "L1-T3",
+        "title": "不害人 · 不违法 · 不互相踩 · 人格统一（核心价值观底线）",
+        "status": "partial",
+        "evidence": "🔶 指导性原则，需靠 L1-T1/T2/T5 与 L2 约定共同落实"
+      },
+      {
+        "id": "L1-T4",
+        "title": "字段命名权威（跨 app 数据正确性底线）",
+        "status": "on",
+        "evidence": "✅ 已落地（mart draft 已复用语）"
+      },
+      {
+        "id": "L1-T5",
+        "title": "多 App 共存红线（部署安全底线，违反即事故）",
+        "status": "on",
+        "evidence": "✅ 已落地（CURRENT-STATE 有 rebase 记录，红线生效）"
+      }
+    ],
+    "qualityGate": [
+      {
+        "app": "waimai",
+        "pass": 45,
+        "total": 45,
+        "verdict": "全绿",
+        "buildStatus": "pass"
+      },
+      {
+        "app": "mart",
+        "pass": 12,
+        "total": 12,
+        "verdict": "全绿",
+        "buildStatus": "pass"
+      },
+      {
+        "app": "brain",
+        "pass": 0,
+        "total": 0,
+        "verdict": "无自动化测试（仅文档契约）",
+        "buildStatus": "unknown"
+      }
+    ],
+    "git": {
+      "commitsTotal": 200,
+      "commitsByDir": {
+        "root": 87,
+        "whoknow-waimai": 86,
+        "docs": 28,
+        "whoknow-mart": 18,
+        "whoknow-brain": 17,
+        "\"": 7,
+        "\"whoknow-waimai": 7,
+        "\"whoknow-brain": 5,
+        "\"whoknow-mart": 4,
+        "archive": 3,
+        "waimai": 3,
+        "experiments": 3,
+        "data": 2,
+        ".githooks": 2,
+        ".workbuddy": 2,
+        "js": 2,
+        "prototype": 2,
+        "\"sanshi-hui-shen-package": 1,
+        "sanshi-hui-shen-package": 1,
+        "\"archive": 1,
+        "styles": 1
+      },
+      "authorDist": {
+        "Ducky Tan": 86,
+        "unknown": 72,
+        "duckytan": 42
+      },
+      "commitTimeseries": [
+        {
+          "week": "2026-W30",
+          "count": 166
+        },
+        {
+          "week": "2026-W31",
+          "count": 12
+        },
+        {
+          "week": "2026-W33",
+          "count": 15
+        },
+        {
+          "week": "2026-W36",
+          "count": 7
+        }
+      ],
+      "branches": [
+        "agent-mart",
+        "agent-waimai",
+        "main",
+        "origin/main"
+      ],
+      "firstCommitAt": "2026-07-21T22:50:15+08:00",
+      "lastCommitAt": "2026-09-01T14:19:38+08:00",
+      "degraded": false
+    }
+  },
+  "apps": [
+    {
+      "appKey": "waimai",
+      "appStatus": "live",
+      "milestonePhase": 7,
+      "testPass": 45,
+      "testTotal": 45,
+      "buildStatus": "pass",
+      "gitCommitsTotal": 86,
+      "gitCommitsByDir": {
+        "src": 55,
+        "docs": 38,
+        "dist": 15,
+        "root": 15,
+        "public": 5,
+        "scripts": 4,
+        "tests": 2,
+        "research-raw": 2
+      },
+      "gitAuthorDist": {
+        "unknown": 44,
+        "Ducky Tan": 42
+      },
+      "candidateCount": 16,
+      "candidateCategories": 8,
+      "unlockGateStatus": false,
+      "diskEvidence": {
+        "hasSrc": true,
+        "hasDist": true,
+        "hasDocs": true,
+        "docCount": 20
+      },
+      "progressPct": 100,
+      "ownerInstance": "DuckyPC",
+      "commitTimeseries": [
+        {
+          "week": "2026-W30",
+          "count": 166
+        },
+        {
+          "week": "2026-W31",
+          "count": 12
+        },
+        {
+          "week": "2026-W33",
+          "count": 15
+        },
+        {
+          "week": "2026-W36",
+          "count": 7
+        }
+      ],
+      "ciResult": "pass",
+      "realtimeProgressPct": null,
+      "playtestMetrics": null,
+      "bizMetrics": {
+        "laughRate": null,
+        "retention": null
+      },
+      "dora": {
+        "deployFreq": null,
+        "leadTime": null,
+        "mtbf": null,
+        "mttr": null
+      },
+      "label": "胡闹外卖"
+    },
+    {
+      "appKey": "mart",
+      "appStatus": "designing",
+      "milestonePhase": 5,
+      "testPass": 12,
+      "testTotal": 12,
+      "buildStatus": "pass",
+      "gitCommitsTotal": 18,
+      "gitCommitsByDir": {
+        "docs": 10,
+        "dist": 9,
+        "root": 5,
+        "src": 4,
+        "tests": 4,
+        "scripts": 3,
+        "production": 2,
+        "future-plans": 2,
+        "memory": 2,
+        "prototype": 1
+      },
+      "gitAuthorDist": {
+        "duckytan": 16,
+        "unknown": 1,
+        "Ducky Tan": 1
+      },
+      "candidateCount": 16,
+      "candidateCategories": 8,
+      "unlockGateStatus": false,
+      "diskEvidence": {
+        "hasSrc": true,
+        "hasDist": true,
+        "hasDocs": true,
+        "docCount": 33
+      },
+      "progressPct": 71,
+      "ownerInstance": "701-PC",
+      "commitTimeseries": [
+        {
+          "week": "2026-W30",
+          "count": 166
+        },
+        {
+          "week": "2026-W31",
+          "count": 12
+        },
+        {
+          "week": "2026-W33",
+          "count": 15
+        },
+        {
+          "week": "2026-W36",
+          "count": 7
+        }
+      ],
+      "ciResult": "pass",
+      "realtimeProgressPct": null,
+      "playtestMetrics": null,
+      "bizMetrics": {
+        "laughRate": null,
+        "retention": null
+      },
+      "dora": {
+        "deployFreq": null,
+        "leadTime": null,
+        "mtbf": null,
+        "mttr": null
+      },
+      "label": "胡闹导购"
+    },
+    {
+      "appKey": "brain",
+      "appStatus": "planning",
+      "milestonePhase": 2,
+      "testPass": 0,
+      "testTotal": 0,
+      "buildStatus": "unknown",
+      "gitCommitsTotal": 17,
+      "gitCommitsByDir": {
+        "docs": 13,
+        "root": 6,
+        "src": 3,
+        "scripts": 2,
+        "releases": 1
+      },
+      "gitAuthorDist": {
+        "unknown": 11,
+        "Ducky Tan": 4,
+        "duckytan": 2
+      },
+      "candidateCount": 16,
+      "candidateCategories": 8,
+      "unlockGateStatus": false,
+      "diskEvidence": {
+        "hasSrc": false,
+        "hasDist": false,
+        "hasDocs": true,
+        "docCount": 8
+      },
+      "progressPct": 29,
+      "ownerInstance": "701-PC",
+      "commitTimeseries": [
+        {
+          "week": "2026-W30",
+          "count": 166
+        },
+        {
+          "week": "2026-W31",
+          "count": 12
+        },
+        {
+          "week": "2026-W33",
+          "count": 15
+        },
+        {
+          "week": "2026-W36",
+          "count": 7
+        }
+      ],
+      "ciResult": "unknown",
+      "realtimeProgressPct": null,
+      "playtestMetrics": null,
+      "bizMetrics": {
+        "laughRate": null,
+        "retention": null
+      },
+      "dora": {
+        "deployFreq": null,
+        "leadTime": null,
+        "mtbf": null,
+        "mttr": null
+      },
+      "label": "胡闹大脑"
+    }
+  ],
+  "candidates": {
+    "total": 16,
+    "categories": [
+      {
+        "id": "A",
+        "name": "A 出行 Mobility",
+        "members": [
+          {
+            "code": "whoknow-ride",
+            "name": "胡闹打车",
+            "reuseLevel": 5,
+            "categoryId": "A",
+            "shell": "出行/打车",
+            "unlockTier": "M2",
+            "section": "2.1"
+          },
+          {
+            "code": "whoknow-nav",
+            "name": "胡闹导航",
+            "reuseLevel": 2,
+            "categoryId": "A",
+            "shell": "地图导航",
+            "unlockTier": "M4",
+            "section": "2.8"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "移动场景，共享\"司机/导航员\"persona 池｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "B",
+        "name": "B 到家服务 Home Errands",
+        "members": [
+          {
+            "code": "whoknow-home",
+            "name": "胡闹家政",
+            "reuseLevel": 3,
+            "categoryId": "B",
+            "shell": "上门维修/保洁",
+            "unlockTier": "M4",
+            "section": "2.7"
+          },
+          {
+            "code": "whoknow-move",
+            "name": "胡闹搬家",
+            "reuseLevel": 3,
+            "categoryId": "B",
+            "shell": "搬家/货运",
+            "unlockTier": "M4",
+            "section": "2.12"
+          },
+          {
+            "code": "whoknow-express",
+            "name": "胡闹快递",
+            "reuseLevel": 2,
+            "categoryId": "B",
+            "shell": "物流查询",
+            "unlockTier": "M4",
+            "section": "2.14"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "上门/到手服务，共享\"服务者毒舌\"tone｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "C",
+        "name": "C 变美与健康 Glow & Wellness",
+        "members": [
+          {
+            "code": "whoknow-salon",
+            "name": "胡闹美发",
+            "reuseLevel": 3,
+            "categoryId": "C",
+            "shell": "美发预约",
+            "unlockTier": "M4",
+            "section": "2.9"
+          },
+          {
+            "code": "whoknow-spa",
+            "name": "胡闹按摩",
+            "reuseLevel": 2,
+            "categoryId": "C",
+            "shell": "上门养生推拿",
+            "unlockTier": "M4",
+            "section": "2.10"
+          },
+          {
+            "code": "whoknow-cam",
+            "name": "胡闹相机",
+            "reuseLevel": 2,
+            "categoryId": "C",
+            "shell": "美颜相机",
+            "unlockTier": "M4",
+            "section": "2.16"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "形象经营域，共享\"点评顾客\"话术母题｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "D",
+        "name": "D 居住 Dwelling",
+        "members": [
+          {
+            "code": "whoknow-rent",
+            "name": "胡闹租房",
+            "reuseLevel": 3,
+            "categoryId": "D",
+            "shell": "租房/看房",
+            "unlockTier": "M4",
+            "section": "2.13"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "单一但高频痛点，待扩\"装修/物业\"补位｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "E",
+        "name": "E 消费与钱包 Commerce",
+        "members": [
+          {
+            "code": "whoknow-ledger",
+            "name": "胡闹记账",
+            "reuseLevel": 3,
+            "categoryId": "E",
+            "shell": "记账/资产",
+            "unlockTier": "M4",
+            "section": "2.11"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "花钱域，共享\"消费虚构 + 吐槽\"机制｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "F",
+        "name": "F 社交与陪伴 Social",
+        "members": [
+          {
+            "code": "whoknow-pet",
+            "name": "胡闹云养宠",
+            "reuseLevel": 5,
+            "categoryId": "F",
+            "shell": "养宠",
+            "unlockTier": "M4",
+            "section": "2.3"
+          },
+          {
+            "code": "whoknow-love",
+            "name": "胡闹相亲",
+            "reuseLevel": 3,
+            "categoryId": "F",
+            "shell": "交友",
+            "unlockTier": "M4",
+            "section": "2.6"
+          },
+          {
+            "code": "whoknow-bar",
+            "name": "胡闹酒吧",
+            "reuseLevel": 3,
+            "categoryId": "F",
+            "shell": "调酒/点单（虚构）",
+            "unlockTier": "M4",
+            "section": "2.15"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "关系域，共享\"虚构互动 + 情感投射\"｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "G",
+        "name": "G 职场 Hustle",
+        "members": [
+          {
+            "code": "whoknow-work",
+            "name": "胡闹打工",
+            "reuseLevel": 4,
+            "categoryId": "G",
+            "shell": "办公/职场",
+            "unlockTier": "M4",
+            "section": "2.5"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "单一，待扩\"面试/开会\"补位｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      },
+      {
+        "id": "H",
+        "name": "H 玄学日常 Omen Daily",
+        "members": [
+          {
+            "code": "whoknow-fate",
+            "name": "胡闹占卜",
+            "reuseLevel": 4,
+            "categoryId": "H",
+            "shell": "星座/抽签",
+            "unlockTier": "M2",
+            "section": "2.2"
+          },
+          {
+            "code": "whoknow-weather",
+            "name": "胡闹天气",
+            "reuseLevel": 3,
+            "categoryId": "H",
+            "shell": "天气",
+            "unlockTier": "M4",
+            "section": "2.4"
+          }
+        ],
+        "unlockGate": {
+          "status": false,
+          "condition": "宜忌/运势域，共享\"离谱卦象\"母题｜金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1"
+        }
+      }
+    ]
+  },
+  "governance": {
+    "l1": [
+      {
+        "id": "L1-T1",
+        "title": "禁忌词红线 0 容忍",
+        "status": "on"
+      },
+      {
+        "id": "L1-T2",
+        "title": "配置与状态分离（玩家隐私底线）",
+        "status": "on"
+      },
+      {
+        "id": "L1-T3",
+        "title": "不害人 · 不违法 · 不互相踩 · 人格统一（核心价值观底线）",
+        "status": "partial"
+      },
+      {
+        "id": "L1-T4",
+        "title": "字段命名权威（跨 app 数据正确性底线）",
+        "status": "on"
+      },
+      {
+        "id": "L1-T5",
+        "title": "多 App 共存红线（部署安全底线，违反即事故）",
+        "status": "on"
+      }
+    ],
+    "l2": [
+      {
+        "id": "L2-C1",
+        "title": "统一部署规范 §11",
+        "status": "on"
+      },
+      {
+        "id": "L2-C2",
+        "title": "内部链接相对路径",
+        "status": "on"
+      },
+      {
+        "id": "L2-C3",
+        "title": "Git 代理约定",
+        "status": "on"
+      },
+      {
+        "id": "L2-C4",
+        "title": "brain 信封契约",
+        "status": "partial"
+      },
+      {
+        "id": "L2-C5",
+        "title": "品牌视觉规范（含硬约束）",
+        "status": "on"
+      },
+      {
+        "id": "L2-C6",
+        "title": "发布硬闸门",
+        "status": "on"
+      },
+      {
+        "id": "L2-C7",
+        "title": "MVP 兼容约定",
+        "status": "on"
+      },
+      {
+        "id": "L2-C8",
+        "title": "不要做清单",
+        "status": "on"
+      },
+      {
+        "id": "L2-C9",
+        "title": "客观表述红线（多实例文档）",
+        "status": "partial"
+      }
+    ],
+    "l3": [
+      {
+        "id": "L3-D1",
+        "title": "三铁律（产品设计哲学）",
+        "status": "on"
+      },
+      {
+        "id": "L3-D2",
+        "title": "痛点为王（产品立项级） 层级已校准",
+        "status": "on"
+      },
+      {
+        "id": "L3-D3",
+        "title": "用户思维铁律（决策三问）",
+        "status": "on"
+      },
+      {
+        "id": "L3-D4",
+        "title": "截图价值优先 / 传播铁律",
+        "status": "on"
+      },
+      {
+        "id": "L3-D5",
+        "title": "四大痛点滤网（决策级） 层级已校准",
+        "status": "on"
+      },
+      {
+        "id": "L3-D6",
+        "title": "锡哥审核铁律（内容供给纪律）",
+        "status": "on"
+      },
+      {
+        "id": "L3-D7",
+        "title": "零负担不 push 留存（运营纪律）",
+        "status": "on"
+      },
+      {
+        "id": "L3-D8",
+        "title": "编排者只编排不建造（工作室协作纪律）",
+        "status": "on"
+      }
+    ],
+    "redLights": [
+      {
+        "id": "L1-T1",
+        "title": "禁忌词红线 0 容忍",
+        "status": "on",
+        "evidence": "✅ 已落地（`forbiddenCheck.ts`，45/45 测试覆盖，真闸门）"
+      },
+      {
+        "id": "L1-T2",
+        "title": "配置与状态分离（玩家隐私底线）",
+        "status": "on",
+        "evidence": "✅ 已落地（`memory.ts` localStorage 实现）"
+      },
+      {
+        "id": "L1-T3",
+        "title": "不害人 · 不违法 · 不互相踩 · 人格统一（核心价值观底线）",
+        "status": "partial",
+        "evidence": "🔶 指导性原则，需靠 L1-T1/T2/T5 与 L2 约定共同落实"
+      },
+      {
+        "id": "L1-T4",
+        "title": "字段命名权威（跨 app 数据正确性底线）",
+        "status": "on",
+        "evidence": "✅ 已落地（mart draft 已复用语）"
+      },
+      {
+        "id": "L1-T5",
+        "title": "多 App 共存红线（部署安全底线，违反即事故）",
+        "status": "on",
+        "evidence": "✅ 已落地（CURRENT-STATE 有 rebase 记录，红线生效）"
+      }
+    ],
+    "gate": {
+      "status": false,
+      "condition": "金克木硬约束：waimai 真机 playtest 硬闸门 PASS + mart v1 跑通，二者全绿前禁止任一候选进入 Phase 1",
+      "prerequisites": [
+        "waimai 真机 playtest 硬闸门 PASS",
+        "mart v1 跑通验证"
+      ],
+      "frozenBy": "总纲 §2 金克木·克制扩张 + 三司会审 2026-07-28 裁定"
+    }
+  },
+  "warnings": [
+    "mart 七阶段表未解析到完成项，回退基线 phase=5",
+    "brain 七阶段表未解析到完成项，回退基线 phase=2"
+  ]
+}

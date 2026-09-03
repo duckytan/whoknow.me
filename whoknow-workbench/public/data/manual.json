@@ -1,0 +1,220 @@
+{
+  "_meta": {
+    "purpose": "胡闹宇宙开发工作台 B 类手动维护数据（SYSTEM_DESIGN.md §6.3）",
+    "schemaVersion": "2026-09-03.001",
+    "updatedAt": "2026-09-03",
+    "mergeRule": "dataLoader.ts 运行时深度合并 metrics.json，manual.json 同名字段优先覆盖",
+    "owners": {
+      "healthScore": "PM（许清楚）/ 主理人 · 里程碑节点更新",
+      "playtestResult": "主理人 · 真机 playtest 后更新",
+      "brainEnvelopeAutomation": "701-PC（Agent-商城）· 状态变更时更新",
+      "redlightList": "主理人 / quality · 季度或事件触发",
+      "constitutionLevel": "主理人 · 宪法修订时",
+      "dualInstanceLoad": "可派生自 git，专人复核覆盖 · 周更"
+    }
+  },
+  "healthScore": {
+    "waimai": {
+      "progress": 100,
+      "quality": 92,
+      "risk": 70,
+      "collab": 85,
+      "business": 30
+    },
+    "mart": {
+      "progress": 68,
+      "quality": 74,
+      "risk": 60,
+      "collab": 78,
+      "business": 22
+    },
+    "brain": {
+      "progress": 28,
+      "quality": 45,
+      "risk": 40,
+      "collab": 55,
+      "business": 15
+    }
+  },
+  "playtestResult": {
+    "waimai": null,
+    "mart": null,
+    "brain": null
+  },
+  "brainEnvelopeAutomation": "paused",
+  "redlightList": [
+    {
+      "id": "L1-T1",
+      "title": "禁忌词红线 0 容忍",
+      "status": "on",
+      "evidence": "forbiddenCheck.ts 真闸门已落地，waimai 45/45 测试覆盖，red_light_count===0 才放行"
+    },
+    {
+      "id": "L1-T2",
+      "title": "配置与状态分离（玩家隐私底线）",
+      "status": "on",
+      "evidence": "memory.ts 玩家数据仅落 localStorage，brain 只产内容配置"
+    },
+    {
+      "id": "L1-T3",
+      "title": "不害人 · 不违法 · 不互相踩 · 人格统一",
+      "status": "partial",
+      "evidence": "指导性原则，依赖 L1-T1/T2/T5 与 L2 约定共同落实，缺独立机检"
+    },
+    {
+      "id": "L1-T4",
+      "title": "字段命名权威（跨 app 数据正确性底线）",
+      "status": "on",
+      "evidence": "ADR-001-data-shape-authority.md 已裁决 6 项字段二义，mart draft 已复用命名"
+    },
+    {
+      "id": "L1-T5",
+      "title": "多 App 共存红线（部署安全底线，违反即事故）",
+      "status": "partial",
+      "evidence": "历史 rebase 记录显示红线生效；workbench 部署接入（vercel.json rewrite + .gitignore 例外）属 T08，2026-09-03 尚未执行"
+    }
+  ],
+  "constitutionLevel": {
+    "l1": [
+      { "id": "L1-T1", "title": "禁忌词红线 0 容忍", "status": "on" },
+      { "id": "L1-T2", "title": "配置与状态分离（玩家隐私底线）", "status": "on" },
+      { "id": "L1-T3", "title": "不害人 · 不违法 · 不互相踩 · 人格统一", "status": "partial" },
+      { "id": "L1-T4", "title": "字段命名权威（跨 app 数据正确性底线）", "status": "on" },
+      { "id": "L1-T5", "title": "多 App 共存红线（部署安全底线，违反即事故）", "status": "partial" }
+    ],
+    "l2": [
+      { "id": "L2-C1", "title": "统一部署规范 §11", "status": "on" },
+      { "id": "L2-C2", "title": "内部链接相对路径", "status": "on" },
+      { "id": "L2-C3", "title": "Git 代理约定", "status": "on" },
+      { "id": "L2-C4", "title": "brain 信封契约", "status": "partial" },
+      { "id": "L2-C5", "title": "品牌视觉规范（含硬约束）", "status": "on" },
+      { "id": "L2-C6", "title": "发布硬闸门", "status": "on" },
+      { "id": "L2-C7", "title": "MVP 兼容约定", "status": "on" },
+      { "id": "L2-C8", "title": "不要做清单", "status": "on" },
+      { "id": "L2-C9", "title": "客观表述红线（多实例文档）", "status": "partial" }
+    ],
+    "l3": [
+      { "id": "L3-D1", "title": "三铁律（产品设计哲学）", "status": "on" },
+      { "id": "L3-D2", "title": "痛点为王（产品立项级）", "status": "on" },
+      { "id": "L3-D3", "title": "用户思维铁律（决策三问）", "status": "on" },
+      { "id": "L3-D4", "title": "截图价值优先 / 传播铁律", "status": "partial" },
+      { "id": "L3-D5", "title": "四大痛点滤网（决策级）", "status": "on" },
+      { "id": "L3-D6", "title": "锡哥审核铁律（内容供给纪律）", "status": "partial" },
+      { "id": "L3-D7", "title": "零负担不 push 留存（运营纪律）", "status": "on" },
+      { "id": "L3-D8", "title": "编排者只编排不建造（工作室协作纪律）", "status": "on" }
+    ]
+  },
+  "dualInstanceLoad": {
+    "701-PC": 0,
+    "DuckyPC": 0
+  },
+  "contract": {
+    "specRef": "whoknow-brain/docs/api-spec.md",
+    "specVersion": "v2.2",
+    "automation": "paused",
+    "envelope": [
+      {
+        "field": "app",
+        "path": "app",
+        "type": "string",
+        "enumValues": ["waimai", "mart", "brain"],
+        "note": "多租户主键：标识配置消费方 app 短名"
+      },
+      {
+        "field": "meta.category",
+        "path": "meta.category",
+        "type": "string",
+        "enumValues": ["A", "B", "C", "D", "E", "F", "G", "H"],
+        "note": "对应 APP-MATRIX-ROADMAP §3 八大类，成簇共享 persona 池"
+      },
+      {
+        "field": "meta.persona_type",
+        "path": "meta.persona_type",
+        "type": "string",
+        "enumValues": ["boss", "rider", "driver", "clerk", "pet", "service_worker"],
+        "note": "人格类型：waimai 用 boss/rider，矩阵扩展时替换为对应角色"
+      },
+      {
+        "field": "meta.tone",
+        "path": "meta.tone",
+        "type": "string",
+        "enumValues": ["毒舌", "哲学", "话痨", "社恐", "暴躁"],
+        "note": "语气母题：同簇 app 共享，降低边际内容成本"
+      },
+      {
+        "field": "meta.memory_scope",
+        "path": "meta.memory_scope",
+        "type": "string",
+        "enumValues": ["session", "shop", "global"],
+        "note": "记忆分级：与 DATA-STRUCTURE-v1 L2 运行时/L3 持久化分层对齐"
+      },
+      {
+        "field": "meta.fiction_flag",
+        "path": "meta.fiction_flag",
+        "type": "boolean",
+        "enumValues": ["true", "false"],
+        "note": "虚构标记：true 时前端须渲染「本次为虚构」水印（红线要求）"
+      }
+    ],
+    "degrade": [
+      {
+        "level": "L1",
+        "trigger": "脑今日配置拉取成功",
+        "watermark": "🧠 今日 AI 更新",
+        "dataSource": "brain latest-config.json（当日）",
+        "userVisible": "当日全新段子池",
+        "depth": 1
+      },
+      {
+        "level": "L2",
+        "trigger": "今日配置不可达，昨日配置命中缓存",
+        "watermark": "⏰ 昨日 AI 内容",
+        "dataSource": "brain latest-config.json（前一日缓存）",
+        "userVisible": "前一日段子池",
+        "depth": 2
+      },
+      {
+        "level": "L3",
+        "trigger": "远端全部不可达，回落内置静态包",
+        "watermark": "🎭 经典段子",
+        "dataSource": "前端内置 fallback.json / DRAMA-SEED",
+        "userVisible": "内置经典段子池",
+        "depth": 3
+      },
+      {
+        "level": "L4",
+        "trigger": "内置包亦异常",
+        "watermark": "今天没新段子，喝杯水吧 ☕",
+        "dataSource": "无",
+        "userVisible": "温和弹窗提示，绝不静默失败",
+        "depth": 4
+      }
+    ]
+  },
+  "notes": [
+    {
+      "id": "note-brain-src",
+      "scope": "brain",
+      "severity": "warn",
+      "text": "口径冲突待核实：ROLES.md §6.5 记载 DuckyPC 已将 whoknow-brain src 全套实现提交 origin/main（32 commits），2026-09-03 磁盘核查 whoknow-brain/ 仅含 docs/。工作台按「以磁盘为准」展示，冲突交 DuckyPC 核实。"
+    },
+    {
+      "id": "note-playtest-gate",
+      "scope": "waimai",
+      "severity": "warn",
+      "text": "playtest 闸门口径（A 轻量 / B 自然回收 / C 全量）待主理人拍板，playtestResult 三项均为 null。"
+    },
+    {
+      "id": "note-deploy-t08",
+      "scope": "workbench",
+      "severity": "info",
+      "text": "部署接入（vercel.json 追加 /workbench rewrite + .gitignore 追加 !whoknow-workbench/dist/ 例外）属 T08，2026-09-03 未执行，本工作台仅完成本地构建验证。"
+    },
+    {
+      "id": "note-ci-gap",
+      "scope": "universe",
+      "severity": "info",
+      "text": "无 CI 平台，ciResult 以 dist/ 产物存在性近似；DORA 与业务指标（笑率/留存）管道待建，字段为 null。"
+    }
+  ]
+}

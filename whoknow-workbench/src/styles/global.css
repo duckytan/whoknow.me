@@ -1,0 +1,144 @@
+/**
+ * 工作台全局深色样式。
+ * 锚色遵循 BRAND.md / CONSTITUTION.md L2-C5：绿 #6eda78 / 橙 #ff7849 / 紫 #8b5cf6 不可替换。
+ */
+
+:root {
+  --wb-bg: #0f1117;
+  --wb-bg-soft: #131722;
+  --wb-panel: #171a23;
+  --wb-panel-2: #1d2130;
+  --wb-border: #262b36;
+  --wb-border-soft: #1f2430;
+  --wb-text: #e6e8ee;
+  --wb-text-dim: #a7aec1;
+  --wb-text-muted: #79819a;
+  --wb-green: #6eda78;
+  --wb-orange: #ff7849;
+  --wb-purple: #8b5cf6;
+  --wb-blue: #38bdf8;
+  --wb-yellow: #fbbf24;
+  --wb-red: #ef4444;
+  --wb-gray: #4b5563;
+  --wb-radius: 10px;
+  --wb-shadow: 0 2px 16px rgba(0, 0, 0, 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--wb-bg);
+  color: var(--wb-text);
+  font-family: 'Inter', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--wb-green);
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a3040;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ── Element Plus 深色变量对齐工作台配色 ───────────────── */
+html.dark {
+  --el-bg-color: var(--wb-panel);
+  --el-bg-color-page: var(--wb-bg);
+  --el-bg-color-overlay: var(--wb-panel-2);
+  --el-text-color-primary: var(--wb-text);
+  --el-text-color-regular: var(--wb-text-dim);
+  --el-text-color-secondary: var(--wb-text-muted);
+  --el-border-color: var(--wb-border);
+  --el-border-color-light: var(--wb-border);
+  --el-border-color-lighter: var(--wb-border-soft);
+  --el-fill-color-blank: var(--wb-panel);
+  --el-fill-color-light: var(--wb-panel-2);
+  --el-color-primary: var(--wb-green);
+  --el-color-success: var(--wb-green);
+  --el-color-warning: var(--wb-orange);
+  --el-color-danger: var(--wb-red);
+  --el-color-info: var(--wb-text-muted);
+}
+
+html.dark .el-menu {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: var(--wb-text-dim);
+  --el-menu-hover-bg-color: #1f2430;
+  --el-menu-active-color: var(--wb-green);
+  border-right: none;
+}
+
+html.dark .el-table {
+  --el-table-border-color: var(--wb-border);
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: #1b1f2b;
+  --el-table-row-hover-bg-color: #1f2430;
+}
+
+html.dark .el-tree {
+  --el-tree-node-hover-bg-color: #1f2430;
+  background: transparent;
+  color: var(--wb-text-dim);
+}
+
+html.dark .el-card {
+  --el-card-bg-color: var(--wb-panel);
+  border-color: var(--wb-border);
+}
+
+/* ── 通用工具类 ─────────────────────────────────────────── */
+.wb-mono {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+.wb-dim {
+  color: var(--wb-text-muted);
+}
+
+.wb-note {
+  color: var(--wb-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.wb-grid-gap {
+  margin-bottom: 16px;
+}
+
+/* 无障碍：焦点可见 + reduced-motion 降级（L2-C5 WCAG AA） */
+:focus-visible {
+  outline: 2px solid var(--wb-orange);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "whoknow-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "胡闹宇宙项目开发工作台 · 宇宙综合面板 / 子项目详情 / 候选矩阵 / 治理透视",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit",
+    "gen": "node scripts/gen-metrics.mjs"
+  },
+  "dependencies": {
+    "echarts": "^5.5.0",
+    "element-plus": "^2.7.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.2.0",
+    "vue-tsc": "^2.0.0"
+  }
+}
