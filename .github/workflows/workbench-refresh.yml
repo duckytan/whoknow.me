@@ -1,0 +1,50 @@
+# 工作台指标周更（三司会审 sanshi-20260904-001 P1 建议 · 根治手工刷新链）
+# 职责：重新生成 metrics.json → 构建 workbench → 提交推送 main
+# 数据无变化时自动跳过提交。手动触发：GitHub Actions 页面 Run workflow。
+name: workbench-refresh
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # 每周一 02:00 UTC（北京周一 10:00）
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: workbench-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # gen-metrics.mjs 读取 git log --all，需完整历史
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: whoknow-workbench/package-lock.json
+
+      - name: 重新生成指标数据
+        working-directory: whoknow-workbench
+        run: node scripts/gen-metrics.mjs
+
+      - name: 类型检查并构建
+        working-directory: whoknow-workbench
+        run: npm ci && npm run build
+
+      - name: 提交并推送
+        run: |
+          git config user.name "workbench-bot"
+          git config user.email "workbench-bot@users.noreply.github.com"
+          git add whoknow-workbench/public/data whoknow-workbench/dist
+          if git diff --cached --quiet; then
+            echo "数据无变化，跳过提交"
+          else
+            git commit -m "chore(workbench): 定时刷新指标数据与构建产物"
+            git push origin HEAD:main
+          fi

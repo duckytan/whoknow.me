@@ -13,7 +13,7 @@
 
   | 计算机名 | 角色 | AI 自称 | 负责范围 |
   |---|---|---|---|
-  | `701-PC` | **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/`（独占）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）|
+  | `701-PC` | **Agent-商城** | 胡叨叨 🦆 | `whoknow-mart/`（独占）；`whoknow-workbench/`（独占，含状态锚与面板维护 @2026-09-04）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）|
   | `DuckyPC` | **Agent-外卖** | （待该实例自定后回填本表）| `whoknow-waimai/` + 主站前端（`data/` `styles/` `js/` `index*.html`）；`whoknow-brain/`（实测主责 @2026-08-31，含 `src/` 全套实现 + 已出 waimai 版本 `releases/waimai/2026-08-16.001.json`，归属待 Ducky 确认）|
 
 - **仓库只放"地图"，不放"角色定位结论"**：映射表（本文件）入库共享；"本实例身份 / 本实例负责范围"的**定位结论**缓存到本机 gitignored 的 `.workbuddy/memory/`，不与另一台冲突。但**对协作可见的称呼约定**（见下）必须入库共享，否则双实例无法对齐"对方叫什么、用户叫什么"。
@@ -28,7 +28,7 @@
 | 实例标识 | 所在机器 | 负责范围（独占） | 说明 |
 |---|---|---|---|
 | **Agent-外卖** | `DuckyPC` | `whoknow-waimai/`、`data/`、`styles/`、`js/`、`index.html`、`index1.html`；`whoknow-brain/`（实测主责 @2026-08-31，含 `src/` 全套实现 + 已出 waimai 版本 `releases/waimai/2026-08-16.001.json`，归属待 Ducky 确认）| 外卖 App 全栈 + 主站门面前端 + 宇宙级契约中枢（brain 实现，归属待确认）|
-| **Agent-商城** | `701-PC` | `whoknow-mart/`（独占）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）| 商城 App + 宇宙级契约中枢（名义）|
+| **Agent-商城** | `701-PC` | `whoknow-mart/`（独占）；`whoknow-workbench/`（独占，含状态锚与面板维护 @2026-09-04）；`whoknow-brain/`（名义 lane，实测由 `DuckyPC` 实现并部署 waimai 版 @2026-08-31，归属待 Ducky 拍板确认）| 商城 App + 开发工作台 + 宇宙级契约中枢（名义）|
 | **共享 / 协调（须协商）**| — | `胡闹宇宙总体设计方案.md`、`README.md`、`BRAND.md`、`vercel.json`、`archive/`、`docs/studio/`（除本文件与 WIP.md 外）| 跨切面文件，改动须通知另一实例并经人工确认 |
 
 > 范围划分是**建议值**，可按实际工作流调整；调整后须双方一致并回写本表与 §0 映射。

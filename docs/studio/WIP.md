@@ -10,3 +10,4 @@
 | （示例）701-PC | Agent-商城 | whoknow-mart/docs/... | 商城 MVP 概念细化 | 2026-07-26 | 进行中 |
 | 701-PC | Agent-商城 | 胡闹宇宙总体设计方案.md + APP-MATRIX-ROADMAP.md + whoknow-brain/docs/* | 三司会审收口 A/B/C 落地；2-A brain engine/ 处置 2026-08-31 完成（备份后清，main ff 成功）；brain lane 归属待 Ducky 确认 | 2026-07-29 | ✅ 已收口 |
 | 701-PC | Agent-商城 | docs/studio/ROLES.md | 修订 brain lane 映射：§0/§1/§6.5 反映 DuckyPC 实测主责(2026-08-31 跨实例红线事件)，归属待 Ducky 拍板确认 | 2026-08-31 | ✅ 已收口（待 Ducky 确认）|
+| 701-PC | Agent-商城 | docs/studio/ROLES.md + vercel.json + .github/workflows/workbench-refresh.yml + whoknow-workbench/dist/data（移出跟踪）| 三司会审 sanshi-20260904-001 P1 落地：workbench owner lane 登记（§0/§1 同步）、workbench 数据路由改指 public/data 去重、新增 GitHub Action 周更数据（经 Ducky 2026-09-04 「继续」指令确认） | 2026-09-04 | ✅ 已收口 |

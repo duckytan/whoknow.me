@@ -43,6 +43,8 @@ research-raw/
 
 # ── workbench 预构建产物（开发工作台，需提交支持 Vercel 静态部署，/workbench → whoknow-workbench/dist） ──
 !whoknow-workbench/dist/
+# 运行时数据单一来源 = public/data（vercel.json /workbench/data 路由直指）；dist/data 为构建复制产物，不重复入库
+whoknow-workbench/dist/data/
 
 # ── QA 临时验证产物（boundary/qa-validate/reverify-rider 等，非源码） ──
 whoknow-waimai/.qa-tmp/

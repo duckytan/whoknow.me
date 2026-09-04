@@ -10,7 +10,7 @@
     { "source": "/mart/", "destination": "/whoknow-mart/dist/index.html" },
     { "source": "/mart", "destination": "/whoknow-mart/dist/index.html" },
     { "source": "/workbench/assets/:path*", "destination": "/whoknow-workbench/dist/assets/:path*" },
-    { "source": "/workbench/data/:path*", "destination": "/whoknow-workbench/dist/data/:path*" },
+    { "source": "/workbench/data/:path*", "destination": "/whoknow-workbench/public/data/:path*" },
     { "source": "/workbench/:path*", "destination": "/whoknow-workbench/dist/index.html" },
     { "source": "/workbench/", "destination": "/whoknow-workbench/dist/index.html" },
     { "source": "/workbench", "destination": "/whoknow-workbench/dist/index.html" }
