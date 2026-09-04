@@ -30,20 +30,30 @@ const dataFresh = computed(() => useUniverseStore().dataFresh);
 const generatedAt = computed(() => useUniverseStore().generatedAt);
 const appsStore = useAppsStore();
 
+interface NavItem {
+  to: string;
+  label: string;
+}
+
 /**
  * App 导航项由 store 驱动，顺序与数据一致。
  * 唯一事实源是 gen-metrics.mjs 的 APP_DEFS（导航 / 卡片 / 质量门 / 状态灯均沿用），
  * 避免这里再硬编码一份导致两处顺序漂移。
  */
-const appNavItems = computed(() =>
+const appNavItems = computed<NavItem[]>(() =>
   appsStore.list.length > 0
     ? appsStore.list.map((a) => ({ to: `/app/${a.appKey}`, label: a.label ?? a.appKey }))
     : APP_NAV_FALLBACK,
 );
 
-const navItems = computed(() => [
+/** 主导航：综合面板 + 各 App 详情页（顺序与数据一致） */
+const navPrimary = computed<NavItem[]>(() => [
   { to: '/', label: '宇宙综合面板' },
   ...appNavItems.value,
+]);
+
+/** 工具导航：跨 App 的治理类页面，与 App 页非同类，用分隔线与主导航隔开 */
+const navSecondary = computed<NavItem[]>(() => [
   { to: '/candidates', label: '候选矩阵' },
   { to: '/governance', label: '治理透视' },
 ]);
@@ -73,7 +83,17 @@ onMounted(bootstrap);
       </div>
       <nav class="wb-app__links">
         <router-link
-          v-for="item in navItems"
+          v-for="item in navPrimary"
+          :key="item.to"
+          :to="item.to"
+          class="wb-app__link"
+          active-class="wb-app__link--active"
+        >
+          {{ item.label }}
+        </router-link>
+        <span class="wb-app__divider" aria-hidden="true" />
+        <router-link
+          v-for="item in navSecondary"
           :key="item.to"
           :to="item.to"
           class="wb-app__link"
@@ -181,6 +201,15 @@ onMounted(bootstrap);
   color: #0f1117;
   background: var(--wb-green);
   font-weight: 600;
+}
+
+/* 主导航（面板 + App 页）与工具导航（候选矩阵 / 治理透视）之间的分组分隔线 */
+.wb-app__divider {
+  width: 1px;
+  height: 18px;
+  background: var(--wb-border);
+  margin: 0 8px;
+  flex-shrink: 0;
 }
 
 .wb-app__meta {
