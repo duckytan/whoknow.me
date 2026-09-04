@@ -6,6 +6,8 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import type {
   AppMetrics,
+  AppProfile,
+  AppProfiles,
   AutomationStatus,
   ContractHub,
   HealthScore,
@@ -22,6 +24,8 @@ export const useAppsStore = defineStore('apps', () => {
   const playtestResult = ref<Record<string, PlaytestGrade | null>>({});
   const brainEnvelopeAutomation = ref<AutomationStatus>('paused');
   const contract = ref<ContractHub>(createEmptyData().contract);
+  /** 各 app 的特征档案（manual.json 维护，去模板化详情页的数据源） */
+  const appProfiles = ref<AppProfiles>({});
 
   const keys = computed(() => list.value.map((a) => a.appKey));
 
@@ -43,12 +47,18 @@ export const useAppsStore = defineStore('apps', () => {
     return playtestResult.value[key] ?? null;
   }
 
+  /** 特征档案：按 appKey 取，未配置返回 null（页面降级为不渲染该区块） */
+  function profile(key: string): AppProfile | null {
+    return appProfiles.value[key] ?? null;
+  }
+
   function hydrate(data: WorkbenchData): void {
     list.value = data.apps;
     healthScore.value = data.manual.healthScore;
     playtestResult.value = data.manual.playtestResult;
     brainEnvelopeAutomation.value = data.manual.brainEnvelopeAutomation;
     contract.value = data.contract;
+    appProfiles.value = data.appProfiles ?? {};
   }
 
   return {
@@ -57,11 +67,13 @@ export const useAppsStore = defineStore('apps', () => {
     playtestResult,
     brainEnvelopeAutomation,
     contract,
+    appProfiles,
     keys,
     byKey,
     get,
     health,
     playtest,
+    profile,
     hydrate,
   };
 });

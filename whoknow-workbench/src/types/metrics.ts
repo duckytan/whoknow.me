@@ -293,9 +293,10 @@ export interface DataNote {
   severity: 'info' | 'warn';
 }
 
-/** manual.json 的完整载荷：ManualMetrics + 契约中枢 + 备注 */
+/** manual.json 的完整载荷：ManualMetrics + 契约中枢 + App 特征档案 + 备注 */
 export interface ManualPayload extends ManualMetrics {
   contract: ContractHub;
+  appProfiles: AppProfiles;
   notes: DataNote[];
 }
 
@@ -303,6 +304,7 @@ export interface ManualPayload extends ManualMetrics {
 export interface WorkbenchData extends MetricsBundle {
   manual: ManualMetrics;
   contract: ContractHub;
+  appProfiles: AppProfiles;
   notes: DataNote[];
 }
 
@@ -346,3 +348,119 @@ export interface InstanceLoadRow {
   total: number;
   scope: string;
 }
+
+// ── App 特征档案（per-app 详情页专用，manual.json 人工维护）─────
+/**
+ * 去模板化的关键：每个 app 用不同的 ProfileSection 组合描述自己的特征数据，
+ * AppDetail.vue 只做 kind → 组件的通用分派，内容完全由 manual.json 决定。
+ */
+export type ProfileSectionKind =
+  | 'stat-grid'
+  | 'list'
+  | 'keywords'
+  | 'matrix'
+  | 'timeline'
+  | 'callout'
+  | 'branches'
+  | 'shops'
+  | 'pairs';
+
+export interface ProfileStat {
+  label: string;
+  value: string;
+  /** CSS 变量色，如 var(--wb-green) */
+  accent?: string;
+}
+
+export interface ProfileItem {
+  title: string;
+  desc?: string;
+  tag?: string;
+}
+
+export interface ProfileKeyword {
+  text: string;
+  desc?: string;
+}
+
+export interface ProfileMatrix {
+  head: string[];
+  rows: { rowHead: string; cells: string[] }[];
+}
+
+export interface ProfileTimelineRow {
+  phase: string;
+  role: string;
+  detail: string;
+}
+
+export interface ProfileBranch {
+  name: string;
+  trigger: string;
+  rarity: string;
+  achievements?: string[];
+}
+
+export interface ProfileShop {
+  id: string;
+  name: string;
+  emoji: string;
+  personality: string;
+  score: number;
+  monthlySales: string;
+  deliveryTime: string;
+  minOrder: number;
+  deliveryFee: number;
+  distance: string;
+  promo: string;
+  dishes: { name: string; price: number }[];
+}
+
+export interface ProfilePair {
+  key: string;
+  value: string;
+}
+
+export interface ProfileSection {
+  id: string;
+  kind: ProfileSectionKind;
+  title: string;
+  subtitle?: string;
+  /** kind = stat-grid */
+  stats?: ProfileStat[];
+  /** kind = list */
+  items?: ProfileItem[];
+  /** kind = keywords */
+  keywords?: ProfileKeyword[];
+  /** kind = matrix */
+  matrix?: ProfileMatrix;
+  /** kind = timeline */
+  timeline?: ProfileTimelineRow[];
+  /** kind = branches */
+  branches?: ProfileBranch[];
+  /** kind = shops */
+  shops?: ProfileShop[];
+  /** kind = pairs */
+  pairs?: ProfilePair[];
+  /** kind = callout */
+  callout?: { tone: 'warn' | 'info' | 'ok'; text: string };
+}
+
+export interface AppProfile {
+  /** 一句话定位 */
+  tagline: string;
+  /** 详述（1-2 句） */
+  oneLiner: string;
+  /** 核心机制关键词 */
+  coreMechanics: string[];
+  /** 关键数据高亮 */
+  highlightStats: ProfileStat[];
+  /** 设计支柱 / 乐趣假说 / 关键原则（各 app 不同） */
+  pillars?: ProfileItem[];
+  /** 真实外壳 / 荒诞内核边界（跨 App 设计宪法实例化） */
+  boundary?: { tone: 'warn' | 'info' | 'ok'; text: string };
+  /** 特征数据集：各 app 不同，这是去模板化的核心 */
+  sections: ProfileSection[];
+}
+
+export type AppProfiles = Record<string, AppProfile>;

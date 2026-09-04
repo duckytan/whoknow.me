@@ -9,6 +9,7 @@
  */
 
 import type {
+  AppProfiles,
   DataNote,
   ManualMetrics,
   ManualPayload,
@@ -72,6 +73,7 @@ export function createEmptyData(): WorkbenchData {
       degrade: [],
       automation: 'paused',
     },
+    appProfiles: {},
     notes: [],
   };
 }
@@ -167,6 +169,10 @@ export async function loadWorkbenchData(): Promise<LoadResult> {
 
   const contract = deepMerge(createEmptyData().contract, manualRaw?.contract ?? {});
   const notes: DataNote[] = Array.isArray(manualRaw?.notes) ? manualRaw.notes : [];
+  const appProfiles: AppProfiles =
+    manualRaw && isPlainObject(manualRaw.appProfiles)
+      ? (manualRaw.appProfiles as unknown as AppProfiles)
+      : {};
 
   // manual 覆盖：红线看板与宪法层级以人工维护为权威（自动采集仅提供标题兜底）
   const riskBoard = manual.redlightList.length > 0 ? manual.redlightList : bundle.universe.riskBoard;
@@ -199,6 +205,7 @@ export async function loadWorkbenchData(): Promise<LoadResult> {
     governance,
     manual,
     contract: { ...contract, automation: manual.brainEnvelopeAutomation },
+    appProfiles,
     notes,
   };
 

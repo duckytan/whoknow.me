@@ -10,7 +10,21 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useAppsStore } from '@/stores/apps';
 import { useUniverseStore } from '@/stores/universe';
-import type { EnvelopeDimension, HealthScore, QualityGateRow } from '@/types/metrics';
+import type {
+  AppProfile,
+  EnvelopeDimension,
+  HealthScore,
+  ProfileBranch,
+  ProfileItem,
+  ProfileKeyword,
+  ProfileMatrix,
+  ProfilePair,
+  ProfileSection,
+  ProfileShop,
+  ProfileStat,
+  ProfileTimelineRow,
+  QualityGateRow,
+} from '@/types/metrics';
 import SectionCard from '@/components/common/SectionCard.vue';
 import StatusLight from '@/components/common/StatusLight.vue';
 import MetricCard from '@/components/common/MetricCard.vue';
@@ -44,6 +58,22 @@ const health = computed<HealthScore | null>(() => (app.value ? apps.health(app.v
 const qg = computed<QualityGateRow | undefined>(() =>
   qualityGate.value.find((g) => g.app === key.value),
 );
+
+// ── 特征档案（per-app，manual.json 人工维护）──────────────
+// 去模板化的关键：内容完全由 appProfiles 决定，本页只做 kind → 渲染分派。
+const profile = computed<AppProfile | null>(() => apps.profile(key.value));
+
+// 可选字段统一取空容器，模板里不出现「可能未定义」的分支
+const statsOf = (s: ProfileSection): ProfileStat[] => s.stats ?? [];
+const itemsOf = (s: ProfileSection): ProfileItem[] => s.items ?? [];
+const keywordsOf = (s: ProfileSection): ProfileKeyword[] => s.keywords ?? [];
+const matrixOf = (s: ProfileSection): ProfileMatrix => s.matrix ?? { head: [], rows: [] };
+const timelineOf = (s: ProfileSection): ProfileTimelineRow[] => s.timeline ?? [];
+const branchesOf = (s: ProfileSection): ProfileBranch[] => s.branches ?? [];
+const shopsOf = (s: ProfileSection): ProfileShop[] => s.shops ?? [];
+const pairsOf = (s: ProfileSection): ProfilePair[] => s.pairs ?? [];
+const calloutOf = (s: ProfileSection) => s.callout ?? { tone: 'info' as const, text: '' };
+const pillarsOf = (p: AppProfile): ProfileItem[] => p.pillars ?? [];
 
 // ── 进度：七阶段里程碑 ──────────────────────────────────────
 interface PhaseStep {
@@ -151,6 +181,139 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
             <MetricCard label="通过率" :value="`${passPct(app.testPass, app.testTotal)}%`" accent="var(--wb-text)" />
             <MetricCard label="构建" :value="buildStatusLabel(app.buildStatus)" :accent="buildStatusColor(app.buildStatus)" dot-color="var(--wb-green)" />
             <MetricCard label="负责实例" :value="ownerInstance" accent="var(--wb-blue)" dot-color="var(--wb-blue)" />
+          </div>
+        </div>
+
+        <div v-if="profile" class="detail__intro">
+          <p class="detail__tagline">{{ profile.tagline }}</p>
+          <p class="detail__oneliner">{{ profile.oneLiner }}</p>
+          <div class="detail__chips">
+            <span v-for="m in profile.coreMechanics" :key="m" class="detail__chip">{{ m }}</span>
+          </div>
+        </div>
+      </SectionCard>
+
+      <!-- 特征档案：各 App 内容不同（manual.json · appProfiles 驱动） -->
+      <SectionCard
+        v-if="profile"
+        title="特征档案"
+        :subtitle="`${app.label ?? app.appKey} · 真实数据档案`"
+        tag="P0"
+        tag-color="var(--wb-purple)"
+      >
+        <div class="detail__profile">
+          <div v-if="profile.boundary" class="detail__callout" :class="`detail__callout--${profile.boundary.tone}`">
+            {{ profile.boundary.text }}
+          </div>
+
+          <div class="detail__metric-row">
+            <MetricCard
+              v-for="s in profile.highlightStats"
+              :key="s.label"
+              :label="s.label"
+              :value="s.value"
+              :accent="s.accent || 'var(--wb-text)'"
+            />
+          </div>
+
+          <div v-if="pillarsOf(profile).length > 0" class="detail__pillars">
+            <div v-for="p in pillarsOf(profile)" :key="p.title" class="detail__pillar">
+              <span class="detail__pillar-t">{{ p.title }}</span>
+              <span class="wb-note">{{ p.desc }}</span>
+            </div>
+          </div>
+
+          <div v-for="sec in profile.sections" :key="sec.id" class="detail__sec">
+            <h4 class="detail__h">{{ sec.title }}</h4>
+            <p v-if="sec.subtitle" class="wb-note">{{ sec.subtitle }}</p>
+
+            <div v-if="sec.kind === 'stat-grid'" class="detail__metric-row">
+              <MetricCard
+                v-for="s in statsOf(sec)"
+                :key="s.label"
+                :label="s.label"
+                :value="s.value"
+                :accent="s.accent || 'var(--wb-text)'"
+              />
+            </div>
+
+            <ul v-else-if="sec.kind === 'list'" class="detail__items">
+              <li v-for="(it, i) in itemsOf(sec)" :key="i" class="detail__item">
+                <span class="detail__item-t">{{ it.title }}</span>
+                <span v-if="it.desc" class="wb-note">{{ it.desc }}</span>
+                <span v-if="it.tag" class="detail__item-tag">{{ it.tag }}</span>
+              </li>
+            </ul>
+
+            <div v-else-if="sec.kind === 'keywords'" class="detail__chips">
+              <span v-for="(k, i) in keywordsOf(sec)" :key="i" class="detail__chip">
+                {{ k.text }}<i v-if="k.desc" class="detail__chip-d"> · {{ k.desc }}</i>
+              </span>
+            </div>
+
+            <table v-else-if="sec.kind === 'matrix'" class="detail__matrix">
+              <thead>
+                <tr>
+                  <th v-for="(h, i) in matrixOf(sec).head" :key="i">{{ h }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(r, i) in matrixOf(sec).rows" :key="i">
+                  <th>{{ r.rowHead }}</th>
+                  <td v-for="(c, j) in r.cells" :key="j">{{ c }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <ul v-else-if="sec.kind === 'timeline'" class="detail__timeline">
+              <li v-for="(t, i) in timelineOf(sec)" :key="i" class="detail__tl">
+                <span class="detail__tl-phase">{{ t.phase }}</span>
+                <span class="detail__tl-role">{{ t.role }}</span>
+                <span class="wb-note">{{ t.detail }}</span>
+              </li>
+            </ul>
+
+            <ul v-else-if="sec.kind === 'branches'" class="detail__branches">
+              <li v-for="(b, i) in branchesOf(sec)" :key="i" class="detail__branch">
+                <span class="detail__branch-name">{{ b.name }}</span>
+                <span class="detail__branch-meta">触发 {{ b.trigger }} · {{ b.rarity }}</span>
+                <span v-if="b.achievements" class="wb-note">成就：{{ b.achievements.join(' / ') }}</span>
+              </li>
+            </ul>
+
+            <div v-else-if="sec.kind === 'shops'" class="detail__shops">
+              <article v-for="sh in shopsOf(sec)" :key="sh.id" class="detail__shop">
+                <header class="detail__shop-head">
+                  <span class="detail__shop-emoji">{{ sh.emoji }}</span>
+                  <span class="detail__shop-name">{{ sh.name }}</span>
+                  <span class="detail__shop-persona">{{ sh.personality }}</span>
+                  <span class="detail__shop-score">★{{ sh.score }}</span>
+                </header>
+                <div class="detail__shop-meta wb-mono">
+                  {{ sh.monthlySales }} · {{ sh.deliveryTime }} · 起送 ¥{{ sh.minOrder }} · 配送 ¥{{ sh.deliveryFee }} · {{ sh.distance }} · {{ sh.promo }}
+                </div>
+                <div class="detail__shop-dishes">
+                  <span v-for="(d, j) in sh.dishes" :key="j" class="detail__dish">
+                    {{ d.name }} <i>¥{{ d.price }}</i>
+                  </span>
+                </div>
+              </article>
+            </div>
+
+            <dl v-else-if="sec.kind === 'pairs'" class="detail__pairs">
+              <div v-for="(p, i) in pairsOf(sec)" :key="i" class="detail__pair">
+                <dt>{{ p.key }}</dt>
+                <dd>{{ p.value }}</dd>
+              </div>
+            </dl>
+
+            <div
+              v-else-if="sec.kind === 'callout'"
+              class="detail__callout"
+              :class="`detail__callout--${calloutOf(sec).tone}`"
+            >
+              {{ calloutOf(sec).text }}
+            </div>
           </div>
         </div>
       </SectionCard>
@@ -531,6 +694,346 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
   flex-direction: column;
   gap: 2px;
   min-width: 0;
+}
+
+/* ── 特征档案（per-app） ─────────────────────────────── */
+.detail__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--wb-border);
+}
+
+.detail__tagline {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--wb-green);
+}
+
+.detail__oneliner {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--wb-text-dim);
+}
+
+.detail__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.detail__chip {
+  font-size: 11px;
+  color: var(--wb-text-dim);
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  line-height: 1.6;
+}
+
+.detail__chip-d {
+  font-style: normal;
+  color: var(--wb-text-muted);
+}
+
+.detail__profile {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 档案内数值偏文本化，缩小等宽字号以免溢出 */
+.detail__profile :deep(.wb-metric__value) {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.detail__sec {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail__pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 8px;
+}
+
+.detail__pillar {
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-left: 2px solid var(--wb-green);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail__pillar-t {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 8px;
+}
+
+.detail__item {
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail__item-t {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__item-tag {
+  align-self: flex-start;
+  font-size: 10px;
+  color: var(--wb-purple);
+  border: 1px solid var(--wb-purple);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+.detail__matrix {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+.detail__matrix th,
+.detail__matrix td {
+  border: 1px solid var(--wb-border);
+  padding: 6px 8px;
+  text-align: left;
+  color: var(--wb-text-dim);
+  line-height: 1.5;
+}
+
+.detail__matrix thead th {
+  background: var(--wb-panel-2);
+  color: var(--wb-text);
+  font-weight: 600;
+}
+
+.detail__matrix tbody th {
+  background: var(--wb-panel-2);
+  color: var(--wb-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.detail__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail__tl {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 2px 10px;
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.detail__tl-phase {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wb-purple);
+  grid-row: span 2;
+}
+
+.detail__tl-role {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__tl .wb-note {
+  grid-column: 2;
+}
+
+.detail__branches {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail__branch {
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-left: 2px solid var(--wb-orange);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail__branch-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__branch-meta {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  color: var(--wb-orange);
+}
+
+.detail__shops {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+}
+
+.detail__shop {
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail__shop-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.detail__shop-emoji {
+  font-size: 16px;
+}
+
+.detail__shop-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__shop-persona {
+  font-size: 11px;
+  color: var(--wb-purple);
+  border: 1px solid var(--wb-purple);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+.detail__shop-score {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--wb-yellow);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+.detail__shop-meta {
+  font-size: 11px;
+  color: var(--wb-text-muted);
+  line-height: 1.5;
+}
+
+.detail__shop-dishes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.detail__dish {
+  font-size: 11px;
+  color: var(--wb-text-dim);
+  border: 1px solid var(--wb-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.detail__dish i {
+  font-style: normal;
+  color: var(--wb-orange);
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+.detail__pairs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px;
+}
+
+.detail__pair {
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.detail__pair dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--wb-text);
+}
+
+.detail__pair dd {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--wb-text-dim);
+  line-height: 1.5;
+}
+
+.detail__callout {
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--wb-text-dim);
+  background: var(--wb-panel-2);
+  border: 1px solid var(--wb-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.detail__callout--warn {
+  border-left: 3px solid var(--wb-orange);
+}
+
+.detail__callout--info {
+  border-left: 3px solid var(--wb-blue);
+}
+
+.detail__callout--ok {
+  border-left: 3px solid var(--wb-green);
 }
 
 .detail__degrade-lvl {
