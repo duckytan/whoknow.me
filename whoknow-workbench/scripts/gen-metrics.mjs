@@ -45,10 +45,13 @@ const APP_DEFS = [
     dir: 'whoknow-brain',
     label: '胡闹大脑',
     ownerInstance: '701-PC',
-    phaseDoc: 'docs/studio/STUDIO-PROGRESS.md',
-    testProbes: [],
-    fallbackPhase: 2,
-    fallbackTest: [0, 0],
+    // brain 单一进度锚（2026-09-04 建立）：STUDIO-PROGRESS.md 由 waimai 主导，brain 段无可解析表
+    phaseDoc: 'whoknow-brain/docs/STATUS.md',
+    testProbes: [
+      { file: 'whoknow-brain/docs/STATUS.md', re: /`npm test`\s*\*\*(\d+)\/(\d+)\*\*/ },
+    ],
+    fallbackPhase: 4,
+    fallbackTest: [77, 77],
   },
   {
     key: 'waimai',
@@ -392,10 +395,7 @@ function collectApps(gitPerApp, docCache) {
       phase = def.fallbackPhase;
       warnings.push(`${def.key} 七阶段表未解析到完成项，回退基线 phase=${phase}`);
     }
-    if (def.key !== 'waimai') {
-      // waimai 的七阶段表在根状态锚；mart/brain 无独立七阶段表，按各自基线校准
-      phase = Math.min(phase, def.fallbackPhase);
-    }
+    // 解析值即权威；fallback 仅在七阶段表未解析到完成项时生效
 
     const [testPass, testTotal] = resolveTestCounts(def, docCache);
     const gitSlot = gitPerApp[def.dir] ?? { commits: 0, authors: {}, dirs: {} };

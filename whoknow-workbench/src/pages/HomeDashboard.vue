@@ -5,7 +5,7 @@
  */
 import { storeToRefs } from 'pinia';
 import { useUniverseStore } from '@/stores/universe';
-import { formatDate } from '@/services/format';
+import { formatDateTime } from '@/services/format';
 
 import UniverseProgressModule from '@/components/modules/UniverseProgressModule.vue';
 import AppStatusLightsModule from '@/components/modules/AppStatusLightsModule.vue';
@@ -19,7 +19,7 @@ import ContributionActivityModule from '@/components/modules/ContributionActivit
 import ContractHubModule from '@/components/modules/ContractHubModule.vue';
 
 const universe = useUniverseStore();
-const { overallProgressPct, generatedAt, dataFresh } = storeToRefs(universe);
+const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = storeToRefs(universe);
 </script>
 
 <template>
@@ -31,10 +31,11 @@ const { overallProgressPct, generatedAt, dataFresh } = storeToRefs(universe);
       </div>
       <div class="home__status">
         <span class="home__pct wb-mono">{{ overallProgressPct }}%</span>
-        <span class="home__fresh" :class="dataFresh ? 'home__fresh--ok' : 'home__fresh--stale'">
-          {{ dataFresh ? '数据可用' : '数据缺失' }}
+        <span v-if="isStale" class="home__fresh home__fresh--stale">
+          ⚠️ 数据已滞后 {{ dataAgeDays }} 天 · 请在 whoknow-workbench 重跑 npm run gen 并重新部署
         </span>
-        <span class="wb-mono home__ts">{{ formatDate(generatedAt) }}</span>
+        <span v-else-if="dataFresh" class="home__ts">数据截至 {{ formatDateTime(generatedAt) }}</span>
+        <span v-else class="home__fresh home__fresh--stale">数据缺失</span>
       </div>
     </header>
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2026-09-03.001",
-  "generatedAt": "2026-09-03T09:25:33.565Z",
+  "generatedAt": "2026-09-04T04:54:14.607Z",
   "source": {
     "gitRepo": "whoknow.me",
     "statusDocs": [
@@ -10,14 +10,14 @@
     ]
   },
   "universe": {
-    "overallProgressPct": 67,
+    "overallProgressPct": 76,
     "appStatusLights": [
       {
         "appKey": "brain",
-        "appStatus": "planning",
-        "milestonePhase": 2,
-        "testPass": 0,
-        "testTotal": 0,
+        "appStatus": "designing",
+        "milestonePhase": 4,
+        "testPass": 77,
+        "testTotal": 77,
         "buildStatus": "unknown",
         "gitCommitsTotal": 17,
         "gitCommitsByDir": {
@@ -36,12 +36,12 @@
         "candidateCategories": 8,
         "unlockGateStatus": false,
         "diskEvidence": {
-          "hasSrc": false,
+          "hasSrc": true,
           "hasDist": false,
           "hasDocs": true,
-          "docCount": 8
+          "docCount": 17
         },
-        "progressPct": 29,
+        "progressPct": 57,
         "ownerInstance": "701-PC",
         "commitTimeseries": [
           {
@@ -58,7 +58,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 7
+            "count": 14
           }
         ],
         "ciResult": "unknown",
@@ -105,7 +105,7 @@
           "hasSrc": true,
           "hasDist": true,
           "hasDocs": true,
-          "docCount": 20
+          "docCount": 26
         },
         "progressPct": 100,
         "ownerInstance": "DuckyPC",
@@ -124,7 +124,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 7
+            "count": 14
           }
         ],
         "ciResult": "pass",
@@ -193,7 +193,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 7
+            "count": 14
           }
         ],
         "ciResult": "pass",
@@ -531,9 +531,9 @@
     "qualityGate": [
       {
         "app": "brain",
-        "pass": 0,
-        "total": 0,
-        "verdict": "无自动化测试（仅文档契约）",
+        "pass": 77,
+        "total": 77,
+        "verdict": "全绿",
         "buildStatus": "unknown"
       },
       {
@@ -552,15 +552,16 @@
       }
     ],
     "git": {
-      "commitsTotal": 200,
+      "commitsTotal": 207,
       "commitsByDir": {
-        "root": 87,
+        "root": 88,
         "whoknow-waimai": 86,
         "docs": 28,
         "whoknow-mart": 18,
         "whoknow-brain": 17,
         "\"": 7,
         "\"whoknow-waimai": 7,
+        "whoknow-workbench": 6,
         "\"whoknow-brain": 5,
         "\"whoknow-mart": 4,
         "archive": 3,
@@ -579,7 +580,7 @@
       "authorDist": {
         "Ducky Tan": 86,
         "unknown": 72,
-        "duckytan": 42
+        "duckytan": 49
       },
       "commitTimeseries": [
         {
@@ -596,27 +597,27 @@
         },
         {
           "week": "2026-W36",
-          "count": 7
+          "count": 14
         }
       ],
       "branches": [
         "agent-mart",
-        "agent-waimai",
         "main",
+        "origin/agent-mart",
         "origin/main"
       ],
       "firstCommitAt": "2026-07-21T22:50:15+08:00",
-      "lastCommitAt": "2026-09-01T14:19:38+08:00",
+      "lastCommitAt": "2026-09-04T11:54:40+08:00",
       "degraded": false
     }
   },
   "apps": [
     {
       "appKey": "brain",
-      "appStatus": "planning",
-      "milestonePhase": 2,
-      "testPass": 0,
-      "testTotal": 0,
+      "appStatus": "designing",
+      "milestonePhase": 4,
+      "testPass": 77,
+      "testTotal": 77,
       "buildStatus": "unknown",
       "gitCommitsTotal": 17,
       "gitCommitsByDir": {
@@ -635,12 +636,12 @@
       "candidateCategories": 8,
       "unlockGateStatus": false,
       "diskEvidence": {
-        "hasSrc": false,
+        "hasSrc": true,
         "hasDist": false,
         "hasDocs": true,
-        "docCount": 8
+        "docCount": 17
       },
-      "progressPct": 29,
+      "progressPct": 57,
       "ownerInstance": "701-PC",
       "commitTimeseries": [
         {
@@ -657,7 +658,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 7
+          "count": 14
         }
       ],
       "ciResult": "unknown",
@@ -704,7 +705,7 @@
         "hasSrc": true,
         "hasDist": true,
         "hasDocs": true,
-        "docCount": 20
+        "docCount": 26
       },
       "progressPct": 100,
       "ownerInstance": "DuckyPC",
@@ -723,7 +724,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 7
+          "count": 14
         }
       ],
       "ciResult": "pass",
@@ -792,7 +793,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 7
+          "count": 14
         }
       ],
       "ciResult": "pass",
@@ -1200,7 +1201,6 @@
     }
   },
   "warnings": [
-    "mart 七阶段表未解析到完成项，回退基线 phase=5",
-    "brain 七阶段表未解析到完成项，回退基线 phase=2"
+    "mart 七阶段表未解析到完成项，回退基线 phase=5"
   ]
 }

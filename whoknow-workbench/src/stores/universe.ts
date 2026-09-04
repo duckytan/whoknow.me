@@ -50,6 +50,17 @@ export const useUniverseStore = defineStore('universe', () => {
 
   const dataFresh = computed(() => Boolean(generatedAt.value) && schemaVersion.value !== 'unavailable');
 
+  /** 数据新鲜度：generatedAt 距今天数（向下取整）；缺失或不可解析时为 null */
+  const dataAgeDays = computed<number | null>(() => {
+    if (!generatedAt.value) return null;
+    const t = new Date(generatedAt.value).getTime();
+    if (Number.isNaN(t)) return null;
+    return Math.max(0, Math.floor((Date.now() - t) / 86_400_000));
+  });
+
+  /** 滞后超过 7 天视为 stale（P0-2：数据新鲜度显性化，页头警示） */
+  const isStale = computed(() => dataAgeDays.value !== null && dataAgeDays.value > 7);
+
   function hydrate(data: WorkbenchData): void {
     schemaVersion.value = data.schemaVersion;
     generatedAt.value = data.generatedAt;
@@ -94,6 +105,8 @@ export const useUniverseStore = defineStore('universe', () => {
     totalTestPass,
     totalTestTotal,
     dataFresh,
+    dataAgeDays,
+    isStale,
     hydrate,
     setLoading,
     setErrors,
