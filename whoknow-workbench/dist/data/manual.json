@@ -1,0 +1,545 @@
+{
+  "_meta": {
+    "purpose": "胡闹宇宙开发工作台 B 类手动维护数据（SYSTEM_DESIGN.md §6.3）",
+    "schemaVersion": "2026-09-03.001",
+    "updatedAt": "2026-09-03",
+    "mergeRule": "dataLoader.ts 运行时深度合并 metrics.json，manual.json 同名字段优先覆盖",
+    "owners": {
+      "healthScore": "PM（许清楚）/ 主理人 · 里程碑节点更新",
+      "playtestResult": "主理人 · 真机 playtest 后更新",
+      "brainEnvelopeAutomation": "701-PC（Agent-商城）· 状态变更时更新",
+      "redlightList": "主理人 / quality · 季度或事件触发",
+      "constitutionLevel": "主理人 · 宪法修订时",
+      "dualInstanceLoad": "可派生自 git，专人复核覆盖 · 周更"
+    }
+  },
+  "healthScore": {
+    "waimai": {
+      "progress": 100,
+      "quality": 92,
+      "risk": 70,
+      "collab": 85,
+      "business": 30
+    },
+    "mart": {
+      "progress": 68,
+      "quality": 74,
+      "risk": 60,
+      "collab": 78,
+      "business": 22
+    },
+    "brain": {
+      "progress": 28,
+      "quality": 45,
+      "risk": 40,
+      "collab": 55,
+      "business": 15
+    }
+  },
+  "playtestResult": {
+    "waimai": null,
+    "mart": null,
+    "brain": null
+  },
+  "brainEnvelopeAutomation": "paused",
+  "redlightList": [
+    {
+      "id": "L1-T1",
+      "title": "禁忌词红线 0 容忍",
+      "status": "on",
+      "evidence": "forbiddenCheck.ts 真闸门已落地，waimai 45/45 测试覆盖，red_light_count===0 才放行"
+    },
+    {
+      "id": "L1-T2",
+      "title": "配置与状态分离（玩家隐私底线）",
+      "status": "on",
+      "evidence": "memory.ts 玩家数据仅落 localStorage，brain 只产内容配置"
+    },
+    {
+      "id": "L1-T3",
+      "title": "不害人 · 不违法 · 不互相踩 · 人格统一",
+      "status": "partial",
+      "evidence": "指导性原则，依赖 L1-T1/T2/T5 与 L2 约定共同落实，缺独立机检"
+    },
+    {
+      "id": "L1-T4",
+      "title": "字段命名权威（跨 app 数据正确性底线）",
+      "status": "on",
+      "evidence": "ADR-001-data-shape-authority.md 已裁决 6 项字段二义，mart draft 已复用命名"
+    },
+    {
+      "id": "L1-T5",
+      "title": "多 App 共存红线（部署安全底线，违反即事故）",
+      "status": "partial",
+      "evidence": "历史 rebase 记录显示红线生效；workbench 部署接入（vercel.json rewrite + .gitignore 例外）属 T08，2026-09-03 尚未执行"
+    }
+  ],
+  "constitutionLevel": {
+    "l1": [
+      { "id": "L1-T1", "title": "禁忌词红线 0 容忍", "status": "on" },
+      { "id": "L1-T2", "title": "配置与状态分离（玩家隐私底线）", "status": "on" },
+      { "id": "L1-T3", "title": "不害人 · 不违法 · 不互相踩 · 人格统一", "status": "partial" },
+      { "id": "L1-T4", "title": "字段命名权威（跨 app 数据正确性底线）", "status": "on" },
+      { "id": "L1-T5", "title": "多 App 共存红线（部署安全底线，违反即事故）", "status": "partial" }
+    ],
+    "l2": [
+      { "id": "L2-C1", "title": "统一部署规范 §11", "status": "on" },
+      { "id": "L2-C2", "title": "内部链接相对路径", "status": "on" },
+      { "id": "L2-C3", "title": "Git 代理约定", "status": "on" },
+      { "id": "L2-C4", "title": "brain 信封契约", "status": "partial" },
+      { "id": "L2-C5", "title": "品牌视觉规范（含硬约束）", "status": "on" },
+      { "id": "L2-C6", "title": "发布硬闸门", "status": "on" },
+      { "id": "L2-C7", "title": "MVP 兼容约定", "status": "on" },
+      { "id": "L2-C8", "title": "不要做清单", "status": "on" },
+      { "id": "L2-C9", "title": "客观表述红线（多实例文档）", "status": "partial" }
+    ],
+    "l3": [
+      { "id": "L3-D1", "title": "三铁律（产品设计哲学）", "status": "on" },
+      { "id": "L3-D2", "title": "痛点为王（产品立项级）", "status": "on" },
+      { "id": "L3-D3", "title": "用户思维铁律（决策三问）", "status": "on" },
+      { "id": "L3-D4", "title": "截图价值优先 / 传播铁律", "status": "partial" },
+      { "id": "L3-D5", "title": "四大痛点滤网（决策级）", "status": "on" },
+      { "id": "L3-D6", "title": "锡哥审核铁律（内容供给纪律）", "status": "partial" },
+      { "id": "L3-D7", "title": "零负担不 push 留存（运营纪律）", "status": "on" },
+      { "id": "L3-D8", "title": "编排者只编排不建造（工作室协作纪律）", "status": "on" }
+    ]
+  },
+  "dualInstanceLoad": {
+    "701-PC": 0,
+    "DuckyPC": 0
+  },
+  "contract": {
+    "specRef": "whoknow-brain/docs/api-spec.md",
+    "specVersion": "v2.2",
+    "automation": "paused",
+    "envelope": [
+      {
+        "field": "app",
+        "path": "app",
+        "type": "string",
+        "enumValues": ["waimai", "mart", "brain"],
+        "note": "多租户主键：标识配置消费方 app 短名"
+      },
+      {
+        "field": "meta.category",
+        "path": "meta.category",
+        "type": "string",
+        "enumValues": ["A", "B", "C", "D", "E", "F", "G", "H"],
+        "note": "对应 APP-MATRIX-ROADMAP §3 八大类，成簇共享 persona 池"
+      },
+      {
+        "field": "meta.persona_type",
+        "path": "meta.persona_type",
+        "type": "string",
+        "enumValues": ["boss", "rider", "driver", "clerk", "pet", "service_worker"],
+        "note": "人格类型：waimai 用 boss/rider，矩阵扩展时替换为对应角色"
+      },
+      {
+        "field": "meta.tone",
+        "path": "meta.tone",
+        "type": "string",
+        "enumValues": ["毒舌", "哲学", "话痨", "社恐", "暴躁"],
+        "note": "语气母题：同簇 app 共享，降低边际内容成本"
+      },
+      {
+        "field": "meta.memory_scope",
+        "path": "meta.memory_scope",
+        "type": "string",
+        "enumValues": ["session", "shop", "global"],
+        "note": "记忆分级：与 DATA-STRUCTURE-v1 L2 运行时/L3 持久化分层对齐"
+      },
+      {
+        "field": "meta.fiction_flag",
+        "path": "meta.fiction_flag",
+        "type": "boolean",
+        "enumValues": ["true", "false"],
+        "note": "虚构标记：true 时前端须渲染「本次为虚构」水印（红线要求）"
+      }
+    ],
+    "degrade": [
+      {
+        "level": "L1",
+        "trigger": "脑今日配置拉取成功",
+        "watermark": "🧠 今日 AI 更新",
+        "dataSource": "brain latest-config.json（当日）",
+        "userVisible": "当日全新段子池",
+        "depth": 1
+      },
+      {
+        "level": "L2",
+        "trigger": "今日配置不可达，昨日配置命中缓存",
+        "watermark": "⏰ 昨日 AI 内容",
+        "dataSource": "brain latest-config.json（前一日缓存）",
+        "userVisible": "前一日段子池",
+        "depth": 2
+      },
+      {
+        "level": "L3",
+        "trigger": "远端全部不可达，回落内置静态包",
+        "watermark": "🎭 经典段子",
+        "dataSource": "前端内置 fallback.json / DRAMA-SEED",
+        "userVisible": "内置经典段子池",
+        "depth": 3
+      },
+      {
+        "level": "L4",
+        "trigger": "内置包亦异常",
+        "watermark": "今天没新段子，喝杯水吧 ☕",
+        "dataSource": "无",
+        "userVisible": "温和弹窗提示，绝不静默失败",
+        "depth": 4
+      }
+    ]
+  },
+  "appProfiles": {
+    "waimai": {
+      "tagline": "披着 8 分美团皮的戏精外卖",
+      "oneLiner": "核心不是「点外卖」，是「看 NPC 因为你这次的选择，在一单里跌宕起伏地发疯」；单机玩法 + 云端内容，每日由胡闹大脑喂新段子，今日梗今日看。",
+      "coreMechanics": ["DRAMA-ENGINE-V2 四阶段推演", "DramaBranch 多结局", "NPC 跨单记忆 flags", "零卡路里模式（仅正向荒诞）", "图鉴 + 称号（非计数非等级）", "客服喜剧高潮入口", "无惩罚「今日梗」"],
+      "highlightStats": [
+        { "label": "商家", "value": "5 家（5 种老板人格全覆盖）", "accent": "var(--wb-green)" },
+        { "label": "菜品", "value": "30 道（5 店 × 6）", "accent": "var(--wb-blue)" },
+        { "label": "闪电骑手", "value": "3 名", "accent": "var(--wb-purple)" },
+        { "label": "内置 DramaBranch", "value": "7 条多结局", "accent": "var(--wb-orange)" },
+        { "label": "设计支柱", "value": "6 条（P1–P6）", "accent": "var(--wb-text)" },
+        { "label": "真实痛点映射", "value": "7 项", "accent": "var(--wb-yellow)" }
+      ],
+      "pillars": [
+        { "title": "P1 因你不同", "desc": "每一次点单，NPC 反应都因你（备注/次数/玩法）而不同" },
+        { "title": "P2 截图即胜利", "desc": "每个高光交互都要能回答「用户会截图发朋友圈吗」" },
+        { "title": "P3 零负担", "desc": "不肝、不氪、不学；无等级、无断签惩罚、无损失厌恶" },
+        { "title": "P4 选择触发戏精", "desc": "戏精灵魂由玩家行为（备注/催单/投诉）驱动，不是贴图" },
+        { "title": "P5 单机也有回来理由", "desc": "图鉴收集 + 隐藏线 + 无惩罚「今日梗」" },
+        { "title": "P6 前 3 秒必爆点", "desc": "进首页/进店 3 秒内必出现至少一个戏精爆点" }
+      ],
+      "boundary": { "tone": "warn", "text": "真实外壳 / 荒诞内核边界：下单·结算·催单·投诉流程严格仿美团（真）；荒诞仅限戏精台词 + 本次消费虚构（绝不真支付）；禁忌词红线 0 容忍（自杀/暴力/违法/真实医疗机构/死亡/威胁/竞品名一律不得落地）。" },
+      "sections": [
+        {
+          "id": "w-shops-persona",
+          "kind": "pairs",
+          "title": "商家 × 老板人格（5 店全覆盖 5 种人格）",
+          "pairs": [
+            { "key": "老王烧烤 🍢", "value": "暴躁 angry" },
+            { "key": "孔子饺子馆 🥟", "value": "哲学 philo" },
+            { "key": "佛系粥铺 🥣", "value": "佛系 gentle" },
+            { "key": "怪味研究所 🧪", "value": "怪 weird" },
+            { "key": "懒人便当 🛋️", "value": "懒 lazy" }
+          ]
+        },
+        {
+          "id": "w-shops-menu",
+          "kind": "shops",
+          "title": "商家目录 + 菜单（5 店 × 6 菜）",
+          "shops": [
+            { "id": "s01", "name": "老王烧烤", "emoji": "🍢", "personality": "暴躁", "score": 4.9, "monthlySales": "月售 5600+", "deliveryTime": "28分钟", "minOrder": 30, "deliveryFee": 3, "distance": "1.2km", "promo": "满50减15 | 满100减30", "dishes": [{"name": "羊肉串", "price": 6}, {"name": "烤茄子", "price": 12}, {"name": "烤冷面", "price": 10}, {"name": "烤鸡翅", "price": 8}, {"name": "冰啤酒", "price": 5}, {"name": "蒜蓉粉丝", "price": 14}] },
+            { "id": "s02", "name": "孔子饺子馆", "emoji": "🥟", "personality": "哲学", "score": 4.7, "monthlySales": "月售 2200+", "deliveryTime": "22分钟", "minOrder": 20, "deliveryFee": 2, "distance": "800m", "promo": "满30减8 | 满60减18", "dishes": [{"name": "猪肉白菜饺", "price": 18}, {"name": "韭菜鸡蛋饺", "price": 16}, {"name": "三鲜饺", "price": 22}, {"name": "饺子汤", "price": 6}, {"name": "蒜泥", "price": 2}, {"name": "老陈醋", "price": 3}] },
+            { "id": "s03", "name": "佛系粥铺", "emoji": "🥣", "personality": "佛系", "score": 4.8, "monthlySales": "月售 1800+", "deliveryTime": "25分钟", "minOrder": 15, "deliveryFee": 2, "distance": "600m", "promo": "满20减6", "dishes": [{"name": "皮蛋瘦肉粥", "price": 12}, {"name": "小米粥", "price": 8}, {"name": "南瓜粥", "price": 10}, {"name": "茶叶蛋", "price": 2}, {"name": "青菜包", "price": 4}, {"name": "凉拌黄瓜", "price": 6}] },
+            { "id": "s04", "name": "怪味研究所", "emoji": "🧪", "personality": "怪", "score": 4.6, "monthlySales": "月售 900+", "deliveryTime": "30分钟", "minOrder": 25, "deliveryFee": 4, "distance": "1.5km", "promo": "满40减12", "dishes": [{"name": "香菜冰淇淋", "price": 15}, {"name": "榴莲披萨", "price": 28}, {"name": "臭豆腐", "price": 10}, {"name": "蓝色可乐", "price": 8}, {"name": "辣椒巧克力", "price": 12}, {"name": "折耳根奶昔", "price": 14}] },
+            { "id": "s05", "name": "懒人便当", "emoji": "🛋️", "personality": "懒", "score": 4.5, "monthlySales": "月售 3000+", "deliveryTime": "20分钟", "minOrder": 20, "deliveryFee": 3, "distance": "700m", "promo": "满25减10", "dishes": [{"name": "招牌便当", "price": 20}, {"name": "照烧鸡腿饭", "price": 22}, {"name": "咖喱饭", "price": 18}, {"name": "泡面", "price": 9}, {"name": "火腿三明治", "price": 12}, {"name": "冰可乐", "price": 4}] }
+          ]
+        },
+        {
+          "id": "w-branches",
+          "kind": "branches",
+          "title": "内置 DramaBranch（7 条多结局，来自 GDD §9.4）",
+          "branches": [
+            { "name": "穷鬼套餐", "trigger": "orderTotal < 20", "rarity": "common", "achievements": ["poor_meal"] },
+            { "name": "便宜菜多·骑手吐槽", "trigger": "avgDishPrice < 10", "rarity": "uncommon", "achievements": ["cheap_ghost"] },
+            { "name": "破产·被接济·结成眷侣", "trigger": "orderTotal >= 300", "rarity": "epic（概率 0.3）", "achievements": ["bankrupt_legend"] },
+            { "name": "暴饮暴食·老板心疼", "trigger": "todayOrderCount >= 3", "rarity": "rare（概率递增）", "achievements": ["overeat_warn"] },
+            { "name": "黑暗料理·隐藏私房菜", "trigger": "hasTag(odd_eats)", "rarity": "legendary（必触发）", "achievements": ["dark_chef"] },
+            { "name": "宿世姻缘·旧识重逢", "trigger": "flag(married_{riderId})", "rarity": "epic", "achievements": ["fate_bound"] },
+            { "name": "拉黑重逢·冰释前嫌", "trigger": "flag(blacklisted_{shopId})", "rarity": "legendary", "achievements": ["reconciled"] }
+          ]
+        },
+        {
+          "id": "w-riders",
+          "kind": "list",
+          "title": "闪电骑手（3 名）",
+          "items": [
+            { "title": "雷速飞 ⚡", "desc": "全勤王 · 1000+ 单 / 0 投诉" },
+            { "title": "李慢慢 🐢", "desc": "慢工出细活 · 准时率 99%" },
+            { "title": "张迷路 🧭", "desc": "路痴担当 · 靠问路送达" }
+          ]
+        },
+        {
+          "id": "w-push",
+          "kind": "list",
+          "title": "DRAMA 四阶段推演（接单→出餐→配送→送达）",
+          "items": [
+            { "title": "阶段 1 接单", "desc": "老板反应，骰子判定；bossMood 初始化" },
+            { "title": "阶段 2 出餐", "desc": "速度/态度受 bossMood 影响" },
+            { "title": "阶段 3 配送", "desc": "骑手/路线事件，受前序 delay 影响" },
+            { "title": "阶段 4 送达", "desc": "结局/彩蛋，综合状态落点" },
+            { "title": "记忆分级", "desc": "shopVisit >= 3 回头客（regular） / >= 10 VIP（vip） / 首触（first）" }
+          ]
+        },
+        {
+          "id": "w-pain",
+          "kind": "list",
+          "title": "真实外卖痛点映射（机制正当性锚点）",
+          "items": [
+            { "title": "等待焦虑（骑手迟到/出餐慢）", "desc": "DramaBranch 骑手翻车/迷路结局，戏精化等待" },
+            { "title": "减肥管不住手", "desc": "零卡路里模式（仅正向荒诞，负卡路里）" },
+            { "title": "孤独 / 一个人吃", "desc": "订单详情彩蛋卡「骑手赞了你」+ 老板认得你（flags）" },
+            { "title": "售后无门 / 投诉石沉大海", "desc": "客服喜剧入口（催单/投诉触发老板抢麦）" },
+            { "title": "花钱心疼 / 没钱也想吃", "desc": "虚拟 0 成本随便点" },
+            { "title": "选择困难 / 不知点啥", "desc": "多结局探索欲（换备注试结局）" },
+            { "title": "商家难吃 / 踩雷", "desc": "虚拟外卖无真实难吃风险（弱化）" }
+          ]
+        },
+        {
+          "id": "w-degrade",
+          "kind": "callout",
+          "title": "4 级降级 + 脑在工作水印",
+          "callout": { "tone": "info", "text": "启动 GET /api/v1/food/config，按 L1 今日 / L2 昨日 / L3 静态 fallback / L4 无内容 四级降级；永远显示页脚水印（🧠 今日 AI 更新），但绝不覆盖戏精弹层/气泡/结局卡，保持干净美团伪装。" }
+        }
+      ]
+    },
+    "mart": {
+      "tagline": "披着淘宝外衣的反骨导购博弈（选招制）娱乐化 App",
+      "oneLiner": "mart 不卖「省钱」，卖「权力反转 + 情绪代偿」：玩家用话术撬开一个死活不卖的反骨导购，把消费者在系统面前的弱者关系反过来，获得掌控感。商品只是博弈舞台，不下单也爽（零卡路里解瘾）。",
+      "coreMechanics": ["选招制 4 招（位置随机）", "破防度 0~100（命中 +40 / 踩雷 −10）", "克制矩阵 5 型 × 4 招 = 20 格", "记忆分级 first/regular/vip", "双重胜利态（破防态 / 反消费胜利态）", "图鉴收集（非 gacha 计数）", "4 选招状态机（L2 运行时）"],
+      "highlightStats": [
+        { "label": "导购", "value": "5 名（5 archetype）", "accent": "var(--wb-green)" },
+        { "label": "招式", "value": "4 招", "accent": "var(--wb-blue)" },
+        { "label": "克制矩阵", "value": "20 格（5×4）", "accent": "var(--wb-purple)" },
+        { "label": "双重胜利态", "value": "2 种", "accent": "var(--wb-orange)" },
+        { "label": "设计支柱", "value": "6 条（P1–P6）", "accent": "var(--wb-text)" },
+        { "label": "乐趣假说", "value": "7 条（H0–H6）", "accent": "var(--wb-yellow)" }
+      ],
+      "pillars": [
+        { "title": "P1 因你不同", "desc": "同一导购因博弈历史（第 N 次 / 曾用招式 / 记忆分级）给不同反应，NPC「记得」玩家" },
+        { "title": "P2 截图即胜利", "desc": "反骨破功 + 双重胜利态文案是天然截图点；戏精弹层无水印" },
+        { "title": "P3 零负担", "desc": "仿淘宝结算、不氪不肝、无 gacha 等级；归零态是反消费胜利而非惩罚" },
+        { "title": "P4 戏精由选择触发", "desc": "选招→回怼实时博弈，非预置贴图；4 选项位置随机防肌肉记忆" },
+        { "title": "P5 单机也有回来理由", "desc": "图鉴收集（导购/招式/弱点/分支），非计数成就" },
+        { "title": "P6 前 3 秒必爆点", "desc": "进商品页/点结算 3 秒内导购闪现第一句毒舌劝退" }
+      ],
+      "boundary": { "tone": "warn", "text": "真实外壳 / 荒诞内核边界：商品列表/详情/加购/结算/支付流严格仿淘宝（真）；导购立绘/动效按真实电商质感（真）；荒诞仅限 NPC 对白/选招文案/戏精弹层（唯一合法出口）；本次购物虚构（不真下单、不真支付）。4 选招属对话延伸层，须呈现为戏精对白选项而非电商功能按钮。" },
+      "sections": [
+        {
+          "id": "m-moves",
+          "kind": "keywords",
+          "title": "4 选招（位置随机防肌肉记忆）",
+          "keywords": [
+            { "text": "硬刚（坚定）", "desc": "正面杠" },
+            { "text": "比价", "desc": "拿价格压" },
+            { "text": "装可怜", "desc": "卖惨" },
+            { "text": "以毒攻毒", "desc": "以疯克疯" }
+          ]
+        },
+        {
+          "id": "m-matrix",
+          "kind": "matrix",
+          "title": "克制矩阵（5 型 × 4 招 = 20 格）",
+          "subtitle": "每格 moodDelta 由该导购隐藏弱点/踩雷决定：命中隐藏弱点 +40 / 踩雷 −10 / 平手 +10；具体哪格是弱点或踩雷为运行时隐藏属性，玩家需探索归纳（数值全待标定）。",
+          "matrix": {
+            "head": ["导购 archetype", "硬刚", "比价", "装可怜", "以毒攻毒"],
+            "rows": [
+              { "rowHead": "毒舌 poison_tongue", "cells": ["Δ（+40 / −10 / +10）", "Δ", "Δ", "Δ"] },
+              { "rowHead": "理性 rational", "cells": ["Δ", "Δ", "Δ", "Δ"] },
+              { "rowHead": "懒 lazy", "cells": ["Δ", "Δ", "Δ", "Δ"] },
+              { "rowHead": "哲学 philosopher", "cells": ["Δ", "Δ", "Δ", "Δ"] },
+              { "rowHead": "暗 dark", "cells": ["Δ", "Δ", "Δ", "Δ"] }
+            ]
+          }
+        },
+        {
+          "id": "m-guides",
+          "kind": "list",
+          "title": "5 导购 archetype（persona 池）",
+          "items": [
+            { "title": "毒舌 poison_tongue", "desc": "招牌反骨，劝退金句制造机" },
+            { "title": "理性 rational", "desc": "拿数据 / 性价比压你" },
+            { "title": "懒 lazy", "desc": "能不动就不动，躺送" },
+            { "title": "哲学 philosopher", "desc": "苏格拉底式反问" },
+            { "title": "暗 dark", "desc": "阴间 / 悬疑风" }
+          ]
+        },
+        {
+          "id": "m-dual-win",
+          "kind": "list",
+          "title": "双重胜利态（归零态也是赢）",
+          "items": [
+            { "title": "破防态（affinity ≥ 100）", "desc": "导购叹气「…行吧，算你赢」→ 掌控爽（放行）" },
+            { "title": "反消费胜利态（affinity ≤ 0）", "desc": "导购「省钱了，不用谢我」→ 省了钱，也是赢（劝退）" },
+            { "title": "保底", "desc": "round_cap 内必破防；达上限默认劝退（防死循环）" }
+          ]
+        },
+        {
+          "id": "m-fsm",
+          "kind": "list",
+          "title": "选招制博弈状态机（L2 运行时）",
+          "items": [
+            { "title": "状态量", "desc": "affinity(0~100) / round / tags（仅内存不落盘）" },
+            { "title": "[结算] → 导购闪现", "desc": "P6 首爆点（3 秒内毒舌劝退）" },
+            { "title": "每轮", "desc": "出 4 选项（位置随机）→ 查克制矩阵 → affinity += moodDelta" },
+            { "title": "判定", "desc": "≥100 破防态 / ≤0 反消费胜利态 / 否则下一轮（位置重随机）" }
+          ]
+        },
+        {
+          "id": "m-verbs",
+          "kind": "keywords",
+          "title": "核心动词词表（玩家在 mart 里真正「做」的事）",
+          "keywords": [
+            { "text": "逛", "desc": "浏览商品页（仿淘宝）" },
+            { "text": "点", "desc": "点「结算」触发博弈" },
+            { "text": "怼", "desc": "从 4 选项选招怼导购" },
+            { "text": "撬", "desc": "命中隐藏弱点，破防度涨" },
+            { "text": "截", "desc": "截戏精高光发朋友圈" },
+            { "text": "集", "desc": "收集图鉴（导购/招式/弱点/分支）" },
+            { "text": "访", "desc": "换导购/换招回访" }
+          ]
+        },
+        {
+          "id": "m-reject",
+          "kind": "callout",
+          "title": "否决标准（坏长什么样 · 机检可执行）",
+          "callout": { "tone": "warn", "text": "① 记忆失效：同导购第 ≥5 次博弈台词/弱点无差异（P1 破裂）→ 否决；② 矩阵崩坏：任一轮 4 选项全 +40 或全 −10（无策略空间）→ 否决；③ 配置污染：红线词出现在运行时任何屏 → 整包拒绝回退（L1-T1）。" }
+        },
+        {
+          "id": "m-hypo",
+          "kind": "list",
+          "title": "乐趣假说（可证伪 · H0–H6）",
+          "items": [
+            { "title": "H0 主假说", "desc": "年轻用户会为「用话术反转权力关系、撬开死活不卖的反骨导购」的掌控感投入注意力与传播，即便无真实交易" },
+            { "title": "H1", "desc": "≤3 分钟理解核心循环并走完一局（G1 达成率 ≥80%）" },
+            { "title": "H2", "desc": "整局至少 1 次出声笑/截图（G2 笑率 ≥60%，<30% 否决）" },
+            { "title": "H3", "desc": "能区分破防态与反消费胜利态两种赢法（≥70%）" },
+            { "title": "H4", "desc": "双重胜利消解「赢=被说服下单」，归零态不自感为输" },
+            { "title": "H5", "desc": "4 选项位置随机真防肌肉记忆（无单招 >50%）" },
+            { "title": "H6", "desc": "记忆分级第 ≥5 次博弈产生可感知差异（G4 基线）" }
+          ]
+        }
+      ]
+    },
+    "brain": {
+      "tagline": "胡闹宇宙的运营代理人 · 一次产出，养活全线产品",
+      "oneLiner": "brain 不只是内容生成器，它是 whoknow 矩阵的灵魂架构师 / 数据采集器 / 内容生成器 / 运营监控 / 矩阵代理人。一次 LLM 调用同时服务多产品，成本摊薄。",
+      "coreMechanics": ["多产品共用契约（一次 LLM 多 app 配置）", "信封 6 字段配置契约", "forbidden_check 发布闸门（红灯 0 容忍）", "4 级质量优先降级", "人工审核落盘（锡哥只审不写）", "soul_layer 人格注入", "采集→生成→部署 三段流水线"],
+      "highlightStats": [
+        { "label": "服务产品", "value": "全部 whoknow（waimai/brain/mart/future）", "accent": "var(--wb-green)" },
+        { "label": "月成本", "value": "¥10–15（预算上限 ¥30）", "accent": "var(--wb-blue)" },
+        { "label": "实施时序", "value": "M0–M5（M0 单人 8–12h）", "accent": "var(--wb-purple)" },
+        { "label": "架构", "value": "三系 collector/generator/deployer", "accent": "var(--wb-orange)" },
+        { "label": "降级层级", "value": "4 级（L1–L4）", "accent": "var(--wb-text)" },
+        { "label": "响应格式", "value": "{ok,data,meta}", "accent": "var(--wb-yellow)" }
+      ],
+      "pillars": [
+        { "title": "每个 API 一个模块", "desc": "一文件一功能，加新 = 加文件" },
+        { "title": "多产品共用协议", "desc": "brain 一次 LLM = 多产品配置，成本摊薄" },
+        { "title": "质量优先降级", "desc": "宁可「今天没新段子」也不出错（锡哥 Q23）" },
+        { "title": "单人友好优先", "desc": "M0–M2 让锡哥少干活，不是扩展性优先" }
+      ],
+      "sections": [
+        {
+          "id": "b-timeline",
+          "kind": "timeline",
+          "title": "实施时序（M0–M5）",
+          "timeline": [
+            { "phase": "M0", "role": "单人验证", "detail": "验证 AI 能生成可用话术 · 8–12h · ¥5" },
+            { "phase": "M1", "role": "帮 waimai 拉新留存", "detail": "+20h · ¥15" },
+            { "phase": "M2", "role": "接埋点 + 自我调整", "detail": "+30h · ¥30" },
+            { "phase": "M3", "role": "mart 接入 + 多产品矩阵", "detail": "+50h · ¥50" },
+            { "phase": "M4", "role": "A/B test + 自我评估", "detail": "+80h · ¥80" },
+            { "phase": "M5", "role": "开放 API + 多租户", "detail": "+100h · ¥100+" }
+          ]
+        },
+        {
+          "id": "b-matrix",
+          "kind": "list",
+          "title": "服务矩阵（一次产出养活全线）",
+          "items": [
+            { "title": "waimai（胡闹外卖）", "desc": "v2 重建中（DRAMA 引擎 + brain 契约）· ✅ M0 接入" },
+            { "title": "mart（胡闹导购）", "desc": "方案阶段 · 🟡 M1 接入" },
+            { "title": "未来产品 × N", "desc": "概念 · 🟢 M3+ 接入" },
+            { "title": "成本摊薄", "desc": "一次 LLM 调用同时服务多产品" }
+          ]
+        },
+        {
+          "id": "b-arch",
+          "kind": "list",
+          "title": "架构三系（each API 一个模块）",
+          "items": [
+            { "title": "collector 数据采集", "desc": "hot（微博热搜）/ weather / holiday / server 心跳（M0 必做）" },
+            { "title": "generator 生成", "desc": "llm（DeepSeek V3）/ prompt / forbidden（禁忌词过滤）/ soul（M1）" },
+            { "title": "deployer 部署", "desc": "file（本地 JSON）/ report（HTML 报告）/ cdn（M1）" }
+          ]
+        },
+        {
+          "id": "b-m0",
+          "kind": "list",
+          "title": "M0 必做模块清单（13 → 8，三司会审 P0-1）",
+          "items": [
+            { "title": "collector/hot.ts 微博热搜", "desc": "✅ M0 必做 · 30min" },
+            { "title": "collector/weather.ts 天气", "desc": "✅ M0 必做 · 15min" },
+            { "title": "collector/holiday.ts 节日", "desc": "✅ M0 必做 · 15min" },
+            { "title": "collector/server.ts 服务器心跳", "desc": "✅ M0 必做 · 1h" },
+            { "title": "generator/llm.ts 调 AI", "desc": "✅ M0 必做 · 1h" },
+            { "title": "generator/prompt.ts prompt 模板", "desc": "✅ M0 必做 · 30min" },
+            { "title": "generator/forbidden.ts 禁忌词过滤", "desc": "✅ M0 必做 · 30min" },
+            { "title": "deployer/file.ts 写本地 JSON", "desc": "✅ M0 必做 · 20min" },
+            { "title": "deployer/report.ts HTML 报告", "desc": "✅ M0 必做 · 30min" },
+            { "title": "news / soul / cdn / metrics", "desc": "❌ 非 M0（分别归 M1 / M1 / M1 / M2）" }
+          ]
+        },
+        {
+          "id": "b-envelope",
+          "kind": "pairs",
+          "title": "信封 6 字段（配置契约，与契约信封 tab 互补）",
+          "pairs": [
+            { "key": "version / generated_at / effective_until", "value": "版本与有效期" },
+            { "key": "meta", "value": "hot_today / weather / holiday（时间元参数）" },
+            { "key": "soul_layer", "value": "npc_id / personality / speech_style / forbidden_words（人格注入）" },
+            { "key": "ui_meta", "value": "ai_story_visible / freshness_hours（水印驱动）" },
+            { "key": "story_assets", "value": "today_hot_topic / npc_quotes_today（戏精动态）" },
+            { "key": "forbidden_check", "value": "red_light_count / passed（发布闸门）" }
+          ]
+        },
+        {
+          "id": "b-degrade",
+          "kind": "callout",
+          "title": "质量优先降级铁律（锡哥 Q23）",
+          "callout": { "tone": "warn", "text": "质量 > 数量，宁可「今天没新段子」也不出错。四级：L1 当日生成 → L2 昨日 → L3 静态 fallback → L4 诚实告知「今天没新段子」。" }
+        },
+        {
+          "id": "b-redlight",
+          "kind": "list",
+          "title": "禁忌词红绿灯（发布闸门）",
+          "items": [
+            { "title": "红灯 0 容忍", "desc": "自杀/暴力/违法/真实医疗机构/死亡/威胁/竞品名 → 整包拒绝" },
+            { "title": "黄灯须化名", "desc": "竞品→某团/某宝；真人名→某明星；真实地名→京城" },
+            { "title": "放行条件", "desc": "forbidden_check.passed=true 且 red_light_count=0 才允许进 app" }
+          ]
+        }
+      ]
+    }
+  },
+  "notes": [
+    {
+      "id": "note-brain-src",
+      "scope": "brain",
+      "severity": "warn",
+      "text": "口径冲突待核实：ROLES.md §6.5 记载 DuckyPC 已将 whoknow-brain src 全套实现提交 origin/main（32 commits），2026-09-03 磁盘核查 whoknow-brain/ 仅含 docs/。工作台按「以磁盘为准」展示，冲突交 DuckyPC 核实。"
+    },
+    {
+      "id": "note-playtest-gate",
+      "scope": "waimai",
+      "severity": "warn",
+      "text": "playtest 闸门口径（A 轻量 / B 自然回收 / C 全量）待主理人拍板，playtestResult 三项均为 null。"
+    },
+    {
+      "id": "note-deploy-t08",
+      "scope": "workbench",
+      "severity": "info",
+      "text": "部署接入（vercel.json 追加 /workbench rewrite + .gitignore 追加 !whoknow-workbench/dist/ 例外）属 T08，2026-09-03 未执行，本工作台仅完成本地构建验证。"
+    },
+    {
+      "id": "note-ci-gap",
+      "scope": "universe",
+      "severity": "info",
+      "text": "无 CI 平台，ciResult 以 dist/ 产物存在性近似；DORA 与业务指标（笑率/留存）管道待建，字段为 null。"
+    }
+  ]
+}

@@ -40,3 +40,6 @@ research-raw/
 
 # ── mart 预构建产物（胡闹导购原型，需提交支持 Vercel 静态部署） ──
 !whoknow-mart/dist/
+
+# ── workbench 预构建产物（开发工作台，需提交支持 Vercel 静态部署，/workbench → whoknow-workbench/dist） ──
+!whoknow-workbench/dist/
