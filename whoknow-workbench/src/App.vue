@@ -92,15 +92,18 @@ onMounted(bootstrap);
           {{ item.label }}
         </router-link>
         <span class="wb-app__divider" aria-hidden="true" />
-        <router-link
-          v-for="item in navSecondary"
-          :key="item.to"
-          :to="item.to"
-          class="wb-app__link"
-          active-class="wb-app__link--active"
-        >
-          {{ item.label }}
-        </router-link>
+        <div class="wb-app__group">
+          <span class="wb-app__group-label">治理</span>
+          <router-link
+            v-for="item in navSecondary"
+            :key="item.to"
+            :to="item.to"
+            class="wb-app__link wb-app__link--tool"
+            active-class="wb-app__link--active"
+          >
+            {{ item.label }}
+          </router-link>
+        </div>
       </nav>
       <div class="wb-app__meta">
         <span v-if="dataFresh" class="wb-app__fresh">数据可用</span>
@@ -206,10 +209,34 @@ onMounted(bootstrap);
 /* 主导航（面板 + App 页）与工具导航（候选矩阵 / 治理透视）之间的分组分隔线 */
 .wb-app__divider {
   width: 1px;
-  height: 18px;
+  height: 24px;
   background: var(--wb-border);
-  margin: 0 8px;
+  margin: 0 12px;
   flex-shrink: 0;
+}
+
+/* 工具导航分组容器：虚线边框 + 组标签，与主导航在视觉上明确区分为另一栏目 */
+.wb-app__group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 9px;
+  border: 1px dashed var(--wb-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  flex-shrink: 0;
+}
+
+.wb-app__group-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--wb-text-muted);
+  margin-right: 3px;
+  user-select: none;
+}
+
+.wb-app__link--tool {
+  font-size: 12.5px;
 }
 
 .wb-app__meta {
