@@ -16,18 +16,37 @@ const route = useRoute();
 const loading = ref(true);
 const messages = ref<string[]>([]);
 
-const navItems = [
-  { to: '/', label: '宇宙综合面板' },
+/**
+ * 降级菜单：仅在数据未就绪（首次加载中 / metrics.json 完全缺失）时兜底，
+ * 正常路径走 store，顺序仍以 gen-metrics.mjs 的 APP_DEFS 为准。
+ */
+const APP_NAV_FALLBACK = [
+  { to: '/app/brain', label: '胡闹大脑' },
   { to: '/app/waimai', label: '胡闹外卖' },
   { to: '/app/mart', label: '胡闹导购' },
-  { to: '/app/brain', label: '胡闹大脑' },
-  { to: '/candidates', label: '候选矩阵' },
-  { to: '/governance', label: '治理透视' },
 ];
 
 const dataFresh = computed(() => useUniverseStore().dataFresh);
 const generatedAt = computed(() => useUniverseStore().generatedAt);
-const appKeys = computed(() => useAppsStore().keys);
+const appsStore = useAppsStore();
+
+/**
+ * App 导航项由 store 驱动，顺序与数据一致。
+ * 唯一事实源是 gen-metrics.mjs 的 APP_DEFS（导航 / 卡片 / 质量门 / 状态灯均沿用），
+ * 避免这里再硬编码一份导致两处顺序漂移。
+ */
+const appNavItems = computed(() =>
+  appsStore.list.length > 0
+    ? appsStore.list.map((a) => ({ to: `/app/${a.appKey}`, label: a.label ?? a.appKey }))
+    : APP_NAV_FALLBACK,
+);
+
+const navItems = computed(() => [
+  { to: '/', label: '宇宙综合面板' },
+  ...appNavItems.value,
+  { to: '/candidates', label: '候选矩阵' },
+  { to: '/governance', label: '治理透视' },
+]);
 
 async function bootstrap(): Promise<void> {
   const { data, diagnostics } = await loadWorkbenchData();
