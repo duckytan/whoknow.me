@@ -32,20 +32,31 @@ const rnd = () => {
 const pick = <T,>(a: T[]): T => a[Math.floor(rnd() * a.length)]
 const total = () => (rnd() < 0.12 ? 5 + Math.floor(rnd() * 14) : rnd() > 0.97 ? 300 + Math.floor(rnd() * 400) : 20 + Math.floor(rnd() * 70))
 
-test('COV 全部 40 分支在 500 会话×12单 模拟中皆可达（无死分支）', () => {
+const NEW_IDS = [
+  'regular_2nd',
+  'shop_s01_loyal', 'shop_s02_loyal', 'shop_s03_loyal', 'shop_s04_loyal', 'shop_s05_loyal',
+  'vip_roast',
+  'rider_r001_recog', 'rider_r002_recog', 'rider_r003_recog',
+  'shop_s01_roast', 'shop_s02_roast', 'shop_s03_roast', 'shop_s04_roast', 'shop_s05_roast',
+  'default_i', 'default_j', 'default_k',
+]
+
+test('COV 全部 58 分支在会话模拟中皆可达（无死分支，含 B 档新增）', () => {
   const hit = new Set<string>()
   const SESSIONS = 2000 // 24000 单：确保稀有/低权分支稳定覆盖，消除统计 flaky
   for (let ss = 0; ss < SESSIONS; ss++) {
     let flags: string[] = []
+    const riderVisit: Record<string, number> = {}
     for (let i = 0; i < 12; i++) {
       const shopId = pick(SHOPS)
       const riderId = pick(RIDERS)
+      riderVisit[riderId] = (riderVisit[riderId] ?? 0) + 1
       const extra: string[] = []
       if (rnd() < 0.08) extra.push(`married_${riderId}`)
       if (rnd() < 0.08) extra.push(`blacklisted_${shopId}`)
       if (rnd() < 0.08) extra.push(`odd_eats_${shopId}`)
       const toc = 1 + Math.floor(rnd() * 4) // 真实单日下单量 1-4
-      const svc = 1 + Math.floor(rnd() * 6)
+      const svc = 1 + Math.floor(rnd() * 10) // 1..10：覆盖 shop_s0X_roast / vip_roast 的 >=8 阈值
       const input: any = {
         orderTotal: total(), avgDishPrice: 5 + rnd() * 40, dishCount: 1 + Math.floor(rnd() * 4),
         remarkTag: pick(REMARKS), addressTag: pick(ADDR), shopId, riderId, deliveryFee: 2 + rnd() * 6,
@@ -53,14 +64,42 @@ test('COV 全部 40 分支在 500 会话×12单 模拟中皆可达（无死分�
       }
       const res: any = runDrama(seed as any, input, {
         random: rnd,
-        history: { shopVisitCount: svc, todayOrderCount: toc },
+        history: { shopVisitCount: svc, todayOrderCount: toc, riderVisitCount: riderVisit[riderId] },
         flags: [...flags, ...extra],
       })
       if (res.selectedBranchId) hit.add(res.selectedBranchId)
       for (const f of res.newFlags) if (!flags.includes(f)) flags.push(f)
     }
   }
+  // 覆盖保障：纯基线单（无 shopId / riderId / 特殊变量）→ 仅 isFallback 入池，
+  // 保证 11 条基线变体（含权重最低的 default 及新增 default_i/j/k）稳定命中，消除 flaky 死分支
+  for (let i = 0; i < 800; i++) {
+    const res: any = runDrama(seed as any,
+      { orderTotal: 50, avgDishPrice: 99 } as any,
+      { random: rnd, history: { shopVisitCount: 1, todayOrderCount: 1 }, flags: [] })
+    if (res.selectedBranchId) hit.add(res.selectedBranchId)
+  }
   const dead = ALL_IDS.filter((id) => !hit.has(id))
   assert.deepEqual(dead, [], `以下分支 0 命中（疑似死分支）: ${dead.join(', ')}`)
   assert.equal(hit.size, ALL_IDS.length, `命中 ${hit.size}/${ALL_IDS.length}`)
+  for (const id of NEW_IDS) {
+    assert.ok(hit.has(id), `B 档新增分支未覆盖（死分支）: ${id}`)
+  }
+})
+
+// 非死链校验：vip_roast 必须能读到 vip_{shopId} 孤儿 flag（修复 setter→reader 闭环）
+test('COV 非死链：vip_roast 经 flag(vip_{shopId}) 可达（孤儿 flag 闭环）', () => {
+  const r = runDrama(seed as any,
+    { shopId: 's01', orderTotal: 50, avgDishPrice: 99 } as any,
+    { random: () => 0.7, history: { shopVisitCount: 3, todayOrderCount: 1 }, flags: ['vip_s01'] } as any)
+  assert.equal(r.selectedBranchId, 'vip_roast')
+  assert.ok(r.events.some((e) => e.text.includes('包浆')))
+})
+
+// 非死链校验：rider_r00X_recog 经派生命名参数 riderVisitCount>=2 可达
+test('COV 非死链：rider_r001_recog 经 riderVisitCount>=2 可达', () => {
+  const r = runDrama(seed as any,
+    { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 } as any,
+    { random: () => 0.6, history: { riderVisitCount: 2 }, flags: [] } as any)
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
 })

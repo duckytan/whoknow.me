@@ -6,6 +6,7 @@ export interface Branch {
   id: string
   name?: string
   weight?: number
+  priority?: number // Phase 6 优先级层：越高越优先（缺省 0，向后兼容）。引擎先取命中分支中 priority 最高档再抽签。
   isFallback?: boolean
   trigger: {
     condition: string
@@ -51,7 +52,7 @@ export function parseBranches(raw: unknown): Branch[] {
 const KNOWN_VARS = new Set([
   'orderTotal', 'deliveryFee', 'todayOrderCount', 'shopId', 'riderId',
   'avgDishPrice', 'dishCount', 'remarkTag', 'addressTag', 'hot_today', 'weather',
-  'shopVisitCount',
+  'shopVisitCount', 'riderVisitCount',
 ])
 
 /** 校验红线：任何台词文本不得残留「非白名单」占位符（如旧名 {price}/{fee}）。 */

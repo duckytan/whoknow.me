@@ -1,22 +1,30 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { buildOrderInput, type OrderForm } from '../core/orderInput'
-import { runDrama, type RunResult } from '../engine/dramaEngine'
-import { loadSeedBranches, type Branch } from '../config/loader'
-import { memory } from '../store/memoryStore'
+import {
+  sliceDrama,
+  type SliceResult,
+  type AddressTag,
+  type RemarkTag,
+  ADDRESS_OFFSETS,
+  REMARK_OFFSETS,
+} from '../engine/sliceDrama'
 import { runForbiddenCheck, type TabooList } from '../core/forbiddenCheck'
 import { getShop, getRider, pickRider } from '../data/shops'
 import { getDish } from '../data/dishes'
 import { getItems, dishCount, cartTotal, clearShop } from '../store/cart'
-import { getAchievement } from '../data/achievements'
-import seedRaw from '../../docs/specs/DRAMA-SEED-v1-2026-07-24.json'
+import { memory } from '../store/memoryStore'
+import type { OrderHistoryEntry } from '../store/memory'
 import tabooRaw from '../../tests/taboo-list.json'
-import DramaTimeline from '../components/DramaTimeline.vue'
+import MapTrack from '../components/MapTrack.vue'
+import DramaChat from '../components/DramaChat.vue'
+import PushNotifier from '../components/PushNotifier.vue'
+import { provideDramaProgress } from '../composables/useDramaProgress'
+import { showToast } from '../lib/toast'
+import { track } from '../analytics/tracker'
 import RiderCard from '../components/RiderCard.vue'
 import PersonaBadge from '../components/PersonaBadge.vue'
 
-const branches = loadSeedBranches(seedRaw as unknown)
 const taboo = tabooRaw as unknown as TabooList
 const route = useRoute()
 const router = useRouter()
@@ -26,86 +34,204 @@ const shop = getShop(shopId)
 const assignedRiderId = pickRider()
 const rider = getRider(assignedRiderId)
 
-// 从购物车推导 orderInput（不再手填参数）
+// 从购物车推导展示
 const cartItems = computed(() => getItems(shopId))
 const dishCountVal = computed(() => dishCount(shopId))
 const orderTotalVal = computed(() => cartTotal(shopId))
-const avgDishPriceVal = computed(() =>
-  dishCountVal.value > 0 ? Math.round(orderTotalVal.value / dishCountVal.value) : 0
-)
 const selectedDishes = computed(() =>
   Object.entries(cartItems.value).map(([id, q]) => ({ dish: getDish(shopId, id), q }))
 )
 
-const remark = ref('')
-const address = ref('')
-const result = ref<RunResult | null>(null)
-const gate = ref<{ pass: boolean; redLightCount: number }>({ pass: true, redLightCount: 0 })
+// ---- 纯点击选择器（地址/备注/餐具/发票） ----
+const addressChips: { id: AddressTag; label: string; emoji: string }[] = [
+  { id: 'toilet', label: '公厕', emoji: '🚽' },
+  { id: 'icu', label: 'ICU 病房', emoji: '🏥' },
+  { id: 'home', label: '家庭', emoji: '🏠' },
+  { id: 'company', label: '公司', emoji: '🏢' },
+]
+const remarkChips: { id: RemarkTag; label: string; emoji: string }[] = [
+  { id: 'more_spicy', label: '多放辣', emoji: '🌶️' },
+  { id: 'less_spicy', label: '少放辣', emoji: '🥱' },
+  { id: 'no_cilantro', label: '不要香菜', emoji: '🌿' },
+  { id: 'no_scold', label: '别骂了', emoji: '🤐' },
+  { id: 'perform', label: '表演才艺', emoji: '🎤' },
+  { id: 'boss_thx', label: '老板辛苦了', emoji: '🙏' },
+]
+const utensilOptions = ['无需餐具', '1份餐具', '2份餐具', '3份餐具']
 
-const branchMeta = computed<Branch | undefined>(() =>
-  branches.find((b) => b.id === result.value?.selectedBranchId)
-)
-const shopVisitCount = computed(() =>
-  result.value ? memory.getShopMemory(shopId ?? 's01').visitCount : 0
-)
-const orderAch = computed(() => branchMeta.value?.achievements ?? [])
+// 选择状态
+const addressTag = ref<AddressTag | ''>('')
+const remarkTag = ref<RemarkTag | ''>('')
+const selectedUtensil = ref('无需餐具')
+const payMethod = ref('极速支付')
+
+// 顶部 Tab
+const orderMode = ref<'delivery' | 'pickup'>('delivery')
+
+// 时间选择
+const timeSlot = ref('auto')
+
+// ---- 底部抽屉选择器 ----
+interface SheetOption { id: string; label: string; sub?: string }
+interface SheetState { title: string; options: SheetOption[]; selected: string; onPick: (id: string) => void }
+const sheet = ref<SheetState | null>(null)
+
+function openSheet(title: string, options: SheetOption[], selected: string, onPick: (id: string) => void) {
+  sheet.value = { title, options, selected, onPick }
+}
+function closeSheet() { sheet.value = null }
+
+// 地址选择
+function pickAddress(id: string) {
+  addressTag.value = id as AddressTag
+  closeSheet()
+}
+function openAddressSheet() {
+  openSheet('选择地址',
+    addressChips.map(a => ({ id: a.id, label: `${a.emoji} ${a.label}`, sub: fmtOffset(ADDRESS_OFFSETS[a.id]).text })),
+    addressTag.value || '', pickAddress)
+}
+
+// 备注选择
+function pickRemark(id: string) {
+  remarkTag.value = id as RemarkTag
+  closeSheet()
+}
+function openRemarkSheet() {
+  openSheet('给老板捎句话',
+    remarkChips.map(r => ({ id: r.id, label: `${r.emoji} ${r.label}`, sub: fmtOffset(REMARK_OFFSETS[r.id]).text })),
+    remarkTag.value || '', pickRemark)
+}
+
+// 餐具选择
+function pickUtensil(id: string) {
+  selectedUtensil.value = id
+  closeSheet()
+}
+function openUtensilSheet() {
+  openSheet('餐具数量',
+    utensilOptions.map(u => ({ id: u, label: u })),
+    selectedUtensil.value, pickUtensil)
+}
+
+// 发票（戏精提示）：走 app 内拟真 toast，不用原生 alert（系统弹窗一出来就出戏）
+function onInvoiceClick() {
+  showToast('本单戏票不支持报销 🎭')
+}
+
+// 价格明细计算
+const basePrice = computed(() => orderTotalVal.value)
+const deliveryFeeVal = computed(() => shop?.deliveryFee ?? 3)
+const packingFee = computed(() => Math.max(2, dishCountVal.value)) // 每件1元，最低2元
+const mtCoupon = computed(() => Math.min(10, Math.round(basePrice.value * 0.12)))
+const shopCoupon = computed(() => shop?.promo.includes('满') ? 3 : 0)
+const itemDiscount = computed(() => Math.round(basePrice.value * 0.05))
+const totalDiscount = computed(() => mtCoupon.value + shopCoupon.value + itemDiscount.value)
+const finalPay = computed(() => basePrice.value + deliveryFeeVal.value + packingFee.value - totalDiscount.value)
+
+// P1-7: 价格跳动。总价（源头是 orderTotalVal）变化时自增 key，
+// 让 .pb-price 重新挂载以重放 CSS price-pop 动画（纯视觉，无额外依赖）。
+const priceBumpKey = ref(0)
+watch(finalPay, () => {
+  priceBumpKey.value++
+})
+
+function fmtOffset(n: number): { text: string; cls: string } {
+  if (n === 0) return { text: '0', cls: 'zero' }
+  return n > 0 ? { text: `+${n}`, cls: 'up' } : { text: `${n}`, cls: 'down' }
+}
+
+// 确定性 ETA：用 shopId 派生稳定起止分钟，去掉 Math.random 跳数（重渲染不再变）。
+function eta(seed: string): [number, number] {
+  const h = [...seed].reduce((a, c) => a + c.charCodeAt(0), 0)
+  const start = (h % 12) + 28
+  const end = start + (h % 8) + 10
+  return [start, end]
+}
+function pad(n: number): string {
+  return String(n).padStart(2, '0')
+}
+const etaRange = eta(shopId)
+
+// 提交
+const result = ref<SliceResult | null>(null)
+provideDramaProgress(() => result.value?.events ?? [])
+const gate = ref<{ pass: boolean; redLightCount: number }>({ pass: true, redLightCount: 0 })
+const isDev = import.meta.env.DEV
 
 function submit() {
   if (dishCountVal.value === 0) return
-  const oi = buildOrderInput({
-    shopId,
-    riderId: assignedRiderId,
-    orderTotal: orderTotalVal.value,
-    avgDishPrice: avgDishPriceVal.value,
+  if (!addressTag.value || !remarkTag.value) return
+  const r = sliceDrama({
+    addressTag: addressTag.value,
+    remarkTag: remarkTag.value,
     dishCount: dishCountVal.value,
-    deliveryFee: shop?.deliveryFee ?? 3,
-    remark: remark.value,
-    address: address.value,
-  } as OrderForm)
-  const sid = oi.shopId ?? 's01'
-  const hist = memory.getHistoryParams(sid)
-  hist.shopVisitCount = (hist.shopVisitCount ?? 0) + 1 // 含本次，驱动同店递进分支(第3/5单)
-  const mem = memory.getShopMemory(sid)
-  const r = runDrama(branches, oi, { random: Math.random, history: hist, flags: mem.flags })
+    totalPrice: orderTotalVal.value,
+  })
   result.value = r
-
   const fg = runForbiddenCheck(r.events.map((e) => e.text), taboo)
   gate.value = { pass: fg.pass, redLightCount: fg.redLightCount }
 
-  if (r.selectedBranchId) {
-    memory.recordOrder(sid, { flags: r.newFlags, tags: r.finalState.tags })
-    memory.unlockAchievements(orderAch.value)
-    memory.recordOrderHistory({
-      ts: Date.now(),
-      shopId: sid,
-      shopName: getShop(sid)?.name ?? sid,
-      branchId: r.selectedBranchId,
-      branchName: branchMeta.value?.name,
-      bossMood: r.finalState.bossMood,
-      total: oi.orderTotal,
-      achievements: orderAch.value,
-    })
-    clearShop(sid) // 结算后清空该车
+  // 写入订单历史 + 养跨单记忆（必须在 clearShop 之前：此时 dish 仍在购物车）
+  const entry: OrderHistoryEntry = {
+    ts: Date.now(),
+    shopId,
+    shopName: shop?.name ?? '',
+    branchId: null,
+    bossMood: result.value.dramaState.bossMood,
+    total: orderTotalVal.value,
+    achievements: memory.getAchievements(),
+    items: selectedDishes.value.map((s) => ({
+      dishId: s.dish?.id ?? '',
+      name: s.dish?.name ?? '',
+      emoji: s.dish?.emoji ?? '🍽️',
+      qty: s.q,
+      price: s.dish?.price ?? 0,
+    })),
   }
+  memory.recordOrder(shopId) // 养跨单记忆（骑手认人 M8 依赖）
+  memory.recordOrderHistory(entry) // 喂订单页
+
+  clearShop(shopId)
 }
 function reset() {
   result.value = null
-  remark.value = ''
-  address.value = ''
+  // 上线后验证钩子：复玩信号（喂重复疲劳代理指标），先抓刚完成的组合再清状态
+  track('replay', { addressTag: addressTag.value || undefined, remarkTag: remarkTag.value || undefined })
+  addressTag.value = ''
+  remarkTag.value = ''
 }
 function back() {
   router.push(`/shop/${shopId}`)
 }
+
+// 上线后验证钩子：截图分享信号（纯点击，不弹原生输入框）
+function onShare() {
+  track('share_click', { addressTag: addressTag.value || undefined, remarkTag: remarkTag.value || undefined })
+  const text = '胡闹外卖 · 这单剧本由锡哥手编，笑死我了 🤣'
+  if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+    navigator.share({ title: '胡闹外卖', text, url: location.href }).catch(() => {})
+  } else {
+    showToast('截图已就位，去朋友圈发吧 📸')
+  }
+}
 </script>
 
 <template>
-  <!-- 表单态 -->
-  <div v-if="!result">
+  <!-- ====== 表单态 ====== -->
+  <div v-if="!result" class="order-form-wrap">
+    <!-- 顶部导航 -->
     <div class="mt-nav">
       <div class="mt-nav__top">
         <div class="mt-nav__back" @click="back">‹</div>
-        <div class="mt-nav__title">确认订单 · 看老板演戏</div>
+        <div class="mt-nav__title">确认订单</div>
       </div>
+    </div>
+
+    <!-- 顶部 Tab：外卖配送 / 到店自取 -->
+    <div class="pay-top">
+      <button class="pt-item" :class="{ on: orderMode === 'delivery' }" @click="orderMode = 'delivery'">外卖配送</button>
+      <button class="pt-item" :class="{ on: orderMode === 'pickup' }" @click="orderMode = 'pickup'">到店自取<span class="pt-bonus" v-if="orderMode !== 'pickup'">[新客减2]</span></button>
     </div>
 
     <div v-if="dishCountVal === 0" class="empty-cart">
@@ -113,86 +239,254 @@ function back() {
       <button class="submit-btn" @click="back">去菜单</button>
     </div>
 
-    <div v-else class="form">
-      <div class="shop-line">
-        {{ shop?.emoji }} {{ shop?.name }}
-        <PersonaBadge v-if="shop" :personality="shop.personality" />
+    <div v-else style="padding-bottom: 80px;">
+      <!-- 地址 Cell -->
+      <div class="cell" @click="openAddressSheet">
+        <div class="cell-main">
+          <div class="cell-label">{{ addressTag ? addressChips.find(a => a.id === addressTag)?.label : '选择地址' }}</div>
+          <div class="cell-sub" v-if="addressTag">{{ addressTag === 'home' ? '锡哥精选段子路 88 号' : addressTag === 'company' ? '胡闹大厦 A 座 18 层' : addressTag === 'icu' ? '市第一人民医院 3 号楼' : '公厕旁小树林' }} · 135****3389</div>
+        </div>
+        <span class="cell-val"><span class="cell-arrow">›</span></span>
       </div>
 
-      <div class="cart-summary">
-        <div class="cs-row" v-for="s in selectedDishes" :key="s.dish?.id">
-          <span class="cs-emoji">{{ s.dish?.emoji }}</span>
-          <span class="cs-name">{{ s.dish?.name }}</span>
-          <span class="cs-q">×{{ s.q }}</span>
-          <span class="cs-price">¥{{ (s.dish?.price ?? 0) * s.q }}</span>
+      <!-- 时间选择 -->
+      <div class="time-cells">
+        <div class="time-cell" :class="{ on: timeSlot === 'auto' }" @click="timeSlot = 'auto'">
+          <div class="tc-top">商家自配 {{ String(new Date().getHours()).padStart(2,'0') }}:{{ pad(etaRange[0]) }}~{{ pad(etaRange[1]) }}</div>
+          <div class="tc-time">约 {{ shop?.deliveryTime || '25分钟' }}</div>
         </div>
-        <div class="cs-total">
-          <span>共 {{ dishCountVal }} 件</span>
-          <span class="big">¥{{ orderTotalVal }}</span>
+        <div class="time-cell" :class="{ on: timeSlot === 'reserve' }" @click="timeSlot = 'reserve'">
+          <div class="tc-top">预约配送</div>
+          <div class="tc-pick">选择时间 ›</div>
         </div>
       </div>
 
-      <label>备注<input v-model="remark" placeholder="私房菜 / 拉黑 / 多放辣 / 别骂了" /></label>
-      <label>地址<input v-model="address" placeholder="奇葩地址会触发彩蛋" /></label>
-      <button class="submit-btn" @click="submit">下单 🍜（¥{{ orderTotalVal }}）</button>
+      <!-- 商品清单 -->
+      <div style="background:#fff;margin-top:10px;padding:12px 14px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--mt-text);margin-bottom:8px">
+          {{ shop?.emoji }} {{ shop?.name }}
+          <PersonaBadge v-if="shop" :personality="shop.personality" />
+          <span style="margin-left:auto;font-size:11px;color:var(--mt-text-3);font-weight:400">商家自配</span>
+        </div>
+        <div class="cs-row" v-for="s in selectedDishes" :key="s.dish?.id" style="padding:8px 0;border-bottom:1px solid var(--mt-line)">
+          <span class="cs-emoji" style="font-size:22px;width:48px;height:48px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FFE08A,#FFC93C);border-radius:8px;">{{ s.dish?.emoji }}</span>
+          <span class="cs-name" style="flex:1;padding-left:8px">{{ s.dish?.name }}</span>
+          <span class="cs-q" style="color:var(--mt-text-3)">×{{ s.q }}</span>
+          <span class="cs-price" style="font-weight:600;color:var(--mt-text)">¥{{ (s.dish?.price ?? 0) * s.q }}</span>
+        </div>
+      </div>
+
+      <!-- 价格明细 -->
+      <div class="price-section">
+        <div class="price-rows">
+          <div class="price-row"><span class="pr-l">商品原价</span><span class="pr-v strike">¥{{ basePrice.toFixed(1) }}</span></div>
+          <div class="price-row"><span class="pr-l">配送费</span><span class="pr-v">¥{{ deliveryFeeVal }}<template v-if="deliveryFeeVal === 0"> 免配送</template></span></div>
+          <div class="price-row"><span class="pr-l">包装费</span><span class="pr-v">¥{{ packingFee }}</span></div>
+          <div class="price-row"><span class="pr-l">美团红包</span><span class="pr-v red">-¥{{ mtCoupon.toFixed(1) }}</span></div>
+          <div class="price-row" v-if="shopCoupon > 0"><span class="pr-l">商家代金券</span><span class="pr-v red">-¥{{ shopCoupon.toFixed(1) }}</span></div>
+          <div class="price-row"><span class="pr-l">商品优惠</span><span class="pr-v red">-¥{{ itemDiscount.toFixed(1) }}</span></div>
+          <div class="price-row pr-save">已优惠 ¥{{ totalDiscount.toFixed(1) }}</div>
+          <div class="price-row pr-total"><span>合计</span><span style="font-size:20px;color:var(--mt-price)">¥{{ finalPay.toFixed(1) }}</span></div>
+        </div>
+      </div>
+
+      <!-- 备注 Cell -->
+      <div class="cell" @click="openRemarkSheet">
+        <div class="cell-main">
+          <div class="cell-label">备注</div>
+        </div>
+        <span class="cell-val">{{ remarkTag ? remarkChips.find(r => r.id === remarkTag)?.label : '请选择' }} <span class="cell-arrow">›</span></span>
+      </div>
+
+      <!-- 餐具 Cell -->
+      <div class="cell" @click="openUtensilSheet">
+        <div class="cell-main">
+          <div class="cell-label">餐具</div>
+        </div>
+        <span class="cell-val">{{ selectedUtensil }} <span class="cell-arrow">›</span></span>
+      </div>
+
+      <!-- 支付方式列表 -->
+      <div class="pay-list">
+        <div class="pay-item" :class="{ on: payMethod === '极速支付' }" @click="payMethod = '极速支付'">
+          <span class="pi-check"></span>
+          <span class="pi-name">极速支付 ✓</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '美团支付' }" @click="payMethod = '美团支付'">
+          <span class="pi-check"></span>
+          <span class="pi-name">美团支付</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '微信支付' }" @click="payMethod = '微信支付'">
+          <span class="pi-check"></span>
+          <span class="pi-name">微信支付</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '支付宝' }" @click="payMethod = '支付宝'">
+          <span class="pi-check"></span>
+          <span class="pi-name">支付宝</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '工商银行卡' }" @click="payMethod = '工商银行卡'">
+          <span class="pi-check"></span>
+          <span class="pi-name">工商银行卡</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '信用卡' }" @click="payMethod = '信用卡'">
+          <span class="pi-check"></span>
+          <span class="pi-name">信用卡</span>
+        </div>
+        <div class="pay-item" :class="{ on: payMethod === '找人代付' }" @click="payMethod = '找人代付'">
+          <span class="pi-check"></span>
+          <span class="pi-name">找人代付</span>
+        </div>
+      </div>
+
+      <!-- 发票 Cell -->
+      <div class="cell" @click="onInvoiceClick">
+        <div class="cell-main">
+          <div class="cell-label">开发票</div>
+        </div>
+        <span class="cell-val">未选择 <span class="cell-arrow">›</span></span>
+      </div>
+
+      <!-- 可享权益 -->
+      <div class="rights">
+        <div class="ri on"><span class="ri-ico">✓</span> 买贵必赔</div>
+        <div class="ri"><span class="ri-ico">🔒</span> 号码保护</div>
+        <div class="ri"><span class="ri-ico">😋</span> 放心吃</div>
+      </div>
     </div>
+
+    <!-- 粘性结算栏（z-index:11 覆盖 TabBar） -->
+    <div class="pay-bar" v-if="dishCountVal > 0">
+      <div class="pb-left">
+        <span class="pb-price" :key="priceBumpKey">¥{{ finalPay.toFixed(1) }}</span>
+        <span class="pb-save">共减<b>¥{{ totalDiscount.toFixed(1) }}</b></span>
+      </div>
+      <button class="pb-btn" @click="submit">极速支付</button>
+    </div>
+
+    <!-- 底部抽屉选择器 -->
+    <Teleport to="body">
+      <div v-if="sheet" class="sheet-overlay" @click.self="closeSheet">
+        <div class="sheet-panel">
+          <div class="sheet-handle"></div>
+          <div class="sheet-title">{{ sheet.title }}</div>
+          <div class="sheet-options">
+            <div
+              v-for="opt in sheet.options"
+              :key="opt.id"
+              class="sheet-opt"
+              :class="{ on: sheet.selected === opt.id }"
+              @click="sheet.onPick(opt.id)"
+            >
+              {{ opt.label }}
+              <span v-if="opt.sub" style="display:block;font-size:11px;color:var(--mt-text-3);margin-top:2px;font-weight:400">{{ opt.sub }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 
-  <!-- 结果态 = 订单详情 -->
+  <!-- ====== 结果态（不变） ====== -->
   <div v-else class="order-detail">
     <div class="map">
-      <div class="road"></div>
-      <div class="from"></div>
-      <div class="to"></div>
-      <div class="route"></div>
-      <div class="rider-dot">🛵</div>
-      <div class="topbar">
+      <MapTrack :address-tag="addressTag" />
+      <div class="topbar" style="z-index: 5">
         <span class="back" @click="reset">‹</span>
         <span class="ttl">订单详情</span>
         <span class="ic">📞</span>
       </div>
     </div>
 
-    <div class="eta-bar">
-      <div class="big">本店第 <b>{{ shopVisitCount }}</b> 单 · 老板心情 <b>{{ result.finalState.bossMood }}</b></div>
-      <div class="bubble" v-if="rider">
-        <div class="av">⚡</div>
-        <div class="t">
-          <b>{{ rider.name }}</b>：这单我骑出了感情
-          <span class="sig">— {{ rider.name }} / {{ rider.sub }}</span>
-        </div>
-      </div>
-    </div>
-
     <RiderCard v-if="rider" :rider="rider" />
 
-    <div style="padding: 10px 14px 0; font-size: 13px; color: var(--mt-text-2)">
-      命中：<b style="color: var(--mt-text)">{{ result.selectedBranchId }}</b>
-      <span v-if="branchMeta?.name">（{{ branchMeta.name }}）</span>
-    </div>
+    <DramaChat
+      :events="result.events"
+      :address-chip="addressChips.find((c) => c.id === addressTag) || null"
+      :remark-chip="remarkChips.find((c) => c.id === remarkTag) || null"
+    />
 
-    <DramaTimeline :events="result.events" />
-
-    <div class="story-watermark">
-      <span class="badge">🎭 锡哥精选段子</span>
-      <span>本单剧本由锡哥手编</span>
-    </div>
-
-    <div class="page-pad" style="padding-top: 0" v-if="orderAch.length">
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px">🏆 本单解锁成就</div>
-      <div v-for="id in orderAch" :key="id" class="muted">· {{ (getAchievement(id)?.name) || id }}</div>
-    </div>
-
-    <div class="gate" :class="gate.pass ? 'ok' : 'fail'">
-      <template v-if="gate.pass">✅ 红线门控通过（red_light_count = 0）</template>
-      <template v-else>⛔ 红线命中 {{ gate.redLightCount }} 处，已拦截</template>
-    </div>
+    <PushNotifier :address-tag="addressTag" :shop-name="shop?.name" />
 
     <div class="page-pad">
       <button class="submit-btn" @click="reset">再来一单 🔁</button>
+      <button class="submit-btn" style="background:transparent;color:var(--mt-price);border:1px solid var(--mt-price);margin-top:10px" @click="onShare">📸 截图分享</button>
+
+      <div class="story-watermark">
+        <span class="badge">🎭 锡哥精选段子</span>
+        <span>本单剧本由锡哥手编 · 仅供娱乐</span>
+      </div>
+
+      <div class="gate" v-if="isDev" :class="gate.pass ? 'ok' : 'fail'">
+        <template v-if="gate.pass">✅ 红线门控通过（red_light_count = 0）</template>
+        <template v-else>⛔ 红线命中 {{ gate.redLightCount }} 处，已拦截</template>
+      </div>
+
       <div class="muted" style="text-align: center; margin-top: 12px">
         <a @click="back" style="color: var(--mt-text-2)">‹ 回菜单</a>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.order-form-wrap { background: var(--mt-bg); min-height: calc(100vh - 100px); }
+
+/* 复用 chip 样式 */
+.chip-block { margin: 14px 0 4px; }
+.chip-label { font-size: 14px; font-weight: 700; color: var(--mt-text); margin-bottom: 8px; }
+.chip-label .hint { font-size: 11px; font-weight: 400; color: var(--mt-text-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid var(--mt-line);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--mt-text);
+  font-family: inherit;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+.chip:active { transform: scale(0.96); }
+.chip:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 2px; }
+.chip .ce { font-size: 16px; }
+.chip .cs { font-size: 11px; font-weight: 700; }
+.chip .cs.up { color: var(--role-gentle); }
+.chip .cs.down { color: var(--mt-price); }
+.chip .cs.zero { color: var(--mt-text-3); }
+.chip.on {
+  background: var(--mt-yellow);
+  border-color: var(--mt-yellow-deep);
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(255, 193, 0, 35);
+}
+.chip.on .cs.up,
+.chip.on .cs.down,
+.chip.on .cs.zero { color: #1a1a1a; }
+
+/* 水印 */
+.story-watermark {
+  margin: 14px auto 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--mt-text-3);
+  text-align: center;
+}
+.story-watermark .badge {
+  background: transparent;
+  color: var(--mt-text-3);
+  font-size: 11px;
+  padding: 0;
+  font-weight: 700;
+}
+</style>

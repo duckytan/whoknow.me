@@ -1,4 +1,9 @@
-# 胡闹外卖 · 真机 Playtest 操作手册（RUNBOOK）
+> **本 RUNBOOK 已作废（2026-08-01）**
+> 原因：产品已改为纯点击（无自由文本输入），且切片引擎由 `sliceDrama` 驱动、无 `branch_id` 概念。本手册中的"填备注文本""抄 branch_id""12 单普通单"等流程均已失效。
+> 现行 Playtest 流程见 `../qa/LAUGH-GATE-KIT-2026-07-31.md`（笑率闸门降级 3-5 人执行包：阈值 / 脚本 / 记录表 / 外壳 vs 内核归因法 / 两道新门）。
+> 本文件仅作历史存档，照此招人会当场卡住。
+
+# 胡闹外卖 · 真机 Playtest 操作手册（RUNBOOK）【已作废】
 
 > 配套：`PLAYTEST-CHECKLIST-2026-07-25.md`（硬闸门口径）、`scorecard-template.csv`（评分表）、`scripts/playtest-aggregate.ts`（CSV → 判定）。
 > 本手册把"什么叫产品做完了"变成 tester 能照着点、能精确记录的动作。

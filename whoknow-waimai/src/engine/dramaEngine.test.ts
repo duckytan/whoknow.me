@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { runDrama, type RunResult } from './dramaEngine.ts'
+import { MemoryEngine, MemStore } from '../store/memory.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const seed = JSON.parse(
@@ -166,4 +167,63 @@ test('T17 变体池：穷鬼单抽样，poor 与 poor_b 均可能命中', () => 
   }
   assert.ok(seen.has('poor'), 'poor 未出现')
   assert.ok(seen.has('poor_b'), 'poor_b 变体未出现')
+})
+
+// 18) 框架深化 B 档：同店二访（shopVisitCount=2，不传 shopId 隔离店间）→ 命中 regular_2nd（不与 regular_3rd 的 >=3 重叠）
+test('T18 同店二访·第2单：shopVisitCount=2（不传 shopId）命中 regular_2nd', () => {
+  const r = run({ orderTotal: 50, avgDishPrice: 99 }, { history: { shopVisitCount: 2 } })
+  assert.equal(r.selectedBranchId, 'regular_2nd')
+  assert.ok(r.events.some((e) => e.text.includes('第')))
+})
+
+// 19) 框架深化 B 档：骑手认人（riderId=r001 & riderVisitCount=2）→ 命中 rider_r001_recog
+test('T19 骑手认人·同骑手第2单：riderId=r001 & riderVisitCount=2 命中 rider_r001_recog', () => {
+  const r = run(
+    { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 },
+    { random: () => 0.6, history: { riderVisitCount: 2 } }
+  )
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
+  assert.ok(r.events.some((e) => e.text.includes('雷速飞')))
+})
+
+// 20) 框架深化 B 档·骑手认人端到端：真实记忆层派生 riderVisitCount → engine（非手动注入）
+//     经 MemoryEngine.recordRider 落库两单，getHistoryParams 真实派生 riderVisitCount=2，
+//     喂给 runDrama 命中 rider_r001_recog，并经 unlockAchievements 解锁 rider_buddy。
+//     隔离店间维度（不传 shopId / shopVisitCount），同 T18/T19 手法，使骑手认人断言确定性。
+test('T20 骑手认人·端到端：memory 真实派生 → engine 命中 rider_r001_recog 且解锁 rider_buddy', () => {
+  const eng = new MemoryEngine(new MemStore())
+  const oi = { riderId: 'r001', orderTotal: 50, avgDishPrice: 99 }
+  // 第1单：真实落库骑手计数（存储 0 → 1），riderVisitCount 含本次 = 1（尚未认人）
+  let hist = eng.getHistoryParams('s01', 'r001')
+  runDrama(branches, oi as any, { random: () => 0.6, history: { riderVisitCount: hist.riderVisitCount } as any, flags: [] })
+  eng.recordOrder('s01')
+  eng.recordRider('r001')
+  // 第2单：getHistoryParams 真实派生 riderVisitCount = 存储(1) + 1 = 2（含本次）→ 命中认人阈值 >=2
+  hist = eng.getHistoryParams('s01', 'r001')
+  assert.equal(hist.riderVisitCount, 2) // 关键：值来自真实存储派生，非手写注入 {riderVisitCount:2}
+  const r = runDrama(branches, oi as any, { random: () => 0.6, history: { riderVisitCount: hist.riderVisitCount } as any, flags: [] })
+  assert.equal(r.selectedBranchId, 'rider_r001_recog')
+  assert.ok(r.events.some((e: any) => e.text.includes('雷速飞')))
+  // 解锁成就：与 OrderView 同路径（branchMeta.achievements → unlockAchievements）
+  const branch = (branches as any[]).find((b) => b.id === r.selectedBranchId)
+  const unlocked = eng.unlockAchievements(branch.achievements ?? [])
+  assert.ok(unlocked.includes('rider_buddy'))
+  assert.ok(eng.getAchievements().includes('rider_buddy'))
+})
+
+// 21) Phase 6 优先级层：命中分支中 priority 最高档胜出（不被 weight/顺序干扰）
+test('T21 优先级层：高 priority 命中分支压过低 priority 命中分支', () => {
+  const custom = [
+    { id: 'low', weight: 100, priority: 5, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'boss', text: '低' }] },
+    { id: 'high', weight: 1, priority: 30, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'boss', text: '高' }] },
+  ]
+  const r = runDrama(custom as any, {}, { random: () => 0 } as any)
+  assert.equal(r.selectedBranchId, 'high') // 高 priority 胜出，尽管 weight 小且排在后
+  // 同档内仍按 weight 抽签：两分支同 priority 时，random=0 取首个累计命中的
+  const tie = [
+    { id: 'a', weight: 5, priority: 10, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'b', text: 'A' }] },
+    { id: 'b', weight: 5, priority: 10, trigger: { condition: '1=1' }, chain: [{ phase: 'accept', actor: 'b', text: 'B' }] },
+  ]
+  const rt = runDrama(tie as any, {}, { random: () => 0 } as any)
+  assert.equal(rt.selectedBranchId, 'a') // 同档按 weight 顺序抽，random=0 取首个
 })

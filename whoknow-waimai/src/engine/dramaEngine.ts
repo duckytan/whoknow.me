@@ -29,6 +29,7 @@ export interface HistoryParams {
   shopVisitCount?: number
   todayOrderCount?: number
   totalOrders?: number
+  riderVisitCount?: number
   [k: string]: unknown
 }
 
@@ -278,10 +279,17 @@ export function runDrama(branches: any[], orderInput: OrderInput, opts: RunOpts 
   }
 
   // 2) 权重池选 1（isFallback 分支仅在无其它命中时才兜底）
+  //    Phase 6 优先级层：先取命中分支中 priority 最高的那一档（tier），
+  //    只在最高档内按 weight 抽签。解决「用户做了 X 却看不到 X 的反应」——
+  //    高意图分支（备注彩蛋/同店里程碑，priority 高）稳定压过低意图分支。
   let selected: any = null
   if (pool.length > 0) {
     const real = pool.filter((p) => !p.branch.isFallback)
-    const candidates = real.length ? real : pool
+    let candidates = real.length ? real : pool
+    const prio = (p: { branch: any }) => (typeof p.branch.priority === 'number' ? p.branch.priority : 0)
+    const maxP = candidates.reduce((m, p) => Math.max(m, prio(p)), 0)
+    const tiered = candidates.filter((p) => prio(p) >= maxP)
+    if (tiered.length) candidates = tiered
     const totalW = candidates.reduce((s, p) => s + p.weight, 0)
     let r = random() * totalW
     for (const p of candidates) {

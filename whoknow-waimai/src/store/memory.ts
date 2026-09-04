@@ -1,6 +1,13 @@
 // memory.ts — 记忆引擎（M1）
 // 驱动「同店第 N 单差异」：累计到店次数、flags、tags；全局订单计数。
 // storage 注入式：浏览器用 localStorage，测试用内存实现。
+//
+// D7 加固（P1 审计）：所有读取一律走 safeJson。脏 localStorage（用户手改 / 插件写入 /
+// 旧版本残留 / 写入被截断）只会降级成"没有数据"，绝不抛异常白屏订单页与客服页。
+
+// 注意：此处带 .ts 扩展名是刻意的——memory.ts 会被 node:test 直接加载运行，
+// Node 的 ESM 解析器不做扩展名补全；tsconfig 已开 allowImportingTsExtensions，Vite 也照常打包。
+import { safeParse, safeParseArray, isPlainObject, toFiniteNumber } from '../lib/safeJson.ts'
 
 export interface KVStore {
   getItem(key: string): string | null
@@ -18,6 +25,7 @@ export interface HistoryParams {
   shopVisitCount: number
   todayOrderCount: number
   totalOrders: number
+  riderVisitCount?: number
   [k: string]: unknown
 }
 
@@ -30,12 +38,18 @@ export interface OrderHistoryEntry {
   bossMood: number
   total?: number
   achievements: string[]
+  /** 本单真实菜品快照（扩展可选字段，不改变既有字段语义）。用于订单页真实缩略图/件数/菜名。 */
+  items?: { dishId: string; name: string; emoji: string; qty: number; price: number }[]
 }
 
 interface ShopRecord {
   visitCount: number
   flags: string[]
   tags: string[]
+}
+
+interface RiderRecord {
+  visitCount: number
 }
 
 interface GlobalRecord {
@@ -57,29 +71,50 @@ export class MemoryEngine {
   private shopKey(shopId: string) {
     return `waimai:memory:${shopId}`
   }
+  private riderKey(riderId: string) {
+    return `waimai:rider:${riderId}`
+  }
   private globalKey() {
     return 'waimai:global'
   }
 
   private readShop(shopId: string): ShopRecord {
-    const raw = this.store.getItem(this.shopKey(shopId))
-    if (!raw) return { visitCount: 0, flags: [], tags: [] }
-    try {
-      return JSON.parse(raw) as ShopRecord
-    } catch {
-      return { visitCount: 0, flags: [], tags: [] }
+    const rec = safeParse<Partial<ShopRecord>>(
+      this.store.getItem(this.shopKey(shopId)),
+      {},
+      isPlainObject,
+    )
+    return {
+      visitCount: toFiniteNumber(rec.visitCount),
+      flags: Array.isArray(rec.flags) ? rec.flags.filter((f) => typeof f === 'string') : [],
+      tags: Array.isArray(rec.tags) ? rec.tags.filter((t) => typeof t === 'string') : [],
     }
   }
   private writeShop(shopId: string, rec: ShopRecord) {
     this.store.setItem(this.shopKey(shopId), JSON.stringify(rec))
   }
+  private readRider(riderId: string): RiderRecord {
+    const rec = safeParse<Partial<RiderRecord>>(
+      this.store.getItem(this.riderKey(riderId)),
+      {},
+      isPlainObject,
+    )
+    return { visitCount: toFiniteNumber(rec.visitCount) }
+  }
+  private writeRider(riderId: string, rec: RiderRecord) {
+    this.store.setItem(this.riderKey(riderId), JSON.stringify(rec))
+  }
   private readGlobal(): GlobalRecord {
-    const raw = this.store.getItem(this.globalKey())
     const t = todayStr()
-    if (!raw) return { totalOrders: 0, todayOrderCount: 0, todayDate: t }
-    const g = JSON.parse(raw) as GlobalRecord
-    if (g.todayDate !== t) return { totalOrders: g.totalOrders, todayOrderCount: 0, todayDate: t }
-    return g
+    const g = safeParse<Partial<GlobalRecord>>(
+      this.store.getItem(this.globalKey()),
+      {},
+      isPlainObject,
+    )
+    const totalOrders = toFiniteNumber(g.totalOrders)
+    // 跨天（含 todayDate 缺失/脏值）：保留总单数，当日计数归零
+    if (g.todayDate !== t) return { totalOrders, todayOrderCount: 0, todayDate: t }
+    return { totalOrders, todayOrderCount: toFiniteNumber(g.todayOrderCount), todayDate: t }
   }
   private writeGlobal(g: GlobalRecord) {
     this.store.setItem(this.globalKey(), JSON.stringify(g))
@@ -117,10 +152,25 @@ export class MemoryEngine {
     return { shopId, visitCount: s.visitCount, flags: s.flags.slice(), tags: s.tags.slice() }
   }
 
-  getHistoryParams(shopId: string): HistoryParams {
+  /** 记录骑手送达一单，返回递增后的骑手访问计数（与 recordOrder 对 shop 的写法平行）。 */
+  recordRider(riderId: string): number {
+    const r = this.readRider(riderId)
+    r.visitCount += 1
+    this.writeRider(riderId, r)
+    return r.visitCount
+  }
+
+  getHistoryParams(shopId: string, riderId?: string): HistoryParams {
     const s = this.readShop(shopId)
     const g = this.readGlobal()
-    return { shopVisitCount: s.visitCount, todayOrderCount: g.todayOrderCount, totalOrders: g.totalOrders }
+    const out: HistoryParams = {
+      shopVisitCount: s.visitCount,
+      todayOrderCount: g.todayOrderCount,
+      totalOrders: g.totalOrders,
+    }
+    // 骑手维度：含本次 +1，与 OrderView 对 shop 的本地 +1 语义一致；未传 riderId 时不含该字段（向后兼容）
+    if (riderId) out.riderVisitCount = this.readRider(riderId).visitCount + 1
+    return out
   }
 
   // ---- 成就解锁追踪 ----
@@ -129,8 +179,7 @@ export class MemoryEngine {
   }
   /** 合并解锁集合，返回最新全集；仅新增时写回。 */
   unlockAchievements(ids: string[]): string[] {
-    const raw = this.store.getItem(this.achKey())
-    const cur = raw ? (JSON.parse(raw) as string[]) : []
+    const cur = safeParseArray<string>(this.store.getItem(this.achKey()), (v) => typeof v === 'string')
     let changed = false
     for (const id of ids) {
       if (id && !cur.includes(id)) {
@@ -142,8 +191,7 @@ export class MemoryEngine {
     return cur.slice()
   }
   getAchievements(): string[] {
-    const raw = this.store.getItem(this.achKey())
-    return raw ? (JSON.parse(raw) as string[]) : []
+    return safeParseArray<string>(this.store.getItem(this.achKey()), (v) => typeof v === 'string')
   }
 
   // ---- 订单历史 ----
@@ -151,14 +199,12 @@ export class MemoryEngine {
     return 'waimai:history'
   }
   recordOrderHistory(entry: OrderHistoryEntry): void {
-    const raw = this.store.getItem(this.histKey())
-    const arr = raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
+    const arr = safeParseArray<OrderHistoryEntry>(this.store.getItem(this.histKey()), isPlainObject)
     arr.unshift(entry)
     this.store.setItem(this.histKey(), JSON.stringify(arr.slice(0, 100)))
   }
   getOrderHistory(): OrderHistoryEntry[] {
-    const raw = this.store.getItem(this.histKey())
-    return raw ? (JSON.parse(raw) as OrderHistoryEntry[]) : []
+    return safeParseArray<OrderHistoryEntry>(this.store.getItem(this.histKey()), isPlainObject)
   }
 
   /** 测试/重置用：清掉某店或全部。 */

@@ -43,3 +43,6 @@ research-raw/
 
 # ── workbench 预构建产物（开发工作台，需提交支持 Vercel 静态部署，/workbench → whoknow-workbench/dist） ──
 !whoknow-workbench/dist/
+
+# ── QA 临时验证产物（boundary/qa-validate/reverify-rider 等，非源码） ──
+whoknow-waimai/.qa-tmp/

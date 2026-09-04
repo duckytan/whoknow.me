@@ -1,7 +1,7 @@
 # 项目状态 · whoknow 胡闹宇宙
 
 > **任何 agent / 协作者请先读此文件** —— 它是根状态锚，看完即可拿到项目最新状态。
-> 最后更新：2026-07-25 · 主理人 游承峰（Yoan Summit）
+> 最后更新：2026-07-26 · 主理人 游承峰（Yoan Summit）
 > 详细进度见 `docs/studio/STUDIO-PROGRESS.md`（工作室进度快照）
 
 ---
@@ -26,7 +26,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 
 - **引擎**：Vue3 + Vite + Vant（沿用现状，不重做）
 - **平台**：PWA 优先（Vercel 现栈加 manifest + service worker）；小程序为独立 target，lean 模式下冻结至 M2
-- **评审强度**：lean 轻量（设计评审 + 冒烟测试；保留 playtest 真机硬闸门）
+- **评审强度**：**full**（2026-07-26 起锁定；M1 执行期曾用 lean，见 whoknow-waimai M1 复盘）。每个阶段切换走正式质量门（设计/架构/烟雾/发布评审，给 PASS/CONCERNS/FAIL）；保留真机 playtest 硬闸门。
 
 ## 关键文档（按优先级读）
 
@@ -52,7 +52,7 @@ Phase 3 收口已完成（ADR-001 + forbidden_check 真闸门 + DRAMA 解析器�
 ## 开放项（历史 P0 未动）
 
 - **P0-C（⏸ 2026-07-26 暂停）**：latest-config 信封完整种子 / `vercel.json` buildCommand（forbidden_check 客户端闸门 ✅ 已落地，见上）。**暂停原因**：后台工程 agent 已终止(killed)，且 brain(胡闹大脑)实际负责方已定（归 `701-PC` / Agent-商城，见 ROLES.md §0 / §6.5）；**处置**：由 `701-PC`（Agent-商城）上的 agent 执行，不得由 `DuckyPC`（Agent-外卖）跨机器修改。信封样例 `latest-config.json`/`fallback.json` 已抢救进 `whoknow-waimai/public/config/`（见 2026-07-26 提交）。
-- **P0-D（部分缓解）**：`remarkTag` 现已被 odd/blacklist/more_spicy/no_scold 消费（odd_eats、boss_blacklist 经备注可达）；`shopVisitCount` 仍未被任何分支消费（店间/同店差异感待 P1 设计）
+- **P0-D（已解决 · 2026-07-26 B 档深化）**：`remarkTag` 已被 odd/blacklist/more_spicy/no_scold 消费；`shopVisitCount` 现被 `regular_2nd`/`shop_s0X_loyal×5`/`vip_roast`/`shop_s0X_roast×5` 消费（同店差异感成立）；新增 `riderVisitCount`（引擎从 L3 `riderHistory` 派生）驱动骑手认人（`rider_r00X_recog`×3）。SEED 40→58 分支 + 3 新成就（local_regular/old_shop_roast/rider_buddy），测试全绿。
 - **P0-E（已解决）**：视觉前品牌 —— P0-2 已将 BRAND.md 锚色(`--brand-green/orange/purple`)+字体令牌(ZCOOL KuaiLe 手写梗等)引入 `src/style.css`；导航选中态改品牌橙红、段子卡手写体+品牌绿高亮底(截图价值)、成就✓改品牌绿、全局 whoknow 绿底白「?」角标；无障碍回归待 M2
 
 ## 变更记录
