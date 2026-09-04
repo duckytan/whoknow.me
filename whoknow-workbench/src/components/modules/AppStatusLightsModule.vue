@@ -1,6 +1,7 @@
 <script setup lang="ts">
 /**
- * App 状态灯模块：waimai / mart / brain 三张卡，含状态灯、阶段进度、测试通过率、构建结论。
+ * App 状态灯模块：brain / waimai / mart 三张卡（顺序由 gen-metrics APP_DEFS 决定），
+ * 含状态灯、阶段进度、测试通过率、构建结论。
  */
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -33,7 +34,7 @@ function openApp(key: string): void {
 <template>
   <SectionCard
     title="子项目状态灯"
-    subtitle="waimai / mart / brain 运行态一览"
+    subtitle="brain / waimai / mart 运行态一览"
     tag="P0"
     tag-color="var(--wb-green)"
   >

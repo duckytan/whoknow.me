@@ -13,6 +13,70 @@
     "overallProgressPct": 67,
     "appStatusLights": [
       {
+        "appKey": "brain",
+        "appStatus": "planning",
+        "milestonePhase": 2,
+        "testPass": 0,
+        "testTotal": 0,
+        "buildStatus": "unknown",
+        "gitCommitsTotal": 17,
+        "gitCommitsByDir": {
+          "docs": 13,
+          "root": 6,
+          "src": 3,
+          "scripts": 2,
+          "releases": 1
+        },
+        "gitAuthorDist": {
+          "unknown": 11,
+          "Ducky Tan": 4,
+          "duckytan": 2
+        },
+        "candidateCount": 16,
+        "candidateCategories": 8,
+        "unlockGateStatus": false,
+        "diskEvidence": {
+          "hasSrc": false,
+          "hasDist": false,
+          "hasDocs": true,
+          "docCount": 8
+        },
+        "progressPct": 29,
+        "ownerInstance": "701-PC",
+        "commitTimeseries": [
+          {
+            "week": "2026-W30",
+            "count": 166
+          },
+          {
+            "week": "2026-W31",
+            "count": 12
+          },
+          {
+            "week": "2026-W33",
+            "count": 15
+          },
+          {
+            "week": "2026-W36",
+            "count": 7
+          }
+        ],
+        "ciResult": "unknown",
+        "realtimeProgressPct": null,
+        "playtestMetrics": null,
+        "bizMetrics": {
+          "laughRate": null,
+          "retention": null
+        },
+        "dora": {
+          "deployFreq": null,
+          "leadTime": null,
+          "mtbf": null,
+          "mttr": null
+        },
+        "label": "胡闹大脑"
+      },
+      {
         "appKey": "waimai",
         "appStatus": "live",
         "milestonePhase": 7,
@@ -146,70 +210,6 @@
           "mttr": null
         },
         "label": "胡闹导购"
-      },
-      {
-        "appKey": "brain",
-        "appStatus": "planning",
-        "milestonePhase": 2,
-        "testPass": 0,
-        "testTotal": 0,
-        "buildStatus": "unknown",
-        "gitCommitsTotal": 17,
-        "gitCommitsByDir": {
-          "docs": 13,
-          "root": 6,
-          "src": 3,
-          "scripts": 2,
-          "releases": 1
-        },
-        "gitAuthorDist": {
-          "unknown": 11,
-          "Ducky Tan": 4,
-          "duckytan": 2
-        },
-        "candidateCount": 16,
-        "candidateCategories": 8,
-        "unlockGateStatus": false,
-        "diskEvidence": {
-          "hasSrc": false,
-          "hasDist": false,
-          "hasDocs": true,
-          "docCount": 8
-        },
-        "progressPct": 29,
-        "ownerInstance": "701-PC",
-        "commitTimeseries": [
-          {
-            "week": "2026-W30",
-            "count": 166
-          },
-          {
-            "week": "2026-W31",
-            "count": 12
-          },
-          {
-            "week": "2026-W33",
-            "count": 15
-          },
-          {
-            "week": "2026-W36",
-            "count": 7
-          }
-        ],
-        "ciResult": "unknown",
-        "realtimeProgressPct": null,
-        "playtestMetrics": null,
-        "bizMetrics": {
-          "laughRate": null,
-          "retention": null
-        },
-        "dora": {
-          "deployFreq": null,
-          "leadTime": null,
-          "mtbf": null,
-          "mttr": null
-        },
-        "label": "胡闹大脑"
       }
     ],
     "milestoneGantt": [
@@ -530,6 +530,13 @@
     ],
     "qualityGate": [
       {
+        "app": "brain",
+        "pass": 0,
+        "total": 0,
+        "verdict": "无自动化测试（仅文档契约）",
+        "buildStatus": "unknown"
+      },
+      {
         "app": "waimai",
         "pass": 45,
         "total": 45,
@@ -542,13 +549,6 @@
         "total": 12,
         "verdict": "全绿",
         "buildStatus": "pass"
-      },
-      {
-        "app": "brain",
-        "pass": 0,
-        "total": 0,
-        "verdict": "无自动化测试（仅文档契约）",
-        "buildStatus": "unknown"
       }
     ],
     "git": {
@@ -611,6 +611,70 @@
     }
   },
   "apps": [
+    {
+      "appKey": "brain",
+      "appStatus": "planning",
+      "milestonePhase": 2,
+      "testPass": 0,
+      "testTotal": 0,
+      "buildStatus": "unknown",
+      "gitCommitsTotal": 17,
+      "gitCommitsByDir": {
+        "docs": 13,
+        "root": 6,
+        "src": 3,
+        "scripts": 2,
+        "releases": 1
+      },
+      "gitAuthorDist": {
+        "unknown": 11,
+        "Ducky Tan": 4,
+        "duckytan": 2
+      },
+      "candidateCount": 16,
+      "candidateCategories": 8,
+      "unlockGateStatus": false,
+      "diskEvidence": {
+        "hasSrc": false,
+        "hasDist": false,
+        "hasDocs": true,
+        "docCount": 8
+      },
+      "progressPct": 29,
+      "ownerInstance": "701-PC",
+      "commitTimeseries": [
+        {
+          "week": "2026-W30",
+          "count": 166
+        },
+        {
+          "week": "2026-W31",
+          "count": 12
+        },
+        {
+          "week": "2026-W33",
+          "count": 15
+        },
+        {
+          "week": "2026-W36",
+          "count": 7
+        }
+      ],
+      "ciResult": "unknown",
+      "realtimeProgressPct": null,
+      "playtestMetrics": null,
+      "bizMetrics": {
+        "laughRate": null,
+        "retention": null
+      },
+      "dora": {
+        "deployFreq": null,
+        "leadTime": null,
+        "mtbf": null,
+        "mttr": null
+      },
+      "label": "胡闹大脑"
+    },
     {
       "appKey": "waimai",
       "appStatus": "live",
@@ -745,70 +809,6 @@
         "mttr": null
       },
       "label": "胡闹导购"
-    },
-    {
-      "appKey": "brain",
-      "appStatus": "planning",
-      "milestonePhase": 2,
-      "testPass": 0,
-      "testTotal": 0,
-      "buildStatus": "unknown",
-      "gitCommitsTotal": 17,
-      "gitCommitsByDir": {
-        "docs": 13,
-        "root": 6,
-        "src": 3,
-        "scripts": 2,
-        "releases": 1
-      },
-      "gitAuthorDist": {
-        "unknown": 11,
-        "Ducky Tan": 4,
-        "duckytan": 2
-      },
-      "candidateCount": 16,
-      "candidateCategories": 8,
-      "unlockGateStatus": false,
-      "diskEvidence": {
-        "hasSrc": false,
-        "hasDist": false,
-        "hasDocs": true,
-        "docCount": 8
-      },
-      "progressPct": 29,
-      "ownerInstance": "701-PC",
-      "commitTimeseries": [
-        {
-          "week": "2026-W30",
-          "count": 166
-        },
-        {
-          "week": "2026-W31",
-          "count": 12
-        },
-        {
-          "week": "2026-W33",
-          "count": 15
-        },
-        {
-          "week": "2026-W36",
-          "count": 7
-        }
-      ],
-      "ciResult": "unknown",
-      "realtimeProgressPct": null,
-      "playtestMetrics": null,
-      "bizMetrics": {
-        "laughRate": null,
-        "retention": null
-      },
-      "dora": {
-        "deployFreq": null,
-        "leadTime": null,
-        "mtbf": null,
-        "mttr": null
-      },
-      "label": "胡闹大脑"
     }
   ],
   "candidates": {

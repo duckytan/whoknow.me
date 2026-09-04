@@ -38,6 +38,18 @@ const STATUS_DOCS = [
 
 /** 三个已立项 app 的采集配置（顺序即展示顺序） */
 const APP_DEFS = [
+  // 顺序 = 工作台展示顺序（导航 / 卡片 / 质量门 / 状态灯均沿用此序）
+  // 胡闹大脑为全宇宙契约中枢，置顶展示；其余保持原相对顺序。
+  {
+    key: 'brain',
+    dir: 'whoknow-brain',
+    label: '胡闹大脑',
+    ownerInstance: '701-PC',
+    phaseDoc: 'docs/studio/STUDIO-PROGRESS.md',
+    testProbes: [],
+    fallbackPhase: 2,
+    fallbackTest: [0, 0],
+  },
   {
     key: 'waimai',
     dir: 'whoknow-waimai',
@@ -63,16 +75,6 @@ const APP_DEFS = [
     ],
     fallbackPhase: 5,
     fallbackTest: [12, 12],
-  },
-  {
-    key: 'brain',
-    dir: 'whoknow-brain',
-    label: '胡闹大脑',
-    ownerInstance: '701-PC',
-    phaseDoc: 'docs/studio/STUDIO-PROGRESS.md',
-    testProbes: [],
-    fallbackPhase: 2,
-    fallbackTest: [0, 0],
   },
 ];
 
