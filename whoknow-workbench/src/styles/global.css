@@ -47,7 +47,12 @@ a {
   background: transparent;
 }
 
-/* ── Element Plus 深色变量对齐工作台配色（其余皮肤双份覆盖见 T4）── */
+/* ── Element Plus 双主题变量覆盖（T4）─────────────────────────
+ * 深色套（html.dark）服务 cosmos-dark / legacy；浅色套（html:not(.dark)）服务 paper-light。
+ * 两套 --el-* 均指向 --wb-* 语义令牌；变量名与 element-plus/theme-chalk 实际声明逐一核对。
+ * 浅色下 EP 交互色用锚色深化变体 --wb-green-ink（#2f7a3b，对白底 ≈5.3:1），
+ * 锚色本体 #6eda78 仅 ≈1.9:1，不作浅色文字色（tokens.paper-light.css 有说明）。
+ */
 html.dark {
   --el-bg-color: var(--wb-panel);
   --el-bg-color-page: var(--wb-bg);
@@ -55,19 +60,74 @@ html.dark {
   --el-text-color-primary: var(--wb-text);
   --el-text-color-regular: var(--wb-text-dim);
   --el-text-color-secondary: var(--wb-text-muted);
+  --el-text-color-placeholder: var(--wb-text-muted);
+  --el-text-color-disabled: var(--wb-text-muted);
   --el-border-color: var(--wb-border);
+  --el-border-color-hover: var(--wb-border-strong);
   --el-border-color-light: var(--wb-border);
   --el-border-color-lighter: var(--wb-border-soft);
+  --el-border-color-extra-light: var(--wb-border-soft);
+  --el-fill-color: var(--wb-panel-2);
   --el-fill-color-blank: var(--wb-panel);
   --el-fill-color-light: var(--wb-panel-2);
+  --el-fill-color-lighter: var(--wb-panel-2);
+  --el-fill-color-extra-light: var(--wb-panel-2);
+  --el-mask-color: rgba(10, 6, 18, 0.6);
   --el-color-primary: var(--wb-green);
+  --el-color-primary-rgb: 110, 218, 120;
+  --el-color-primary-dark-2: color-mix(in srgb, var(--wb-green) 80%, white);
+  --el-color-primary-light-3: color-mix(in srgb, var(--wb-green) 70%, var(--wb-bg));
+  --el-color-primary-light-5: color-mix(in srgb, var(--wb-green) 50%, var(--wb-bg));
+  --el-color-primary-light-7: color-mix(in srgb, var(--wb-green) 30%, var(--wb-bg));
+  --el-color-primary-light-8: color-mix(in srgb, var(--wb-green) 20%, var(--wb-bg));
+  --el-color-primary-light-9: color-mix(in srgb, var(--wb-green) 10%, var(--wb-bg));
   --el-color-success: var(--wb-green);
   --el-color-warning: var(--wb-orange);
   --el-color-danger: var(--wb-red);
   --el-color-info: var(--wb-text-muted);
 }
 
-html.dark .el-menu {
+html:not(.dark) {
+  --el-bg-color: var(--wb-panel);
+  --el-bg-color-page: var(--wb-bg);
+  --el-bg-color-overlay: var(--wb-panel);
+  --el-text-color-primary: var(--wb-text);
+  --el-text-color-regular: var(--wb-text-dim);
+  --el-text-color-secondary: var(--wb-text-muted);
+  --el-text-color-placeholder: var(--wb-text-muted);
+  --el-text-color-disabled: var(--wb-text-muted);
+  --el-border-color: var(--wb-border-strong);
+  --el-border-color-hover: var(--wb-border-strong);
+  --el-border-color-light: var(--wb-border);
+  --el-border-color-lighter: var(--wb-border);
+  --el-border-color-extra-light: var(--wb-border);
+  --el-fill-color: var(--wb-panel-2);
+  --el-fill-color-blank: var(--wb-panel);
+  --el-fill-color-light: var(--wb-panel-2);
+  --el-fill-color-lighter: var(--wb-panel-2);
+  --el-fill-color-extra-light: var(--wb-panel-2);
+  --el-mask-color: rgba(255, 255, 255, 0.7);
+  --el-color-primary: var(--wb-green-ink);
+  --el-color-primary-rgb: 47, 122, 59;
+  --el-color-primary-dark-2: color-mix(in srgb, var(--wb-green-ink) 80%, black);
+  --el-color-primary-light-3: color-mix(in srgb, var(--wb-green-ink) 70%, white);
+  --el-color-primary-light-5: color-mix(in srgb, var(--wb-green-ink) 50%, white);
+  --el-color-primary-light-7: color-mix(in srgb, var(--wb-green-ink) 30%, white);
+  --el-color-primary-light-8: color-mix(in srgb, var(--wb-green-ink) 20%, white);
+  --el-color-primary-light-9: color-mix(in srgb, var(--wb-green-ink) 10%, white);
+  --el-color-success: var(--wb-green-ink);
+  --el-color-warning: var(--wb-orange);
+  --el-color-danger: var(--wb-red);
+  --el-color-info: var(--wb-text-dim);
+}
+
+/* 浅色下 el-tabs 活动条保持锚色本体（品牌识别），文字色已由 --el-color-primary 保证可读 */
+.el-tabs__active-bar {
+  background-color: var(--wb-green);
+}
+
+/* 组件级微调引用 --wb-* 令牌，深浅两套通用（--wb-* 已按皮肤解析） */
+.el-menu {
   --el-menu-bg-color: transparent;
   --el-menu-text-color: var(--wb-text-dim);
   --el-menu-hover-bg-color: var(--wb-border-soft);
@@ -75,7 +135,7 @@ html.dark .el-menu {
   border-right: none;
 }
 
-html.dark .el-table {
+.el-table {
   --el-table-border-color: var(--wb-border);
   --el-table-bg-color: transparent;
   --el-table-tr-bg-color: transparent;
@@ -83,13 +143,13 @@ html.dark .el-table {
   --el-table-row-hover-bg-color: var(--wb-border-soft);
 }
 
-html.dark .el-tree {
+.el-tree {
   --el-tree-node-hover-bg-color: var(--wb-border-soft);
   background: transparent;
   color: var(--wb-text-dim);
 }
 
-html.dark .el-card {
+.el-card {
   --el-card-bg-color: var(--wb-panel);
   border-color: var(--wb-border);
 }

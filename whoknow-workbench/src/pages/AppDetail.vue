@@ -499,10 +499,6 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
   min-width: 280px;
 }
 
-.detail__tabs {
-  --el-color-primary: var(--wb-green);
-}
-
 .detail__tabs :deep(.el-tabs__item) {
   color: var(--wb-text-dim);
 }
@@ -654,7 +650,6 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
   border: 1px solid var(--wb-border);
   border-radius: 8px;
   padding: 8px 12px;
-  --el-color-primary: var(--wb-green);
 }
 
 .detail__tree :deep(.el-tree-node__label) {
