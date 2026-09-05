@@ -1,22 +1,13 @@
 <script setup lang="ts">
 /**
- * 首页 · 宇宙综合面板：组装全部 10 个首页模块（P0 全量 + P1 图表）。
- * 数据由 App.vue 在挂载时统一加载并注入 4 个 store，本页仅消费 store。
+ * 首页 · 宇宙综合面板：页头（进度 / 新鲜度提示）+ 皮肤化模块区。
+ * 模块区域布局自 T7 起由皮肤配置驱动（SkinPage → 布局变体 → ModuleHost），
+ * 数据仍由 App.vue 挂载时统一加载并注入 store，本页仅消费 store。
  */
 import { storeToRefs } from 'pinia';
 import { useUniverseStore } from '@/stores/universe';
 import { formatDateTime } from '@/services/format';
-
-import UniverseProgressModule from '@/components/modules/UniverseProgressModule.vue';
-import AppStatusLightsModule from '@/components/modules/AppStatusLightsModule.vue';
-import MilestoneGanttModule from '@/components/modules/MilestoneGanttModule.vue';
-import CandidateMatrixModule from '@/components/modules/CandidateMatrixModule.vue';
-import RiskBoardModule from '@/components/modules/RiskBoardModule.vue';
-import QualityGateModule from '@/components/modules/QualityGateModule.vue';
-import HealthRadarModule from '@/components/modules/HealthRadarModule.vue';
-import DualInstanceLoadModule from '@/components/modules/DualInstanceLoadModule.vue';
-import ContributionActivityModule from '@/components/modules/ContributionActivityModule.vue';
-import ContractHubModule from '@/components/modules/ContractHubModule.vue';
+import SkinPage from '@/components/SkinPage.vue';
 
 const universe = useUniverseStore();
 const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = storeToRefs(universe);
@@ -27,7 +18,7 @@ const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = sto
     <header class="home__head">
       <div>
         <h1 class="home__title">宇宙综合面板</h1>
-        <p class="home__sub">胡闹宇宙项目开发工作台 · 首页 MVP（T01–T04）</p>
+        <p class="home__sub">胡闹宇宙项目开发工作台</p>
       </div>
       <div class="home__status">
         <span class="home__pct wb-mono">{{ overallProgressPct }}%</span>
@@ -39,33 +30,7 @@ const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = sto
       </div>
     </header>
 
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24" :lg="8"><UniverseProgressModule /></el-col>
-      <el-col :xs="24" :lg="16"><AppStatusLightsModule /></el-col>
-    </el-row>
-
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24"><MilestoneGanttModule /></el-col>
-    </el-row>
-
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24" :lg="12"><CandidateMatrixModule /></el-col>
-      <el-col :xs="24" :lg="12"><HealthRadarModule /></el-col>
-    </el-row>
-
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24" :lg="10"><QualityGateModule /></el-col>
-      <el-col :xs="24" :lg="14"><RiskBoardModule /></el-col>
-    </el-row>
-
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24" :lg="12"><DualInstanceLoadModule /></el-col>
-      <el-col :xs="24" :lg="12"><ContributionActivityModule /></el-col>
-    </el-row>
-
-    <el-row :gutter="16" class="home__row">
-      <el-col :xs="24"><ContractHubModule /></el-col>
-    </el-row>
+    <SkinPage page="home" />
   </div>
 </template>
 
@@ -117,11 +82,6 @@ const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = sto
   border: 1px solid;
 }
 
-.home__fresh--ok {
-  color: var(--wb-green);
-  border-color: var(--wb-green);
-}
-
 .home__fresh--stale {
   color: var(--wb-orange);
   border-color: var(--wb-orange);
@@ -130,13 +90,5 @@ const { overallProgressPct, generatedAt, dataFresh, dataAgeDays, isStale } = sto
 .home__ts {
   font-size: 12px;
   color: var(--wb-text-muted);
-}
-
-.home__row {
-  margin-bottom: 0 !important;
-}
-
-.home__row :deep(.el-col) {
-  margin-bottom: 16px;
 }
 </style>

@@ -12,7 +12,48 @@
     "home": {
       "layout": "home-classic",
       "density": "comfortable",
-      "regions": []
+      "regions": [
+        {
+          "region": "progress",
+          "module": "UniverseProgressModule"
+        },
+        {
+          "region": "statusLights",
+          "module": "AppStatusLightsModule"
+        },
+        {
+          "region": "gantt",
+          "module": "MilestoneGanttModule"
+        },
+        {
+          "region": "candidates",
+          "module": "CandidateMatrixModule"
+        },
+        {
+          "region": "radar",
+          "module": "HealthRadarModule"
+        },
+        {
+          "region": "qualityGate",
+          "module": "QualityGateModule"
+        },
+        {
+          "region": "riskBoard",
+          "module": "RiskBoardModule"
+        },
+        {
+          "region": "load",
+          "module": "DualInstanceLoadModule"
+        },
+        {
+          "region": "activity",
+          "module": "ContributionActivityModule"
+        },
+        {
+          "region": "contract",
+          "module": "ContractHubModule"
+        }
+      ]
     }
   }
 }
