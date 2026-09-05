@@ -8,6 +8,7 @@ import { useRouter } from 'vue-router';
 import { useAppsStore } from '@/stores/apps';
 import type { AppMetrics } from '@/types/metrics';
 import SectionCard from '@/components/common/SectionCard.vue';
+import WbIcon from '@/components/common/WbIcon.vue';
 import StatusLight from '@/components/common/StatusLight.vue';
 import {
   appStatusColor,
@@ -21,6 +22,13 @@ import {
 const router = useRouter();
 const apps = useAppsStore();
 const { list } = storeToRefs(apps);
+
+/** App 角标图标映射（appKey → WbIcon 名称） */
+const APP_ICON = { brain: 'brain', waimai: 'bag', mart: 'cart' } as const;
+
+function appIcon(key: string): (typeof APP_ICON)[keyof typeof APP_ICON] | 'dashboard' {
+  return (APP_ICON as Record<string, (typeof APP_ICON)[keyof typeof APP_ICON]>)[key] ?? 'dashboard';
+}
 
 function phaseText(app: AppMetrics): string {
   return `阶段 ${app.milestonePhase} / 7 · ${app.progressPct ?? Math.round((app.milestonePhase / 7) * 100)}%`;
@@ -50,7 +58,10 @@ function openApp(key: string): void {
       >
         <header class="asl__head">
           <div class="asl__title">
-            <span class="asl__name">{{ app.label ?? app.appKey }}</span>
+            <span class="asl__name">
+              <WbIcon :name="appIcon(app.appKey)" :size="18" aria-hidden="true" />
+              {{ app.label ?? app.appKey }}
+            </span>
             <span class="asl__key wb-mono">{{ app.appKey }}</span>
           </div>
           <StatusLight :color="appStatusColor(app.appStatus)" :label="appStatusLabel(app.appStatus)" size="md" />
@@ -143,6 +154,9 @@ function openApp(key: string): void {
 }
 
 .asl__name {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 14px;
   font-weight: 600;
   color: var(--wb-text);

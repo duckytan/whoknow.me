@@ -449,12 +449,40 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
     </template>
 
     <SectionCard v-else title="未找到子项目" :subtitle="`key=${key || '空'}`">
-      <p class="wb-note">该子项目不在已立项清单（waimai / mart / brain）中。请从导航栏或首页卡片进入。</p>
+      <div class="detail__empty">
+        <svg
+          class="detail__empty-art"
+          width="88"
+          height="88"
+          viewBox="0 0 88 88"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle cx="44" cy="44" r="34" stroke="var(--wb-border-strong)" stroke-width="2" stroke-dasharray="6 6" />
+          <circle cx="44" cy="40" r="12" stroke="var(--wb-green)" stroke-width="2" />
+          <path d="M36 40c2.5 3 13.5 3 16 0" stroke="var(--wb-green)" stroke-width="2" stroke-linecap="round" />
+          <circle cx="40" cy="36.5" r="1.6" fill="var(--wb-green)" />
+          <circle cx="48" cy="36.5" r="1.6" fill="var(--wb-green)" />
+          <path d="M30 66c4-6 24-6 28 0" stroke="var(--wb-purple)" stroke-width="2" stroke-linecap="round" />
+          <circle cx="70" cy="22" r="2" fill="var(--wb-orange)" />
+          <circle cx="18" cy="30" r="1.5" fill="var(--wb-purple)" />
+        </svg>
+        <p class="wb-note">该子项目不在已立项清单（waimai / mart / brain）中。请从导航栏或首页卡片进入。</p>
+      </div>
     </SectionCard>
   </div>
 </template>
 
 <style scoped>
+.detail__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+  text-align: center;
+}
+
 .detail {
   display: flex;
   flex-direction: column;
