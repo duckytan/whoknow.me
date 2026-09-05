@@ -108,8 +108,37 @@ export const useSkinStore = defineStore('skin', () => {
     apply();
   }
 
+  /** 布局覆盖持久化键（per-page） */
+  function layoutKey(page: string): string {
+    return `wb.layout.${page}`;
+  }
+
+  function readLayoutOverride(page: string): void {
+    try {
+      const raw = localStorage.getItem(layoutKey(page));
+      if (raw) layoutOverride.value[page] = JSON.parse(raw);
+    } catch {
+      /* 损坏的覆盖配置按无覆盖处理 */
+    }
+  }
+
+  /** 更新某页布局覆盖（Dev 面板用）并持久化 localStorage['wb.layout.<page>'] */
+  function setLayoutOverride(
+    page: string,
+    patch: { layout?: string; density?: Density; hidden?: string[] },
+  ): void {
+    const prev = layoutOverride.value[page] ?? {};
+    layoutOverride.value[page] = { ...prev, ...patch };
+    try {
+      localStorage.setItem(layoutKey(page), JSON.stringify(layoutOverride.value[page]));
+    } catch {
+      /* 持久化失败不阻塞交互 */
+    }
+  }
+
   // 初始应用：保证首帧前 data-skin / dark 类名已就位（与 index.html 内联脚本双重保险）
   apply();
+  readLayoutOverride('home');
 
   return {
     skinId,
@@ -120,6 +149,7 @@ export const useSkinStore = defineStore('skin', () => {
     resolveInitial,
     apply,
     setSkin,
+    setLayoutOverride,
     refreshChartTokens,
   };
 });

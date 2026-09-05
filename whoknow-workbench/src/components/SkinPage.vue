@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /**
- * 皮肤页面入口（T6 · 架构 §4.3）：按 page 读取皮肤配置 → 解析布局变体 → 渲染区域。
+ * 皮肤页面入口（T6 · 架构 §4.3；T11 接入 Dev 面板覆盖）。
+ * 布局/密度优先级：layoutOverride（localStorage['wb.layout.<page>']，Dev 面板写入）
+ *   > 皮肤 JSON 声明 > 兜底 home-classic。
  * 未知 layout id → 降级 home-classic + console.warn（PRD R-P0-06 验收④）。
- * 密度档位经 CSS 变量注入布局组件（T11 Dev 面板可覆盖）。
+ * hidden 列表中的区域被过滤（模块集合仍 100% 在 store，仅呈现隐藏）。
  */
 import { computed } from 'vue';
 import { useSkinStore } from '@/stores/skin';
@@ -17,26 +19,33 @@ const props = defineProps<{
 const skinStore = useSkinStore();
 
 const pageConfig = computed(() => skinStore.config.pages[props.page]);
+const override = computed(() => skinStore.layoutOverride[props.page]);
+
+const declaredLayout = computed(
+  () => override.value?.layout ?? pageConfig.value?.layout ?? FALLBACK_HOME_LAYOUT,
+);
 
 const layoutId = computed(() => {
-  const declared = pageConfig.value?.layout ?? FALLBACK_HOME_LAYOUT;
-  if (!LAYOUT_REGISTRY[declared]) {
-    console.warn(`[skin] unknown layout variant: ${declared}`);
+  if (!LAYOUT_REGISTRY[declaredLayout.value]) {
+    console.warn(`[skin] unknown layout variant: ${declaredLayout.value}`);
     return FALLBACK_HOME_LAYOUT;
   }
-  return declared;
+  return declaredLayout.value;
 });
 
 const layoutComp = computed(() => LAYOUT_REGISTRY[layoutId.value].component);
 
-/** regions 数组转 region→slot 映射，供布局组件按名取模块 */
+/** regions 数组转 region→slot 映射，过滤 Dev 面板隐藏的模块 */
 const regionMap = computed<Record<string, RegionMapping>>(() => {
+  const hidden = new Set(override.value?.hidden ?? []);
   const map: Record<string, RegionMapping> = {};
-  for (const r of pageConfig.value?.regions ?? []) map[r.region] = r;
+  for (const r of pageConfig.value?.regions ?? []) {
+    if (!hidden.has(r.module)) map[r.region] = r;
+  }
   return map;
 });
 
-const density = computed(() => pageConfig.value?.density ?? 'comfortable');
+const density = computed(() => override.value?.density ?? pageConfig.value?.density ?? 'comfortable');
 </script>
 
 <template>

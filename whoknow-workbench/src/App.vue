@@ -11,6 +11,8 @@ import { useAppsStore } from '@/stores/apps';
 import { useCandidatesStore } from '@/stores/candidates';
 import { useGovernanceStore } from '@/stores/governance';
 import { useSkinStore } from '@/stores/skin';
+import SkinBackdrop from '@/components/SkinBackdrop.vue';
+import SkinPanel from '@/components/SkinPanel.vue';
 
 const route = useRoute();
 const skinStore = useSkinStore();
@@ -80,9 +82,10 @@ onMounted(bootstrap);
 
 <template>
   <div class="wb-app">
+    <SkinBackdrop />
     <header class="wb-app__nav">
       <div class="wb-app__brand">
-        <span class="wb-app__logo">🛰️</span>
+        <span class="wb-app__wordmark">whoknow<span class="wb-app__q">?</span></span>
         <div class="wb-app__brand-text">
           <strong>胡闹宇宙 · 开发工作台</strong>
           <span class="wb-app__brand-sub">宇宙综合面板 / 子项目 / 候选矩阵 / 治理透视</span>
@@ -117,6 +120,7 @@ onMounted(bootstrap);
         <span v-else class="wb-app__stale">数据缺失</span>
         <span class="wb-mono wb-app__ts">{{ generatedAt ? generatedAt.slice(0, 10) : '—' }}</span>
       </div>
+      <SkinPanel />
       <div class="wb-app__skin" role="group" aria-label="皮肤切换">
         <button
           v-for="opt in skinOptions"
@@ -175,8 +179,18 @@ onMounted(bootstrap);
   gap: 10px;
 }
 
-.wb-app__logo {
+/* 品牌字标（T8 · BRAND §12.1/§12.4）：Bungee 自托管字体，锚色问号点缀 */
+.wb-app__wordmark {
+  font-family: var(--wb-font-display);
   font-size: 22px;
+  line-height: 1;
+  color: var(--wb-text);
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+.wb-app__q {
+  color: var(--wb-green);
 }
 
 .wb-app__brand-text {
@@ -204,9 +218,12 @@ onMounted(bootstrap);
 }
 
 .wb-app__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 13px;
   color: var(--wb-text-dim);
-  padding: 5px 11px;
+  padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid transparent;
   transition:
@@ -318,6 +335,8 @@ onMounted(bootstrap);
 }
 
 .wb-app__main {
+  position: relative;
+  z-index: 1;
   flex: 1 1 auto;
   padding: 18px 22px 40px;
   max-width: 1480px;
