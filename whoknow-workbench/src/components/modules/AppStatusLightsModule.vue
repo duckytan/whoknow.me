@@ -162,7 +162,7 @@ function openApp(key: string): void {
 .asl__phase-bar {
   height: 6px;
   border-radius: 3px;
-  background: #2a3040;
+  background: var(--wb-border-strong);
   overflow: hidden;
 }
 
