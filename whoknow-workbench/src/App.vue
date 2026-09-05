@@ -10,8 +10,15 @@ import { useUniverseStore } from '@/stores/universe';
 import { useAppsStore } from '@/stores/apps';
 import { useCandidatesStore } from '@/stores/candidates';
 import { useGovernanceStore } from '@/stores/governance';
+import { useSkinStore } from '@/stores/skin';
 
 const route = useRoute();
+const skinStore = useSkinStore();
+const skinOptions = [
+  { id: 'cosmos-dark', label: '宇宙暗色' },
+  { id: 'paper-light', label: '纸感浅色' },
+  { id: 'legacy', label: '回滚' },
+] as const;
 
 const loading = ref(true);
 const messages = ref<string[]>([]);
@@ -109,6 +116,19 @@ onMounted(bootstrap);
         <span v-if="dataFresh" class="wb-app__fresh">数据可用</span>
         <span v-else class="wb-app__stale">数据缺失</span>
         <span class="wb-mono wb-app__ts">{{ generatedAt ? generatedAt.slice(0, 10) : '—' }}</span>
+      </div>
+      <div class="wb-app__skin" role="group" aria-label="皮肤切换">
+        <button
+          v-for="opt in skinOptions"
+          :key="opt.id"
+          type="button"
+          class="wb-skin-btn"
+          :class="{ 'wb-skin-btn--active': skinStore.skinId === opt.id }"
+          :aria-pressed="skinStore.skinId === opt.id"
+          @click="skinStore.setSkin(opt.id)"
+        >
+          {{ opt.label }}
+        </button>
       </div>
     </header>
 
@@ -244,6 +264,45 @@ onMounted(bootstrap);
   align-items: center;
   gap: 8px;
   font-size: 12px;
+}
+
+/* 皮肤切换器：分段按钮组，触控区 ≥44×44（BRAND §13.3）；键盘可达（原生 button） */
+.wb-app__skin {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--wb-border);
+  border-radius: 10px;
+  background: var(--wb-bg-soft);
+  flex-shrink: 0;
+}
+
+.wb-skin-btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--wb-text-dim);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.wb-skin-btn:hover {
+  color: var(--wb-text);
+}
+
+.wb-skin-btn--active {
+  color: var(--wb-on-accent);
+  background: var(--wb-green);
+  border-color: var(--wb-green);
+  font-weight: 600;
 }
 
 .wb-app__fresh {

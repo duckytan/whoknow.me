@@ -1,0 +1,18 @@
+{
+  "id": "legacy",
+  "label": "回滚（中性冷灰）",
+  "tokens": "legacy",
+  "fonts": {
+    "display": "Bungee",
+    "title": "ZCOOL QingKe HuangYou",
+    "body": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "pages": {
+    "home": {
+      "layout": "home-classic",
+      "density": "comfortable",
+      "regions": []
+    }
+  }
+}

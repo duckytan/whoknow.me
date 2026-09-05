@@ -1,0 +1,18 @@
+{
+  "id": "cosmos-dark",
+  "label": "宇宙暗色",
+  "tokens": "cosmos-dark",
+  "fonts": {
+    "display": "Bungee",
+    "title": "ZCOOL QingKe HuangYou",
+    "body": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "pages": {
+    "home": {
+      "layout": "home-classic",
+      "density": "comfortable",
+      "regions": []
+    }
+  }
+}

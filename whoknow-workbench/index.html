@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh-CN">
   <head>
+    <!-- 首屏防闪：#app 渲染前同步写入 data-skin 与 dark 类名（T3） -->
+    <script>
+      (function () {
+        var order = ['cosmos-dark', 'paper-light', 'legacy'];
+        function pick() {
+          var u = new URLSearchParams(location.search).get('skin');
+          if (u && order.indexOf(u) !== -1) return u;
+          try {
+            var s = localStorage.getItem('wb.skin');
+            if (s && order.indexOf(s) !== -1) return s;
+          } catch (e) {}
+          if (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) return 'paper-light';
+          return 'cosmos-dark';
+        }
+        var id = pick();
+        var h = document.documentElement;
+        h.setAttribute('data-skin', id);
+        // 仅 paper-light 为浅色；cosmos-dark 与 legacy（中性冷灰，需 EP 深色变量）均加 dark 类
+        h.classList.toggle('dark', id !== 'paper-light');
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="dark light" />
     <title>胡闹宇宙 · 开发工作台</title>
     <meta
       name="description"
       content="胡闹宇宙项目开发工作台：宇宙综合面板 / 子项目详情 / 候选矩阵 / 治理透视"
     />
+    <!-- 字体 preload（T2 子集化 woff2；vite 以稳定文件名产出，见 vite.config assetFileNames） -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/workbench/assets/fonts/Bungee.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/workbench/assets/fonts/Inter-400.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/workbench/assets/fonts/JetBrainsMono-400.woff2" />
   </head>
   <body>
     <div id="app"></div>

@@ -1,0 +1,18 @@
+{
+  "id": "paper-light",
+  "label": "纸感浅色",
+  "tokens": "paper-light",
+  "fonts": {
+    "display": "Bungee",
+    "title": "Noto Sans SC",
+    "body": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "pages": {
+    "home": {
+      "layout": "home-classic",
+      "density": "comfortable",
+      "regions": []
+    }
+  }
+}
