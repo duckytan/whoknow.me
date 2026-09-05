@@ -1,0 +1,46 @@
+/**
+ * 产品浅色皮肤令牌（T1）。挂 [data-skin="paper-light"]。
+ * 取值来源：BRAND.md §2.3 产品浅色色板。
+ * 锚色由 tokens.css 注入，本文件不重声明。
+ * 轴标签文字 --chart-muted(#666) 对 --wb-panel(#fff) 对比度 ≈5.7:1 ≥4.5:1（BRAND §17）。
+ */
+
+[data-skin="paper-light"] {
+  /* 语义层（BRAND §2.3） */
+  --wb-bg: #f7f7f8;
+  --wb-bg-soft: #ffffff;
+  --wb-panel: #ffffff;
+  --wb-panel-2: #f0f0f2;
+  --wb-border: #ededed;
+  --wb-border-soft: #ededed;
+  --wb-border-strong: #dcdce0;
+  --wb-text: #222222;
+  --wb-text-dim: #666666;
+  --wb-text-muted: #999999;
+
+  /* 字号角色：标题切 Noto Sans SC 700（长文阅读稳定性优先） */
+  --wb-font-title: 'Noto Sans SC', 'ZCOOL QingKe HuangYou', sans-serif;
+
+  /* 浅色无光晕 */
+  --glow-purple: none;
+  --glow-green: none;
+  --glow-orange: none;
+  --shadow-glow-green: none;
+  --shadow-glow-orange: none;
+
+  /* 标准投影（BRAND §6 浅色） */
+  --wb-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --wb-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --wb-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --wb-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --wb-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  /* 图表容器令牌（浅色，轴标签对 --wb-panel 对比度 ≥4.5:1） */
+  --chart-text: #222222;
+  --chart-muted: #666666;
+  --chart-axis-line: #dcdce0;
+  --chart-split-line: rgba(102, 102, 102, 0.16);
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.98);
+  --chart-tooltip-border: #dcdce0;
+  --chart-legend: #666666;
+}

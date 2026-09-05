@@ -1,0 +1,46 @@
+/**
+ * 回滚皮肤令牌（T1）。挂 [data-skin="legacy"]。
+ * 精确复刻 2026-09-05 现状中性冷灰，作为对照与回滚出口（PRD Q9）。
+ * 注意：本文件按定义保留 #0f1117 / #171a23 / #262b36 / #79819a，
+ *       属验收 #1 的预期命中，P1 完成后移除（ARCHITECTURE §8-6）。
+ */
+
+[data-skin="legacy"] {
+  /* 语义层：2026-09-05 中性冷灰精确复刻 */
+  --wb-bg: #0f1117;
+  --wb-bg-soft: #131722;
+  --wb-panel: #171a23;
+  --wb-panel-2: #1d2130;
+  --wb-border: #262b36;
+  --wb-border-soft: #1f2430;
+  --wb-border-strong: #2a2236;
+  --wb-text: #e6e8ee;
+  --wb-text-dim: #a7aec1;
+  --wb-text-muted: #79819a;
+
+  /* 字号角色沿用现状 */
+  --wb-font-title: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+
+  /* 回滚皮肤无光晕 */
+  --glow-purple: none;
+  --glow-green: none;
+  --glow-orange: none;
+  --shadow-glow-green: none;
+  --shadow-glow-orange: none;
+
+  /* 阴影沿用现状中性冷灰投影 */
+  --wb-shadow-card: 0 2px 16px rgba(0, 0, 0, 0.42);
+  --wb-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --wb-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --wb-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --wb-shadow: var(--wb-shadow-card);
+
+  /* 图表容器令牌（沿用现状冷灰文字色） */
+  --chart-text: #e6e8ee;
+  --chart-muted: #a7aec1;
+  --chart-axis-line: #262b36;
+  --chart-split-line: rgba(167, 174, 193, 0.16);
+  --chart-tooltip-bg: rgba(23, 26, 35, 0.96);
+  --chart-tooltip-border: #262b36;
+  --chart-legend: #a7aec1;
+}

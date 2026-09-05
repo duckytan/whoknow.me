@@ -1,28 +1,11 @@
 /**
- * 工作台全局深色样式。
- * 锚色遵循 BRAND.md / CONSTITUTION.md L2-C5：绿 #6eda78 / 橙 #ff7849 / 紫 #8b5cf6 不可替换。
+ * 工作台全局样式（T1 重写）。
+ * ─────────────────────────────────────────────────────────────
+ * 语义层 --wb-* 不再在 :root 写死，改由 tokens.css（默认骨架）
+ * 经 [data-skin="cosmos-dark|paper-light|legacy"] 在运行时注入。
+ * 锚色遵循 BRAND.md / CONSTITUTION.md L2-C5：绿 #6eda78 / 橙 #ff7849 /
+ * 紫 #8b5cf6 不可替换（集中声明于 tokens.css）。
  */
-
-:root {
-  --wb-bg: #0f1117;
-  --wb-bg-soft: #131722;
-  --wb-panel: #171a23;
-  --wb-panel-2: #1d2130;
-  --wb-border: #262b36;
-  --wb-border-soft: #1f2430;
-  --wb-text: #e6e8ee;
-  --wb-text-dim: #a7aec1;
-  --wb-text-muted: #79819a;
-  --wb-green: #6eda78;
-  --wb-orange: #ff7849;
-  --wb-purple: #8b5cf6;
-  --wb-blue: #38bdf8;
-  --wb-yellow: #fbbf24;
-  --wb-red: #ef4444;
-  --wb-gray: #4b5563;
-  --wb-radius: 10px;
-  --wb-shadow: 0 2px 16px rgba(0, 0, 0, 0.42);
-}
 
 * {
   box-sizing: border-box;
@@ -39,7 +22,7 @@ body,
 body {
   background: var(--wb-bg);
   color: var(--wb-text);
-  font-family: 'Inter', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-family: var(--wb-font-body);
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -56,7 +39,7 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a3040;
+  background: var(--wb-border-strong);
   border-radius: 4px;
 }
 
@@ -64,7 +47,7 @@ a {
   background: transparent;
 }
 
-/* ── Element Plus 深色变量对齐工作台配色 ───────────────── */
+/* ── Element Plus 深色变量对齐工作台配色（其余皮肤双份覆盖见 T4）── */
 html.dark {
   --el-bg-color: var(--wb-panel);
   --el-bg-color-page: var(--wb-bg);
@@ -87,7 +70,7 @@ html.dark {
 html.dark .el-menu {
   --el-menu-bg-color: transparent;
   --el-menu-text-color: var(--wb-text-dim);
-  --el-menu-hover-bg-color: #1f2430;
+  --el-menu-hover-bg-color: var(--wb-border-soft);
   --el-menu-active-color: var(--wb-green);
   border-right: none;
 }
@@ -96,12 +79,12 @@ html.dark .el-table {
   --el-table-border-color: var(--wb-border);
   --el-table-bg-color: transparent;
   --el-table-tr-bg-color: transparent;
-  --el-table-header-bg-color: #1b1f2b;
-  --el-table-row-hover-bg-color: #1f2430;
+  --el-table-header-bg-color: var(--wb-bg-soft);
+  --el-table-row-hover-bg-color: var(--wb-border-soft);
 }
 
 html.dark .el-tree {
-  --el-tree-node-hover-bg-color: #1f2430;
+  --el-tree-node-hover-bg-color: var(--wb-border-soft);
   background: transparent;
   color: var(--wb-text-dim);
 }
@@ -113,7 +96,7 @@ html.dark .el-card {
 
 /* ── 通用工具类 ─────────────────────────────────────────── */
 .wb-mono {
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+  font-family: var(--wb-font-mono);
 }
 
 .wb-dim {
@@ -137,8 +120,12 @@ html.dark .el-card {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
+  /* 通用兜底：覆盖后续新增组件（含 data-skin 属性选择器） */
+  *,
+  [data-skin] * {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

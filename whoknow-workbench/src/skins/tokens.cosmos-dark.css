@@ -1,0 +1,45 @@
+/**
+ * 宇宙暗色皮肤令牌（T1）。挂 [data-skin="cosmos-dark"]。
+ * 取值来源：BRAND.md §2.2 宇宙暗色色板 + §6 氛围层。
+ * 锚色（green/orange/purple/blue/yellow/pink/teal/violet）由 tokens.css 注入，本文件不重声明。
+ */
+
+[data-skin="cosmos-dark"] {
+  /* 语义层（BRAND §2.2） */
+  --wb-bg: #0a0612;
+  --wb-bg-soft: #120a1a;
+  --wb-panel: #1a1126;
+  --wb-panel-2: #1a1126;
+  --wb-border: #1f1828;
+  --wb-border-soft: #1f1828;
+  --wb-border-strong: #2a2236;
+  --wb-text: #ededef;
+  --wb-text-dim: #a094b8;
+  --wb-text-muted: #6b6480;
+
+  /* 字号角色：标题用 ZCOOL 庆科黄油体（海报感） */
+  --wb-font-title: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+
+  /* 背景光晕（BRAND §2.2：左上紫 / 右下绿 / 中橙） */
+  --glow-purple: radial-gradient(60% 50% at 0% 0%, rgba(139, 92, 246, 0.18), transparent 70%);
+  --glow-green: radial-gradient(55% 45% at 100% 100%, rgba(110, 218, 120, 0.10), transparent 70%);
+  --glow-orange: radial-gradient(40% 40% at 50% 50%, rgba(255, 120, 73, 0.06), transparent 70%);
+
+  /* 低光晕替代投影（BRAND §6 暗色） */
+  --shadow-glow-green: 0 0 24px rgba(110, 218, 120, 0.25);
+  --shadow-glow-orange: 0 0 24px rgba(255, 120, 73, 0.25);
+  --wb-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --wb-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --wb-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --wb-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --wb-shadow: var(--wb-shadow-card);
+
+  /* 图表容器令牌（供 ECharts canvas 经 getComputedStyle 解析，T5 消费） */
+  --chart-text: #c3cadb;
+  --chart-muted: #a094b8;
+  --chart-axis-line: #2a2236;
+  --chart-split-line: rgba(160, 148, 184, 0.16);
+  --chart-tooltip-bg: rgba(26, 17, 38, 0.96);
+  --chart-tooltip-border: #2a2236;
+  --chart-legend: #a094b8;
+}
