@@ -9,10 +9,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "node scripts/validate-skins.mjs && vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc --noEmit",
-    "gen": "node scripts/gen-metrics.mjs"
+    "gen": "node scripts/gen-metrics.mjs",
+    "validate:skins": "node scripts/validate-skins.mjs"
   },
   "dependencies": {
     "echarts": "^5.5.0",
