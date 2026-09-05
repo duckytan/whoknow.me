@@ -201,7 +201,7 @@ onMounted(bootstrap);
 }
 
 .wb-app__link--active {
-  color: #0f1117;
+  color: var(--wb-on-accent);
   background: var(--wb-green);
   font-weight: 600;
 }

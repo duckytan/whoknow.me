@@ -69,7 +69,7 @@ function select(key: string): void {
 }
 
 .wb-tabbar__item--active {
-  color: #0f1117;
+  color: var(--wb-on-accent);
   background: var(--wb-green);
   border-color: var(--wb-green);
   font-weight: 600;

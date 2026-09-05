@@ -15,6 +15,9 @@
   --wb-green: #6eda78;   /* 胡闹绿：主品牌 / 活力 / 梗点 */
   --wb-orange: #ff7849;  /* 橙红：CTA / 强调 / 警示 */
   --wb-purple: #8b5cf6;  /* 宇宙紫：神秘 / 次级强调 / 光晕 */
+
+  /* 锚色 / 高亮底（绿底激活态、Tab 选中态等）上的前景深文字，跨皮肤恒定 */
+  --wb-on-accent: #0f1117;
   --wb-blue: #38bdf8;
   --wb-yellow: #fbbf24;
   --wb-pink: #f472b6;

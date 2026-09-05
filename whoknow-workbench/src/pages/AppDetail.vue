@@ -599,7 +599,7 @@ const laneTotal = (instance: '701-PC' | 'DuckyPC'): number =>
 
 .detail__lane-badge {
   font-size: 11px;
-  color: #0f1117;
+  color: var(--wb-on-accent);
   background: var(--wb-blue);
   border-radius: 4px;
   padding: 1px 6px;

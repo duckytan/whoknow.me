@@ -2,7 +2,7 @@
  * 产品浅色皮肤令牌（T1）。挂 [data-skin="paper-light"]。
  * 取值来源：BRAND.md §2.3 产品浅色色板。
  * 锚色由 tokens.css 注入，本文件不重声明。
- * 轴标签文字 --chart-muted(#666) 对 --wb-panel(#fff) 对比度 ≈5.7:1 ≥4.5:1（BRAND §17）。
+ * 轴标签文字（#666）对面板底（#fff）对比度 ≈5.7:1 ≥4.5:1（BRAND §17）。
  */
 
 [data-skin="paper-light"] {
