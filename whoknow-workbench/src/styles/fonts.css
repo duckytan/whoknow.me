@@ -1,0 +1,115 @@
+/*
+ * 品牌字体 @font-face 与字号角色令牌（阶段 A · T2）
+ *
+ * 字阵容严格遵循 BRAND.md §3.1：
+ *   --wb-font-display  Bungee                  （顶栏字标、页面大标题）
+ *   --wb-font-title    ZCOOL QingKe HuangYou    （卡片 / 区块标题）
+ *   --wb-font-body     Inter + Noto Sans SC     （正文与 UI）
+ *   --wb-font-mono     JetBrains Mono           （数值、代码、标签）
+ *
+ * 全部字体自托管于 src/assets/fonts/（不放 CDN），由 scripts/subset-fonts.mjs
+ * 经 subset-font（harfbuzzjs，纯 JS）按工作台实际用到的字符白名单子集化为 woff2。
+ *
+ * 禁用字体：本文件未引入 BRAND §3.1 阵容之外的任何字体，含被主理人明令禁用的
+ * 退役草书体；CI 以 `grep -rni` 校验 `src/` 不含被禁字体名，命中须为 0。
+ *
+ * 部署约束：本文件需由 main.ts/入口样式引入方 import（属 T3 范围），
+ * 此处保持自包含——不依赖其它 CSS 即可提供完整的 @font-face 与回退栈。
+ */
+
+/* ── 展示 / Logo：Bungee（拉丁，单字重 400） ─────────────── */
+@font-face {
+  font-family: 'Bungee';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/Bungee.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2018-2019,
+    U+201C-201D, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20AC, U+2122;
+}
+
+/* ── 中文标题：ZCOOL QingKe HuangYou（站酷庆科黄油体，单字重 400） ── */
+@font-face {
+  font-family: 'ZCOOL QingKe HuangYou';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ZCOOLQingKeHuangYou.woff2') format('woff2');
+  unicode-range: U+2E80-2EFF, U+2F00-2FDF, U+3000-303F, U+4E00-9FFF,
+    U+F900-FAFF, U+FF00-FFEF;
+}
+
+/* ── 正文拉丁：Inter（多字重） ───────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/Inter-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2018-2019,
+    U+201C-201D, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20AC, U+2122;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/Inter-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2018-2019,
+    U+201C-201D, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20AC, U+2122;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/Inter-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2018-2019,
+    U+201C-201D, U+2020-2022, U+2026, U+2030, U+2039-203A, U+20AC, U+2122;
+}
+
+/* ── 正文中文：Noto Sans SC（仅 400；中文粗体由 400 合成） ── */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/NotoSansSC-400.woff2') format('woff2');
+  unicode-range: U+2E80-2EFF, U+2F00-2FDF, U+3000-303F, U+4E00-9FFF,
+    U+F900-FAFF, U+FF00-FFEF;
+}
+
+/* ── 等宽 / 标签：JetBrains Mono（多字重） ──────────────── */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/JetBrainsMono-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF, U+2300-23FF,
+    U+2B00-2BFF, U+20AC, U+2122;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/JetBrainsMono-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+2000-206F, U+2190-21FF, U+2300-23FF,
+    U+2B00-2BFF, U+20AC, U+2122;
+}
+
+/*
+ * 字号角色令牌（默认声明；皮肤层可在 [data-skin=...] 下覆盖，
+ * 例如 paper-light 将 --wb-font-title 切到 'Noto Sans SC'，见 T1 tokens.*.css）。
+ * 回退栈保留系统字体，确保断网 / 字体缺失时不破版、不出现豆腐块。
+ */
+:root {
+  --wb-font-display: 'Bungee', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --wb-font-title: 'ZCOOL QingKe HuangYou', 'PingFang SC', 'Microsoft YaHei',
+    system-ui, sans-serif;
+  --wb-font-body: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei',
+    system-ui, sans-serif;
+  --wb-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas,
+    'PingFang SC', 'Microsoft YaHei', monospace;
+}
