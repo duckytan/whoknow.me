@@ -11,6 +11,7 @@ import type {
   LightStatus,
   PlaytestGrade,
 } from '@/types/metrics';
+import { BRAND_ANCHORS, FIXED_COLORS } from '@/components/charts/palette';
 
 export const PLACEHOLDER = '—';
 
@@ -172,11 +173,12 @@ export function automationLight(status: AutomationStatus | null | undefined): Li
   return 'off';
 }
 
+/* 甘特四色跨皮肤恒定（锚色 + 恒定语义色），经 palette 单一真源引用；值同 tokens.css 的 --wb-red/--wb-gray */
 const GANTT_COLOR: Record<GanttRowStatus, string> = {
-  done: '#6eda78',
-  active: '#ff7849',
-  planned: '#4b5563',
-  blocked: '#ef4444',
+  done: BRAND_ANCHORS.green,
+  active: BRAND_ANCHORS.orange,
+  planned: FIXED_COLORS.gray,
+  blocked: FIXED_COLORS.red,
 };
 
 export function ganttColor(status: GanttRowStatus): string {

@@ -5,14 +5,8 @@
 import type { EChartsOption } from 'echarts';
 import type { NamedSeries, RadarIndicator } from '@/types/metrics';
 import { useChart } from './useChart';
-import {
-  AXIS_LINE_COLOR,
-  CHART_PALETTE,
-  LEGEND_BASE,
-  MUTED_COLOR,
-  SPLIT_LINE_COLOR,
-  TOOLTIP_BASE,
-} from './palette';
+import { useSkinStore } from '@/stores/skin';
+import { BRAND_ANCHORS, legendBase, tooltipBase } from './palette';
 
 const props = withDefaults(
   defineProps<{
@@ -24,19 +18,21 @@ const props = withDefaults(
 );
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   return {
-    color: CHART_PALETTE,
-    tooltip: { ...TOOLTIP_BASE, trigger: 'item' },
-    legend: { ...LEGEND_BASE, bottom: 0, left: 'center', icon: 'circle' },
+    color: t.series,
+    tooltip: { ...tooltipBase(t), trigger: 'item' },
+    legend: { ...legendBase(t), bottom: 0, left: 'center', icon: 'circle' },
     radar: {
       center: ['50%', '46%'],
       radius: '62%',
       indicator: props.indicators.map((item) => ({ name: item.name, max: item.max })),
-      axisName: { color: MUTED_COLOR, fontSize: 11 },
-      axisLine: { lineStyle: { color: AXIS_LINE_COLOR } },
-      splitLine: { lineStyle: { color: SPLIT_LINE_COLOR } },
+      axisName: { color: t.muted, fontSize: 11 },
+      axisLine: { lineStyle: { color: t.axisLine } },
+      splitLine: { lineStyle: { color: t.splitLine } },
       splitArea: {
-        areaStyle: { color: ['rgba(110, 218, 120, 0.03)', 'rgba(139, 92, 246, 0.03)'] },
+        /* 锚色 rgb 微透底纹：锚色值不变，仅透明度形式（L2-C5 允许的锚色家族用法） */
+        areaStyle: { color: [`${BRAND_ANCHORS.green}08`, `${BRAND_ANCHORS.purple}08`] },
       },
     },
     series: [

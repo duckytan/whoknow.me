@@ -15,7 +15,7 @@ import RingChart from '@/components/charts/RingChart.vue';
 import FunnelChart from '@/components/charts/FunnelChart.vue';
 import StatusLight from '@/components/common/StatusLight.vue';
 import { reuseStars } from '@/services/format';
-import { GREEN, PURPLE, ORANGE, BLUE } from '@/components/charts/palette';
+import { useSkinStore } from '@/stores/skin';
 
 const router = useRouter();
 const candidates = useCandidatesStore();
@@ -25,7 +25,8 @@ const { total, categories, gateOpen } = storeToRefs(candidates);
 const { list } = storeToRefs(apps);
 const { liveCount } = storeToRefs(universe);
 
-const ringColor = [GREEN, PURPLE, ORANGE, BLUE, '#fbbf24', '#f472b6', '#34d399', '#a78bfa'];
+/* 数据序列色单一真源 = skin store 的 chartTokens.series（跨皮肤恒定，由 --wb-* 解析） */
+const ringColor = useSkinStore().chartTokens.series;
 
 const ringItems = computed<NamedValue[]>(() =>
   categories.value.map((cluster, idx) => ({

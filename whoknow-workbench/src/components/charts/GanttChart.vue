@@ -7,7 +7,8 @@ import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
 import type { GanttRow } from '@/types/metrics';
 import { useChart } from './useChart';
-import { AXIS_LINE_COLOR, MUTED_COLOR, SPLIT_LINE_COLOR, TOOLTIP_BASE } from './palette';
+import { useSkinStore } from '@/stores/skin';
+import { tooltipBase } from './palette';
 import { ganttColor, ganttLabel } from '@/services/format';
 
 const props = withDefaults(
@@ -63,6 +64,7 @@ function renderItem(params: any, api: any): any {
 }
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   const labels = props.rows.map((row) => row.label);
   const data: BarDatum[] = props.rows.map((row, index) => ({
     value: [index, toTs(row.start), toTs(row.end)],
@@ -72,7 +74,7 @@ function buildOption(): EChartsOption {
 
   return {
     tooltip: {
-      ...TOOLTIP_BASE,
+      ...tooltipBase(t),
       trigger: 'item',
       formatter: (param: any) => {
         const meta: GanttRow | undefined = param?.data?.meta;
@@ -90,14 +92,14 @@ function buildOption(): EChartsOption {
     xAxis: {
       type: 'time',
       position: 'top',
-      axisLine: { lineStyle: { color: AXIS_LINE_COLOR } },
+      axisLine: { lineStyle: { color: t.axisLine } },
       axisTick: { show: false },
       axisLabel: {
-        color: MUTED_COLOR,
+        color: t.muted,
         fontSize: 11,
         formatter: '{yyyy}-{MM}',
       },
-      splitLine: { lineStyle: { color: SPLIT_LINE_COLOR, type: 'dashed' } },
+      splitLine: { lineStyle: { color: t.splitLine, type: 'dashed' } },
     },
     yAxis: {
       type: 'category',
@@ -107,7 +109,7 @@ function buildOption(): EChartsOption {
       axisTick: { show: false },
       splitLine: { show: false },
       axisLabel: {
-        color: MUTED_COLOR,
+        color: t.muted,
         fontSize: 11,
         width: 158,
         overflow: 'truncate',

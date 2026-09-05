@@ -5,7 +5,8 @@
 import type { EChartsOption } from 'echarts';
 import type { NamedValue } from '@/types/metrics';
 import { useChart } from './useChart';
-import { CHART_PALETTE, LEGEND_BASE, TEXT_COLOR, MUTED_COLOR, TOOLTIP_BASE } from './palette';
+import { useSkinStore } from '@/stores/skin';
+import { legendBase, tooltipBase } from './palette';
 
 const props = withDefaults(
   defineProps<{
@@ -24,15 +25,16 @@ const props = withDefaults(
 );
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   return {
-    color: CHART_PALETTE,
+    color: t.series,
     tooltip: {
-      ...TOOLTIP_BASE,
+      ...tooltipBase(t),
       trigger: 'item',
       formatter: '{b}：{c}（{d}%）',
     },
     legend: props.showLegend
-      ? { ...LEGEND_BASE, bottom: 0, left: 'center', icon: 'circle' }
+      ? { ...legendBase(t), bottom: 0, left: 'center', icon: 'circle' }
       : { show: false },
     graphic:
       props.centerValue || props.centerLabel
@@ -43,10 +45,10 @@ function buildOption(): EChartsOption {
               top: props.showLegend ? '38%' : '44%',
               style: {
                 text: props.centerValue,
-                fill: TEXT_COLOR,
+                fill: t.text,
                 fontSize: 24,
                 fontWeight: 600,
-                fontFamily: 'JetBrains Mono, Consolas, monospace',
+                fontFamily: t.fontFamily || 'JetBrains Mono, Consolas, monospace',
                 align: 'center',
               },
             },
@@ -56,7 +58,7 @@ function buildOption(): EChartsOption {
               top: props.showLegend ? '52%' : '58%',
               style: {
                 text: props.centerLabel,
-                fill: MUTED_COLOR,
+                fill: t.muted,
                 fontSize: 12,
                 align: 'center',
               },
@@ -70,7 +72,7 @@ function buildOption(): EChartsOption {
         center: ['50%', props.showLegend ? '45%' : '50%'],
         avoidLabelOverlap: true,
         itemStyle: {
-          borderColor: '#171a23',
+          borderColor: t.panel2,
           borderWidth: 2,
         },
         label: { show: false },

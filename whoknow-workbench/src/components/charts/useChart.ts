@@ -5,6 +5,7 @@
 
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import * as echarts from 'echarts';
+import { useSkinStore } from '@/stores/skin';
 
 export interface UseChartResult {
   chartRef: ReturnType<typeof ref<HTMLDivElement | null>>;
@@ -40,7 +41,9 @@ export function useChart(
     }
   });
 
-  watch(depsGetter, () => render(), { deep: true });
+  // 皮肤切换触发重绘：skinId 变更 → buildOption 重跑 → chartTokens 经 store 重新解析
+  const skinStore = useSkinStore();
+  watch([depsGetter, () => skinStore.skinId], () => render(), { deep: true });
 
   onBeforeUnmount(() => {
     window.removeEventListener('resize', handleResize);

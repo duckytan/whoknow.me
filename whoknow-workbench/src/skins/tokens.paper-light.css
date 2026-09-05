@@ -43,6 +43,9 @@
   --chart-tooltip-bg: rgba(255, 255, 255, 0.98);
   --chart-tooltip-border: #dcdce0;
   --chart-legend: #666666;
+  --chart-heat-from: #f0f0f2;
+  --chart-split-area: rgba(0, 0, 0, 0.03);
+  --chart-shadow-color: rgba(0, 0, 0, 0.18);
 
   /* 锚色深化可读变体（仅浅色语境功能色；锚色本体 #6eda78 不变，见 tokens.css）：
      #2f7a3b 对白底对比度 ≈5.3:1 ≥4.5:1，供 EP 文字/交互色使用（绿 #6eda78 对白仅 ≈1.9:1） */

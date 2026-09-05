@@ -6,7 +6,7 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUniverseStore } from '@/stores/universe';
 import type { NamedValue } from '@/types/metrics';
-import { GREEN, ORANGE, GRAY } from '@/components/charts/palette';
+import { BRAND_ANCHORS, FIXED_COLORS } from '@/components/charts/palette';
 import SectionCard from '@/components/common/SectionCard.vue';
 import RingChart from '@/components/charts/RingChart.vue';
 import MetricCard from '@/components/common/MetricCard.vue';
@@ -16,9 +16,9 @@ const universe = useUniverseStore();
 const { overallProgressPct, liveCount, designingCount, planningCount } = storeToRefs(universe);
 
 const ringItems = computed<NamedValue[]>(() => [
-  { name: '已上线', value: liveCount.value, color: GREEN },
-  { name: '设计中', value: designingCount.value, color: ORANGE },
-  { name: '规划中', value: planningCount.value, color: GRAY },
+  { name: '已上线', value: liveCount.value, color: BRAND_ANCHORS.green },
+  { name: '设计中', value: designingCount.value, color: BRAND_ANCHORS.orange },
+  { name: '规划中', value: planningCount.value, color: FIXED_COLORS.gray },
 ]);
 </script>
 

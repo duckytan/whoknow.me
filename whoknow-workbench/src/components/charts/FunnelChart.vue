@@ -5,7 +5,8 @@
 import type { EChartsOption } from 'echarts';
 import type { NamedValue } from '@/types/metrics';
 import { useChart } from './useChart';
-import { CHART_PALETTE, TOOLTIP_BASE } from './palette';
+import { useSkinStore } from '@/stores/skin';
+import { tooltipBase } from './palette';
 
 const props = withDefaults(
   defineProps<{
@@ -16,9 +17,10 @@ const props = withDefaults(
 );
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   return {
-    color: CHART_PALETTE,
-    tooltip: { ...TOOLTIP_BASE, trigger: 'item', formatter: '{b}' },
+    color: t.series,
+    tooltip: { ...tooltipBase(t), trigger: 'item', formatter: '{b}' },
     series: [
       {
         type: 'funnel',
@@ -33,12 +35,12 @@ function buildOption(): EChartsOption {
         label: {
           show: true,
           position: 'inside',
-          color: '#0f1117',
+          color: t.onAccent,
           fontSize: 12,
           fontWeight: 600,
           formatter: '{b}',
         },
-        itemStyle: { borderColor: '#171a23', borderWidth: 2 },
+        itemStyle: { borderColor: t.panel2, borderWidth: 2 },
         emphasis: { label: { fontSize: 13 } },
         data: props.items.map((item) => ({
           name: item.name,

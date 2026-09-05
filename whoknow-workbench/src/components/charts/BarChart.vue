@@ -5,12 +5,12 @@
 import type { EChartsOption } from 'echarts';
 import type { NamedSeries } from '@/types/metrics';
 import { useChart } from './useChart';
+import { useSkinStore } from '@/stores/skin';
 import {
-  CATEGORY_AXIS_BASE,
-  CHART_PALETTE,
-  LEGEND_BASE,
-  TOOLTIP_BASE,
-  VALUE_AXIS_BASE,
+  categoryAxisBase,
+  legendBase,
+  tooltipBase,
+  valueAxisBase,
 } from './palette';
 
 const props = withDefaults(
@@ -33,22 +33,23 @@ const props = withDefaults(
 );
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   const valueAxis = {
     type: 'value' as const,
     minInterval: 1,
     max: props.maxValue > 0 ? props.maxValue : undefined,
-    ...VALUE_AXIS_BASE,
+    ...valueAxisBase(t),
   };
   const categoryAxis = {
     type: 'category' as const,
     data: props.categories,
-    ...CATEGORY_AXIS_BASE,
+    ...categoryAxisBase(t),
   };
 
   return {
-    color: CHART_PALETTE,
-    tooltip: { ...TOOLTIP_BASE, trigger: 'axis', axisPointer: { type: 'shadow' } },
-    legend: props.showLegend ? { ...LEGEND_BASE, top: 0, right: 0, icon: 'circle' } : { show: false },
+    color: t.series,
+    tooltip: { ...tooltipBase(t), trigger: 'axis', axisPointer: { type: 'shadow' } },
+    legend: props.showLegend ? { ...legendBase(t), top: 0, right: 0, icon: 'circle' } : { show: false },
     grid: {
       left: props.horizontal ? 96 : 46,
       right: 24,
@@ -66,7 +67,7 @@ function buildOption(): EChartsOption {
       label: {
         show: props.series.length === 1,
         position: props.horizontal ? 'right' : 'top',
-        color: '#a7aec1',
+        color: t.muted,
         fontSize: 11,
       },
       emphasis: { focus: 'series' },

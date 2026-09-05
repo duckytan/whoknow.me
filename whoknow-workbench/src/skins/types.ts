@@ -68,6 +68,18 @@ export interface ChartTokenSet {
   tooltipBg: string;
   tooltipBorder: string;
   legend: string;
+  /** 面板色（图表 item 描边等，来自 --wb-panel-2） */
+  panel2: string;
+  /** 锚色/高亮底上的前景文字（来自 --wb-on-accent，漏斗与热力 label 用） */
+  onAccent: string;
+  /** 数值/等宽字体族（来自 --wb-font-mono，canvas 不认 var() 需具体值） */
+  fontFamily: string;
+  /** 热力图渐变起点（深色取深底、浅色取浅底，来自 --chart-heat-from） */
+  heatFrom: string;
+  /** 热力图 splitArea 微透底（来自 --chart-split-area） */
+  splitArea: string;
+  /** 图形强调阴影色（来自 --chart-shadow-color） */
+  shadowColor: string;
   /** 数据序列色（锚色家族，两皮肤共用），由 CHART_PALETTE_VARS 解析 */
   series: string[];
 }

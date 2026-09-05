@@ -9,7 +9,7 @@ import type { SkinId, ChartTokenSet, Density } from '@/skins/types';
 import { SKIN_REGISTRY } from '@/skins/registry';
 import { resolveInitialSkin, persistSkin } from '@/composables/useSkin';
 
-/** 数据序列色：两皮肤共用，引用 CSS 变量名（非 hex 字面量） */
+/** 数据序列色：两皮肤共用，引用 CSS 变量名（非 hex 字面量）；与 palette.CHART_PALETTE_VARS 保持一致 */
 const DATA_SERIES_VARS = [
   '--wb-green',
   '--wb-orange',
@@ -30,6 +30,9 @@ const CONTAINER_VARS = {
   tooltipBg: '--chart-tooltip-bg',
   tooltipBorder: '--chart-tooltip-border',
   legend: '--chart-legend',
+  heatFrom: '--chart-heat-from',
+  splitArea: '--chart-split-area',
+  shadowColor: '--chart-shadow-color',
 } as const;
 
 function emptyChartTokens(): ChartTokenSet {
@@ -41,6 +44,12 @@ function emptyChartTokens(): ChartTokenSet {
     tooltipBg: '',
     tooltipBorder: '',
     legend: '',
+    panel2: '',
+    onAccent: '',
+    fontFamily: '',
+    heatFrom: '',
+    splitArea: '',
+    shadowColor: '',
     series: [],
   };
 }
@@ -68,6 +77,12 @@ export const useSkinStore = defineStore('skin', () => {
       tooltipBg: read(CONTAINER_VARS.tooltipBg),
       tooltipBorder: read(CONTAINER_VARS.tooltipBorder),
       legend: read(CONTAINER_VARS.legend),
+      panel2: read('--wb-panel-2'),
+      onAccent: read('--wb-on-accent'),
+      fontFamily: read('--wb-font-mono'),
+      heatFrom: read(CONTAINER_VARS.heatFrom),
+      splitArea: read(CONTAINER_VARS.splitArea),
+      shadowColor: read(CONTAINER_VARS.shadowColor),
       series: DATA_SERIES_VARS.map(read),
     };
   }

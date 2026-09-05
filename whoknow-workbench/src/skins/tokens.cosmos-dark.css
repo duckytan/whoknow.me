@@ -42,4 +42,7 @@
   --chart-tooltip-bg: rgba(26, 17, 38, 0.96);
   --chart-tooltip-border: #2a2236;
   --chart-legend: #a094b8;
+  --chart-heat-from: #1d2130;
+  --chart-split-area: rgba(255, 255, 255, 0.02);
+  --chart-shadow-color: rgba(0, 0, 0, 0.5);
 }

@@ -5,12 +5,12 @@
 import type { EChartsOption } from 'echarts';
 import type { NamedSeries } from '@/types/metrics';
 import { useChart } from './useChart';
+import { useSkinStore } from '@/stores/skin';
 import {
-  CATEGORY_AXIS_BASE,
-  CHART_PALETTE,
-  LEGEND_BASE,
-  TOOLTIP_BASE,
-  VALUE_AXIS_BASE,
+  categoryAxisBase,
+  legendBase,
+  tooltipBase,
+  valueAxisBase,
 } from './palette';
 
 const props = withDefaults(
@@ -31,21 +31,22 @@ const props = withDefaults(
 );
 
 function buildOption(): EChartsOption {
+  const t = useSkinStore().chartTokens;
   return {
-    color: CHART_PALETTE,
-    tooltip: { ...TOOLTIP_BASE, trigger: 'axis', axisPointer: { type: 'line' } },
-    legend: props.showLegend ? { ...LEGEND_BASE, top: 0, right: 0, icon: 'circle' } : { show: false },
+    color: t.series,
+    tooltip: { ...tooltipBase(t), trigger: 'axis', axisPointer: { type: 'line' } },
+    legend: props.showLegend ? { ...legendBase(t), top: 0, right: 0, icon: 'circle' } : { show: false },
     grid: { left: 44, right: 18, top: props.showLegend ? 30 : 14, bottom: 34 },
     xAxis: {
       type: 'category',
       boundaryGap: false,
       data: props.categories,
-      ...CATEGORY_AXIS_BASE,
+      ...categoryAxisBase(t),
     },
     yAxis: {
       type: 'value',
       minInterval: 1,
-      ...VALUE_AXIS_BASE,
+      ...valueAxisBase(t),
     },
     series: props.series.map((s, index) => ({
       name: s.name,
@@ -57,7 +58,7 @@ function buildOption(): EChartsOption {
       areaStyle: props.area
         ? {
             opacity: 0.18,
-            color: CHART_PALETTE[index % CHART_PALETTE.length],
+            color: t.series[index % t.series.length],
           }
         : undefined,
       data: s.values,
