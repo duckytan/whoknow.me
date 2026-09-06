@@ -11,8 +11,8 @@
 ## 0. 30 秒速览
 
 - **项目**：whoknow（胡闹宇宙）——娱乐化、梗向、截图传播驱动的虚拟生活服务产品矩阵。
-- **产品矩阵**：`whoknow-waimai`（胡闹外卖·已上线 M1）/ `whoknow-mart`（胡闹导购·概念）/ `whoknow-brain`（胡闹控制中心·导演角色，手动生成）。
-- **部署**：单 Vercel 仓库托管多 app，根 `vercel.json` 纯静态 + `/短名` 路由分发。
+- **产品矩阵**：`whoknow-waimai`（胡闹外卖·已上线 M1）/ `whoknow-mart`（胡闹导购·概念）/ `whoknow-brain`（胡闹控制中心·导演角色，手动生成）/ `whoknow-adventure`（胡闹冒险·**纸笔桌游，唯一非 Web 产品线，不部署**）。
+- **部署**：单 Vercel 仓库托管多 app，根 `vercel.json` 纯静态 + `/短名` 路由分发。⚠️ **例外：`whoknow-adventure` 是纸笔打印件，无 `dist/`、不进路由、不部署——别给它加 rewrite。**
 - **当前里程碑（详见 [`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md)，含最后更新日期）**：外卖 M1 已上线；导购概念；brain 手动信封。
 - **本实例所在机器负责什么**：见 §6 身份确认 + §8 分工表。
 
@@ -38,7 +38,7 @@
 2. **配置与状态分离**：brain 只产内容配置（L1），永远不写玩家数据；玩家数据只在浏览器 localStorage，brain 碰不到（隐私 + 单机 0 成本基石）。
 3. **不害人 / 不违法 / 不互相踩 / 人格统一**：内容不制造焦虑、不人身攻击、不碰真实明星物价品牌（黄灯须化名）；多 app 人格一致。
 4. **字段命名权威**：mart 必须复用 waimai 命名（`actor` / `moodDelta` / `next`+`nextWeights` / `id`），严禁抢先另起；须等 waimai `DATA-STRUCTURE-v1` 落定后一次性对齐。
-5. **多 app 共存红线**：新增 app 只动两处（`vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外）；绝不删改其他 app 的路由/目录；绝不 `force push`。
+5. **多 app 共存红线**：新增 app 只动两处（`vercel.json` 追加 rewrite + `.gitignore` 追加 `!dist/` 例外）；绝不删改其他 app 的路由/目录；绝不 `force push`。**⚠️ 例外：纸笔 / 非 Web 产品线（`whoknow-adventure`）不部署，两处都不要动**——给它加 rewrite 是错的。
 
 其余为 **L2 强约定**（部署§11、相对路径、Git 代理、brain 信封契约、视觉规范、发布闸门、MVP 兼容、⛔不要做）与 **L3 当前纪律**（三铁律、痛点为王、用户思维、截图价值、痛点滤网、锡哥审核、零负担、编排者纪律，每条带退出条件）——见 `CONSTITUTION.md`。
 
@@ -49,6 +49,7 @@
 - **外卖 M1**：七阶段（概念→系统设计→技术搭建→预制作→制作→打磨→发布）全 ✅，已上线 `/waimai`；测试 45/45 绿，构建 0 类型错误。
 - **导购**：概念阶段，复用契约对齐中（`whoknow-mart/docs/`）。
 - **brain**：手动信封（锡哥生成），P0-C 自动化**暂停**（见 §8）。
+- **冒险（adventure）**：**验证阶段**。已交付第一章「冰原」5 关 + 6 种怪靶（可打印 HTML）。当前唯一目标是验证「闭眼打靶手感成不成立」——**5 关实测结论出来前不要做第 6 关**。非 Web，不部署。
 - **开放项**：P0-C 暂停（后台 agent 已终止，待重启）；playtest 硬闸门口径（A 轻量 / B 自然回收 / C 全量）未拍板；brain 负责方已定：`701-PC` / Agent-商城（胡叨叨），见 §8；P0-D `shopVisitCount` 未被消费（待 P1）；小程序 target 冻结至 M2；无障碍 3 项回归待 M2。
 
 📄 详情：[`docs/studio/PROJECT-STATUS.md`](docs/studio/PROJECT-STATUS.md)
@@ -97,6 +98,7 @@
 | `whoknow-waimai/` | 外卖 app：`src/`（引擎/视图/store）、`docs/`（GDD/规格）、`public/config/`（brain 信封样例） |
 | `whoknow-mart/` | 导购 app（概念） |
 | `whoknow-brain/` | 控制中心：`docs/api-spec.md`（信封契约） |
+| `whoknow-adventure/` | 胡闹冒险（纸笔桌游）：`README.md`（设计框架）+ `print/`（可打印靶纸 / 关卡，**不部署**） |
 | `docs/studio/` | 宇宙级文档：结构规范 / 状态 / 协作章程 / `memory/` |
 | `docs/studio/memory/` | 跨设备共享记忆（进 git） |
 | `.workbuddy/memory/` | 本机工作台日志（**不进 git**，留本地） |

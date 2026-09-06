@@ -64,13 +64,15 @@
               ┌───────────┼───────────┐
               ▼           ▼           ▼
        ┌──────────┐ ┌──────────┐ ┌──────────┐
-       │  waimai   │ │   mart   │ │    ???    │
-       │ 胡闹外卖  │ │ 胡闹导购  │ │ 后续产品  │
+       │  waimai   │ │   mart   │ │  后续 Web │
+       │ 胡闹外卖  │ │ 胡闹导购  │ │   产品    │
        │          │ │          │ │          │
-       │ 纯前端   │ │ 纯前端   │ │ 纯前端    │
-       │ 无AI    │ │ 无AI    │ │ 无AI     │
+       │ 纯前端   │ │ 纯前端   │ │  纯前端   │
+       │ 无AI    │ │ 无AI    │ │  无AI     │
        └──────────┘ └──────────┘ └──────────┘
 ```
+
+> 🗡️ **第四条产品线不在图上**：`whoknow-adventure`（胡闹冒险）是**纸笔实体桌游**，可打印、不联网、不消费 brain 配置，因此不在这套「brain 分发 → 纯前端 App」的体系内。
 
 ### AI 角色定位（最重要的一条）
 
@@ -101,6 +103,11 @@
 | **whoknow-waimai** 🍜 | v2 设计完成·重建中 | `whoknow-waimai/` | `duckytan/whoknow-waimai` | 胡闹外卖 · 段子外卖（DRAMA 引擎） |
 | **whoknow-mart** 🛒 | v1 反骨原型已上线 `/mart` | `whoknow-mart/` | — | 胡闹导购 · 反骨导购博弈 |
 | **whoknow-brain** 🧠 | 概念阶段 | `whoknow-brain/` | — | 胡闹控制中心 · AI 大脑总控 |
+| **whoknow-adventure** 🗡️ | 验证阶段·第一章 5 关 | `whoknow-adventure/` | — | 胡闹冒险 · 单人纸笔地城（闭眼打靶） |
+
+> 🗡️ **胡闹冒险是唯一的非 Web 产品线**：形态是「一本册子 + 一支笔」的**可打印纸笔桌游**，不是网页 App。
+> 它**不消费 brain 信封、不进 Vercel 路由、没有 `dist/`**——所以上面那张 brain 分发架构图不适用于它，别按 Web App 的习惯给它加部署配置。
+> 设计框架与打印件见 [`whoknow-adventure/README.md`](./whoknow-adventure/README.md)。
 
 ### 产品路线图
 
@@ -151,6 +158,7 @@ whoknow.me           ← 胡闹宇宙入口
 food.whoknow.me      ← 胡闹外卖产品页
 mart.whoknow.me      ← 胡闹导购产品页
 brain.whoknow.me     ← 控制中心后台（不对外）
+adventure.whoknow.me ← 胡闹冒险产品页（未来：规则书 / 扩展关下载，当前仅占位）
 ```
 
 ---
@@ -194,6 +202,7 @@ whoknow.me/
 ├── whoknow-waimai/                ← 胡闹外卖 v2（重建中）
 ├── whoknow-mart/                  ← 胡闹导购（v1 已上线 /mart）
 ├── whoknow-brain/                 ← 胡闹控制中心（契约·M0 接入）
+├── whoknow-adventure/             ← 胡闹冒险 · 单人纸笔地城（可打印，不参与 Vercel 部署）
 └── archive/                       ← 已归档废旧资产（prototype 等）
 ```
 
