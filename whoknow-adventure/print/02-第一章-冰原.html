@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="faPzGgBlgAaEqWLXHQJWR2">
+<head data-page-node-id="TdYF2zFbTe8GM6j38EWO6x">
+<meta charset="UTF-8" data-page-node-id="roerbn9cpap6sxHh2t72Hy">
+<title>胡闹冒险 · 第一章 冰原（验证版 5 关）</title>
+<style>
+  @page { size: A4 portrait; margin: 10mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+    margin: 0; padding: 0; color: #111; background: #fff;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 2mm;
+    border-bottom: 0.5mm solid #111; padding-bottom: 1.5mm; margin-bottom: 4mm;
+  }
+  .brand .mark { width: 3mm; height: 3mm; background: #ff7849; display: inline-block; flex: 0 0 3mm; }
+  .brand .bn { font-size: 13px; font-weight: 700; letter-spacing: 1px; }
+  .brand .bc { font-size: 8px; color: #666; margin-left: auto; }
+  h1 { font-size: 16px; font-weight: 600; margin: 0 0 2mm 0; }
+  h2 { font-size: 13px; font-weight: 600; margin: 0 0 1mm 0; }
+  p { font-size: 9.5px; line-height: 1.6; margin: 0 0 2mm 0; }
+  .sub { font-size: 10px; color: #555; margin: 0 0 4mm 0; }
+  .level { break-before: page; break-after: page; }
+  .level:first-of-type { break-before: auto; }
+  .wrap { display: flex; gap: 5mm; align-items: flex-start; }
+  .mapbox { flex: 0 0 100mm; }
+  .infobox { flex: 1; }
+  .panel { border: 0.3mm solid #bbb; border-radius: 2mm; padding: 2.5mm; margin-bottom: 3mm; }
+  .panel.aha { background: #f4f4f4; border-color: #555; }
+  table { width: 100%; border-collapse: collapse; font-size: 9px; }
+  th, td { border: 0.2mm solid #ccc; padding: 1.2mm 1.5mm; text-align: left; }
+  th { background: #eee; font-weight: 600; }
+  td.c { text-align: center; }
+  ul { margin: 0; padding-left: 4mm; font-size: 9px; line-height: 1.7; }
+  .tag { display: inline-block; font-size: 8px; border: 0.3mm solid #888; border-radius: 1mm; padding: 0.3mm 1.2mm; margin-right: 1mm; }
+  .warn { font-size: 8.5px; color: #a33; line-height: 1.6; margin-top: 2mm; }
+  .legend { font-size: 8px; color: #444; line-height: 1.7; margin-top: 2mm; }
+</style>
+</head>
+<body data-page-node-id="VQuSOfeDoyP7CmcvxPFYJw">
+
+<div class="brand">
+  <span class="mark"></span><span class="bn">胡闹冒险</span>
+  <span class="bc">whoknow-adventure ｜ 第一章 · 冰原 ｜ 验证版</span>
+</div>
+
+<h1 data-page-node-id="mNVpdAWjLBRerdYFYnH7ID">第一章 · 冰原</h1>
+<p class="sub" data-page-node-id="DAyjnQrETDUjuttXSeDMiW">验证版 5 关 ｜ 目标：先确认「打靶那一发爽不爽」，别急着做满 50 关</p>
+
+<div class="panel" data-page-node-id="djsg7XFbftckHjWschrXRN">
+  <h2 data-page-node-id="CmMBcZmHGnp8scGk9MnaMX">本章移动规则：滑行</h2>
+  <p data-page-node-id="wbWUENGdOyqzHDClMgxIBd">
+    每次移动，选<b data-page-node-id="rBNnHgINSurEFPB4hDg0T0">上 / 下 / 左 / 右</b>其中一个方向，然后<b data-page-node-id="2LEOrAGiHVI9VCzIEetdAj">一直滑到底</b>——直到下一格是冰壁、冰柱或怪物才停下。<br data-page-node-id="PTFPBbt3DY9rebFD3vfFE7">
+    · 下一格是怪物 → <b data-page-node-id="lHwjpZKuN9pF0ahfofU88Z">原地不动，触发战斗</b>，仍消耗 1 次移动<br data-page-node-id="iNDJCDVARpQXZelVDcqhCS">
+    · 经过宝箱 / 钥匙 / 药水 → <b data-page-node-id="dlQTl2zWDdg4Y0f9wHHOZf">自动拾取</b>，不需要停在上面<br data-page-node-id="7pTCMBfEMuD85Z7YAJQAV8">
+    · 经过尖刺 → 损失 3 点生命，并<b data-page-node-id="LAk0Gjwba2q0YUbdA9KMeG">停在该格</b><br data-page-node-id="OkqbDyTQ0cngUsSRjdVZjv">
+    · 怪物被击败后从地图移除 —— <b data-page-node-id="KjygVzQ8HmzNXyuDrDXT90">它就不当刹车了</b>
+  </p>
+  <p style="margin-top:2mm" data-page-node-id="MDM7ia49lQujD5aUIbyhT3">
+    玩家初始：生命 20 / 20，金币 0，武器：短剑（无加成）。<br data-page-node-id="e155Mp3izEMYoGWynRFEHU">
+    战斗流程：撞上怪 → 在<b data-page-node-id="sXbRm3fTrdw7DJNBfWpRhk">靶纸</b>上找到对应的靶 → 闭眼从攻击条划向靶心 → 结算 → 怪物没死就继续打，或选择撤退（撤退不消耗移动，但本次战斗作废）。
+  </p>
+</div>
+
+<div class="panel aha" data-page-node-id="ej1QG8sJ4o8fMILh2Yvyln">
+  <h2 data-page-node-id="DtCZM6Oezp1lRukPa0azM2">本章要验证的三件事（玩完 5 关请自问）</h2>
+  <ul data-page-node-id="QzTNSOmIhXFKlZCQ3ryz4F">
+    <li data-page-node-id="DbSEbzW0pGv8dzQ4uCooH7"><b data-page-node-id="lYo7DPNvGKVS0cTuNedP03">打靶那一发爽不爽？</b> —— 这是命门。不爽的话，后面 45 关都白搭，越早放弃越省钱。</li>
+    <li data-page-node-id="yYbCFN2vWvSyPOOWIxkEGB"><b data-page-node-id="vDndS5fcKc2tdrNXujDDzN">单关时长多少？</b> —— 基线参考 10~15 分钟。超过 20 分钟说明地图太大或怪太肉。</li>
+    <li data-page-node-id="AA3aprRhvwiJqmXxt3FXXP"><b data-page-node-id="5InCN0P6BOndfX8Mp7AG4g">有没有「啊哈」？</b> —— 就是那种"原来得先这样再那样"的瞬间。每关至少要有一次，没有就重做这关。</li>
+  </ul>
+  <p class="warn" data-page-node-id="gUENLpI5rg8IjgpyFIhbZS">⚠ 所有三星阈值都是<b data-page-node-id="himmyGdITiBxWlJnkRoqC8">初稿估算</b>，没经过试玩。请以实际游玩结果校准后再定稿 —— 桌游数值没有算出来的，只有玩出来的。</p>
+</div>
+
+<div class="legend" data-page-node-id="kmNp4ZCVAZ4cv3kN0wTDlu">
+  <b data-page-node-id="RbggDRkgoEBCasao14QnNA">地图图例</b>　深灰方块＝冰壁（边界）　带叉方块＝冰柱　圆形+数字＝怪物（数字为血量）　方块+对角十字＝宝箱　圆环+杆＝钥匙　圆形+加号＝净化药　三角＝尖刺　双圈＝起点　方块+双竖线＝出口
+</div>
+
+<!-- ============ 第 1 关 ============ -->
+<div class="level" data-page-node-id="SbZVvWcm5BQFMt4JLCzsLd">
+  <h1 data-page-node-id="RqNUDYbSHX8CpoReksz35P">第 1 关 · 初次滑行</h1>
+  <p class="sub" data-page-node-id="LYbZ928XmtwxQox01HppwK">教学关。让你体会「停不下来」这件事。</p>
+  <div class="wrap" data-page-node-id="lEkIYnwV7Kl8A5JgadG0K2">
+    <div class="mapbox" data-page-node-id="Q9KIYRUqCXgmUBFHj3mdp6">
+      <svg width="100mm" height="100mm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-page-node-id="sdcnVPaqtEXdKmRXZGorLm">
+        <rect x="0" y="0" width="100" height="100" fill="#999" data-page-node-id="gTbrjwnaODG6TS8QKrbEIk"/>
+        <rect x="10" y="10" width="80" height="80" fill="#fff" data-page-node-id="3vNj6tdQ7twl7D9fUyejXv"/>
+        <g stroke="#e0e0e0" stroke-width="0.2" data-page-node-id="yjiLAmGYAgGyEVH7KVFuVf">
+          <line x1="20" y1="10" x2="20" y2="90" data-page-node-id="igHwlQXk0R1xqkwXlQhEo8"/><line x1="30" y1="10" x2="30" y2="90" data-page-node-id="a2JZCRHwlHl2lDHSxXtaFj"/>
+          <line x1="40" y1="10" x2="40" y2="90" data-page-node-id="fHt6sbD1s2Q6Ds7f2Cz4qN"/><line x1="50" y1="10" x2="50" y2="90" data-page-node-id="LvUCHxwUYEZpshBIyJIHQp"/>
+          <line x1="60" y1="10" x2="60" y2="90" data-page-node-id="r8l2bD5CcLirGJh5IF0FpM"/><line x1="70" y1="10" x2="70" y2="90" data-page-node-id="8rinupH3uynEWEFiakMCZJ"/>
+          <line x1="80" y1="10" x2="80" y2="90" data-page-node-id="0yK7S0Q0hUOlR3mhrkqwEK"/>
+          <line x1="10" y1="20" x2="90" y2="20" data-page-node-id="JfAJ4NKqxHjhbun8wsjmUE"/><line x1="10" y1="30" x2="90" y2="30" data-page-node-id="D1lDn0zxfRs8KEbAT5vwq8"/>
+          <line x1="10" y1="40" x2="90" y2="40" data-page-node-id="ZqcIxhKjGJsLkeZHhyLJek"/><line x1="10" y1="50" x2="90" y2="50" data-page-node-id="QVdoZ9BCt5iYSM1CWuws4n"/>
+          <line x1="10" y1="60" x2="90" y2="60" data-page-node-id="qYEO7PfdOjOTH3K9qOkeV1"/><line x1="10" y1="70" x2="90" y2="70" data-page-node-id="C6NuhkgezLai9fjFv4lY1B"/>
+          <line x1="10" y1="80" x2="90" y2="80" data-page-node-id="zFBQIGOnmgTkFvVhVCJBxz"/>
+        </g>
+        <rect x="35" y="45" width="10" height="10" fill="#555" data-page-node-id="NTt3rx9cocFv2JN6GJII65"/><line x1="35" y1="45" x2="45" y2="55" stroke="#fff" stroke-width="0.5" data-page-node-id="aolEvRl1vEgZ8DToeAAQEO"/><line x1="45" y1="45" x2="35" y2="55" stroke="#fff" stroke-width="0.5" data-page-node-id="aLaPcbXyAUeWGJfZa52Yma"/>
+        <rect x="65" y="35" width="10" height="10" fill="#555" data-page-node-id="Uert9A6FhJ2qociz5Pq1ZQ"/><line x1="65" y1="35" x2="75" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="oLXMfSvckLwTwwu9Da53ZE"/><line x1="75" y1="35" x2="65" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="jDgiSb8WytArXAsIyR2o1s"/>
+        <circle cx="15" cy="15" r="4.2" fill="#fff" stroke="#111" stroke-width="0.8" data-page-node-id="GMIMsdIBwWHWBZiAxIA8EX"/><circle cx="15" cy="15" r="2.4" fill="none" stroke="#111" stroke-width="0.4" data-page-node-id="CVB1i2DyeiWXd07klLCTXy"/>
+        <rect x="82" y="82" width="8" height="8" fill="#fff" stroke="#111" stroke-width="0.6" data-page-node-id="NxFG34R9y3Im6PNq4fIY0g"/><line x1="85" y1="82" x2="85" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="HHE22kC1Nc3IT4Ilfpcy1j"/><line x1="88" y1="82" x2="88" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="xF2EWE2GJ9XsmII0o7VO4q"/>
+        <circle cx="55" cy="15" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="iE36mMnM6OgIMxeyPXPtzO"/><text x="55" y="17" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="6etNC82tK0FQCFGV1OTJJq">10</text>
+        <circle cx="85" cy="65" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="jS2rPkMAX90Zwl8pp6xDN9"/><text x="85" y="67" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="kQFYDDTnuQyoHjpXx0EcYK">6</text>
+        <rect x="83" y="32" width="9" height="9" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="JFcoQSHSchLJTidxuL3PAd"/><line x1="83" y1="32" x2="92" y2="41" stroke="#111" stroke-width="0.35" data-page-node-id="n4JCFMULtZ83Fu7PN2BhNH"/><line x1="92" y1="32" x2="83" y2="41" stroke="#111" stroke-width="0.35" data-page-node-id="HskVGuCUVvjCqkCCN89bie"/>
+      </svg>
+      <p class="legend" data-page-node-id="0OwKghig5izSRKlSYFOHnZ">起点 (2,2) ｜ 出口 (9,9) ｜ 冰柱 (5,5) (7,4) ｜ 史莱姆×2 ｜ 宝箱 (9,4)</p>
+    </div>
+    <div class="infobox" data-page-node-id="DQE3mInLb26hHxEtn2tmDD">
+      <div class="panel aha" data-page-node-id="4SGB1AQZvGO5EK4MxeOfFi">
+        <h2 data-page-node-id="u8bYV4Wmx7ie4Zt23KekYa">设计意图</h2>
+        <p data-page-node-id="eHbGyqlEZ9qJUt8n8DZ7Re">纯教学。地图很空，让你第一次感受"我明明想停在第 4 格，结果滑到了第 9 格"。<b data-page-node-id="8TXiXXZ2GZA0puF9EdlZFR">不设陷阱，不设啊哈，只教规则。</b></p>
+      </div>
+      <div class="panel" data-page-node-id="uogBHNu6F9essy866HGELG">
+        <h2 data-page-node-id="iGBx6wLgUGeQMDKofa6zCC">本关怪物</h2>
+        <table data-page-node-id="EItagVx1naJiufcDzTB79j">
+          <tr data-page-node-id="K5yPReo2ZdCD3U1BZHTXZT"><th data-page-node-id="afgxd0c21hufBIUlD1FQFG">怪物</th><th data-page-node-id="4cbOD7yGjIYVAXsQA1jyOo">靶纸</th><th data-page-node-id="wQqiW2YZQIsE4gxr36DIbi">血</th><th data-page-node-id="xmi4d9wZVnrdqwetfPnGp5">伤害</th></tr>
+          <tr data-page-node-id="fpHr5AzEBoIj4NS83g1peS"><td data-page-node-id="GCGZDhHF7k8oyAA7S5y1Hm">冰原史莱姆</td><td class="c" data-page-node-id="92Dp9RNwUJl8sbo8glS8Bw">①</td><td class="c" data-page-node-id="ev1ApD2bslfXQ5iP2HKK15">10</td><td class="c" data-page-node-id="eG21rzykwOReWCUSxshhub">1</td></tr>
+          <tr data-page-node-id="AztCwFKqH9kifIlnWCXRwO"><td data-page-node-id="LYmPaFWotb8dWKNxde7ia4">冰原史莱姆</td><td class="c" data-page-node-id="P73HzTLl4MEKckJIiDbTrQ">①</td><td class="c" data-page-node-id="jBc1v0mwAHJHiXoC5hHnPV">6</td><td class="c" data-page-node-id="xkzgaNH7MTcyhLee6BoFPA">1</td></tr>
+        </table>
+      </div>
+      <div class="panel" data-page-node-id="zyAjxsgUMn8hzSjBOqKsYF">
+        <h2 data-page-node-id="gBpALw8RYzFUJEht1IexmD">三星阈值（初稿）</h2>
+        <table data-page-node-id="R2gVFoBLr8HEBWWmZX2rB7">
+          <tr data-page-node-id="1E14EDoEdvoRHxBZieN2aT"><th data-page-node-id="U3c598MUNGEX8EWpf86JD7">项目</th><th data-page-node-id="nfbGuXrUegiFDyk8Hb0oR8">2 星</th><th data-page-node-id="QzMlwCDaebAfIyFLqVuG5l">1 星</th></tr>
+          <tr data-page-node-id="GCL1L5to7moGWKnFpqPKfz"><td data-page-node-id="hkHnMRXJXixLl0ZtbYxXNt">移动次数</td><td class="c" data-page-node-id="kiAhXKK0jrGyJD9msAlsJb">≤ 7</td><td class="c" data-page-node-id="p5WCqXx2xPTBesuRlAad2q">≤ 10</td></tr>
+          <tr data-page-node-id="pekAqZFto2ztkzWxy0aTpv"><td data-page-node-id="s4LOxGEhZOFXDcAC49WCrB">击败怪物</td><td class="c" data-page-node-id="f9skKQe7msg5ouecUCh29b">2 / 2</td><td class="c" data-page-node-id="y4FOTRiSIEB2vi2nfXG6uN">1 / 2</td></tr>
+          <tr data-page-node-id="6uBnQXhkWJjqklClwPciu0"><td data-page-node-id="8QFyrF38MGIiqmBdOquP98">损失生命</td><td class="c" data-page-node-id="CxbLUY4hc4qZ7Wg64hZox4">≤ 2</td><td class="c" data-page-node-id="J9Fq1ooXdVOz2558oMs7mH">≤ 5</td></tr>
+        </table>
+        <p class="warn" data-page-node-id="Q85HOSIgA7jwvnSXGhyg3e">参考解约 6 步：右→打→右→下（过宝箱）→打→下→左。请实测校准。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第 2 关 ============ -->
+<div class="level" data-page-node-id="hftpbpN0EUbkcIMDNDylPO">
+  <h1 data-page-node-id="FcktT2ZAWTgEOBmy9nIFaO">第 2 关 · 刹车没了</h1>
+  <p class="sub" data-page-node-id="5HTqEcF15eChxHUAVS2grC">第一个「啊哈」关。怪物不只是敌人，它还是你的刹车片。</p>
+  <div class="wrap" data-page-node-id="WnS9ILsSi2iQoNLZ17vHEl">
+    <div class="mapbox" data-page-node-id="8CvpJVXP5bV6SqCEUmtnAG">
+      <svg width="100mm" height="100mm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-page-node-id="pEQz5XTZRzvEJEtPMC6dMV">
+        <rect x="0" y="0" width="100" height="100" fill="#999" data-page-node-id="bLES8hIS5m1C13yfiHa8MA"/>
+        <rect x="10" y="10" width="80" height="80" fill="#fff" data-page-node-id="kCmfCqYDPxsUNEU0sCn1tQ"/>
+        <g stroke="#e0e0e0" stroke-width="0.2" data-page-node-id="5cAkpAf9MfJRhZKYurfIgz">
+          <line x1="20" y1="10" x2="20" y2="90" data-page-node-id="27E0z5jFeFZ8XenrEfQfVd"/><line x1="30" y1="10" x2="30" y2="90" data-page-node-id="RDVINcFuCRyVKObzSegrfx"/>
+          <line x1="40" y1="10" x2="40" y2="90" data-page-node-id="79kgfm7Oa6QrD1E4vtfS1w"/><line x1="50" y1="10" x2="50" y2="90" data-page-node-id="kxhhywzHRFwfW53M5yoPKh"/>
+          <line x1="60" y1="10" x2="60" y2="90" data-page-node-id="BA3gNXpTMHiLIJytuOSd3R"/><line x1="70" y1="10" x2="70" y2="90" data-page-node-id="fCno2epXkCIo3nPWUFec0E"/>
+          <line x1="80" y1="10" x2="80" y2="90" data-page-node-id="5IwL6wS3t6DrdZEtF0gtMw"/>
+          <line x1="10" y1="20" x2="90" y2="20" data-page-node-id="5uBitkwviQ7nfH0WUyGnyJ"/><line x1="10" y1="30" x2="90" y2="30" data-page-node-id="LkBQ4ihAIvSCT1JTkN8Li3"/>
+          <line x1="10" y1="40" x2="90" y2="40" data-page-node-id="zYHnNljseuDFMbLUayCueW"/><line x1="10" y1="50" x2="90" y2="50" data-page-node-id="GYgX4kuBLLODU5HsDpuzax"/>
+          <line x1="10" y1="60" x2="90" y2="60" data-page-node-id="1oYH9kfMbKSkZVorVPaDAI"/><line x1="10" y1="70" x2="90" y2="70" data-page-node-id="coZi61Am8p1YZD6PYMFPKO"/>
+          <line x1="10" y1="80" x2="90" y2="80" data-page-node-id="X9565Omj774cdqC6DNq4JH"/>
+        </g>
+        <rect x="25" y="35" width="10" height="10" fill="#555" data-page-node-id="mOuGa5YlV1HbM8seIdxFDy"/><line x1="25" y1="35" x2="35" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="OOjkmlinCoc59mKXelKYeI"/><line x1="35" y1="35" x2="25" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="hMMPKPOOlpGnU9r4sNYTNs"/>
+        <rect x="65" y="35" width="10" height="10" fill="#555" data-page-node-id="fnpo1s0ANpWaOc15hOXLyY"/><line x1="65" y1="35" x2="75" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="fPskH4kXHa5wgDjk5JjCdC"/><line x1="75" y1="35" x2="65" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="t4wxKk8PJQlTlVxOjDiu9t"/>
+        <rect x="35" y="65" width="10" height="10" fill="#555" data-page-node-id="Akpm4mwEDyhJAlyKte5pqn"/><line x1="35" y1="65" x2="45" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="MdESNjnVVcH4iZoLYbfeRd"/><line x1="45" y1="65" x2="35" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="f2dUH6ewYVuAXHGYYRqDmI"/>
+        <rect x="75" y="65" width="10" height="10" fill="#555" data-page-node-id="rbYkbuSg6ha6g8j9uNuaqe"/><line x1="75" y1="65" x2="85" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="0DiwyIpkVXL75pIEyWxjsH"/><line x1="85" y1="65" x2="75" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="UY7MW0diqm6XPa8cQmL5Pw"/>
+        <circle cx="15" cy="15" r="4.2" fill="#fff" stroke="#111" stroke-width="0.8" data-page-node-id="b4OkCTsm51haF6OJ95kxkT"/><circle cx="15" cy="15" r="2.4" fill="none" stroke="#111" stroke-width="0.4" data-page-node-id="jiMYHLXhUj6lZM4uNuIBhc"/>
+        <rect x="82" y="82" width="8" height="8" fill="#fff" stroke="#111" stroke-width="0.6" data-page-node-id="U4Z4UVfCf4NCVTNJxPNFV1"/><line x1="85" y1="82" x2="85" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="YfPcIBquAsIkAJJtHSnFJq"/><line x1="88" y1="82" x2="88" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="juggqlDSxyJLRBFEoIRZuS"/>
+        <circle cx="55" cy="15" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="2N4vst8JAZFiyirdb39UC0"/><text x="55" y="17" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="hqINKOZ2rgRbCuqB28LefL">14</text>
+        <circle cx="15" cy="75" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="wZ0h7VabM4vmJokBCvWEfz"/><text x="15" y="77" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="7vd0mT9BWJK57T9hJfAsF6">10</text>
+        <rect x="43" y="52" width="9" height="9" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="0o6ew3ubkfYotPQrUoYAat"/><line x1="43" y1="52" x2="52" y2="61" stroke="#111" stroke-width="0.35" data-page-node-id="zrzSDo8FNI9RzCzHQil6EB"/><line x1="52" y1="52" x2="43" y2="61" stroke="#111" stroke-width="0.35" data-page-node-id="rvPhrU1IjbZEL21nuuhChm"/>
+      </svg>
+      <p class="legend" data-page-node-id="201AVGXBvtkpArueIufhsi">起点 (2,2) ｜ 出口 (9,9) ｜ 冰柱 (3,4) (7,4) (4,7) (8,7) ｜ 霜狼 (6,2) ｜ 史莱姆 (2,8) ｜ 宝箱 (5,6)</p>
+    </div>
+    <div class="infobox" data-page-node-id="L7eH0CCAS9I8dJEY7Hc7o8">
+      <div class="panel aha" data-page-node-id="HnWihlDWnttnzlhrZkf7XB">
+        <h2 data-page-node-id="uBjGGb5eELhZPMmcSgXYjq">啊哈点：怪物是你的刹车片</h2>
+        <p data-page-node-id="hoHw4hyRyLQxfWzkvJATk0">
+          想拿到中间的宝箱，你得先<b data-page-node-id="f4A29EoBfhyqeAck7KTJm0">停在 (5,2) 才能向下转</b>。而 (5,2) 能停住，全靠右边 (6,2) 那只霜狼挡着。<br data-page-node-id="w5IDEu8bwDSTy85I3c0YWo"><br data-page-node-id="x3RDAdB5Bp6eyhhVyf5jvl">
+          <b data-page-node-id="KoTAMybjdDYW7wSOGHIHCj">可你一旦把霜狼打死，刹车就没了</b> —— 下一滑直接飙到最右边，永远回不来。<br data-page-node-id="cYPh5t04O6ssY9SDmqvl28"><br data-page-node-id="jfVUqghWAcVLGxrs1rt32r">
+          所以顺序很重要：<b data-page-node-id="DALx9otA2ZMGHIVwxmBZZg">先借霜狼停住 → 下去拿宝箱 → 再决定要不要回来打它。</b>
+        </p>
+        <p class="warn" data-page-node-id="UQTH9zrF0Q128csowDFx84">如果玩的人没意识到"顺序有讲究"，说明这个啊哈没做出来，得把宝箱挪得更"只能这么拿"。</p>
+      </div>
+      <div class="panel" data-page-node-id="eDBRwneFgYHfpHpPsbHc8z">
+        <h2 data-page-node-id="lsWpto1XC0BhDjTDp6YhSN">本关怪物</h2>
+        <table data-page-node-id="v0pWFdmkTUqDSOM15aQxkV">
+          <tr data-page-node-id="l3SqaQ6BBtt37iMi1B30HY"><th data-page-node-id="06S8TxhQvh37iOg7q1rHfh">怪物</th><th data-page-node-id="Xs1tIQMtTR04idIYVC5OH2">靶纸</th><th data-page-node-id="5znrkMK6y4D7n6YSI6tMkH">血</th><th data-page-node-id="lVTx3Tu75iyfMVSUkiQryY">伤害</th></tr>
+          <tr data-page-node-id="k4BTsWXKTAFVks7nNgtsK5"><td data-page-node-id="MLdNk350vTQHavS4Dz1YDf">霜狼</td><td class="c" data-page-node-id="Ds9vADk3Qm0SiobOu3DGTs">②</td><td class="c" data-page-node-id="FqOckPxWmRDSqC8WZ3BNEO">14</td><td class="c" data-page-node-id="zIUlkV0pk35RBeAgec2uKG">2</td></tr>
+          <tr data-page-node-id="rF11AFBD2c0ypRdBYlcNRk"><td data-page-node-id="mWM3VIoo9ZPQ3g2UZNF9PE">冰原史莱姆</td><td class="c" data-page-node-id="MqsAzlmlx7SRVHsxQseLdm">①</td><td class="c" data-page-node-id="NM3cSfqTio3GSAVUJDFTfP">10</td><td class="c" data-page-node-id="8Gha3NeGqPrN6YOjGik6oG">1</td></tr>
+        </table>
+        <p class="legend" data-page-node-id="6fLEHSLDPJ19wHjF6tW7EM">霜狼深灰段 90°，很容易中。要不要为三星去惹它，是这关真正的决策。</p>
+      </div>
+      <div class="panel" data-page-node-id="1N0J5fs7W2y5YyjqhxbFQC">
+        <h2 data-page-node-id="DeEHR05CR1g4YTqkQKt1Xi">三星阈值（初稿）</h2>
+        <table data-page-node-id="WL5Ej6rERuEkGnDb7M77EM">
+          <tr data-page-node-id="ldIStXmH1xow83F9dDKvLB"><th data-page-node-id="DniR8uEWUcWfpXA6aHMloQ">项目</th><th data-page-node-id="twGQdVzpuMZVnodLwh0gOt">2 星</th><th data-page-node-id="kyqmNyoMSUAC9EWDugE4G5">1 星</th></tr>
+          <tr data-page-node-id="PM4UbtZZB6ZWD5EFL0Nz7L"><td data-page-node-id="uD7EGjlIgcZDoS3DyIHVGL">移动次数</td><td class="c" data-page-node-id="vZZChSN8NVthoLfmXxZB80">≤ 8</td><td class="c" data-page-node-id="dvQLSCq5imVU8fNoXqbJNw">≤ 11</td></tr>
+          <tr data-page-node-id="mc3hjLJh8e4qbAKOqAN7vy"><td data-page-node-id="EMpkU1ohbeRxAxTKXaPfQ7">击败怪物</td><td class="c" data-page-node-id="C8LRRw4BAu6luJb0YAHlEJ">2 / 2</td><td class="c" data-page-node-id="t70AwPGtHsBEeQhkdqF84B">1 / 2</td></tr>
+          <tr data-page-node-id="N85lgv1WAPedBoIPBDy8pK"><td data-page-node-id="wn2IOYyIjHE1w3vOlxNc9b">损失生命</td><td class="c" data-page-node-id="4lWN3GkhivwfBBlPd37ewU">≤ 3</td><td class="c" data-page-node-id="nHfgjxsBzo6eiLTGKQpaIF">≤ 7</td></tr>
+        </table>
+        <p class="warn" data-page-node-id="xkdZyySc9OJGFfJb3LERzh">偷懒解 3 步（右→下→右到出口），但怪物项 0 星。全灭解约 7 步。校准后让两条路的差距刚好「纠结」。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第 3 关 ============ -->
+<div class="level" data-page-node-id="5qHPGNJkiLu3ZKp7UmwGK8">
+  <h1 data-page-node-id="a8RVnt6gNdSq5rjQ1WQDjM">第 3 关 · 先拿药</h1>
+  <p class="sub" data-page-node-id="86iAB73inEUMD6VztuCzPR">倒推关。先想清楚终点要什么，再倒着推路线。</p>
+  <div class="wrap" data-page-node-id="atGfIGOlGPIoFvLyw8i6CA">
+    <div class="mapbox" data-page-node-id="jVfnBvrsCrr6kx1oorypMx">
+      <svg width="100mm" height="100mm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-page-node-id="BebXwy63e2IDzPE6wHY5ej">
+        <rect x="0" y="0" width="100" height="100" fill="#999" data-page-node-id="URfwhs1D2Rye8FzHZNjZva"/>
+        <rect x="10" y="10" width="80" height="80" fill="#fff" data-page-node-id="rNZUJmiizvR0rxSmeptiDl"/>
+        <g stroke="#e0e0e0" stroke-width="0.2" data-page-node-id="giJYxtEYeAKVDsQDDue7Jo">
+          <line x1="20" y1="10" x2="20" y2="90" data-page-node-id="HH6KpHguisFwLdDZGtSWi0"/><line x1="30" y1="10" x2="30" y2="90" data-page-node-id="Dik6LhRBvW56cQ85BnWcz1"/>
+          <line x1="40" y1="10" x2="40" y2="90" data-page-node-id="3oGS1Q7Asml5sRExSvOLwq"/><line x1="50" y1="10" x2="50" y2="90" data-page-node-id="VuDjh3DIYxAAx3y5xU9509"/>
+          <line x1="60" y1="10" x2="60" y2="90" data-page-node-id="KoaFI5eU88Gj59rDNC5vzP"/><line x1="70" y1="10" x2="70" y2="90" data-page-node-id="mEA3kdM6qiEF83SIgiEzce"/>
+          <line x1="80" y1="10" x2="80" y2="90" data-page-node-id="ZMqfxqOopPkMQ0BaQ2LlwW"/>
+          <line x1="10" y1="20" x2="90" y2="20" data-page-node-id="wCD5CKnHBR0N9ZcV5suEST"/><line x1="10" y1="30" x2="90" y2="30" data-page-node-id="wcNlzanFHghnFZNKpCzFK3"/>
+          <line x1="10" y1="40" x2="90" y2="40" data-page-node-id="cU00HOwQ6GSrMMBYaEgdAF"/><line x1="10" y1="50" x2="90" y2="50" data-page-node-id="CKKbicBsMeSAnZnPIFvwdc"/>
+          <line x1="10" y1="60" x2="90" y2="60" data-page-node-id="4EFdukBOV5FBqFztILnUcr"/><line x1="10" y1="70" x2="90" y2="70" data-page-node-id="XWFsnykEtZKIEgECBr11dm"/>
+          <line x1="10" y1="80" x2="90" y2="80" data-page-node-id="ZaQp4nQPh7Al77eR4voWMy"/>
+        </g>
+        <rect x="35" y="35" width="10" height="10" fill="#555" data-page-node-id="N0KsSyRyHT5G6gWKr5y6iU"/><line x1="35" y1="35" x2="45" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="A3M0FDzKJlNdDujGWYgGa6"/><line x1="45" y1="35" x2="35" y2="45" stroke="#fff" stroke-width="0.5" data-page-node-id="pcGDpZeL7wE86FtAXDeN4G"/>
+        <rect x="55" y="55" width="10" height="10" fill="#555" data-page-node-id="9OXRD7gOJobBUBvcdh52lw"/><line x1="55" y1="55" x2="65" y2="65" stroke="#fff" stroke-width="0.5" data-page-node-id="G0N9t3pdLHkPZ9yn9VnRns"/><line x1="65" y1="55" x2="55" y2="65" stroke="#fff" stroke-width="0.5" data-page-node-id="nSH0TD4VRT4mCyExiuIoC8"/>
+        <rect x="65" y="25" width="10" height="10" fill="#555" data-page-node-id="0sNIZdbBJxESnTRJ3TEMmp"/><line x1="65" y1="25" x2="75" y2="35" stroke="#fff" stroke-width="0.5" data-page-node-id="pNxQo0tREFCgoHPVnXzFb2"/><line x1="75" y1="25" x2="65" y2="35" stroke="#fff" stroke-width="0.5" data-page-node-id="NZVzMCicOTBVf8U2KAOwTR"/>
+        <circle cx="15" cy="85" r="4.2" fill="#fff" stroke="#111" stroke-width="0.8" data-page-node-id="OxKQuAcPWu5s4CQtHPupnL"/><circle cx="15" cy="85" r="2.4" fill="none" stroke="#111" stroke-width="0.4" data-page-node-id="SkxDBdi5ASUY9MDzWzuDiJ"/>
+        <rect x="82" y="12" width="8" height="8" fill="#fff" stroke="#111" stroke-width="0.6" data-page-node-id="3l1mBB31HtuvUu4zQCO0X5"/><line x1="85" y1="12" x2="85" y2="20" stroke="#111" stroke-width="0.4" data-page-node-id="kfdYgQnqfMYRw2nXeZyKlS"/><line x1="88" y1="12" x2="88" y2="20" stroke="#111" stroke-width="0.4" data-page-node-id="cpfk2X2RvFd60hYpYX81oZ"/>
+        <circle cx="45" cy="65" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="6HZDaw6OfeQzYEalkBPoXo"/><text x="45" y="67" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="CypVA0pCieTkqTwsyy5bwX">14</text>
+        <circle cx="75" cy="55" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="ejHpeuzjTtdW4LdnDH3JZY"/><text x="75" y="57" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="zUR04RokENnHnWHHNqoAF7">6</text>
+        <circle cx="25" cy="25" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="w6ZYZm3O0WlICgYAEmUYBT"/><text x="25" y="27" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="opUbAVZzVdpUUjV815gziV">10</text>
+        <circle cx="15" cy="15" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="MKOCrfHaAdBew72zUHQi0B"/><line x1="12" y1="15" x2="18" y2="15" stroke="#111" stroke-width="0.6" data-page-node-id="SslfGIcinokc8SuSPnFzhz"/><line x1="15" y1="12" x2="15" y2="18" stroke="#111" stroke-width="0.6" data-page-node-id="thCnvFogmzSLiHqIzzRPwr"/>
+      </svg>
+      <p class="legend" data-page-node-id="23ek1bLERVWzAnzv4MYM5e">起点 (2,9) ｜ 出口 (9,2) ｜ 冰柱 (4,4) (6,6) (7,3) ｜ 霜狼 (5,7) ｜ 冰霜蝙蝠 (8,6) ｜ 史莱姆 (3,3) ｜ 净化药 (2,2)</p>
+    </div>
+    <div class="infobox" data-page-node-id="HdXsB2nWAXEw0yXdHl25V9">
+      <div class="panel aha" data-page-node-id="SRNZLXsHCAmhdGtKSFtpjZ">
+        <h2 data-page-node-id="bVKex8l9ApT98y6c4OqrNY">啊哈点：倒着推</h2>
+        <p data-page-node-id="GWLEAavlevpdCm6i9TCDNQ">
+          你身上带着 <b data-page-node-id="Ge8QGgK5sbkBAeBOV9fMq2">【冻伤】</b>：每场战斗额外损失 2 点生命。而净化药在<b data-page-node-id="GIIEm5Slmo6BJnRLZG381H">地图另一头的左上角</b>。<br data-page-node-id="tcBoKkAYWeWGdvwHmuCpD0"><br data-page-node-id="QvTWHUivkRLeveKgGNrBRb">
+          直着往出口冲？三只怪全打下来，光 debuff 就白送 6 点血。<br data-page-node-id="v7NX4FnWenMcAprWHVKCrD">
+          <b data-page-node-id="kR9cHRSv5TKQB5HKWapneG">先往反方向跑去拿药，反而更省。</b>
+        </p>
+        <p class="warn" data-page-node-id="YVTjwAlXpqDOKXDZjoqZoa">这关测的是"玩家会不会主动绕远"。如果所有人都直冲，说明 debuff 惩罚不够痛，把 2 点加到 3 点试试。</p>
+      </div>
+      <div class="panel" data-page-node-id="E1AjLKOwvRCCJU1sB3migh">
+        <h2 data-page-node-id="czbQdayGt8waC5Jxqe6DXF">特殊状态</h2>
+        <p data-page-node-id="e9RCvfv8D5aoZmjPmF37zQ"><span class="tag" data-page-node-id="bIGLHNRQr5pEguGCPOiVKH">开局携带</span><b data-page-node-id="8mbHnDKLG3hnQfI6SYgGVy">【冻伤】</b>：每场战斗额外 -2 生命。拾取净化药后立即清除。</p>
+      </div>
+      <div class="panel" data-page-node-id="PsRcaqXQQLpOT15opDQL92">
+        <h2 data-page-node-id="tKDL5HfWnFqbZ6TN4pDWNA">本关怪物</h2>
+        <table data-page-node-id="OZpKYfhU5Afm9ETuZ8w4wA">
+          <tr data-page-node-id="JHmyjHn65wFsE9BPmZpkTj"><th data-page-node-id="MXbHK3CM9OMfu5zYEYKYCZ">怪物</th><th data-page-node-id="xjeDQuGZ2FrEOaDupEC3Hb">靶纸</th><th data-page-node-id="cfzy1YZl00DiWlEzajgJ1G">血</th><th data-page-node-id="BTNfY8WFYEEj4ZoBI2zJZP">伤害</th></tr>
+          <tr data-page-node-id="pK3G5nrTN7Aad0DDBCV2C9"><td data-page-node-id="yMREJcmY0N1yj4u2Tnlntt">霜狼</td><td class="c" data-page-node-id="qAzd9tf6hqinyAPyMH4Pak">②</td><td class="c" data-page-node-id="R9x5wl2zycnAaDeOKH8RCC">14</td><td class="c" data-page-node-id="qT8g6r6C0kZ8wEI7uakr7J">2</td></tr>
+          <tr data-page-node-id="sO3G2VB7GtdtBLAbDETP19"><td data-page-node-id="J6sxt8ClTD1DI7dQB9ZuK0">冰霜蝙蝠</td><td class="c" data-page-node-id="eVzY3eNiQICVoY76eulXWd">③</td><td class="c" data-page-node-id="aNve35c1uv1EuMQs1PuLHZ">6</td><td class="c" data-page-node-id="9k8s1XzrEPc04848tcjFmY">1</td></tr>
+          <tr data-page-node-id="QJaaxbgcwygjwvbj0KqxiZ"><td data-page-node-id="d5ODltLf3yPPDePMgcCUAJ">冰原史莱姆</td><td class="c" data-page-node-id="pTOA3X5A0EDg3y5OtZxL1J">①</td><td class="c" data-page-node-id="pvc7XaL8GiihCUJotTCQ6d">10</td><td class="c" data-page-node-id="Dycr2ypO5tbkJ9TsKfIWLx">1</td></tr>
+        </table>
+      </div>
+      <div class="panel" data-page-node-id="U4VUxD5iVUiEAq54rrcCay">
+        <h2 data-page-node-id="SAbYHA7HNXU7lWCnuvyJDg">三星阈值（初稿）</h2>
+        <table data-page-node-id="iOzCjU6ia2FHmF3q9AEkbD">
+          <tr data-page-node-id="9c13KxWXCNkjpNqBdC0asa"><th data-page-node-id="b2SDG6TqG5Af36VW93VsMv">项目</th><th data-page-node-id="gnL5Ve6uwdb9oKXPFPwA3z">2 星</th><th data-page-node-id="BZSxtXmcCmTs3PguUyPCpo">1 星</th></tr>
+          <tr data-page-node-id="D3dHZdM6eHXece8zkWcs8F"><td data-page-node-id="vNbwh4L9qgxw7EqZHC6S53">移动次数</td><td class="c" data-page-node-id="sKhKSfOARWUcE7kRcEgD51">≤ 10</td><td class="c" data-page-node-id="Hb0KBYWSBfNXua7ZnrFIS2">≤ 14</td></tr>
+          <tr data-page-node-id="sYSCMbAHGhit76g09Iro3t"><td data-page-node-id="hPrc6Jpqz3YKUl8d2kEueX">击败怪物</td><td class="c" data-page-node-id="YDhh7YCuit159oiKywmHCV">3 / 3</td><td class="c" data-page-node-id="FwewmuzyIxTIUgPnyYvtnC">2 / 3</td></tr>
+          <tr data-page-node-id="58HDunPG7e8XLr3HR7JZ3z"><td data-page-node-id="SypYOWF5cB3WN7y7BCZvWt">损失生命</td><td class="c" data-page-node-id="C2jvg0xL0hQsEPVEuwEqaC">≤ 5</td><td class="c" data-page-node-id="A16d5d3Dz6rvBCIYSLibAe">≤ 10</td></tr>
+        </table>
+        <p class="warn" data-page-node-id="fJRYtb8NSoeWqgAWd8fiIF">参考路线：上（到顶拿药）→右→下→左→上（打史莱姆）… 需实测校准。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第 4 关 ============ -->
+<div class="level" data-page-node-id="SvxfqeqAW2GNxUUO87kgtY">
+  <h1 data-page-node-id="ugNl8mh1E0JQlHGNlwrsq2">第 4 关 · 自己造个刹车</h1>
+  <p class="sub" data-page-node-id="Zkhdoyfch338k6y1Deofm4">道具关。地图不给你刹车，你自己造一个。</p>
+  <div class="wrap" data-page-node-id="7Z1CXMyu0VOLNKs28uzdLQ">
+    <div class="mapbox" data-page-node-id="EiOvOxc5Ne8wDVNsPfR9xC">
+      <svg width="100mm" height="100mm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-page-node-id="t0XnSNcE2AUnEGeEhQU0pH">
+        <rect x="0" y="0" width="100" height="100" fill="#999" data-page-node-id="Bpon2lGc8kYIvKg5r9ilmE"/>
+        <rect x="10" y="10" width="80" height="80" fill="#fff" data-page-node-id="jAIEVe2LBe1stq0O1nSTIC"/>
+        <g stroke="#e0e0e0" stroke-width="0.2" data-page-node-id="pNEpznLaCumdGT6kxgZaJA">
+          <line x1="20" y1="10" x2="20" y2="90" data-page-node-id="43Wm3QFtSa66cra0SpcPD9"/><line x1="30" y1="10" x2="30" y2="90" data-page-node-id="BG1DsKhJu61w7HuOeQ7Wuq"/>
+          <line x1="40" y1="10" x2="40" y2="90" data-page-node-id="cJVPwHjVd15EMl5wIWqR4Y"/><line x1="50" y1="10" x2="50" y2="90" data-page-node-id="YXfX5AItfMwktpTk23s2zB"/>
+          <line x1="60" y1="10" x2="60" y2="90" data-page-node-id="wKZWImtwZwZkvHcGiPV9MD"/><line x1="70" y1="10" x2="70" y2="90" data-page-node-id="tbv3dtJeIr0093VjzSFc5u"/>
+          <line x1="80" y1="10" x2="80" y2="90" data-page-node-id="sYMp1AChAXowH4P376rSii"/>
+          <line x1="10" y1="20" x2="90" y2="20" data-page-node-id="BV5NG49PGj0JELg3qu5fCP"/><line x1="10" y1="30" x2="90" y2="30" data-page-node-id="7oiXs41TenXHXQBHuWSrnT"/>
+          <line x1="10" y1="40" x2="90" y2="40" data-page-node-id="b4FAo53T5MAnKJRCy2JA2n"/><line x1="10" y1="50" x2="90" y2="50" data-page-node-id="iY7LZQF0sjMdIq3GvSSnJd"/>
+          <line x1="10" y1="60" x2="90" y2="60" data-page-node-id="0PAu47PqDChcb9ZT2T9H16"/><line x1="10" y1="70" x2="90" y2="70" data-page-node-id="Os3PHxSqw8zUWWHBj0AYv5"/>
+          <line x1="10" y1="80" x2="90" y2="80" data-page-node-id="o8doa2pjfwDj6rfruP5Qhj"/>
+        </g>
+        <rect x="35" y="15" width="10" height="10" fill="#555" data-page-node-id="5l8VMGnHI5ziNnC0emHaP6"/><line x1="35" y1="15" x2="45" y2="25" stroke="#fff" stroke-width="0.5" data-page-node-id="Px3HCh3IgP0cwQiTrsPLxZ"/><line x1="45" y1="15" x2="35" y2="25" stroke="#fff" stroke-width="0.5" data-page-node-id="bCI3Jdo9aWvchdL7UQzyL8"/>
+        <rect x="55" y="75" width="10" height="10" fill="#555" data-page-node-id="akXOIpS03H0KnaJk5oIpCY"/><line x1="55" y1="75" x2="65" y2="85" stroke="#fff" stroke-width="0.5" data-page-node-id="kJYW7F82sSku9qAc2CVshz"/><line x1="65" y1="75" x2="55" y2="85" stroke="#fff" stroke-width="0.5" data-page-node-id="k9GH2gBNJ4g5ypRnCav4Lz"/>
+        <circle cx="15" cy="45" r="4.2" fill="#fff" stroke="#111" stroke-width="0.8" data-page-node-id="WQm6XpTVZJpfyDpqsnKclE"/><circle cx="15" cy="45" r="2.4" fill="none" stroke="#111" stroke-width="0.4" data-page-node-id="g3cN1yCVT84CJ2CoAdxkVE"/>
+        <rect x="82" y="42" width="8" height="8" fill="#fff" stroke="#111" stroke-width="0.6" data-page-node-id="jzorbkZUHNDzoUegCFuUA8"/><line x1="85" y1="42" x2="85" y2="50" stroke="#111" stroke-width="0.4" data-page-node-id="GgJZC2vIjMPJVquMtFW2tf"/><line x1="88" y1="42" x2="88" y2="50" stroke="#111" stroke-width="0.4" data-page-node-id="truGCZ6entPmQ0z3uOlSqz"/>
+        <circle cx="65" cy="45" r="4.6" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="kKUZ2DuHGe9KWGvmr3xD7R"/><text x="65" y="47" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="RUJ1YGYRFkirjfmbspd2oz">22</text>
+        <circle cx="15" cy="15" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="VDGvx4rBY3mNqflniyCwzI"/><text x="15" y="17" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="BUWvJBo9VHIDQPrCm40D0J">10</text>
+        <rect x="43" y="43" width="9" height="9" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="pV4BBCROu6kFTc6ZlUz86J"/><line x1="43" y1="43" x2="52" y2="52" stroke="#111" stroke-width="0.35" data-page-node-id="sUsnRWDTWY9dhm07T7OAx1"/><line x1="52" y1="43" x2="43" y2="52" stroke="#111" stroke-width="0.35" data-page-node-id="oJQmuO33GhucmCOWBjxIVW"/>
+      </svg>
+      <p class="legend" data-page-node-id="Tv1LX066zL3F2OhwuqySyJ">起点 (2,5) ｜ 出口 (9,5) ｜ 冰柱 (4,2) (6,8) ｜ 雪怪 (7,5) ｜ 史莱姆 (2,2) ｜ 宝箱 (5,5)</p>
+    </div>
+    <div class="infobox" data-page-node-id="WdKllUNpiTfqPReRVFaCZh">
+      <div class="panel aha" data-page-node-id="lOZgzMv3IiuxaPzKeExr0J">
+        <h2 data-page-node-id="bhEQ6DizlRZZruEB5AizYH">啊哈点：没有刹车，就造一个</h2>
+        <p data-page-node-id="POKdoBidi7tXpUeXRIIjMV">
+          宝箱在<b data-page-node-id="BnKaX8AFiEKLFnCwhk1Ecj">正中央 (5,5)</b>，四周一片空旷 —— 不管从哪个方向滑，都会直接穿过去。<br data-page-node-id="7bOCA3ICLxxAOa9aWIJU0G"><br data-page-node-id="DPCsvqDNs5xnCIBDqBGJja">
+          你手上有 1 次 <b data-page-node-id="MWdEOiMMfDRnFlKBnP1GP8">【造冰墙】</b>：可以在<b data-page-node-id="7CEKn0XisXdeUkp9VT0FTy">当前所在格的正交相邻空格</b>造一堵永久冰柱。<br data-page-node-id="hcAZqOE5akWkLYukg15hrZ"><br data-page-node-id="YSB1ovqjln5dGZ8IqfdXHA">
+          所以得先算清楚：<b data-page-node-id="EWf2Fyg9XUK1DSEsDwqac1">造完之后，我从哪滑过来才会正好停在 (5,5)？</b>
+        </p>
+        <p class="warn" data-page-node-id="IkwxRfbQo57HegR0ba7OCQ">这关的爽点全在"算位置"那一下。如果玩家随手造墙也能拿到，说明宝箱周围该再空一点。</p>
+      </div>
+      <div class="panel" data-page-node-id="2vrTS2tNrz4YDSJofkFUI0">
+        <h2 data-page-node-id="r52vkDFGNPmpYfVkHfoC8s">本关道具</h2>
+        <p data-page-node-id="c9QPPHGwHqEhnD2sedwJet"><span class="tag" data-page-node-id="oaTl8tT7QuU5jkU5HA9jkL">×1</span><b data-page-node-id="fmso5nHEQYJEdZk8RLtIup">【造冰墙】</b>：在自身相邻的一个空格生成冰柱，永久存在，可当刹车用。<b data-page-node-id="QpitkyQsDTusw3toSBSPUF">用前想清楚，不能撤销。</b></p>
+      </div>
+      <div class="panel" data-page-node-id="4b71uclcjTf7uEBH0uGIUX">
+        <h2 data-page-node-id="bg2CjzywVFrTE98TFYDm9l">本关怪物</h2>
+        <table data-page-node-id="bRxJXgAha3A9XdPaMzNMBd">
+          <tr data-page-node-id="DlwGy6JnGBx3kFluqZLdQH"><th data-page-node-id="NvdlfBUIgL6SXj0diOfdXl">怪物</th><th data-page-node-id="qmlafRsbOSzHEUgOHnhS6e">靶纸</th><th data-page-node-id="cjdohvas10lqP9vHqFHoGU">血</th><th data-page-node-id="2DHDrZuDMwutqkvDpoT8cy">伤害</th></tr>
+          <tr data-page-node-id="3Y11reg099LBArsG1SKZPn"><td data-page-node-id="WVFWlEITLgH91C3bOYFvfi">雪怪</td><td class="c" data-page-node-id="m7MBUi9nY52XeqArv7Jxiw">⑤</td><td class="c" data-page-node-id="Xr1i3hv7o2oFLGBHbNsO6D">22</td><td class="c" data-page-node-id="DaE51KvPkU0FQVLuviKZWJ">3</td></tr>
+          <tr data-page-node-id="fGOKVmSXD27EmcZPh3QUXG"><td data-page-node-id="gkLCyJD9rG3C9QiGG6EmkQ">冰原史莱姆</td><td class="c" data-page-node-id="eiWeZYDXZT67rVHnFhWeIC">①</td><td class="c" data-page-node-id="OFWzS6WYNRXAYj9Oy9R6jl">10</td><td class="c" data-page-node-id="hW8H5ea8mxIch8BI02D95m">1</td></tr>
+        </table>
+        <p class="legend" data-page-node-id="5xmJLMONNccXXNJC8GMQo6">雪怪就堵在出口正前方，绕不开。血厚、深灰段 120°，是本章第一道硬坎。</p>
+      </div>
+      <div class="panel" data-page-node-id="fqsPrz9fGvr2w1j56uMYiQ">
+        <h2 data-page-node-id="3mAAS5maWk1Bvten5VLmPF">三星阈值（初稿）</h2>
+        <table data-page-node-id="sNjedZ4Kf0jeQsEkMfWhGb">
+          <tr data-page-node-id="rc5vutina2aMmKsHB3ZLlm"><th data-page-node-id="vvwsLHEeNduMUAuRjXTtOM">项目</th><th data-page-node-id="cNknA9ZrH6DkJcikz5YtFT">2 星</th><th data-page-node-id="Dn9tBdLNt1O7f8VZkIDbIq">1 星</th></tr>
+          <tr data-page-node-id="y2B9VAtcdkYkKK24wNbIiC"><td data-page-node-id="BimREdzoSucrYWUsFI8Efk">移动次数</td><td class="c" data-page-node-id="f7beD5ZdFNRctDWUrDx1by">≤ 8</td><td class="c" data-page-node-id="JyyhMc1JcONoD3KSjOZWN5">≤ 12</td></tr>
+          <tr data-page-node-id="0svjN9VKHqoqC6wgeMg5Tw"><td data-page-node-id="92FTATzHq8oCi18R2kBhYx">击败怪物</td><td class="c" data-page-node-id="uPhALy9Xj1rWIwj2KzEXaV">2 / 2</td><td class="c" data-page-node-id="3lhDBFD6H5Fv5yj6nvEAIH">1 / 2</td></tr>
+          <tr data-page-node-id="XxBkQjCvaOtmHos3R1ktov"><td data-page-node-id="kXbkmVdEvaAbccYczDmd9A">损失生命</td><td class="c" data-page-node-id="kd44FSYVPy1diAIydnZUS1">≤ 6</td><td class="c" data-page-node-id="Jx5ZlASJMjoBREQJwf4Fxo">≤ 12</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第 5 关 ============ -->
+<div class="level" data-page-node-id="nuDxHPHkYqM641nDuSW2Yz">
+  <h1 data-page-node-id="C2EPqKF1kzkk3k2Lv99WzR">第 5 关 · 冰原尽头</h1>
+  <p class="sub" data-page-node-id="HvjRuvGPYg2Eqd6gtuA3Tn">综合关。收紧一切，为 Boss 关做压力测试。</p>
+  <div class="wrap" data-page-node-id="uFhctsqBaOrbgTReW1sWeb">
+    <div class="mapbox" data-page-node-id="QJZAYoY53N8TCEWfIKBxpM">
+      <svg width="100mm" height="100mm" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-page-node-id="P23Tof8EzdKTmDEEaKDuBC">
+        <rect x="0" y="0" width="100" height="100" fill="#999" data-page-node-id="WGQSUisJFb2iDbnIMqXefb"/>
+        <rect x="10" y="10" width="80" height="80" fill="#fff" data-page-node-id="A2zmEHPK2XlBcnRt0hFoyI"/>
+        <g stroke="#e0e0e0" stroke-width="0.2" data-page-node-id="ljc3aoLi1jMIqSTJhjMZ7Y">
+          <line x1="20" y1="10" x2="20" y2="90" data-page-node-id="7AbCdFYYhlfHgWM5KixgzL"/><line x1="30" y1="10" x2="30" y2="90" data-page-node-id="1XV75DGnAcb5XQCH5lPnAh"/>
+          <line x1="40" y1="10" x2="40" y2="90" data-page-node-id="JaGz6uknh60hCrdLsbSuFN"/><line x1="50" y1="10" x2="50" y2="90" data-page-node-id="qTtGPcZIJrCIYdCSPNXWam"/>
+          <line x1="60" y1="10" x2="60" y2="90" data-page-node-id="bIAbZ7CkDBpcyZLzRcBte9"/><line x1="70" y1="10" x2="70" y2="90" data-page-node-id="hZJD5z4k8trJrfAcPJooBE"/>
+          <line x1="80" y1="10" x2="80" y2="90" data-page-node-id="j6ON7ezAj7GZxe8kwnZuv5"/>
+          <line x1="10" y1="20" x2="90" y2="20" data-page-node-id="IhYPZGbskBQ8rCj3nOeJBr"/><line x1="10" y1="30" x2="90" y2="30" data-page-node-id="QUjYVqU2CCfrZxcXKo5Sl4"/>
+          <line x1="10" y1="40" x2="90" y2="40" data-page-node-id="8uqWiPk2UMeOvx5tk5YqIR"/><line x1="10" y1="50" x2="90" y2="50" data-page-node-id="VSfgKOjygamOZ9NvFCDHeU"/>
+          <line x1="10" y1="60" x2="90" y2="60" data-page-node-id="u3BtbagKZiTeevghWy73Su"/><line x1="10" y1="70" x2="90" y2="70" data-page-node-id="uqQCm6sAnjV09KPHLQT5O1"/>
+          <line x1="10" y1="80" x2="90" y2="80" data-page-node-id="OJu9O2ll1DFjzTLdocetNk"/>
+        </g>
+        <path d="M45 50 L55 50 L50 42 Z" fill="#333" data-page-node-id="xxgNQjYFI1OrUtFs6pxPEA"/>
+        <path d="M55 60 L65 60 L60 52 Z" fill="#333" data-page-node-id="RBDKDLGtugAKy3pRkEhl8v"/>
+        <rect x="25" y="65" width="10" height="10" fill="#555" data-page-node-id="A6nAjjcbAHsj9H9eKDhQmz"/><line x1="25" y1="65" x2="35" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="Ujz3UNgBKS5jCYBMxs7iNy"/><line x1="35" y1="65" x2="25" y2="75" stroke="#fff" stroke-width="0.5" data-page-node-id="G7vBusQ0bfhCP2VPA8MEif"/>
+        <rect x="65" y="25" width="10" height="10" fill="#555" data-page-node-id="kCwJ8oBpVQ65RjpzQ6tL4T"/><line x1="65" y1="25" x2="75" y2="35" stroke="#fff" stroke-width="0.5" data-page-node-id="F99ty9qlMu7I5HKBzSxDwm"/><line x1="75" y1="25" x2="65" y2="35" stroke="#fff" stroke-width="0.5" data-page-node-id="070mAhqrfDLfyc7RSxyz96"/>
+        <rect x="75" y="75" width="10" height="10" fill="#555" data-page-node-id="Quh4001QieEscAPvTP4kzB"/><line x1="75" y1="75" x2="85" y2="85" stroke="#fff" stroke-width="0.5" data-page-node-id="MLNZQm4xNeVBxnA2SM0jjz"/><line x1="85" y1="75" x2="75" y2="85" stroke="#fff" stroke-width="0.5" data-page-node-id="lZNDnGn5x01Kl1BTpS5NFs"/>
+        <circle cx="15" cy="15" r="4.2" fill="#fff" stroke="#111" stroke-width="0.8" data-page-node-id="V3ggHPrMABPAEJFeQagZIw"/><circle cx="15" cy="15" r="2.4" fill="none" stroke="#111" stroke-width="0.4" data-page-node-id="Gxoqef7lqSW7CYzQt7CMiP"/>
+        <rect x="82" y="82" width="8" height="8" fill="#fff" stroke="#111" stroke-width="0.6" data-page-node-id="ZJnvWdEcC3ZE3VRKWTZH0M"/><line x1="85" y1="82" x2="85" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="vSGFWRA5FFsFV8g948nSN3"/><line x1="88" y1="82" x2="88" y2="90" stroke="#111" stroke-width="0.4" data-page-node-id="KvEykOiSQszFnJ9KNGlR4n"/>
+        <circle cx="35" cy="35" r="4.6" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="pb4oBYPBHPzWF2SwENZoHP"/><text x="35" y="37" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="3UC6rrtcvwhmw7FQCkxdp9">22</text>
+        <circle cx="65" cy="55" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="gbb30DyXvyeJleN5ZUJQob"/><text x="65" y="57" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="3JQhltgDIpEv5JVXiDgQrk">12</text>
+        <circle cx="85" cy="25" r="4" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="5MDAFzL7KT18BHS66stpH0"/><text x="85" y="27" font-size="4.5" text-anchor="middle" fill="#111" data-page-node-id="1NhCtQ0BjY9vgb7ibuANt8">6</text>
+        <rect x="13" y="73" width="9" height="9" fill="#fff" stroke="#111" stroke-width="0.5" data-page-node-id="ITt4CqpMnIFRj42J3QEN7Z"/><line x1="13" y1="73" x2="22" y2="82" stroke="#111" stroke-width="0.35" data-page-node-id="6O8Bh3qXBDQMbR5EuhSMLq"/><line x1="22" y1="73" x2="13" y2="82" stroke="#111" stroke-width="0.35" data-page-node-id="PHwsDPFaUUor2eWBvczSf9"/>
+      </svg>
+      <p class="legend" data-page-node-id="MPdFeJEAG3tXkeRdSHlaCd">起点 (2,2) ｜ 出口 (9,9) ｜ 冰柱 (3,7) (7,3) (8,8) ｜ 尖刺 (5,5) (6,6) ｜ 雪怪 (4,4) ｜ 骷髅弓手 (7,6) ｜ 冰霜蝙蝠 (9,3) ｜ 宝箱 (2,8)</p>
+    </div>
+    <div class="infobox" data-page-node-id="B20pS8wPAU07apeQxokBDx">
+      <div class="panel aha" data-page-node-id="pMmIbauFlgY2vh6fPBYttO">
+        <h2 data-page-node-id="mhrILWquYpJcy4JK4E09Mr">设计意图：压力测试</h2>
+        <p data-page-node-id="sieM2gKkQkcISxPTLcCkFZ">
+          前面四关教的在这里一起上：滑行、刹车消失、绕路、尖刺。<br data-page-node-id="wJQRWaDSZlX6weeb6302fw">
+          <b data-page-node-id="GbSxpD8GSu6qcXbhDeUwVs">两只尖刺分别卡在 (5,5) 和 (6,6)</b>，正好挡住最顺的那条对角路线 —— 逼你绕，但绕就得撞怪。
+        </p>
+        <p class="warn" data-page-node-id="CyxOUTfOv8KaYlmqBdLGDD">这关没有新机制，纯考综合。<b data-page-node-id="JCzBFX7yBKlon4ssihr2Ie">如果玩家在这关才第一次觉得"烧脑"，那说明前 4 关太简单了</b>，得往回调。</p>
+      </div>
+      <div class="panel" data-page-node-id="F4DAtX0HGdKEIK7yqcRowM">
+        <h2 data-page-node-id="qt9CAiC7SxRBz1CqDO6ZGf">本关怪物</h2>
+        <table data-page-node-id="KkcgUpRpAH2usyigteYVIu">
+          <tr data-page-node-id="dOzZb7ferzIKH4Hxyj0xpa"><th data-page-node-id="QWlf2JZy3l7acAuI4ZeN3M">怪物</th><th data-page-node-id="TlsNoA173CYIXmAlRff50y">靶纸</th><th data-page-node-id="EIO5Ozl255y6zxfuBkBqhw">血</th><th data-page-node-id="RVGEL7qXdCkWzkPJbtRgkO">伤害</th></tr>
+          <tr data-page-node-id="TVkQoD9m3SweqoRN4UIuMd"><td data-page-node-id="deynx3nelddsvQqdRXiVLZ">雪怪</td><td class="c" data-page-node-id="z0vGyEEbAabc2EnwDZaBB6">⑤</td><td class="c" data-page-node-id="nHknw24dYBUZNhvIA2qNnm">22</td><td class="c" data-page-node-id="17dEu2jgTOW5RgAr3pQXZ0">3</td></tr>
+          <tr data-page-node-id="JLKX0k9opslLm3afFwWdR8"><td data-page-node-id="eRfm4oqwHgGCnX80VKPNLT">骷髅弓手</td><td class="c" data-page-node-id="qE9xKrWFtAgYWOhcfZgPZ4">④</td><td class="c" data-page-node-id="6ozFYslO7mCJIQl7FUlL79">12</td><td class="c" data-page-node-id="nc3tCqNbAX6nHJpM4Q1qwr">2</td></tr>
+          <tr data-page-node-id="NDCEooEDIpmfrj3RPFb7DV"><td data-page-node-id="vgg1HkWSWKiPlsWJ0UHoEa">冰霜蝙蝠</td><td class="c" data-page-node-id="eKOHZpkXUIaw0aYtXLrSvR">③</td><td class="c" data-page-node-id="a81JXCSAQklgRStAFDnZZW">6</td><td class="c" data-page-node-id="ciT92QoVEFWKpSYer1p3Qe">1</td></tr>
+        </table>
+        <p class="legend" data-page-node-id="C8LHfyQ3CJEAGpW3MsH10P">三只属性完全不同：肉盾 / 金 punish / 扰乱。连着打会明显感到手感变化。</p>
+      </div>
+      <div class="panel" data-page-node-id="o2sKQW4iIodp8qjFYBGNJc">
+        <h2 data-page-node-id="thJIeH5cJn42w1H70qtHNK">三星阈值（初稿）</h2>
+        <table data-page-node-id="T7G5Mww4AT6cAMMO8hOVDS">
+          <tr data-page-node-id="jIBWbIASB2C5aipGY3BcQN"><th data-page-node-id="Kc9nHFGWBhBgYghFNgePpB">项目</th><th data-page-node-id="UM8l8rREfftAczo2t6xulS">2 星</th><th data-page-node-id="fvasT5ZyCbpe6oFqWwDUpw">1 星</th></tr>
+          <tr data-page-node-id="2zmt7xPD8iC4Ji0bZ5JhKa"><td data-page-node-id="GMkyIK1bfiL5lLGeLgFIIg">移动次数</td><td class="c" data-page-node-id="UHYdKWA1gOUnsD6qHdFEXn">≤ 12</td><td class="c" data-page-node-id="ncJ0utzzi2c7ul8CJExqAC">≤ 16</td></tr>
+          <tr data-page-node-id="B1yJkDAh7sPUPAwIUyQhsd"><td data-page-node-id="0qdLWV9JFEeuG2BoqmTZJ9">击败怪物</td><td class="c" data-page-node-id="rGpdrIzRYRrrMyRvKqwQNC">3 / 3</td><td class="c" data-page-node-id="W6ScQypPFwHOwnY4qh8v7M">2 / 3</td></tr>
+          <tr data-page-node-id="GxCXaAHopbUXjs3v9PWtNA"><td data-page-node-id="zwW89bGmEDPlPWQmcwfcKe">损失生命</td><td class="c" data-page-node-id="jTmY7vWWCzvm1AQBBwHCpw">≤ 8</td><td class="c" data-page-node-id="rOfc8CYosycReHifE717iL">≤ 15</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 结算页 ============ -->
+<div class="level" data-page-node-id="s1lv3ulBCI9ZTkliYe6A0U">
+  <h1 data-page-node-id="WTjd6ITO2HhPdPnwhIQN3g">第一章结算 · 你是个什么货色</h1>
+  <p class="sub" data-page-node-id="5QrLvcHEwfGcj17mWISLSH">把 5 关的星数填进来，算出你的头衔。头衔是这游戏最便宜的留存设计 —— 值得认真写。</p>
+
+  <div class="panel" data-page-node-id="mhtQV7E7cN6REdPsqfaXvh">
+    <h2 data-page-node-id="uhEpP4mzfhmBm3rYYvpSE4">逐关记录</h2>
+    <table data-page-node-id="diOjPZAF0QV8olRuRUbdxw">
+      <tr data-page-node-id="Vxxara87q6KciNXYKD4vOv"><th data-page-node-id="IcDCIrMNqoWdfymIEerQgk">关卡</th><th data-page-node-id="OzvPB6uacm2s2FumNbPEdO">移动</th><th data-page-node-id="cAW9EA9wKVcJv0Bp72Mk5Y">击杀</th><th data-page-node-id="LT8vHjNkmFQ7msMmKLfvOa">失血</th><th data-page-node-id="rdSbgdygIu4zYIXZYeg6So">小计</th></tr>
+      <tr data-page-node-id="maiKcQgtNFAFSHO093uSAy"><td data-page-node-id="lBZiAYtfjrs1ezOOjfpEXu">1 · 初次滑行</td><td class="c" data-page-node-id="AbdCTD1kgwIb7XF2E0SquD">__/2</td><td class="c" data-page-node-id="dA4z963khXTEnbMIKEsf7v">__/2</td><td class="c" data-page-node-id="V2WbbIJdn3zQC6Rw4d74Us">__/2</td><td class="c" data-page-node-id="IfwiYIMchevwOIHP1uKfnN">__/6</td></tr>
+      <tr data-page-node-id="2vzhkAGBeGdUkQa1oUPIox"><td data-page-node-id="xV27LCTEioAj1GhUPgl8YO">2 · 刹车没了</td><td class="c" data-page-node-id="j5n4JaSZJqN48yDUdV4Avq">__/2</td><td class="c" data-page-node-id="4A7qBWo5DO3Y1X4HQxHUCJ">__/2</td><td class="c" data-page-node-id="92CFnWCCT9C0QIcTcVO0rL">__/2</td><td class="c" data-page-node-id="3tnM29M6i3em9YXZPL9NJC">__/6</td></tr>
+      <tr data-page-node-id="o4NreCwsYARLbrKpBDNHHB"><td data-page-node-id="ud6zJ2lDVWOmuDaQ1O4Ldi">3 · 先拿药</td><td class="c" data-page-node-id="12AHXLuODHxACRB9RSx3QG">__/2</td><td class="c" data-page-node-id="7FizyN1juWZDmD9GxEH8kv">__/2</td><td class="c" data-page-node-id="nIQGWfmOE8E4qCSmoP62WK">__/2</td><td class="c" data-page-node-id="O9FentodL9T1gPMMgLUvSC">__/6</td></tr>
+      <tr data-page-node-id="ipVmhRYIc1GWRP1OU7MQYU"><td data-page-node-id="0z2IGDL3GFXrd2O23adPHQ">4 · 自己造个刹车</td><td class="c" data-page-node-id="w5hZU5qVyN1qHlrrYBGk2S">__/2</td><td class="c" data-page-node-id="6mgtTW5DRQSIDBngb1XeJK">__/2</td><td class="c" data-page-node-id="cZYKknRrCi4QESwurMDjPw">__/2</td><td class="c" data-page-node-id="fcXYbngUHPDUrYL3VoFCaU">__/6</td></tr>
+      <tr data-page-node-id="VucqMBoAKaae7fP0SXJWua"><td data-page-node-id="O8NzWDAlAHpXpBqKKwarmv">5 · 冰原尽头</td><td class="c" data-page-node-id="6rK0Z7d46UO4tGLPm00Hfs">__/2</td><td class="c" data-page-node-id="13nV7vQb2l47IUV8y1BhOV">__/2</td><td class="c" data-page-node-id="2w2hsUXmipYtGiElRm4Jsr">__/2</td><td class="c" data-page-node-id="ndYfRBUfKy1ZYs5XCZJQiW">__/6</td></tr>
+      <tr data-page-node-id="yaleCrB1XPUUWVdVc9athF"><th data-page-node-id="4AGwpH8tC91yBC2fWbsZdI">合计</th><th class="c" data-page-node-id="luEEvQDWVc8FPcwd2FHHy9">__/10</th><th class="c" data-page-node-id="4HdzuUArCLMeMXg0fqu8AP">__/10</th><th class="c" data-page-node-id="wj5OkVaBdVGpCooPerHFhh">__/10</th><th class="c" data-page-node-id="LsPV3NUouoyE7cPkZpdJ78">__/30</th></tr>
+    </table>
+  </div>
+
+  <div class="panel" data-page-node-id="RhDEDRkrG0fKzNTbtiaodf">
+    <h2 data-page-node-id="2h5QKZbEFBFEIrFkwTzJ3v">头衔表</h2>
+    <p data-page-node-id="WkakbOk26FBBIRB8JSg4AS">先按「移动」查第一个词，按「击杀」查第二个词，按「失血」查第三个词，连起来就是你的称号。</p>
+    <table data-page-node-id="AuVUlaN2RCEexjywYQoIGq">
+      <tr data-page-node-id="aJNBLCy2KPTJBKAzuJ6ARB"><th data-page-node-id="N68pt0IXo8DpYKFQDaKbkC">星数</th><th data-page-node-id="gmdoT0ss0N4MeSKSGRyFOE">移动（前缀）</th><th data-page-node-id="LlBuWYNHpWQCKDvJAXvliQ">击杀（中缀）</th><th data-page-node-id="63rILs4ydV2GeUK8zNYABF">失血（后缀）</th></tr>
+      <tr data-page-node-id="Db1W2V8ED4FcrpfrIoBq5X"><td data-page-node-id="dTYt0NAYUDPocDHMjWdEBK">9-10</td><td data-page-node-id="7b4rinvUMiSFLIUAFb89UO">踏雪无痕的</td><td data-page-node-id="duNnYSMyW82XRm5EIsr1Ju">屠戮成性的</td><td data-page-node-id="h4db43vECoeKyAXDv6E9s7">毫发无伤</td></tr>
+      <tr data-page-node-id="KgwJp0HvVYRJIjQRSvBYXI"><td data-page-node-id="3AAmULbQ4sMzNcGvMpzQAR">7-8</td><td data-page-node-id="IZNdfDAW6JL7ksKouUMvSz">轻车熟路的</td><td data-page-node-id="ZsE2jq6q19u3Ff7jaXoR9m">手段老辣的</td><td data-page-node-id="ogYFUhSwFaMQG6lStiBlUn">皮糙肉厚</td></tr>
+      <tr data-page-node-id="JeaMUQ2X15YHYPX6bscN46"><td data-page-node-id="iZ6toCYoXat7bfv6DGXOOT">5-6</td><td data-page-node-id="HeoFnwxLpwLFpkiZZ3pyVR">跌跌撞撞的</td><td data-page-node-id="hvgOeCoYDoFhLENyxr9WJB">挑三拣四的</td><td data-page-node-id="szQFfjoFe9TtV0GrI2BYMq">伤痕累累</td></tr>
+      <tr data-page-node-id="DRs7kBsHvW0SpZT1V72gOb"><td data-page-node-id="BxHg8Tyw6LSLdZBJadg7co">3-4</td><td data-page-node-id="Ef1kaoBQNAaaU5GHvBZ9JY">晕头转向的</td><td data-page-node-id="bFsCDGGq01LltAcgl0sNtd">心慈手软的</td><td data-page-node-id="KdPXBWZxHRQ4pxFNod7mAt">半条命的</td></tr>
+      <tr data-page-node-id="5DKKOrXlBLGJzvlwIXWlcF"><td data-page-node-id="FlZJPzI3CxMfLwW2nXEGNW">0-2</td><td data-page-node-id="KwTfJ7ApoHh8Fr0JDZlF3I">一瘸一拐的</td><td data-page-node-id="avKheiFMTWgJH9y4y4pif7">与世无争的</td><td data-page-node-id="kAWhpYZKcxJVgsIFFvT5yk">出气筒</td></tr>
+    </table>
+    <p class="legend" data-page-node-id="Yy6yHCZEu5iL6eIMbfGiq2">例：移动 8 星 + 击杀 6 星 + 失血 9 星 = 「<b data-page-node-id="GQ7vD4Lt7Ik5R56cc76oDe">轻车熟路的挑三拣四的毫发无伤</b>」—— 名字本身就是个段子，会想截图。</p>
+  </div>
+
+  <div class="panel aha" data-page-node-id="Ji0LF3YC4MG0nG2Z8r3jFw">
+    <h2 data-page-node-id="8Wxe7AOuZsZbuUb9b3dawj">玩完之后，请回答这 5 个问题</h2>
+    <ul data-page-node-id="khSVfuZvhePLANVXTgKtde">
+      <li data-page-node-id="RZBMPsEZxhFYHpsSDzSFvI">打靶那一发，你想不想再来一次？<b data-page-node-id="Xdr0qcAzv0CpGXNQRMTkHq">（不想 = 核心不成立，及时止损）</b></li>
+      <li data-page-node-id="t7RxSQIEsKz7uOUnjvf2DJ">哪一关让你"哦！"了一声？哪一关是纯耗时间？</li>
+      <li data-page-node-id="yTP6SNzSdcJUSqhGHdrWVD">单关花了多久？</li>
+      <li data-page-node-id="2GlmabcVl3Wg0HZmNyownF">有没有哪一关你算出了最优解，却因为手抖打歪了靶而崩盘？—— <b data-page-node-id="aCEZwOfg9EtKrBZUsiHlJV">有的话，这是好事还是坏事？</b></li>
+      <li data-page-node-id="fYgNJt28sxorHlsVVPuC79">你会想跟别人秀你的头衔吗？</li>
+    </ul>
+    <p class="warn" data-page-node-id="As6ASL3FRSxm13Nk1MYXUK">这 5 个问题的答案，比 50 关地图值钱得多。答完再决定要不要往下做。</p>
+  </div>
+</div>
+
+</body>
+</html>
