@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2026-09-03.001",
-  "generatedAt": "2026-09-04T04:54:14.607Z",
+  "generatedAt": "2026-09-07T06:51:07.140Z",
   "source": {
     "gitRepo": "whoknow.me",
     "statusDocs": [
@@ -19,9 +19,9 @@
         "testPass": 77,
         "testTotal": 77,
         "buildStatus": "unknown",
-        "gitCommitsTotal": 17,
+        "gitCommitsTotal": 18,
         "gitCommitsByDir": {
-          "docs": 13,
+          "docs": 14,
           "root": 6,
           "src": 3,
           "scripts": 2,
@@ -30,7 +30,7 @@
         "gitAuthorDist": {
           "unknown": 11,
           "Ducky Tan": 4,
-          "duckytan": 2
+          "duckytan": 3
         },
         "candidateCount": 16,
         "candidateCategories": 8,
@@ -46,7 +46,7 @@
         "commitTimeseries": [
           {
             "week": "2026-W30",
-            "count": 166
+            "count": 167
           },
           {
             "week": "2026-W31",
@@ -58,7 +58,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 14
+            "count": 35
           }
         ],
         "ciResult": "unknown",
@@ -83,10 +83,10 @@
         "testPass": 45,
         "testTotal": 45,
         "buildStatus": "pass",
-        "gitCommitsTotal": 86,
+        "gitCommitsTotal": 87,
         "gitCommitsByDir": {
           "src": 55,
-          "docs": 38,
+          "docs": 39,
           "dist": 15,
           "root": 15,
           "public": 5,
@@ -95,7 +95,7 @@
           "research-raw": 2
         },
         "gitAuthorDist": {
-          "unknown": 44,
+          "unknown": 45,
           "Ducky Tan": 42
         },
         "candidateCount": 16,
@@ -105,14 +105,14 @@
           "hasSrc": true,
           "hasDist": true,
           "hasDocs": true,
-          "docCount": 26
+          "docCount": 43
         },
         "progressPct": 100,
         "ownerInstance": "DuckyPC",
         "commitTimeseries": [
           {
             "week": "2026-W30",
-            "count": 166
+            "count": 167
           },
           {
             "week": "2026-W31",
@@ -124,7 +124,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 14
+            "count": 35
           }
         ],
         "ciResult": "pass",
@@ -181,7 +181,7 @@
         "commitTimeseries": [
           {
             "week": "2026-W30",
-            "count": 166
+            "count": 167
           },
           {
             "week": "2026-W31",
@@ -193,7 +193,7 @@
           },
           {
             "week": "2026-W36",
-            "count": 14
+            "count": 35
           }
         ],
         "ciResult": "pass",
@@ -552,16 +552,16 @@
       }
     ],
     "git": {
-      "commitsTotal": 207,
+      "commitsTotal": 229,
       "commitsByDir": {
-        "root": 88,
-        "whoknow-waimai": 86,
-        "docs": 28,
+        "root": 91,
+        "whoknow-waimai": 87,
+        "docs": 31,
+        "whoknow-workbench": 24,
+        "whoknow-brain": 18,
         "whoknow-mart": 18,
-        "whoknow-brain": 17,
         "\"": 7,
         "\"whoknow-waimai": 7,
-        "whoknow-workbench": 6,
         "\"whoknow-brain": 5,
         "\"whoknow-mart": 4,
         "archive": 3,
@@ -572,6 +572,9 @@
         ".workbuddy": 2,
         "js": 2,
         "prototype": 2,
+        "whoknow-adventure": 1,
+        "\"whoknow-adventure": 1,
+        ".github": 1,
         "\"sanshi-hui-shen-package": 1,
         "sanshi-hui-shen-package": 1,
         "\"archive": 1,
@@ -579,13 +582,14 @@
       },
       "authorDist": {
         "Ducky Tan": 86,
-        "unknown": 72,
-        "duckytan": 49
+        "unknown": 73,
+        "duckytan": 68,
+        "DuckyPC Agent": 2
       },
       "commitTimeseries": [
         {
           "week": "2026-W30",
-          "count": 166
+          "count": 167
         },
         {
           "week": "2026-W31",
@@ -597,17 +601,18 @@
         },
         {
           "week": "2026-W36",
-          "count": 14
+          "count": 35
         }
       ],
       "branches": [
-        "agent-mart",
         "main",
+        "origin/agent-adventure",
         "origin/agent-mart",
+        "origin/agent-waimai",
         "origin/main"
       ],
       "firstCommitAt": "2026-07-21T22:50:15+08:00",
-      "lastCommitAt": "2026-09-04T11:54:40+08:00",
+      "lastCommitAt": "2026-09-06T08:57:42+08:00",
       "degraded": false
     }
   },
@@ -619,9 +624,9 @@
       "testPass": 77,
       "testTotal": 77,
       "buildStatus": "unknown",
-      "gitCommitsTotal": 17,
+      "gitCommitsTotal": 18,
       "gitCommitsByDir": {
-        "docs": 13,
+        "docs": 14,
         "root": 6,
         "src": 3,
         "scripts": 2,
@@ -630,7 +635,7 @@
       "gitAuthorDist": {
         "unknown": 11,
         "Ducky Tan": 4,
-        "duckytan": 2
+        "duckytan": 3
       },
       "candidateCount": 16,
       "candidateCategories": 8,
@@ -646,7 +651,7 @@
       "commitTimeseries": [
         {
           "week": "2026-W30",
-          "count": 166
+          "count": 167
         },
         {
           "week": "2026-W31",
@@ -658,7 +663,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 14
+          "count": 35
         }
       ],
       "ciResult": "unknown",
@@ -683,10 +688,10 @@
       "testPass": 45,
       "testTotal": 45,
       "buildStatus": "pass",
-      "gitCommitsTotal": 86,
+      "gitCommitsTotal": 87,
       "gitCommitsByDir": {
         "src": 55,
-        "docs": 38,
+        "docs": 39,
         "dist": 15,
         "root": 15,
         "public": 5,
@@ -695,7 +700,7 @@
         "research-raw": 2
       },
       "gitAuthorDist": {
-        "unknown": 44,
+        "unknown": 45,
         "Ducky Tan": 42
       },
       "candidateCount": 16,
@@ -705,14 +710,14 @@
         "hasSrc": true,
         "hasDist": true,
         "hasDocs": true,
-        "docCount": 26
+        "docCount": 43
       },
       "progressPct": 100,
       "ownerInstance": "DuckyPC",
       "commitTimeseries": [
         {
           "week": "2026-W30",
-          "count": 166
+          "count": 167
         },
         {
           "week": "2026-W31",
@@ -724,7 +729,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 14
+          "count": 35
         }
       ],
       "ciResult": "pass",
@@ -781,7 +786,7 @@
       "commitTimeseries": [
         {
           "week": "2026-W30",
-          "count": 166
+          "count": 167
         },
         {
           "week": "2026-W31",
@@ -793,7 +798,7 @@
         },
         {
           "week": "2026-W36",
-          "count": 14
+          "count": 35
         }
       ],
       "ciResult": "pass",
