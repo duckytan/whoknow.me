@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2026-09-03.001",
-  "generatedAt": "2026-09-14T07:24:28.330Z",
+  "generatedAt": "2026-09-21T07:28:22.111Z",
   "source": {
     "gitRepo": "whoknow.me",
     "statusDocs": [
@@ -63,6 +63,10 @@
           {
             "week": "2026-W37",
             "count": 2
+          },
+          {
+            "week": "2026-W38",
+            "count": 1
           }
         ],
         "ciResult": "unknown",
@@ -133,6 +137,10 @@
           {
             "week": "2026-W37",
             "count": 2
+          },
+          {
+            "week": "2026-W38",
+            "count": 1
           }
         ],
         "ciResult": "pass",
@@ -206,6 +214,10 @@
           {
             "week": "2026-W37",
             "count": 2
+          },
+          {
+            "week": "2026-W38",
+            "count": 1
           }
         ],
         "ciResult": "pass",
@@ -564,12 +576,12 @@
       }
     ],
     "git": {
-      "commitsTotal": 232,
+      "commitsTotal": 233,
       "commitsByDir": {
         "root": 92,
         "whoknow-waimai": 87,
         "docs": 33,
-        "whoknow-workbench": 25,
+        "whoknow-workbench": 26,
         "whoknow-brain": 18,
         "whoknow-mart": 18,
         "\"": 7,
@@ -596,8 +608,8 @@
         "Ducky Tan": 86,
         "unknown": 73,
         "duckytan": 70,
-        "DuckyPC Agent": 2,
-        "workbench-bot": 1
+        "workbench-bot": 2,
+        "DuckyPC Agent": 2
       },
       "commitTimeseries": [
         {
@@ -619,6 +631,10 @@
         {
           "week": "2026-W37",
           "count": 2
+        },
+        {
+          "week": "2026-W38",
+          "count": 1
         }
       ],
       "branches": [
@@ -629,7 +645,7 @@
         "origin/main"
       ],
       "firstCommitAt": "2026-07-21T22:50:15+08:00",
-      "lastCommitAt": "2026-09-08T14:31:11+08:00",
+      "lastCommitAt": "2026-09-14T07:24:49Z",
       "degraded": false
     }
   },
@@ -685,6 +701,10 @@
         {
           "week": "2026-W37",
           "count": 2
+        },
+        {
+          "week": "2026-W38",
+          "count": 1
         }
       ],
       "ciResult": "unknown",
@@ -755,6 +775,10 @@
         {
           "week": "2026-W37",
           "count": 2
+        },
+        {
+          "week": "2026-W38",
+          "count": 1
         }
       ],
       "ciResult": "pass",
@@ -828,6 +852,10 @@
         {
           "week": "2026-W37",
           "count": 2
+        },
+        {
+          "week": "2026-W38",
+          "count": 1
         }
       ],
       "ciResult": "pass",
