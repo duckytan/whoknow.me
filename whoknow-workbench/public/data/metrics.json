@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2026-09-03.001",
-  "generatedAt": "2026-11-02T08:40:47.747Z",
+  "generatedAt": "2026-11-09T08:55:04.052Z",
   "source": {
     "gitRepo": "whoknow.me",
     "statusDocs": [
@@ -90,6 +90,10 @@
           },
           {
             "week": "2026-W44",
+            "count": 1
+          },
+          {
+            "week": "2026-W45",
             "count": 1
           }
         ],
@@ -188,6 +192,10 @@
           },
           {
             "week": "2026-W44",
+            "count": 1
+          },
+          {
+            "week": "2026-W45",
             "count": 1
           }
         ],
@@ -289,6 +297,10 @@
           },
           {
             "week": "2026-W44",
+            "count": 1
+          },
+          {
+            "week": "2026-W45",
             "count": 1
           }
         ],
@@ -648,12 +660,12 @@
       }
     ],
     "git": {
-      "commitsTotal": 239,
+      "commitsTotal": 240,
       "commitsByDir": {
         "root": 92,
         "whoknow-waimai": 87,
+        "whoknow-workbench": 33,
         "docs": 33,
-        "whoknow-workbench": 32,
         "whoknow-brain": 18,
         "whoknow-mart": 18,
         "\"": 7,
@@ -680,7 +692,7 @@
         "Ducky Tan": 86,
         "unknown": 73,
         "duckytan": 70,
-        "workbench-bot": 8,
+        "workbench-bot": 9,
         "DuckyPC Agent": 2
       },
       "commitTimeseries": [
@@ -731,6 +743,10 @@
         {
           "week": "2026-W44",
           "count": 1
+        },
+        {
+          "week": "2026-W45",
+          "count": 1
         }
       ],
       "branches": [
@@ -741,7 +757,7 @@
         "origin/main"
       ],
       "firstCommitAt": "2026-07-21T22:50:15+08:00",
-      "lastCommitAt": "2026-10-26T07:16:14Z",
+      "lastCommitAt": "2026-11-02T08:41:08Z",
       "degraded": false
     }
   },
@@ -824,6 +840,10 @@
         },
         {
           "week": "2026-W44",
+          "count": 1
+        },
+        {
+          "week": "2026-W45",
           "count": 1
         }
       ],
@@ -922,6 +942,10 @@
         },
         {
           "week": "2026-W44",
+          "count": 1
+        },
+        {
+          "week": "2026-W45",
           "count": 1
         }
       ],
@@ -1023,6 +1047,10 @@
         },
         {
           "week": "2026-W44",
+          "count": 1
+        },
+        {
+          "week": "2026-W45",
           "count": 1
         }
       ],
